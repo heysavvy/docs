@@ -25,6 +25,9 @@
     "name": "Builder Dashboard",
     "url": "https://app.embeddables.com"
   },
+  "primaryTab": {
+    "name": "Builder Documentation"
+  },
   "tabs": [
     {
       "name": "Reference",
@@ -100,8 +103,7 @@
     }
   ],
   "footerSocials": {
-    "twitter": "https://twitter.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://www.linkedin.com/company/mintsearch"
+    "twitter": "https://twitter.com/embeddables_",
+    "linkedin": "https://www.linkedin.com/company/embeddables"
   }
 }
