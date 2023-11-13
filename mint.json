@@ -2,10 +2,10 @@
   "$schema": "https://mintlify.com/schema.json",
   "name": "Starter Kit",
   "logo": {
-    "dark": "/logo/dark.svg",
-    "light": "/logo/light.svg"
+    "dark": "/logo/embeddables-dark.png",
+    "light": "/logo/embeddables-light.png"
   },
-  "favicon": "/favicon.svg",
+  "favicon": "/favicon.png",
   "colors": {
     "primary": "#6254f3",
     "light": "#7165ee",
@@ -18,34 +18,34 @@
   "topbarLinks": [
     {
       "name": "Support",
-      "url": "mailto:hi@mintlify.com"
+      "url": "mailto:jeremy@embeddables.com"
     }
   ],
   "topbarCtaButton": {
-    "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "name": "Builder Dashboard",
+    "url": "https://app.embeddables.com"
   },
   "tabs": [
     {
-      "name": "API Reference",
-      "url": "api-reference"
+      "name": "Reference",
+      "url": "reference"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "name": "Homepage",
+      "icon": "house",
+      "url": "https://embeddables.com"
     },
     {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
+      "name": "Changelog",
+      "icon": "list",
+      "url": "/changelog"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://embeddables.com/blog"
     }
   ],
   "navigation": [
@@ -53,8 +53,7 @@
       "group": "Get Started",
       "pages": [
         "introduction",
-        "quickstart",
-        "development"
+        "tutorials/quickstart"
       ]
     },
     {
@@ -67,13 +66,15 @@
       ]
     },
     {
-      "group": "Essentials",
+      "group": "How-Tos",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation"
+        "how-tos/accept-payments"
+      ]
+    },
+    {
+      "group": "Tutorials",
+      "pages": [
+        "tutorials/quickstart"
       ]
     },
     {
@@ -86,15 +87,15 @@
     {
       "group": "API Documentation",
       "pages": [
-        "api-reference/introduction"
+        "reference/introduction"
       ]
     },
     {
       "group": "Endpoint Examples",
       "pages": [
-        "api-reference/endpoint/get",
-        "api-reference/endpoint/create",
-        "api-reference/endpoint/delete"
+        "reference/endpoint/get",
+        "reference/endpoint/create",
+        "reference/endpoint/delete"
       ]
     }
   ],
