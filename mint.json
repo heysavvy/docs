@@ -58,6 +58,15 @@
       ]
     },
     {
+      "group": "Guide to the Builder",
+      "pages": [
+        "guide/content",
+        "guide/design",
+        "guide/logic",
+        "guide/next-steps"
+      ]
+    },
+    {
       "group": "Essentials",
       "pages": [
         "essentials/markdown",
