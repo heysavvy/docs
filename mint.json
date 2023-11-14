@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "Embeddables Docs",
   "logo": {
     "dark": "/logo/embeddables-dark.png",
     "light": "/logo/embeddables-light.png"
@@ -92,7 +92,7 @@
       ]
     },
     {
-      "group": "API Documentation",
+      "group": "Reference",
       "pages": [
         "reference/introduction"
       ]
