@@ -17,12 +17,16 @@
   },
   "topbarLinks": [
     {
+      "name": "Embeddables.com",
+      "url": "https://embeddables.com"
+    },
+    {
       "name": "Support",
       "url": "mailto:jeremy@embeddables.com"
     }
   ],
   "topbarCtaButton": {
-    "name": "Builder Dashboard",
+    "name": "Dashboard",
     "url": "https://app.embeddables.com"
   },
   "primaryTab": {
@@ -36,9 +40,9 @@
   ],
   "anchors": [
     {
-      "name": "Homepage",
+      "name": "Docs Home",
       "icon": "house",
-      "url": "https://embeddables.com"
+      "url": "/introduction"
     },
     {
       "name": "Changelog",
