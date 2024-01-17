@@ -58,10 +58,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": [
-        "introduction",
-        "tutorials/quickstart"
-      ]
+      "pages": ["introduction", "tutorials/quickstart"]
     },
     {
       "group": "Guide to the Builder",
@@ -73,29 +70,39 @@
       ]
     },
     {
-      "group": "How-Tos",
+      "group": "Features",
       "pages": [
-        "how-tos/accept-payments"
+        {
+          "group": "Payments",
+          "pages": ["features/payments/stripe", "features/payments/paypal"]
+        },
+        {
+          "group": "Actions",
+          "pages": [
+            "features/actions/webhooks",
+            "features/actions/airtable",
+            "features/actions/hubspot",
+            "features/actions/google-sheets",
+            "features/actions/datastream"
+          ]
+        }
       ]
+    },
+    {
+      "group": "How-Tos",
+      "pages": ["how-tos/accept-payments"]
     },
     {
       "group": "Tutorials",
-      "pages": [
-        "tutorials/quickstart"
-      ]
+      "pages": ["tutorials/quickstart"]
     },
     {
       "group": "About These Docs",
-      "pages": [
-        "about/who-are-these-docs-for",
-        "about/how-we-write-docs"
-      ]
+      "pages": ["about/who-are-these-docs-for", "about/how-we-write-docs"]
     },
     {
       "group": "Reference",
-      "pages": [
-        "reference/introduction"
-      ]
+      "pages": ["reference/introduction"]
     },
     {
       "group": "Endpoint Examples",

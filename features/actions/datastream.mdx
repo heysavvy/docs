@@ -1,0 +1,25 @@
+---
+title: "DataStream"
+description: "What the DataStream feature is for, and how to use it"
+icon: "screencast"
+---
+
+<Note>
+  The DataStream feature is a BETA feature, meaning that we're still ironing out
+  the kinks, and you may need to request access to use it right now.
+</Note>
+
+## What DataStream is for
+
+Sometimes you will want to send user data to an external service like Airtable, and then keep sending the updated user data as the user fills out more information.
+
+For example, when a user enters their email, you might want to send that to Airtable straight away - but then when teh user later enters their name you'd like to store that too.
+
+Normally this would result in several rows per user in the Airtable.
+
+Embeddables' DataStream feature is a new feature in Beta that supports updating the existing records in an external source like Airtable, so that each record alwasy has the most up-to-date version of the data.
+
+<Info>
+  The Embeddables Data Pipeline processes the queue once every minute, so the
+  data you receive can be up to a minute out-of-date.
+</Info>
