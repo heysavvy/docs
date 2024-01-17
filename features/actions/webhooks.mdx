@@ -12,10 +12,21 @@ Webhooks are perfect for that scenario, and Embeddables has a dedicated Webhooks
 
 <Info>
   **What are Webhooks?** Webhooks are a technology that are similar to APIs
-  except the work in the reverse direction: whereas the provider of an API
-  listens for other applications sending requests to that API,
+  except they work in the reverse direction!
+  
+  So while the provider of an API ***listens*** for requests from other applications (and responds accordingly),
+  the provider of a webhook ***sends*** events to any applications that tell it
+  they're listening for events.
+
+In other words, with APIs each event is triggered by the external application,
+whereas with webhooks each event is triggered by the webhook provider themselves.
+
 </Info>
 
 ## How to use Webhooks in Embeddables
 
-Webhooks in Embeddables are powered by Svix, an excellent service that integrates nicely into our systems and handles all the detailed features that we would ever want to build, like retries
+Webhooks in Embeddables are powered by [Svix](https://svix.com/), an excellent service that integrates nicely into our systems and handles all the detailed features that we would ever want to build.
+
+<Note>
+  The rest of this page is queued up to be completed soon - watch this space!
+</Note>
