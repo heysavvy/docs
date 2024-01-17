@@ -83,6 +83,7 @@
             "features/actions/webhooks",
             "features/actions/airtable",
             "features/actions/hubspot",
+            "features/actions/sendgrid",
             "features/actions/google-sheets",
             "features/actions/datastream"
           ]
