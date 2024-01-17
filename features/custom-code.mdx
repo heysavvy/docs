@@ -1,0 +1,88 @@
+---
+title: "Writing Custom Code"
+description: "How to get the most out of custom code blocks in Embeddables"
+icon: "code"
+---
+
+Custom Code blocks provide various bits of context through arguments in the root functions. They are, in order:
+
+| #   | Argument          | Description                                                                                                                  |
+| --- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `userData`        | The current User Data                                                                                                        |
+| 2   | `helperFunctions` | An object containing various helper functions (see [full list below](#available-helper-functions))                           |
+| 3   | `triggerContext`  | An object containing data on what triggered the Computed Field or Action (see [full list below](#available-trigger-context)) |
+
+<CodeGroup>
+
+```javascript Example Computed Field
+function result(userData, helperFunctions, triggerContext) {
+  ...
+}
+```
+
+```javascript Example Action
+function output(userData, helperFunctions, triggerContext) {
+  ...
+}
+```
+
+</CodeGroup>
+
+## Available Helper Functions
+
+### `setUserData()`
+
+This can be used to update the current User Data.
+
+It accepts a JSON object, which can contain one or more key/value pairs.
+
+It's treated as a subset of data that is merged into the existing User Data, although please note that any nested objects will be replaced not merged.
+
+### `resetUserData()`
+
+This can be used to reset the current User Data to the same value as for a brand new user.
+
+All previous data will be lost.
+
+### `triggerAction()`
+
+This can be used to programmatically trigger an action from custom code.
+
+One common use-case for this is when you want two actions to occur, but need one of them to complete before the other one starts.
+
+<Note>
+  This list is not exhaustive - more helper functions will be added to these
+  docs soon.
+</Note>
+
+## Available Trigger Context variables
+
+<Note>
+  **Please note** that `old_user_data` and `new_user_data` currently only
+  contain the input keys for the Computed Field, not all of User Data. This may
+  change in the future.
+</Note>
+
+<CodeGroup>
+
+```typescript Trigger Context for Computed Fields
+type TriggerContext = {
+  inputs_causing_recompute: string[]; // List of keys of inputs that caused the recompute
+  old_input_values: string[]; // List of old values of those inputs (last time this Computed Field was computed)
+  new_input_values: string[]; // List of current values of those inputs
+  old_user_data: Record<string, unknown>; // Snapshot of User Data from when this Computed Field was last computed
+  new_user_data: Record<string, unknown>; // Current value of User Data (identical to the first userData argument)
+};
+```
+
+```typescript Trigger Context for Actions
+type TriggerContext = {
+  trigger_type: string; // E.g. 'outputs_onclick'
+  trigger_page_id: string; // The page that triggered the Action (if triggered by page change)
+  trigger_page_key: string; // The page that triggered the Action (if triggered by page change)
+  trigger_component_id: string; // The component that triggered the Action (if triggered by a component)
+  trigger_component_key: string; // The component that triggered the Action (if triggered by a component)
+};
+```
+
+</CodeGroup>

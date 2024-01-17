@@ -1,0 +1,36 @@
+---
+title: "Glossary"
+description: "Key terms that we use at Embeddables"
+---
+
+#### Contact
+
+See: [End-User](#end-user)
+
+---
+
+#### End-User
+
+_Note: Also known as a [Contact](#contact)._
+
+This is a real life person who is currently viewing/completing, or has previously viewed/completed, one of your embeddables.
+
+This is distinct from an Embeddables User, which is someone who builds embeddables in our builder - like you!
+
+---
+
+#### Entry
+
+See: [User Data](#user-data)
+
+---
+
+#### User Data
+
+_Note: Also known as an [Entry](#entry)._
+
+This is the set of data that an [end-user](#end-user) of an embeddable has at any time, for example their email address or the answer they gave to a question.
+
+It is stored in `JSON` format and the schema is dependent on the embeddable that they are using.
+
+A user that has taken multiple embeddables will have a different User Data for each one. In our database, this is known as one [Contact](#contact) corresponding to multiple [Entries](#entry).
