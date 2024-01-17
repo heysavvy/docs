@@ -99,20 +99,16 @@
       "pages": ["tutorials/quickstart"]
     },
     {
+      "group": "Changelog",
+      "pages": ["changelog"]
+    },
+    {
       "group": "About These Docs",
       "pages": ["about/who-are-these-docs-for", "about/how-we-write-docs"]
     },
     {
       "group": "Reference",
       "pages": ["reference/introduction"]
-    },
-    {
-      "group": "Endpoint Examples",
-      "pages": [
-        "reference/endpoint/get",
-        "reference/endpoint/create",
-        "reference/endpoint/delete"
-      ]
     }
   ],
   "footerSocials": {
