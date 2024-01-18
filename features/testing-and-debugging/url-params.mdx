@@ -1,0 +1,29 @@
+---
+title: "URL Params"
+description: "What URL params are available to use when viewing embeddables"
+icon: "globe"
+---
+
+## How to use URL params in Emebddables
+
+1. The following URL params are available for use on both Embeddables preview links and live URLs on your own site. They aren't available for use on the Builder or Web App.
+2. The key of the param can differ, depending on whether it's on a preview link (e.g. `https://preview.embeddables.com/flow_abcdefg?version=latest`) or a live link (e.g. `https://mywebsite.com/?savvy_flow_version=latest`).
+
+## List of available URL params
+
+<Info>
+  Some of these params start with "savvy" or "savvy_flow" - Savvy is the old
+  name for Embeddables before we changed our brand. We'll be updating these
+  soon!
+</Info>
+
+| Param on preview link | Param on live link   | Possible values            | Description                                                                                 |
+| --------------------- | -------------------- | -------------------------- | ------------------------------------------------------------------------------------------- |
+| `version`             | `savvy_flow_version` | `latest`, `staging`, `123` | Display a certain version of the embeddable                                                 |
+| `savvy_test`          | `savvy_test`         | `true`, `false`            | Force test mode on (if live) or off (if preview)                                            |
+| `savvy_track`         | `savvy_track`        | `true`, `false`            | Force analytics tracking on (if live) or off (if preview)                                   |
+| `static_render`       | `static_render`      | `true`                     | Render only the HTML with no interactivity (useful for showing a preview of the embeddable) |
+
+<Note>
+  The rest of this page is queued up to be completed soon - watch this space!
+</Note>

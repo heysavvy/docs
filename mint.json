@@ -93,7 +93,14 @@
           ]
         },
         "features/custom-code",
-        "features/debugger"
+        {
+          "group": "Testing and Debugging",
+          "icon": "microscope",
+          "pages": [
+            "features/testing-and-debugging/url-params",
+            "features/testing-and-debugging/debugger"
+          ]
+        }
       ]
     },
     {
