@@ -106,7 +106,7 @@
     },
     {
       "group": "How-Tos",
-      "pages": ["how-tos/accept-payments"]
+      "pages": ["how-tos/accept-payments", "how-tos/sync-pages-with-url"]
     },
     {
       "group": "Tutorials",
