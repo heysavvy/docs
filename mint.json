@@ -74,6 +74,7 @@
       "pages": [
         "features/designer",
         "features/layers",
+        "features/saving-and-versions",
         "features/split-testing",
         {
           "group": "Payments",
