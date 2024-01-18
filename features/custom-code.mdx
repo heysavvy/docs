@@ -30,7 +30,7 @@ function output(userData, helperFunctions, triggerContext) {
 
 ## Available Helper Functions
 
-### `setUserData()`
+### `setUserData(updates: Record<string, unknown>)`
 
 This can be used to update the current User Data.
 
@@ -44,7 +44,7 @@ This can be used to reset the current User Data to the same value as for a brand
 
 All previous data will be lost.
 
-### `triggerAction()`
+### `triggerAction(actionId: string)`
 
 This can be used to programmatically trigger an action from custom code.
 
