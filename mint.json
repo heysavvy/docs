@@ -72,13 +72,17 @@
     {
       "group": "Features",
       "pages": [
-        "features/custom-code",
+        "features/designer",
+        "features/layers",
+        "features/split-testing",
         {
           "group": "Payments",
+          "icon": "credit-card",
           "pages": ["features/payments/stripe", "features/payments/paypal"]
         },
         {
           "group": "Actions",
+          "icon": "bolt",
           "pages": [
             "features/actions/webhooks",
             "features/actions/airtable",
@@ -87,7 +91,9 @@
             "features/actions/google-sheets",
             "features/actions/datastream"
           ]
-        }
+        },
+        "features/custom-code",
+        "features/debugger"
       ]
     },
     {
