@@ -18,8 +18,20 @@ trying to just go back one step in the flow, and find that they've gone back to 
 
 ## The solution: syncing embeddable pages with the URL
 
-The solution to this is our **Sync Pages With The URL** feature, which you can find in
-the Embeddable-Wide Settings.
+The solution to this is our **Sync Pages With The URL** feature.
+
+<Steps>
+  <Step title="Turn on the Sync Pages With The URL setting">
+    You can find this in the Embeddable-Wide Options.
+  </Step>
+  <Step title="Test for edge-cases and enjoy.">
+    This feature can have some interesting edge-cases, especially in embedabbles
+    that already have custom logic to do with navigation (such as blocking users
+    from going back after auth or payments). Tread carefully!
+  </Step>
+</Steps>
+
+## How does it work?
 
 When turned on, this works by automatically updating the URL with an <Tooltip
 tip="Anchor links start with a '#' in the URL (e.g. 'mysite.com/about#summary') and
