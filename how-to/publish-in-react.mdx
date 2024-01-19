@@ -1,0 +1,58 @@
+---
+title: "How To: Embed in a React app"
+description: "How to publish your embeddable inside a React app"
+---
+
+Embedding your embeddable in a React app is straightforward, and looks similar to the process of embedding in a regular website.
+
+<Steps>
+  <Step title="Grab the embed code">
+    Head to the embeddable in the [Web App](https://app.embeddables.com/) and
+    grab the embed code from the button at the top.
+  </Step>
+  <Step title="Insert the first part in the Head">
+    The first part of the embed code (the large part) should go in the `<HEAD>` of the page.
+
+    This is the large part that starts like this:
+
+    ```html
+    <script> const SAVVY_PRELOAD_IDS=...
+    ```
+
+  </Step>
+  <Step title="Insert the second part in the Body">
+    The second part of the embed code should go in the `<BODY>` of the page, wherever you want the embeddable to appear on the page.
+
+    The is the part that looks like this (where `flow_abcdefhijklm` is your embeddable ID):
+
+    ```html
+    <savvy id="flow_abcdefhijklm"></savvy>
+    ```
+
+  </Step>
+</Steps>
+
+## Troubleshooting:
+
+### React is giving me a warning about an unrecognized `<savvy>` tag
+
+Sometimes in the console, you will see this warning log from React:
+
+```mdx Console
+Warning: The tag <savvy> is unrecognized in this browser.
+If you meant to render a React component, start its name with an
+uppercase letter.
+```
+
+This warning can be safely ignored, and should have no impact on your app.
+
+However, if you want to avoid the warning appearing in the console, a workaround is to
+insert the savvy just after the initial render using React's `useEffect` hook:
+
+```javascript App.js
+useEffect(() => {
+  const htmlElement = `<savvy id="flow_abcdefhijklm"></savvy>`;
+  const container = document.getElementById("my-container"); // Select the container that the embeddable should appear in
+  container.innerHTML = htmlElement; // Use '+=' if you want to append the embeddable to the contents of the container, instead of replacing the contents
+});
+```

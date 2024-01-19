@@ -1,0 +1,65 @@
+---
+title: "How To: Embed in a React Native app"
+description: "How to publish your embeddable inside a React Native app"
+---
+
+Embedding your embeddable in a React Native app involves using the WebView
+component that comes as part of the `react-native-webview` library.
+
+We use WebView to embed an Embeddables preview URL, since we can't pass HTML
+directly into the WebView.
+
+<Steps>
+  <Step title="Install the react-native-webview library">
+    If you don't already have it installed, run:
+
+    ```shell
+    npm i react-native-webview
+    ```
+
+  </Step>
+  <Step title="Import WebView into your React file">
+    ```javascript
+    import { WebView } from "react-native-webview";
+    ```
+  </Step>
+  <Step title="Insert a WebView">
+    
+    ```javascript
+    <WebView
+      source={{
+        uri: "https://preview.embeddables.com/flow_abcdefhijklm",
+      }}
+    />
+    ```
+  </Step>
+  <Step title="Optional: Give it dimensions">
+    If you can't see it initially, make sure to give it some styles
+    to ensure that it has non-zero zero dimensions:
+    
+    ```javascript
+    <WebView
+      style={{
+        width: 400,
+      }}
+      source={{
+        uri: "https://preview.embeddables.com/flow_abcdefhijklm",
+      }}
+    />
+    ```
+  </Step>
+  <Step title="Optional: Pass properties into User Data">
+    To pass User Data properties into the embeddable, include them in the URL as URL params.
+
+    In the Builder, make sure to add those keys into the Embed URL settings of the embeddable.
+
+    ```javascript
+    <WebView
+      source={{
+        uri: "https://preview.embeddables.com/flow_abcdefhijklm?my_key=my_value",
+      }}
+    />
+    ```
+
+  </Step>
+</Steps>

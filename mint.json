@@ -106,7 +106,14 @@
     },
     {
       "group": "How-Tos",
-      "pages": ["how-tos/accept-payments", "how-tos/sync-pages-with-url"]
+      "pages": [
+        "how-to/accept-payments",
+        "how-to/sync-pages-with-url",
+        {
+          "group": "Going Live",
+          "pages": ["how-to/publish-in-react", "how-to/publish-in-react-native"]
+        }
+      ]
     },
     {
       "group": "Tutorials",
