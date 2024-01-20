@@ -5,17 +5,24 @@ description: "How to publish your embeddable inside a React app"
 
 Embedding your embeddable in a React app is straightforward, and looks similar to the process of embedding in a regular website.
 
+For embedding in other environments, check out [embedding in your website](publish-to-your-site) or a [React Native app](publish-in-react-native).
+
 <Steps>
   <Step title="Grab the embed code">
     Head to the embeddable in the [Web App](https://app.embeddables.com/) and
     grab the embed code from the button at the top.
+    <Frame>
+      <img src="images/embed-button.png" />
+    </Frame>
   </Step>
   <Step title="Insert the first part in the Head">
     The first part of the embed code (the large part) should go in the `<HEAD>` of the page.
 
+    **This only needs to be added once** - if it's already installed on all pages of your site then you can skip this step.
+
     This is the large part that starts like this:
 
-    ```html
+    ```html Embed Code - Part 1/2
     <script> const SAVVY_PRELOAD_IDS=...
     ```
 
@@ -25,14 +32,34 @@ Embedding your embeddable in a React app is straightforward, and looks similar t
 
     The is the part that looks like this (where `flow_abcdefhijklm` is your embeddable ID):
 
-    ```html
+    ```html Embed Code - Part 2/2
     <savvy id="flow_abcdefhijklm"></savvy>
     ```
 
   </Step>
 </Steps>
 
-## Troubleshooting:
+## Embedding in a website or native app?
+
+<CardGroup cols={2}>
+  <Card
+    title="How To: Embed in your website"
+    icon="globe"
+    href="publish-in-react"
+  >
+    How to publish your embeddable to your wesite
+  </Card>
+
+  <Card
+    title="How To: Embed in a React Native app"
+    icon="mobile-screen-button"
+    href="publish-in-react-native"
+  >
+    How to publish your embeddable inside a React Native app
+  </Card>
+</CardGroup>
+
+## Troubleshooting
 
 ### React is giving me a warning about an unrecognized `<savvy>` tag
 
@@ -56,3 +83,5 @@ useEffect(() => {
   container.innerHTML = htmlElement; // Use '+=' if you want to append the embeddable to the contents of the container, instead of replacing the contents
 });
 ```
+
+<Note>Typescript samples will be added to this page soon</Note>

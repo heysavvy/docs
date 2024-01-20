@@ -111,7 +111,11 @@
         "how-to/sync-pages-with-url",
         {
           "group": "Going Live",
-          "pages": ["how-to/publish-in-react", "how-to/publish-in-react-native"]
+          "pages": [
+            "how-to/publish-to-your-site",
+            "how-to/publish-in-react",
+            "how-to/publish-in-react-native"
+          ]
         }
       ]
     },
