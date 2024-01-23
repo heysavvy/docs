@@ -57,14 +57,14 @@
       "url": "introduction"
     },
     {
-      "name": "Changelog",
-      "icon": "list",
-      "url": "reference/changelog"
-    },
-    {
       "name": "Glossary",
       "icon": "book",
       "url": "reference/glossary"
+    },
+    {
+      "name": "Changelog",
+      "icon": "list",
+      "url": "reference/changelog"
     }
   ],
   "navigation": [
@@ -142,7 +142,7 @@
     },
     {
       "group": "Reference",
-      "pages": ["reference/glossary", "reference/changelog"]
+      "pages": ["reference/glossary/glossary", "reference/changelog/changelog"]
     }
   ],
   "footerSocials": {
