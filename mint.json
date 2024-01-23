@@ -118,7 +118,11 @@
     },
     {
       "group": "How Tos: Logic",
-      "pages": ["how-to/sync-pages-with-url", "how-to/accept-payments"]
+      "pages": [
+        "how-to/sync-pages-with-url",
+        "how-to/accept-payments",
+        "how-to/decide-how-to-send-data"
+      ]
     },
     {
       "group": "How Tos: Going Live",

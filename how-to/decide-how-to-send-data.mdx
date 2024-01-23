@@ -1,4 +1,90 @@
 ---
-title: "How To: Decide how to send data"
-description: "Data Pipelines vs API requests"
+title: "How To: Decide how to send/receive data"
+description: "Data Pipelines? API requests? Something else?"
 ---
+
+## Use-cases
+
+Some common use-cases that we often see:
+
+1. I want to send data to an external SaaS app (e.g. a CRM, Airtable).
+2. I wan to trigger an email to be sent to me, or to the end-user.
+3. I want to send data to my own backend/API.
+4. I want to fetch content to display in my embeddable, similar to a CMS.
+5. ...many other combinations of the above...
+
+## Questions
+
+But there are lots of combinations - here are some of the questions to ask yourself.
+
+If you're sending data somewhere:
+
+- Am I sending to an external SaaS app, or to my own backend/database/API?
+- Am I sending the data somewhere to access later, or will I need to access it instantly to avoid blocking the end-user?
+- Am I sending data to a domain that might be blocked by browsers or ad blockers?
+- Will I need to include some kind of private API key or token in the request?
+
+If you're fetching data from somewhere:
+
+- Do I need the content to load instantly on page load, or later (e.g. on a subsequent page, or after a button click)
+- Does the data need to be secure, or is it public data that it's OK for people to access?
+- Am I fetching data from a domain that might be blocked by browsers or ad blockers?
+
+## Which solution to choose - Sending data
+
+### DataPipes - Integrations
+
+This is usually the best solution if:
+
+- ✅ You want to send data to one of these SaaS apps: HubSpot, Airtable, Sendgrid, Google Sheets.
+- ✅ You don't need to access it instantly (can take up to a minute to process).
+
+### DataPipes - Webhooks
+
+This is usually the best solution if:
+
+- ✅ You want to send data to Zapier or your own backend/database/API.
+- ✅ You don't need to access it instantly (can take up to a minute to process).
+
+### Frontend API request, using the Embeddables Secure Proxy
+
+This is usually the best solution if:
+
+- ✅ You want to send data to an external SaaS app, Zapier or your own backend/database/API.
+- ✅ You need to access it instantly (sooner than within 1 minute), or it will block the end-user from progressing.
+- ✅ You need to include some kind of private API key or token in the request - OR - you'll be sending to a domain that might be blocked by browsers or ad blockers.
+
+### Frontend API request, direct
+
+This is usually the best solution if:
+
+- ✅ You want to send data to an external SaaS app, Zapier or your own backend/database/API.
+- ✅ You need to access it instantly (sooner than within 1 minute), or it will block the end-user from progressing.
+- ✅ You don't need to include any kind of private API key or token in the request.
+- ✅ You won't need to send to a domain that risks being blocked by browsers or ad blockers.
+
+## Which solution to choose - Fetching data
+
+### Embeddables CMS feature - currently in `BETA`
+
+This is usually the best solution if:
+
+- ✅ You want to fetch data from an Airtable.
+- ✅ You need the content to load instantly on page load.
+
+### Frontend API request, using the Embeddables Secure Proxy
+
+This is usually the best solution if:
+
+- ✅ You want to fetch data from an external SaaS app, Zapier or your own backend/database/API.
+- ✅ The content doesn't need to load instantly on page load (it can be e.g. on a subsequent page, or after a button click).
+- ✅ You need to include some kind of private API key or token in the request - OR - you're fetching from a domain that might be blocked by browsers or ad blockers.
+
+### Frontend API request, direct
+
+This is usually the best solution if:
+
+- ✅ You want to fetch data from an external SaaS app, Zapier or your own backend/database/API.
+- ✅ The content doesn't need to load instantly on page load (it can be e.g. on a subsequent page, or after a button click).
+- ✅ You don't need to include any kind of private API key or token in the request.
+- ✅ You won't need to send to a domain that risks being blocked by browsers or ad blockers.
