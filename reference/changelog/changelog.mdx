@@ -4,4 +4,51 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
-<Note>This page is queued up to be written soon - watch this space!</Note>
+## Monday 23 January, 2024
+
+- **Conditional Tags** are now live in `BETA`!
+  - Add a condition to a tag so that it is only added to a page/component/element if that condition is met.
+  - Perfect for styles that you want to add/remove dynamically.
+
+<Frame>
+  <img src="/images/features/conditional-tags.gif" />
+</Frame>
+
+---
+
+## Thursday 18 January, 2024
+
+- You can now **Copy/Paste components and pages between different Embeddables**!
+  - Use `Ctrl/Cmd + C` to copy a component, then `Ctrl/Cmd + V` to paste it in another embeddable.
+    - This works with containers - it will copy all child components along with it.
+    - You can also use the Copy button in the Options card.
+    - This will copy across the structure **without styles**.
+  - You can also **copy with styles included** using the "Copy with Styles" button in the Options card.
+    - This will bring all the styles associated with the applied tags.
+    - If any conflict occurs you will be asked to choose whether to replace tag styles or keep them.
+
+<Frame>
+  <img src="/images/features/copy-container-with-styles.gif" />
+</Frame>
+
+---
+
+## Thursday 11 January, 2024
+
+- **⚡️ New Features:**
+  - **Keyboard shortcuts for selecting different components**
+    - You can now change the selection using the arrow keys.
+    - Up and Down for siblings components.
+    - Left and Right for entering or exiting a container
+  - Quick access button to open **list of component triggers**
+    - Click the icon above the border of a selected component to quickly view all triggers associated with that component.
+  - Easily see a **list of triggers for an Action** by hovering over it.
+  - **Debounce option** for InputBox components.
+  - **Default User Data** setting available in Whole Embeddable options.
+  - Easier login/logout UX.
+- **🐞 Bug fixes:**
+  - Editing text/descriptions of OptionsSelector/CustomButtons with Custom HTML no longer breaks the HTML.
+  - Dragging global components on the layers no longer breaks the entire flow JSON.
+  - Builder no longer allows setting keys starting with numbers.
+  - Building repeatable containers was buggy.
+  - When dragging a container into a global position, it took only the container and not the components.
