@@ -148,5 +148,15 @@
   "footerSocials": {
     "twitter": "https://twitter.com/embeddables_",
     "linkedin": "https://www.linkedin.com/company/embeddables"
-  }
+  },
+  "redirects": [
+    {
+      "source": "/glossary",
+      "destination": "/reference/glossary/glossary"
+    },
+    {
+      "source": "/changelog",
+      "destination": "/reference/changelog/changelog"
+    }
+  ]
 }
