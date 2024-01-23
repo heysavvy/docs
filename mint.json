@@ -30,9 +30,21 @@
     "url": "https://app.embeddables.com"
   },
   "primaryTab": {
-    "name": "Builder Documentation"
+    "name": "Welcome to Embeddables"
   },
   "tabs": [
+    {
+      "name": "Features",
+      "url": "features"
+    },
+    {
+      "name": "How-Tos",
+      "url": "how-to"
+    },
+    {
+      "name": "Tutorials",
+      "url": "tutorials"
+    },
     {
       "name": "Reference",
       "url": "reference"
@@ -47,21 +59,21 @@
     {
       "name": "Changelog",
       "icon": "list",
-      "url": "changelog"
+      "url": "reference/changelog"
     },
     {
-      "name": "Blog",
-      "icon": "newspaper",
-      "url": "https://embeddables.com/blog"
+      "name": "Glossary",
+      "icon": "book",
+      "url": "reference/glossary"
     }
   ],
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "tutorials/quickstart", "glossary"]
+      "pages": ["introduction", "10-min-tour", "10-min-quickstart"]
     },
     {
-      "group": "Guide to the Builder",
+      "group": "What can Embeddables do?",
       "pages": [
         "guide/content",
         "guide/design",
@@ -105,27 +117,20 @@
       ]
     },
     {
-      "group": "How-Tos",
+      "group": "How Tos: Logic",
+      "pages": ["how-to/sync-pages-with-url", "how-to/accept-payments"]
+    },
+    {
+      "group": "How Tos: Going Live",
       "pages": [
-        "how-to/accept-payments",
-        "how-to/sync-pages-with-url",
-        {
-          "group": "Going Live",
-          "pages": [
-            "how-to/publish-to-your-site",
-            "how-to/publish-in-react",
-            "how-to/publish-in-react-native"
-          ]
-        }
+        "how-to/publish-to-your-site",
+        "how-to/publish-in-react",
+        "how-to/publish-in-react-native"
       ]
     },
     {
       "group": "Tutorials",
-      "pages": ["tutorials/quickstart"]
-    },
-    {
-      "group": "Changelog",
-      "pages": ["changelog/changelog"]
+      "pages": ["tutorials/10-min-quickstart"]
     },
     {
       "group": "About These Docs",
@@ -133,7 +138,7 @@
     },
     {
       "group": "Reference",
-      "pages": ["reference/introduction"]
+      "pages": ["reference/glossary", "reference/changelog"]
     }
   ],
   "footerSocials": {
