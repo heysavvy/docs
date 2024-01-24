@@ -1,0 +1,37 @@
+---
+title: "How To: Pass data into/out of embeddables to be prefilled"
+sidebarTitle: "How To: Pass data in/out to be prefilled"
+description: "URL params? Embed code? Window functions? Etc..."
+---
+
+## Use-cases
+
+Some common use-cases that we often see:
+
+1. I want to prefill data like email addresses into my embeddable that users have already entered previously on my site.
+2. I want to prefill data from my embeddable into an embedded component inside it, like a Calendly booker or Stripe component.
+3. I want to pass data like email addresses out of my embeddable to be used on a subsequent page on my website.
+
+<Note>
+This page is for passing data to be immediately prefilled somewhere in front of the user.
+
+For ways of sending/receiving the data to/from an external source like an API, database or SaaS app, check out [How To: Decide how to send/receive data](/how-to/decide-how-to-send-data)
+
+</Note>
+
+## Passing data into an embeddable to prefill fields (e.g. email address)
+
+### Method 1: URL params
+
+<Steps>
+  <Step title="Add the fields into the URL as params">
+    For example: `https://mywebsite.com/onboarding?email=ada@lovelace.com`. -
+    Make sure that this is the URL when the embeddable first loads, since that's
+    when it will look for URL params.
+  </Step>
+  <Step title="Add the fields into the URL as params">
+    For example: `https://mywebsite.com/onboarding?email=ada@lovelace.com`. -
+    Make sure that this is the URL when the embeddable first loads, since that's
+    when it will look for URL params.
+  </Step>
+</Steps>
