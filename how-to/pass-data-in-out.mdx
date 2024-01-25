@@ -12,12 +12,12 @@ Some common use-cases that we often see:
 2. I want to prefill data from my embeddable into an embedded component inside it, like a Calendly booker or Stripe component.
 3. I want to pass data like email addresses out of my embeddable to be used on a subsequent page on my website.
 
-<Note>
+<Info>
 This doc is for passing data to be immediately prefilled somewhere in front of the user.
 
 For ways of sending/receiving the data to/from an external source like an API, database or SaaS app, check out [How To: Decide how to send/receive data](/how-to/decide-how-to-send-data)
 
-</Note>
+</Info>
 
 ## Passing data into an embeddable to prefill fields (e.g. email address)
 
@@ -36,6 +36,125 @@ For ways of sending/receiving the data to/from an external source like an API, d
       separated by newlines.
 
   </Step>
+</Steps>
+
+### Method 2: Embed code attributes
+
+<Steps>
+  <Step title="Add each field as an attribute on the <savvy> HTML element">
+    - For example: `<savvy id="flow_abc" email="ada@lovelace.com"></savvy>`.
+    - Make sure that these attributes are present when the element is first added
+      to the DOM, since that's when it will look for URL params.
+  </Step>
+  <Step title="Set those fields to be Embed Code-controlled">
+    - Head to the embeddable-wide settings
+    - Go to the More tab
+    - Add the fields to the Embed Code block,
+      separated by newlines.
+
+  </Step>
+</Steps>
+
+### Method 3: Custom code using Window variable
+
+<Note>
+  This works best when you want to prefill data immediately (as soon as the
+  embeddable loads).
+</Note>
+
+<Steps>
+  <Step title="Place the data on a Window variable in your website/webapp">
+    - From within your website or webapp, create a variable
+      in the Window scope with a unique name.
+    - Add the data you want to prefill into that variable.
+    - **Make sure to that this happens before the embeddable loads.**
+
+    ```javascript Your Website/Webapp Code
+    window.myEmbeddablesPrefillData = {
+      email: 'ada@lovelace.com'
+    }
+    ```
+
+  </Step>
+  <Step title="Add a custom code Action, triggered on first load">
+    For more info on how to do this, check out:
+    <Card
+      title="How To: Run custom code when the Embeddable loads"
+      href="/how-to/run-custom-code-on-load"
+    ></Card>
+  </Step>
+  <Step title="Grab the data from the Window variable, and then set the User Data">
+    - Pull out the data from the Window variable that you 
+      set up in Step 1.
+    - Then use `helperFunctions.setUserData()` to set the
+      User Data based on the payload sent with that event:
+
+    ```javascript Custom Code Action - Triggered on First Load
+    function output(userData, helperFunctions) {
+      const dataToPrefill = window.myEmbeddablesPrefillData
+        if (dataToPrefill) {
+          helperFunctions.setUserData(dataToPrefill);
+        }
+      });
+    }
+    ```
+
+  </Step>
+  
+</Steps>
+
+### Method 4: Custom code using custom Window event
+
+<Note>
+  This works best when you want to prefill data after the embeddable has already
+  loaded
+</Note>
+
+<Steps>
+  <Step title="Add a custom code Action, triggered on first load">
+    For more info on how to do this, check out:
+    <Card
+      title="How To: Run custom code when the Embeddable loads"
+      href="/how-to/run-custom-code-on-load"
+    ></Card>
+  </Step>
+  <Step title="Listen for a custom Window event, and then set the User Data">
+    - Use `window.addEventListener()` to listen for a
+      custom event that you will define.
+    - Then use `helperFunctions.setUserData()` to set the
+      User Data based on the payload sent with that event:
+
+    ```javascript Custom Code Action - Triggered on First Load
+    function output(userData, helperFunctions) {
+      window.addEventListener('embeddables:my_custom_prefill_event', (event) => {
+        const detail = event.detail || {};
+        const dataToPrefill = detail.prefill_data
+        if (dataToPrefill) {
+          helperFunctions.setUserData(dataToPrefill);
+        }
+      });
+    }
+    ```
+
+  </Step>
+  <Step title="Send the custom Window event from your website/webapp">
+    - From your website or webapp, create a new
+      Custom Event with the prefill data, and
+      send it to the Window:
+
+    ```javascript Your Website/Webapp Code
+    const myEvent = new CustomEvent('embeddables:my_custom_prefill_event', {
+      detail: {
+        prefill_data: {
+          email: 'ada@lovelace.com'
+        }
+      }
+    })
+    window.dispatchEvent(myEvent);
+    ```
+
+  </Step>
+  
 </Steps>
 
 <Note>
