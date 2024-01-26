@@ -4,11 +4,30 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
-## Monday 23 January, 2024
+## Thursday 25 January, 2024
 
-- **Conditional Tags** are now live in `BETA`!
-  - Add a condition to a tag so that it is only added to a page/component/element if that condition is met.
-  - Perfect for styles that you want to add/remove dynamically.
+- **🔥 Features and Updates:**
+
+  - When you add a new component, it will now be automatically selected.
+  - When building with ChatMessages components, you can now select which
+    GPT model to use. (Currently [`JSON-Only`](/reference/glossary/glossary#json-only-feature) for now)
+
+- **⚡️ Improvements:**
+  - Re-rendering of pages and components is more efficient, making the builder
+    faster to work with.
+  - Initial rendering of embeddables now fills templates with data (e.g. default
+    userData & external content) for certain component types, which should lead to
+    faster load times and better Google Lighthouse scores.
+- **🐞 Bug fixes:**
+  - The Pages card no longer sometimes plays videos or loads iframes in the background.
+  - The ChatMessages component no longer fails to work if "Handle AI Messages" is not checked.
+
+## Monday 22 January, 2024
+
+- **🔥 Features and Updates:**
+  - **Conditional Tags** are now live in `BETA`!
+    - Add a condition to a tag so that it is only added to a page/component/element if that condition is met.
+    - Perfect for styles that you want to add/remove dynamically.
 
 <Frame>
   <img src="/images/features/conditional-tags.gif" />
@@ -18,14 +37,15 @@ icon: "list"
 
 ## Thursday 18 January, 2024
 
-- You can now **Copy/Paste components and pages between different Embeddables**!
-  - Use `Ctrl/Cmd + C` to copy a component, then `Ctrl/Cmd + V` to paste it in another embeddable.
-    - This works with containers - it will copy all child components along with it.
-    - You can also use the Copy button in the Options card.
-    - This will copy across the structure **without styles**.
-  - You can also **copy with styles included** using the "Copy with Styles" button in the Options card.
-    - This will bring all the styles associated with the applied tags.
-    - If any conflict occurs you will be asked to choose whether to replace tag styles or keep them.
+- **🔥 Features and Updates:**
+  - You can now **Copy/Paste components and pages between different Embeddables**!
+    - Use `Ctrl/Cmd + C` to copy a component, then `Ctrl/Cmd + V` to paste it in another embeddable.
+      - This works with containers - it will copy all child components along with it.
+      - You can also use the Copy button in the Options card.
+      - This will copy across the structure **without styles**.
+    - You can also **copy with styles included** using the "Copy with Styles" button in the Options card.
+      - This will bring all the styles associated with the applied tags.
+      - If any conflict occurs you will be asked to choose whether to replace tag styles or keep them.
 
 <Frame>
   <img src="/images/features/copy-container-with-styles.gif" />
@@ -35,7 +55,7 @@ icon: "list"
 
 ## Thursday 11 January, 2024
 
-- **⚡️ New Features:**
+- **🔥 Features and Updates:**
   - **Keyboard shortcuts for selecting different components**
     - You can now change the selection using the arrow keys.
     - Up and Down for siblings components.
@@ -45,10 +65,11 @@ icon: "list"
   - Easily see a **list of triggers for an Action** by hovering over it.
   - **Debounce option** for InputBox components.
   - **Default User Data** setting available in Whole Embeddable options.
+- **⚡️ Improvements:**
   - Easier login/logout UX.
 - **🐞 Bug fixes:**
   - Editing text/descriptions of OptionsSelector/CustomButtons with Custom HTML no longer breaks the HTML.
   - Dragging global components on the layers no longer breaks the entire flow JSON.
   - Builder no longer allows setting keys starting with numbers.
-  - Building repeatable containers was buggy.
-  - When dragging a container into a global position, it took only the container and not the components.
+  - Building repeatable containers is no longer buggy.
+  - When dragging a container into a global position, it now brings the child components too.
