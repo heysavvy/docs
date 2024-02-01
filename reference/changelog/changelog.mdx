@@ -4,6 +4,41 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+## Thursday 1 February, 2024
+
+- **🔥 Features and Updates:**
+  - You can now find the split test that you're looking for by filtering in the search bar of the Experiments card.
+  - Button components now have a 'Text Wrapper' sub-element (which contains the 'Text' and 'Description' elements) available to be styled in the Designer.
+  - You can now edit Logic items (Actions and Computed Fields) by directly editing the JSON.
+- **⚡️ Improvements:**
+  - Several aspects of the product now load faster, including various analytics features in the Web App, and the initial load of the Builder.
+  - Undo/redo functionality is now visually synced with the Split Test card.
+  - The versions card now shows the exact date + time of each save, rather than simply "5 days ago".
+- **🐞 Bug fixes:**
+  - Non-images no-longer have broken thumbnails in the Assets card.
+
+---
+
+## Monday 29 January, 2024
+
+- **🔥 Features and Updates:**
+  - 🧪 **Split Testing v2** This complete rebuild of our Experiments feature makes it easy and simple to do the following:
+    - Create new experiments.
+    - Pause experiments, selecting a temporary winner\*.
+    - Complete experiments, choosing a winner\* - this will automatically remove conditions as well as losing pages and components that are no longer used.
+    - Add variants and edit variant weights.
+    - Easily add experiment-related conditions to components.
+    - Get a preview link for your experiment with the variant you choose, so you can test out that variant as a user.
+    - View which pages + components are related to a particular experiment variant - these are color-coded, both in the preview and in the Layers card.
+    - See a list of past completed experiments, when they were completed, and (for new experiments\*) which variant won.
+
+<Info>
+  *Note that this only applies to experiments created in Split Testing v2. Older
+  experiments can't be paused or completed in the same way.
+</Info>
+
+---
+
 ## Thursday 25 January, 2024
 
 - **🔥 Features and Updates:**
@@ -31,7 +66,7 @@ icon: "list"
     - Add a condition to a tag so that it is only added to a page/component/element if that condition is met.
     - Perfect for styles that you want to add/remove dynamically.
 
-<Frame>
+<Frame caption="Setting up conditional tags to be applied only in certain scenarios 🎨">
   <img src="/images/features/conditional-tags.gif" />
 </Frame>
 
@@ -40,7 +75,7 @@ icon: "list"
 ## Thursday 18 January, 2024
 
 - **🔥 Features and Updates:**
-  - You can now **Copy/Paste components and pages between different Embeddables**!
+  - You can now **Copy/Paste components and pages between different embeddables**!
     - Use `Ctrl/Cmd + C` to copy a component, then `Ctrl/Cmd + V` to paste it in another embeddable.
       - This works with containers - it will copy all child components along with it.
       - You can also use the Copy button in the Options card.
@@ -49,7 +84,7 @@ icon: "list"
       - This will bring all the styles associated with the applied tags.
       - If any conflict occurs you will be asked to choose whether to replace tag styles or keep them.
 
-<Frame>
+<Frame caption="Copy/Pasting a container with styles across to a different embeddable 🪄">
   <img src="/images/features/copy-container-with-styles.gif" />
 </Frame>
 
