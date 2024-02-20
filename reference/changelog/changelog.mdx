@@ -4,6 +4,48 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+## Friday 16 February, 2024
+
+- **🔥 Features and Updates:**
+  - **Accessibility features**: alt-text is not just for images! It's now easy to add alt text and equivalent meta descriptions and labels in Buttons, Options Buttons, Dropdowns and more.
+- **⚡️ Improvements:**
+  - Various performance updates on the Web App mean that it's now significantly faster!
+  - Stability, logging and performance updates on the Builder.
+- **🐞 Bug fixes:**
+  - Hitting `ESC` inside an input or inside a Code Editor, while the text editor is in focus, will no longer close the card lose your un-applied edits.
+  - The Assets card, when first opened, no longer fails to replace images with a click.
+
+---
+
+## Monday 12 February, 2024
+
+- **🔥 Features and Updates:**
+  - **Submission Table & Export CSVs**:
+    - Long-awaited and much-requested, you can now easily view and download your submissions from a particular embeddable.
+    - Head to the page of a particular embeddable in the Web App and you will now see a spreadsheet-like table of all submissions (or 'entries') for that embeddable.
+    - You can also hit the Download button to export a CSV of the last 1,000, 10,000 or 100,000 submissions, to analyze further in your software of choice.
+  - **Preset option collections** for Option Buttons and Dropdowns: select from presets like 'Countries' and 'US States' to save typing them all out.
+  - **Button tooltips**: give your users more info in case they need it, with easy-to-add tooltips on buttons.
+
+<Frame caption="Adding preset option buttons with a click.">
+  <img src="/images/features/preset-buttons.gif" />
+</Frame>
+
+---
+
+## Thursday 8 February, 2024
+
+- **🔥 Features and Updates:**
+  - **Version Sizes**:
+    - Ever struggled to find that version from weeks ago where you made a huge number of edits?
+    - You can now see the number of edits made in each saved version of an embeddable (applies to versions saved from Feb 8 onwards).
+  - **US Phone number formatting**: Our brand new US phone number formatting features are now available in `BETA` and in [`JSON-Only`](/reference/glossary/glossary#json-only-feature). Contact us if you want to try them out!
+  - **Compare Unsaved JSON Changes**: The versions diff now has a Current JSON option, so you can review your draft updates before hitting save.
+- **⚡️ Improvements:**
+  - Our 'Auto-Preload Next Page Images' feature now applies to images inside buttons.
+
+---
+
 ## Thursday 1 February, 2024
 
 - **🔥 Features and Updates:**
@@ -106,7 +148,7 @@ icon: "list"
   - Easier login/logout UX.
 - **🐞 Bug fixes:**
   - Editing text/descriptions of OptionsSelector/CustomButtons with Custom HTML no longer breaks the HTML.
-  - Dragging global components on the layers no longer breaks the entire flow JSON.
+  - Dragging global components on the layers no longer breaks the entire embeddable JSON.
   - Builder no longer allows setting keys starting with numbers.
   - Building repeatable containers is no longer buggy.
   - When dragging a container into a global position, it now brings the child components too.
