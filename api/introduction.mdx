@@ -1,0 +1,41 @@
+---
+title: "Embeddables API - Introduction"
+description: "Get programmatic access to your embeddables and your data"
+---
+
+<Note>
+  For access to the Embeddables API, please contact the Embeddables team to
+  discuss pricing.
+</Note>
+
+## Welcome
+
+The Embeddables API is brand new and still being built.
+
+Please contact us to get access and let us know what you want us to prioritize shipping first!
+
+{" "}
+
+<Card
+  title="Get Started with the Embeddables API"
+  icon="pen-to-square"
+  href="/api/entries/get-entries"
+>
+  Use our interactive docs to generate your first API request.
+</Card>
+
+## Authentication
+
+All private API endpoints are authenticated using API Keys.
+
+Each API Key gives full access to a particular [Project](/reference/glossary/glossary#project).
+
+Contact the Embeddables Team to discuss acquiring an API Key for accessing private API endpoints.
+
+You should provide the API Key as the `X-Api-Key` header in your request:
+
+```sh Sample CURL Request
+curl --request GET \
+  --url https://api.embeddables.com/projects/{projectId}/entries \
+  --header 'X-Api-Key: <x-api-key>'
+```

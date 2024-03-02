@@ -39,6 +39,16 @@ See: [User Data](#user-data)
 
 ---
 
+#### Group
+
+A Group corresponds to a billing account with Embeddables.
+
+If you are a customer of Embeddables that you would typically have a single Group in our system.
+
+Groups can contain multiple [Projects](#project).
+
+---
+
 #### JSON-Only Feature
 
 These are new features in the Builder, which are available for use but don't yet have
@@ -46,6 +56,18 @@ buttons/inputs in the Builder cards to be able to add/modify them.
 
 **Advanced users only:** If you want to use these features in the meantime, you can
 edit the JSON of the component/page/embeddable to add/update the feature manually.
+
+---
+
+#### Project
+
+Each project is a collection of embeddables, to help you organize them into different... well, projects!
+
+Your various Projects are all associated with your [Group](#group).
+
+If an [End-User](#end-user) who visits multiple embeddables that are all within the same Project, they will have multiple Entries grouped within a single Contact.
+
+On the other hand, if an End User visits multiple embeddables that span several Projects (even if they are in the same Group), this will create multiple Contacts.
 
 ---
 

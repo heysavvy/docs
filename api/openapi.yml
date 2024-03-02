@@ -1,0 +1,404 @@
+openapi: 3.0.1
+info:
+  title: api
+  version: ""
+paths:
+  /embeddables/{id}:
+    get:
+      description: Retrieve an embeddable from the database based on the ID
+      operationId: embeddables_getEmbeddable
+      tags:
+        - Embeddables
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/EmbeddableId"
+          examples:
+            Example1:
+              value: flow_myexampleembeddable
+            Example2:
+              value: flow_doesnotexist
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Embeddable"
+              examples:
+                Example1:
+                  value:
+                    id: flow_myexampleembeddable
+                    title: My Example Embeddable
+                    json_string_prod: '{ "pages": [] }'
+        "404":
+          description: ""
+  /embeddables/{id}/versions/{versionNumber}:
+    get:
+      description: >-
+        Retrieve a specific version of an embeddable from the database based on
+        the ID
+      operationId: embeddables_getEmbeddableVersion
+      tags:
+        - Embeddables
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/EmbeddableId"
+          examples:
+            Example1:
+              value: flow_myexampleembeddable
+            Example2:
+              value: flow_doesnotexist
+            Example3:
+              value: flow_myexampleembeddable
+        - name: versionNumber
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/EmbeddableVersionNumber"
+          examples:
+            Example1:
+              value: 1
+            Example2:
+              value: 1
+            Example3:
+              value: 100
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmbeddableVersion"
+              examples:
+                Example1:
+                  value:
+                    id: flow_myexampleembeddable
+                    version_number: 1
+                    json_string: '{ "pages": [] }'
+        "404":
+          description: ""
+        "405":
+          description: ""
+  /projects/{projectId}/entries:
+    get:
+      description: Retrieve all entries from the database
+      operationId: entries_getEntries
+      tags:
+        - Entries
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_myexampleproject
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            nullable: true
+        - name: updatedAfter
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/DateTime"
+            nullable: true
+        - name: updatedBefore
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/DateTime"
+            nullable: true
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rk_myexampleapikey
+            Example2:
+              value: rk_incorrectkey
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Entry"
+              examples:
+                Example1:
+                  value:
+                    - id: entry_myexampleentry_1
+                      group_id: group_myexamplegroup
+                      project_id: pr_myexampleproject
+                      flow_id: flow_myexampleflow
+                      contact_id: contact_myexamplecontact_1
+                      last_updated: "2022-01-01T00:00:00Z"
+                      entry_data: '{ "email": "ada@lovelace.com" }'
+                    - id: entry_myexampleentry_2
+                      group_id: group_myexamplegroup
+                      project_id: pr_myexampleproject
+                      flow_id: flow_myexampleflow
+                      contact_id: contact_myexamplecontact_2
+                      last_updated: "2022-01-01T00:00:00Z"
+                      entry_data: '{ "email": "grace@hopper.com" }'
+                    - id: entry_myexampleentry_3
+                      group_id: group_myexamplegroup
+                      project_id: pr_myexampleproject
+                      flow_id: flow_myexampleflow
+                      contact_id: contact_myexamplecontact_3
+                      last_updated: "2022-01-01T00:00:00Z"
+                      entry_data: '{ "email": "alan@turing.com" }'
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorBody"
+              examples:
+                Example1:
+                  value:
+                    error:
+                      code: unauthorized
+                      message: >-
+                        You are not authorized to access this project with the
+                        API key provided.
+                    projectId: pr_myexampleproject
+  /projects/{projectId}/entries/{entryId}:
+    get:
+      description: Retrieve an entry from the database based on the ID
+      operationId: entries_getEntry
+      tags:
+        - Entries
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_myexampleproject
+            Example3:
+              value: pr_myexampleproject
+        - name: entryId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/EntryId"
+          examples:
+            Example1:
+              value: entry_myexampleentry
+            Example2:
+              value: entry_doesnotexist
+            Example3:
+              value: entry_doesnotexist
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rk_myexampleapikey
+            Example2:
+              value: rk_incorrectkey
+            Example3:
+              value: rk_myexampleapikey
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Entry"
+              examples:
+                Example1:
+                  value:
+                    id: entry_myexampleentry
+                    group_id: group_myexamplegroup
+                    project_id: pr_myexampleproject
+                    flow_id: flow_myexampleflow
+                    contact_id: contact_myexamplecontact
+                    last_updated: "2022-01-01T00:00:00Z"
+                    entry_data: '{ "email": "ada@lovelace.com" }'
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorBody"
+              examples:
+                Example1:
+                  value:
+                    error:
+                      code: unauthorized
+                      message: >-
+                        You are not authorized to access this project with the
+                        API key provided.
+                    projectId: pr_myexampleproject
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EntryNotFoundErrorBody"
+              examples:
+                Example1:
+                  value:
+                    error:
+                      code: entry_not_found
+                      message: >-
+                        The entry with the specified ID does not exist or you
+                        don't have permission to access it.
+                    entryId: entry_doesnotexist
+components:
+  schemas:
+    EmbeddableId:
+      title: EmbeddableId
+      type: string
+      description: The unique identifier for a Embeddable in the database
+    EmbeddableVersionNumber:
+      title: EmbeddableVersionNumber
+      type: integer
+      description: The version number of an embeddable
+    JsonString:
+      title: JsonString
+      type: string
+      description: The JSON representation of the embeddable, stringified
+    Embeddable:
+      title: Embeddable
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/EmbeddableId"
+        title:
+          type: string
+          example: My Example Embeddable
+        json_string_prod:
+          $ref: "#/components/schemas/JsonString"
+      required:
+        - id
+        - title
+        - json_string_prod
+    EmbeddableVersion:
+      title: EmbeddableVersion
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/EmbeddableId"
+        version_number:
+          $ref: "#/components/schemas/EmbeddableVersionNumber"
+        json_string:
+          $ref: "#/components/schemas/JsonString"
+      required:
+        - id
+        - version_number
+        - json_string
+    EntryId:
+      title: EntryId
+      type: string
+      description: The unique identifier for an Entry in the database
+    GroupId:
+      title: GroupId
+      type: string
+      description: The unique identifier for a Group in the database
+    ProjectId:
+      title: ProjectId
+      type: string
+      description: The unique identifier for a Project in the database
+    FlowId:
+      title: FlowId
+      type: string
+      description: The unique identifier for a Flow in the database
+    ContactId:
+      title: ContactId
+      type: string
+      description: The unique identifier for a Contact in the database
+    DateTime:
+      title: DateTime
+      type: string
+      description: A Date + Time string in ISO format
+    EntryData:
+      title: EntryData
+      type: string
+      description: The entry's user data, stringified
+    Entry:
+      title: Entry
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/EntryId"
+        group_id:
+          $ref: "#/components/schemas/GroupId"
+        project_id:
+          $ref: "#/components/schemas/ProjectId"
+        flow_id:
+          $ref: "#/components/schemas/FlowId"
+        contact_id:
+          $ref: "#/components/schemas/ContactId"
+        last_updated:
+          $ref: "#/components/schemas/DateTime"
+        entry_data:
+          $ref: "#/components/schemas/EntryData"
+      required:
+        - id
+        - group_id
+        - project_id
+        - flow_id
+        - contact_id
+        - last_updated
+        - entry_data
+    ErrorBody:
+      title: ErrorBody
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+    UnauthorizedErrorBody:
+      title: UnauthorizedErrorBody
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/ErrorBody"
+        projectId:
+          $ref: "#/components/schemas/ProjectId"
+      required:
+        - error
+        - projectId
+    EntryNotFoundErrorBody:
+      title: EntryNotFoundErrorBody
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/ErrorBody"
+        entryId:
+          $ref: "#/components/schemas/EntryId"
+      required:
+        - error
+        - entryId
+  securitySchemes: {}
+servers:
+  - url: https://api.embeddables.com
+    description: Production
