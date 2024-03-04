@@ -15,7 +15,6 @@
       "to": "#7165ee"
     }
   },
-  "openapi": ["/api/openapi.yml"],
   "topbarLinks": [
     {
       "name": "Embeddables.com",
@@ -48,7 +47,7 @@
     },
     {
       "name": "API",
-      "url": "api"
+      "url": "api-reference"
     },
     {
       "name": "Reference",
@@ -152,11 +151,11 @@
     },
     {
       "group": "API Documentation",
-      "pages": ["api/introduction"]
+      "pages": ["api-reference/introduction"]
     },
     {
       "group": "Entries",
-      "pages": ["api/entries/get-entries"]
+      "pages": ["api-reference/entries/get-entries"]
     }
   ],
   "footerSocials": {
