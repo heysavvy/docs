@@ -15,6 +15,7 @@
       "to": "#7165ee"
     }
   },
+  "openapi": ["/openapi.yml"],
   "topbarLinks": [
     {
       "name": "Embeddables.com",
