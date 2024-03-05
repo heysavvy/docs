@@ -155,6 +155,10 @@
       "pages": ["api-reference/introduction"]
     },
     {
+      "group": "Embeddables",
+      "pages": ["api-reference/embeddables/get-embeddable"]
+    },
+    {
       "group": "Entries",
       "pages": ["api-reference/entries/get-entries"]
     }

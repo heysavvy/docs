@@ -3,14 +3,24 @@ info:
   title: api
   version: ""
 paths:
-  /embeddables/{id}:
+  /projects/{projectId}/embeddables/{embeddableId}:
     get:
       description: Retrieve an embeddable from the database based on the ID
       operationId: embeddables_getEmbeddable
       tags:
         - Embeddables
       parameters:
-        - name: id
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_myexampleproject
+        - name: embeddableId
           in: path
           required: true
           schema:
@@ -35,7 +45,7 @@ paths:
                     json_string_prod: '{ "pages": [] }'
         "404":
           description: ""
-  /embeddables/{id}/versions/{versionNumber}:
+  /projects/{projectId}/embeddables/{embeddableId}/versions/{versionNumber}:
     get:
       description: >-
         Retrieve a specific version of an embeddable from the database based on
@@ -44,7 +54,19 @@ paths:
       tags:
         - Embeddables
       parameters:
-        - name: id
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_myexampleproject
+            Example3:
+              value: pr_myexampleproject
+        - name: embeddableId
           in: path
           required: true
           schema:
@@ -280,6 +302,37 @@ paths:
                         The entry with the specified ID does not exist or you
                         don't have permission to access it.
                     entryId: entry_doesnotexist
+  /projects/{projectId}:
+    get:
+      description: Retrieve a project from the database based on the ID
+      operationId: projects_getProject
+      tags:
+        - Projects
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_doesnotexist
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+              examples:
+                Example1:
+                  value:
+                    id: pr_myexampleproject
+                    title: My Example Project
+        "404":
+          description: ""
 components:
   schemas:
     EmbeddableId:
@@ -342,10 +395,6 @@ components:
       title: DateTime
       type: string
       description: A Date + Time string in ISO format
-    ProjectId:
-      title: ProjectId
-      type: string
-      description: The unique identifier for a Project in the database
     EntryId:
       title: EntryId
       type: string
@@ -425,6 +474,22 @@ components:
       required:
         - error
         - entryId
+    ProjectId:
+      title: ProjectId
+      type: string
+      description: The unique identifier for a Project in the database
+    Project:
+      title: Project
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/ProjectId"
+        title:
+          type: string
+          example: My Example Project
+      required:
+        - id
+        - title
   securitySchemes: {}
 servers:
   - url: https://api.embeddables.com
