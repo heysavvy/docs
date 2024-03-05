@@ -156,7 +156,10 @@
     },
     {
       "group": "Embeddables",
-      "pages": ["api-reference/embeddables/get-embeddable"]
+      "pages": [
+        "api-reference/embeddables/get-embeddables",
+        "api-reference/embeddables/get-embeddable"
+      ]
     },
     {
       "group": "Entries",

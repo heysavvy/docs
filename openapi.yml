@@ -3,6 +3,62 @@ info:
   title: api
   version: ""
 paths:
+  /projects/{projectId}/embeddables:
+    get:
+      description: Retrieve all embeddables in this project
+      operationId: embeddables_getEmbeddables
+      tags:
+        - Embeddables
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_doesnotexist
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rk_myexampleapikey
+            Example2:
+              value: rk_myexampleapikey
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Embeddable"
+              examples:
+                Example1:
+                  value:
+                    - id: flow_myexampleembeddable_1
+                      title: My Example Embeddable 1
+                      group_id: flow_myexamplegroup
+                      project_id: pr_myexampleproject
+                      json_string_prod: '{ "pages": [] }'
+                    - id: flow_myexampleembeddable_2
+                      title: My Example Embeddable 2
+                      group_id: flow_myexamplegroup
+                      project_id: pr_myexampleproject
+                      json_string_prod: '{ "pages": [] }'
+                    - id: flow_myexampleembeddable_3
+                      title: My Example Embeddable 3
+                      group_id: flow_myexamplegroup
+                      project_id: pr_myexampleproject
+                      json_string_prod: '{ "pages": [] }'
+        "404":
+          description: ""
   /projects/{projectId}/embeddables/{embeddableId}:
     get:
       description: Retrieve an embeddable from the database based on the ID
@@ -30,6 +86,16 @@ paths:
               value: flow_myexampleembeddable
             Example2:
               value: flow_doesnotexist
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rk_myexampleapikey
+            Example2:
+              value: rk_myexampleapikey
       responses:
         "200":
           description: ""
@@ -42,6 +108,8 @@ paths:
                   value:
                     id: flow_myexampleembeddable
                     title: My Example Embeddable
+                    group_id: flow_myexamplegroup
+                    project_id: pr_myexampleproject
                     json_string_prod: '{ "pages": [] }'
         "404":
           description: ""
@@ -90,6 +158,18 @@ paths:
               value: 1
             Example3:
               value: 100
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rk_myexampleapikey
+            Example2:
+              value: rk_myexampleapikey
+            Example3:
+              value: rk_myexampleapikey
       responses:
         "200":
           description: ""
@@ -356,11 +436,19 @@ components:
         title:
           type: string
           example: My Example Embeddable
+        group_id:
+          type: string
+          example: flow_myexamplegroup
+        project_id:
+          type: string
+          example: pr_myexampleproject
         json_string_prod:
           $ref: "#/components/schemas/JsonString"
       required:
         - id
         - title
+        - group_id
+        - project_id
         - json_string_prod
     EmbeddableVersion:
       title: EmbeddableVersion
