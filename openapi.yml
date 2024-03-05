@@ -108,13 +108,25 @@ paths:
           schema:
             type: integer
             nullable: true
-        - name: updatedAfter
+        - name: sort
+          in: query
+          required: false
+          schema:
+            type: string
+            nullable: true
+        - name: direction
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+            nullable: true
+        - name: updated_after
           in: query
           required: false
           schema:
             $ref: "#/components/schemas/DateTime"
             nullable: true
-        - name: updatedBefore
+        - name: updated_before
           in: query
           required: false
           schema:
@@ -311,6 +323,20 @@ components:
         - id
         - version_number
         - json_string
+    Direction:
+      title: Direction
+      type: string
+      enum:
+        - ASC
+        - DESC
+    DateTime:
+      title: DateTime
+      type: string
+      description: A Date + Time string in ISO format
+    ProjectId:
+      title: ProjectId
+      type: string
+      description: The unique identifier for a Project in the database
     EntryId:
       title: EntryId
       type: string
@@ -319,10 +345,6 @@ components:
       title: GroupId
       type: string
       description: The unique identifier for a Group in the database
-    ProjectId:
-      title: ProjectId
-      type: string
-      description: The unique identifier for a Project in the database
     FlowId:
       title: FlowId
       type: string
@@ -331,10 +353,6 @@ components:
       title: ContactId
       type: string
       description: The unique identifier for a Contact in the database
-    DateTime:
-      title: DateTime
-      type: string
-      description: A Date + Time string in ISO format
     EntryData:
       title: EntryData
       type: string
