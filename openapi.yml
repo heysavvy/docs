@@ -106,13 +106,13 @@ paths:
           in: query
           required: false
           schema:
-            type: integer
+            $ref: "#/components/schemas/Limit"
             nullable: true
         - name: sort
           in: query
           required: false
           schema:
-            type: string
+            $ref: "#/components/schemas/Sort"
             nullable: true
         - name: direction
           in: query
@@ -323,12 +323,21 @@ components:
         - id
         - version_number
         - json_string
+    Limit:
+      title: Limit
+      type: integer
+      description: The number of entries to return (defaults to 10).
+    Sort:
+      title: Sort
+      type: string
+      description: the key that you want to sort by (defaults to last_updated)
     Direction:
       title: Direction
       type: string
       enum:
         - ASC
         - DESC
+      description: The direction to sort by (defaults to DESC)
     DateTime:
       title: DateTime
       type: string
