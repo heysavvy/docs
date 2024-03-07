@@ -165,7 +165,10 @@
     },
     {
       "group": "Entries",
-      "pages": ["api-reference/entries/get-entries"]
+      "pages": [
+        "api-reference/entries/get-entries",
+        "api-reference/entries/get-entry-events"
+      ]
     }
   ],
   "footerSocials": {
