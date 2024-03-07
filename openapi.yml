@@ -42,15 +42,15 @@ paths:
               examples:
                 Example1:
                   value:
-                    - id: flow_myexampleembeddable_1
+                    - embeddable_id: flow_myexampleembeddable_1
                       title: My Example Embeddable 1
                       group_id: flow_myexamplegroup
                       project_id: pr_myexampleproject
-                    - id: flow_myexampleembeddable_2
+                    - embeddable_id: flow_myexampleembeddable_2
                       title: My Example Embeddable 2
                       group_id: flow_myexamplegroup
                       project_id: pr_myexampleproject
-                    - id: flow_myexampleembeddable_3
+                    - embeddable_id: flow_myexampleembeddable_3
                       title: My Example Embeddable 3
                       group_id: flow_myexamplegroup
                       project_id: pr_myexampleproject
@@ -103,7 +103,7 @@ paths:
               examples:
                 Example1:
                   value:
-                    id: flow_myexampleembeddable
+                    embeddable_id: flow_myexampleembeddable
                     title: My Example Embeddable
                     group_id: flow_myexamplegroup
                     project_id: pr_myexampleproject
@@ -122,11 +122,98 @@ paths:
                       message: The embeddable does not exist
                     projectId: pr_myexampleproject
                     embeddableId: flow_doesnotexist
+  /projects/{projectId}/embeddables/{embeddableId}/versions:
+    get:
+      description: Retrieve all versions of an embeddable from the database based on the ID
+      operationId: embeddables_getEmbeddableVersions
+      tags:
+        - Embeddables
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_myexampleproject
+        - name: embeddableId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/EmbeddableId"
+          examples:
+            Example1:
+              value: flow_myexampleembeddable
+            Example2:
+              value: flow_doesnotexist
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Limit"
+            nullable: true
+          examples:
+            Example1:
+              value: 100
+        - name: direction
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+            nullable: true
+          examples:
+            Example1:
+              value: DESC
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rk_myexampleapikey
+            Example2:
+              value: rk_myexampleapikey
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EmbeddableVersion"
+              examples:
+                Example1:
+                  value:
+                    - embeddable_id: flow_myexampleembeddable
+                      version_number: 1
+                    - embeddable_id: flow_myexampleembeddable
+                      version_number: 2
+                    - embeddable_id: flow_myexampleembeddable
+                      version_number: 3
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmbeddableDoesNotExistErrorBody"
+              examples:
+                Example1:
+                  value:
+                    error:
+                      code: embeddable_does_not_exist
+                      message: The embeddable does not exist
+                    projectId: pr_myexampleproject
+                    embeddableId: flow_doesnotexist
   /projects/{projectId}/embeddables/{embeddableId}/versions/{versionNumber}:
     get:
       description: >-
         Retrieve a specific version of an embeddable from the database based on
-        the ID
+        the ID and version number
       operationId: embeddables_getEmbeddableVersion
       tags:
         - Embeddables
@@ -185,11 +272,11 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EmbeddableVersion"
+                $ref: "#/components/schemas/EmbeddableVersionWithJson"
               examples:
                 Example1:
                   value:
-                    id: flow_myexampleembeddable
+                    embeddable_id: flow_myexampleembeddable
                     version_number: 123
                     json_string: '{ "pages": [] }'
         "404":
@@ -290,21 +377,21 @@ paths:
               examples:
                 Example1:
                   value:
-                    - id: entry_myexampleentry_1
+                    - entry_id: entry_myexampleentry_1
                       group_id: group_myexamplegroup
                       project_id: pr_myexampleproject
                       flow_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_1
                       last_updated: "2022-01-01T00:00:00Z"
                       entry_data: '{ "email": "ada@lovelace.com" }'
-                    - id: entry_myexampleentry_2
+                    - entry_id: entry_myexampleentry_2
                       group_id: group_myexamplegroup
                       project_id: pr_myexampleproject
                       flow_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_2
                       last_updated: "2022-01-01T00:00:00Z"
                       entry_data: '{ "email": "grace@hopper.com" }'
-                    - id: entry_myexampleentry_3
+                    - entry_id: entry_myexampleentry_3
                       group_id: group_myexamplegroup
                       project_id: pr_myexampleproject
                       flow_id: flow_myexampleflow
@@ -379,7 +466,7 @@ paths:
               examples:
                 Example1:
                   value:
-                    id: entry_myexampleentry
+                    entry_id: entry_myexampleentry
                     group_id: group_myexamplegroup
                     project_id: pr_myexampleproject
                     flow_id: flow_myexampleflow
@@ -465,7 +552,7 @@ components:
       title: Embeddable
       type: object
       properties:
-        id:
+        embeddable_id:
           $ref: "#/components/schemas/EmbeddableId"
         title:
           type: string
@@ -474,7 +561,7 @@ components:
         project_id:
           type: string
       required:
-        - id
+        - embeddable_id
         - title
         - group_id
         - project_id
@@ -492,16 +579,23 @@ components:
       title: EmbeddableVersion
       type: object
       properties:
-        id:
+        embeddable_id:
           $ref: "#/components/schemas/EmbeddableId"
         version_number:
           $ref: "#/components/schemas/EmbeddableVersionNumber"
+      required:
+        - embeddable_id
+        - version_number
+    EmbeddableVersionWithJson:
+      title: EmbeddableVersionWithJson
+      type: object
+      properties:
         json_string:
           $ref: "#/components/schemas/JsonString"
       required:
-        - id
-        - version_number
         - json_string
+      allOf:
+        - $ref: "#/components/schemas/EmbeddableVersion"
     EmbeddableDoesNotExistErrorBody:
       title: EmbeddableDoesNotExistErrorBody
       type: object
@@ -533,25 +627,6 @@ components:
         - projectId
         - embeddableId
         - versionNumber
-    Limit:
-      title: Limit
-      type: integer
-      description: The number of entries to return (defaults to 10).
-    Sort:
-      title: Sort
-      type: string
-      description: the key that you want to sort by (defaults to last_updated)
-    Direction:
-      title: Direction
-      type: string
-      enum:
-        - ASC
-        - DESC
-      description: The direction to sort by (defaults to DESC)
-    DateTime:
-      title: DateTime
-      type: string
-      description: A Date + Time string in ISO format
     EntryId:
       title: EntryId
       type: string
@@ -576,7 +651,7 @@ components:
       title: Entry
       type: object
       properties:
-        id:
+        entry_id:
           $ref: "#/components/schemas/EntryId"
         group_id:
           $ref: "#/components/schemas/GroupId"
@@ -591,7 +666,7 @@ components:
         entry_data:
           $ref: "#/components/schemas/EntryData"
       required:
-        - id
+        - entry_id
         - group_id
         - project_id
         - flow_id
@@ -631,6 +706,25 @@ components:
       required:
         - code
         - message
+    Limit:
+      title: Limit
+      type: integer
+      description: The number of entries to return (defaults to 10).
+    Sort:
+      title: Sort
+      type: string
+      description: the key that you want to sort by (defaults to last_updated)
+    Direction:
+      title: Direction
+      type: string
+      enum:
+        - ASC
+        - DESC
+      description: The direction to sort by (defaults to DESC)
+    DateTime:
+      title: DateTime
+      type: string
+      description: A Date + Time string in ISO format
     ProjectId:
       title: ProjectId
       type: string

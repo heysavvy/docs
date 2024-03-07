@@ -159,6 +159,7 @@
       "pages": [
         "api-reference/embeddables/get-embeddables",
         "api-reference/embeddables/get-embeddable",
+        "api-reference/embeddables/get-embeddable-versions",
         "api-reference/embeddables/get-embeddable-version"
       ]
     },
