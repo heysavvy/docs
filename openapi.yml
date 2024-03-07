@@ -46,17 +46,14 @@ paths:
                       title: My Example Embeddable 1
                       group_id: flow_myexamplegroup
                       project_id: pr_myexampleproject
-                      json_string_prod: '{ "pages": [] }'
                     - id: flow_myexampleembeddable_2
                       title: My Example Embeddable 2
                       group_id: flow_myexamplegroup
                       project_id: pr_myexampleproject
-                      json_string_prod: '{ "pages": [] }'
                     - id: flow_myexampleembeddable_3
                       title: My Example Embeddable 3
                       group_id: flow_myexamplegroup
                       project_id: pr_myexampleproject
-                      json_string_prod: '{ "pages": [] }'
         "404":
           description: ""
   /projects/{projectId}/embeddables/{embeddableId}:
@@ -102,7 +99,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Embeddable"
+                $ref: "#/components/schemas/EmbeddableWithJson"
               examples:
                 Example1:
                   value:
@@ -113,6 +110,18 @@ paths:
                     json_string_prod: '{ "pages": [] }'
         "404":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmbeddableDoesNotExistErrorBody"
+              examples:
+                Example1:
+                  value:
+                    error:
+                      code: embeddable_does_not_exist
+                      message: The embeddable does not exist
+                    projectId: pr_myexampleproject
+                    embeddableId: flow_doesnotexist
   /projects/{projectId}/embeddables/{embeddableId}/versions/{versionNumber}:
     get:
       description: >-
@@ -153,11 +162,11 @@ paths:
             $ref: "#/components/schemas/EmbeddableVersionNumber"
           examples:
             Example1:
-              value: 1
+              value: 123
             Example2:
-              value: 1
+              value: 123
             Example3:
-              value: 100
+              value: 123456789
         - name: X-Api-Key
           in: header
           required: true
@@ -181,12 +190,37 @@ paths:
                 Example1:
                   value:
                     id: flow_myexampleembeddable
-                    version_number: 1
+                    version_number: 123
                     json_string: '{ "pages": [] }'
         "404":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmbeddableDoesNotExistErrorBody"
+              examples:
+                Example1:
+                  value:
+                    error:
+                      code: embeddable_does_not_exist
+                      message: The embeddable does not exist
+                    projectId: pr_myexampleproject
+                    embeddableId: flow_doesnotexist
         "405":
           description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmbeddableVersionDoesNotExistErrorBody"
+              examples:
+                Example1:
+                  value:
+                    error:
+                      code: embeddable_version_does_not_exist
+                      message: The embeddable version does not exist
+                    projectId: pr_myexampleproject
+                    embeddableId: flow_myexampleembeddable
+                    versionNumber: 123456789
   /projects/{projectId}/entries:
     get:
       description: Retrieve all entries from the database
@@ -435,21 +469,25 @@ components:
           $ref: "#/components/schemas/EmbeddableId"
         title:
           type: string
-          example: My Example Embeddable
         group_id:
           type: string
-          example: flow_myexamplegroup
         project_id:
           type: string
-          example: pr_myexampleproject
-        json_string_prod:
-          $ref: "#/components/schemas/JsonString"
       required:
         - id
         - title
         - group_id
         - project_id
+    EmbeddableWithJson:
+      title: EmbeddableWithJson
+      type: object
+      properties:
+        json_string_prod:
+          $ref: "#/components/schemas/JsonString"
+      required:
         - json_string_prod
+      allOf:
+        - $ref: "#/components/schemas/Embeddable"
     EmbeddableVersion:
       title: EmbeddableVersion
       type: object
@@ -464,6 +502,37 @@ components:
         - id
         - version_number
         - json_string
+    EmbeddableDoesNotExistErrorBody:
+      title: EmbeddableDoesNotExistErrorBody
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/ErrorBody"
+        projectId:
+          $ref: "#/components/schemas/ProjectId"
+        embeddableId:
+          $ref: "#/components/schemas/EmbeddableId"
+      required:
+        - error
+        - projectId
+        - embeddableId
+    EmbeddableVersionDoesNotExistErrorBody:
+      title: EmbeddableVersionDoesNotExistErrorBody
+      type: object
+      properties:
+        error:
+          $ref: "#/components/schemas/ErrorBody"
+        projectId:
+          $ref: "#/components/schemas/ProjectId"
+        embeddableId:
+          $ref: "#/components/schemas/EmbeddableId"
+        versionNumber:
+          $ref: "#/components/schemas/EmbeddableVersionNumber"
+      required:
+        - error
+        - projectId
+        - embeddableId
+        - versionNumber
     Limit:
       title: Limit
       type: integer
@@ -529,17 +598,6 @@ components:
         - contact_id
         - last_updated
         - entry_data
-    ErrorBody:
-      title: ErrorBody
-      type: object
-      properties:
-        code:
-          type: string
-        message:
-          type: string
-      required:
-        - code
-        - message
     UnauthorizedErrorBody:
       title: UnauthorizedErrorBody
       type: object
@@ -562,6 +620,17 @@ components:
       required:
         - error
         - entryId
+    ErrorBody:
+      title: ErrorBody
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
     ProjectId:
       title: ProjectId
       type: string
