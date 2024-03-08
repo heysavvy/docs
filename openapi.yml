@@ -203,10 +203,13 @@ paths:
                   value:
                     - embeddable_id: flow_myexampleembeddable
                       version_number: 1
+                      saved_at: "2022-01-01T00:00:00Z"
                     - embeddable_id: flow_myexampleembeddable
                       version_number: 2
+                      saved_at: "2022-01-02T00:00:00Z"
                     - embeddable_id: flow_myexampleembeddable
                       version_number: 3
+                      saved_at: "2022-01-03T00:00:00Z"
         "401":
           description: ""
           content:
@@ -296,6 +299,7 @@ paths:
                   value:
                     embeddable_id: flow_myexampleembeddable
                     version_number: 123
+                    saved_at: "2022-01-01T00:00:00Z"
                     json_string: '{ "pages": [] }'
         "401":
           description: ""
@@ -736,9 +740,12 @@ components:
           $ref: "#/components/schemas/EmbeddableId"
         version_number:
           $ref: "#/components/schemas/EmbeddableVersionNumber"
+        saved_at:
+          $ref: "#/components/schemas/DateTime"
       required:
         - embeddable_id
         - version_number
+        - saved_at
     EmbeddableVersionWithJson:
       title: EmbeddableVersionWithJson
       type: object
