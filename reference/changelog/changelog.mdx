@@ -4,6 +4,76 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+## February 23rd 2024
+
+- **🔥 Features and Updates:**
+
+  - 🏃🏼 **Saving your embeddable is now 40% faster.** We know watching Embeddablob is fun but waiting to get something saved took a little too long. This update improved that speed.
+  - ♿️ **Accessibility controls** for Embeddables launched in Alpha. You can now navigate through the embeddable using the ‘tab’ button to move between components and the ‘Enter’ key to move to the next page. To get access reach out to the team and we’ll enable it.
+
+- **⚡️ Improvements:**
+  - The ‘Buttons’ tab in the ‘Options’ card was too hard to access so it’s been brought forward and is now available without scrolling.
+  - You can now access the Custom HTML Editor in a full screen experience rather than a tiny little window. It’s like the IMAX of code editors now.
+  - You can now specify the maximum selection in a multi-select button e.g. up to 3 responses. This should have been added sooner but it’s finally off the backlog.
+  - Deleting is scary but occasionally you make a mistake. We’ve made it easier to delete an Option Button without clicking 4 times.
+  - We increased the accuracy of click submissions across a wider range of browser types so you can trust your funnel charts even more.
+  - You can now filter to the highest page a user reached. Perfect for seeing which users got to say the email page but no further in live session replay and their submission data.
+  - You can now see the number of events a user had in the users table. Great for seeing at a glance if they did a little or a lot in your embeddable.
+- **🐞 Bug fixes:**
+  - Occasionally discarding changes could cause the page to temporarily appear blank. That scared you (and us) and won’t happen any longer.
+  - Archived Embeddables sometimes remained archived even when you clicked ‘Un-Archive’. We had a word with the archives and now they’re back to behaving themselves. Sorry about that.
+  - API Fix for User Submissions. Occasionally the query slug would be slow but it’s now faster.
+
+---
+
+## March 6th 2024
+
+- **🔥 Features and Updates:**
+
+  - 👥 **We re-built the filter component** as it was a little clunky and unreliable. It’s now simpler (we think) and more reliable.
+  - 🪄 You can now experiment with **hiding/showing components within a test**. Unsure if the social proof container increases click throughs? Now you can test just showing/hiding it without duplicating the entire page and running an A/B split on the page.
+  - 📞 You can now **specify formatting for US phone number inputs** including the visual display and what formats are accepted by validation. We’re looking at you, "+1".
+
+- **⚡️ Improvements:**
+  - The key names on the layers tab sometimes get a little long. Now they have tooltips for when they do.
+  - Scrolling within the UI of the builder felt a little off. We’ve made some design changes to the scroll design and action to make it feel more complete.
+  - You can now duplicate an existing Computed Field. Apparently that didn’t exist and this product manager is finding out for the first time.
+- **🐞 Bug fixes:**
+  - Occasionally the ‘Today’ filter wouldn’t apply and you’d be stuck sitting wondering what was going on. That’s now back to being its useful self.
+  - On the Options card it randomly scrolled you when you selected a tab. That’s now behaving itself.
+  - Updating the key of a computed field (or add a new one) it doesn’t overwrite the name of the input or trigger keys.
+  - Split testing requires snake_case and occasionally you could set the key without it being snake_case and the test would fail to run. That’s now fixed.
+  - The layers card now stays in place and doesn’t jump around the screen every time you open it.
+
+---
+
+## March 8th 2024
+
+- **🐞 Bug fixes:**
+  - The rich text component would periodically decide to become 500px tall whilst you were editing inside of it in the builder. It’s now no longer doing that party trick.
+  - Updating the key name in the options card sometimes caused an alert that said ‘Undefined’. This was unhelpful and annoying and is now fixed.
+  - Charts now load more reliably and don’t go blank when you change a filter.
+  - Copy and Paste keyboard shortcuts stopped working on the Layers card. Now they’re working again.
+
+---
+
+## March 15th 2024
+
+- **🔥 Features and Updates:**
+
+  - 👨‍👩‍👧 Multi-player on Embeddables has been a little underwhelming so we’re working on it. Starting today you’ll seen an alert in the top left if someone else is working at the same time as you and your versions could result in a conflict.
+    - 👨‍👩‍👧 Logs are now in the version control card so you can see who pushed what version to prod and staging and when. No more back and forth Slack messages or scrolling through the version card for 5 minutes.
+
+- **⚡️ Improvements:**
+  - We’ve made it easier to select layers in the layer card as the hit area was a little too small for our liking.
+
+🏃🏽‍♂️ The builder and more specifically the Logic card should now feel more snappy as we found more ways to squeeze the juice out of them.
+
+- **🐞 Bug fixes:**
+  - When you typed code in the code editor and click ‘Save’ and close the card before clicking ‘Apply Changes’ your code could be lost. That’s now been improved so your code is no longer lost.
+
+---
+
 ## Friday 16 February, 2024
 
 - **🔥 Features and Updates:**
