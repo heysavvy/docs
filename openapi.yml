@@ -336,6 +336,122 @@ paths:
                     projectId: pr_myexampleproject
                     embeddableId: flow_myexampleembeddable
                     versionNumber: 123456789
+  /projects/{projectId}/entries-page-views:
+    get:
+      description: >-
+        Retrieve all pages viewed, with timestamps, for all entries in the
+        database
+      operationId: entriesPageViews_getEntriesPageViews
+      tags:
+        - EntriesPageViews
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_myexampleproject
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Limit"
+            nullable: true
+        - name: direction
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/Direction"
+            nullable: true
+        - name: updated_after
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/DateTime"
+            nullable: true
+        - name: updated_before
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/DateTime"
+            nullable: true
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rk_myexampleapikey
+            Example2:
+              value: rk_incorrectkey
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EntryPageViews"
+              examples:
+                Example1:
+                  value:
+                    - entry_id: entry_myexampleentry_1
+                      group_id: group_myexamplegroup
+                      project_id: pr_myexampleproject
+                      embeddable_id: flow_myexampleflow
+                      contact_id: contact_myexamplecontact_1
+                      created_at: "2022-01-01T00:00:00Z"
+                      updated_at: "2022-01-01T00:00:00Z"
+                      page_views:
+                        - timestamp: "2022-01-01T00:00:00Z"
+                          page_id: page_myexamplepageid1
+                          page_key: page_myexamplepagekey1
+                          page_index: 1
+                    - entry_id: entry_myexampleentry_2
+                      group_id: group_myexamplegroup
+                      project_id: pr_myexampleproject
+                      embeddable_id: flow_myexampleflow
+                      contact_id: contact_myexamplecontact_2
+                      created_at: "2022-01-01T00:00:00Z"
+                      updated_at: "2022-01-01T00:00:00Z"
+                      page_views:
+                        - timestamp: "2022-01-01T00:00:00Z"
+                          page_id: page_myexamplepageid1
+                          page_key: page_myexamplepagekey1
+                          page_index: 1
+                    - entry_id: entry_myexampleentry_3
+                      group_id: group_myexamplegroup
+                      project_id: pr_myexampleproject
+                      embeddable_id: flow_myexampleflow
+                      contact_id: contact_myexamplecontact_3
+                      created_at: "2022-01-01T00:00:00Z"
+                      updated_at: "2022-01-01T00:00:00Z"
+                      page_views:
+                        - timestamp: "2022-01-01T00:00:00Z"
+                          page_id: page_myexamplepageid1
+                          page_key: page_myexamplepagekey1
+                          page_index: 1
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorBody"
+              examples:
+                Example1:
+                  value:
+                    error:
+                      code: unauthorized
+                      message: >-
+                        You are not authorized to access this project with the
+                        API key provided.
+                    projectId: pr_myexampleproject
   /projects/{projectId}/entries:
     get:
       description: Retrieve all entries from the database
@@ -796,6 +912,54 @@ components:
         - projectId
         - embeddableId
         - versionNumber
+    EntryPageViews:
+      title: EntryPageViews
+      type: object
+      properties:
+        entry_id:
+          $ref: "#/components/schemas/EntryId"
+        contact_id:
+          $ref: "#/components/schemas/ContactId"
+        project_id:
+          $ref: "#/components/schemas/ProjectId"
+        group_id:
+          $ref: "#/components/schemas/GroupId"
+        embeddable_id:
+          $ref: "#/components/schemas/EmbeddableId"
+        created_at:
+          $ref: "#/components/schemas/DateTime"
+        updated_at:
+          $ref: "#/components/schemas/DateTime"
+        page_views:
+          type: array
+          items:
+            $ref: "#/components/schemas/EntryPageView"
+      required:
+        - entry_id
+        - contact_id
+        - project_id
+        - group_id
+        - embeddable_id
+        - created_at
+        - updated_at
+        - page_views
+    EntryPageView:
+      title: EntryPageView
+      type: object
+      properties:
+        timestamp:
+          $ref: "#/components/schemas/DateTime"
+        page_id:
+          $ref: "#/components/schemas/PageId"
+        page_key:
+          $ref: "#/components/schemas/PageKey"
+        page_index:
+          $ref: "#/components/schemas/PageIndex"
+      required:
+        - timestamp
+        - page_id
+        - page_key
+        - page_index
     EntryId:
       title: EntryId
       type: string
