@@ -168,7 +168,8 @@
       "pages": [
         "api-reference/entries/get-entries",
         "api-reference/entries/get-entries-page-views",
-        "api-reference/entries/get-entry-events"
+        "api-reference/entries/get-entry-events",
+        "api-reference/entries/get-entry"
       ]
     }
   ],
