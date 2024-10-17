@@ -845,12 +845,12 @@ paths:
               Example1:
                 value:
                   embeddable_id: flow_myexampleflow
-                  timestamp: "2022-01-01T00:00:00Z"
+                  timestamp: "2022-01-01T00:00:00.000Z"
                   custom_event_name: my_custom_event
                   custom_event_props: '{ "my_prop": "my_val" }'
                   identifiers:
                     - key: email
-                      value: test@test.com
+                      value: '"test@test.com"'
   /projects/{projectId}:
     get:
       description: Retrieve a project from the database based on the ID
@@ -1193,7 +1193,9 @@ components:
         $ref: "#/components/schemas/Identifier"
       description: >-
         A list of key-value pairs that uniquely identify the end-user that this
-        event should be attached to. Currently supports one key-value pair.
+        event should be attached to. Currently supports one key-value pair. The
+        value must be JSON-stringified, so strings must be wrapped in
+        double-quotes.
     Identifier:
       title: Identifier
       type: object
