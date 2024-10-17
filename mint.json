@@ -171,6 +171,10 @@
         "api-reference/entries/get-entry-events",
         "api-reference/entries/get-entry"
       ]
+    },
+    {
+      "group": "Events",
+      "pages": ["api-reference/events/create-event"]
     }
   ],
   "footerSocials": {

@@ -528,7 +528,6 @@ paths:
                       contact_id: contact_myexamplecontact_1
                       created_at: "2022-01-01T00:00:00Z"
                       updated_at: "2022-01-01T00:00:00Z"
-                      last_updated: "2022-01-01T00:00:00Z"
                       entry_data: '{ "email": "ada@lovelace.com" }'
                     - entry_id: entry_myexampleentry_2
                       group_id: group_myexamplegroup
@@ -537,7 +536,6 @@ paths:
                       contact_id: contact_myexamplecontact_2
                       created_at: "2022-01-01T00:00:00Z"
                       updated_at: "2022-01-01T00:00:00Z"
-                      last_updated: "2022-01-01T00:00:00Z"
                       entry_data: '{ "email": "grace@hopper.com" }'
                     - entry_id: entry_myexampleentry_3
                       group_id: group_myexamplegroup
@@ -546,7 +544,6 @@ paths:
                       contact_id: contact_myexamplecontact_3
                       created_at: "2022-01-01T00:00:00Z"
                       updated_at: "2022-01-01T00:00:00Z"
-                      last_updated: "2022-01-01T00:00:00Z"
                       entry_data: '{ "email": "alan@turing.com" }'
         "401":
           description: ""
@@ -623,7 +620,6 @@ paths:
                     contact_id: contact_myexamplecontact
                     created_at: "2022-01-01T00:00:00Z"
                     updated_at: "2022-01-01T00:00:00Z"
-                    last_updated: "2022-01-01T00:00:00Z"
                     entry_data: '{ "email": "ada@lovelace.com" }'
         "401":
           description: ""
@@ -718,7 +714,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/EntryEvent"
+                  $ref: "#/components/schemas/Event"
               examples:
                 Example1:
                   value:
@@ -784,6 +780,77 @@ paths:
                         The entry with the specified ID does not exist or you
                         don't have permission to access it.
                     entryId: entry_doesnotexist
+  /projects/{projectId}/events:
+    post:
+      description: Submit a custom event for an entry
+      operationId: events_createEvent
+      tags:
+        - Events
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+        - name: X-Api-Key
+          in: header
+          required: true
+          schema:
+            type: string
+          examples:
+            Example1:
+              value: rk_myexampleapikey
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Event"
+              examples:
+                Example1:
+                  value:
+                    group_id: group_myexamplegroup
+                    project_id: pr_myexampleproject
+                    embeddable_id: flow_myexampleflow
+                    embeddable_version_number: 1
+                    contact_id: contact_myexamplecontact
+                    entry_id: entry_myexampleentry
+                    timestamp: "2022-01-01T00:00:00Z"
+                    event_type: custom_event:triggered
+                    custom_event_name: my_custom_event
+                    custom_event_props: '{ "my_prop": "my_val" }'
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorBody"
+        "404":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EntryNotFoundErrorBody"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EntryEventRequest"
+            examples:
+              Example1:
+                value:
+                  embeddable_id: flow_myexampleflow
+                  timestamp: "2022-01-01T00:00:00Z"
+                  custom_event_name: my_custom_event
+                  custom_event_props: '{ "my_prop": "my_val" }'
+                  identifiers:
+                    - key: email
+                      value: test@test.com
   /projects/{projectId}:
     get:
       description: Retrieve a project from the database based on the ID
@@ -1008,8 +1075,6 @@ components:
           $ref: "#/components/schemas/DateTime"
         updated_at:
           $ref: "#/components/schemas/DateTime"
-        last_updated:
-          $ref: "#/components/schemas/DateTime"
         entry_data:
           $ref: "#/components/schemas/EntryData"
       required:
@@ -1020,10 +1085,9 @@ components:
         - contact_id
         - created_at
         - updated_at
-        - last_updated
         - entry_data
-    EntryEvent:
-      title: EntryEvent
+    Event:
+      title: Event
       type: object
       properties:
         entry_id:
@@ -1038,6 +1102,7 @@ components:
           $ref: "#/components/schemas/EmbeddableId"
         embeddable_version_number:
           $ref: "#/components/schemas/EmbeddableVersionNumber"
+          nullable: true
         timestamp:
           $ref: "#/components/schemas/DateTime"
         page_id:
@@ -1066,13 +1131,18 @@ components:
         view_type:
           $ref: "#/components/schemas/ViewType"
           nullable: true
+        custom_event_name:
+          type: string
+          nullable: true
+        custom_event_props:
+          type: string
+          nullable: true
       required:
         - entry_id
         - contact_id
         - project_id
         - group_id
         - embeddable_id
-        - embeddable_version_number
         - timestamp
         - event_type
     EntryNotFoundErrorBody:
@@ -1083,9 +1153,58 @@ components:
           $ref: "#/components/schemas/ErrorBody"
         entryId:
           $ref: "#/components/schemas/EntryId"
+          nullable: true
       required:
         - error
-        - entryId
+    EntryEventRequest:
+      title: EntryEventRequest
+      type: object
+      properties:
+        embeddable_id:
+          $ref: "#/components/schemas/EmbeddableId"
+        timestamp:
+          $ref: "#/components/schemas/DateTime"
+        custom_event_name:
+          $ref: "#/components/schemas/CustomEventName"
+        custom_event_props:
+          $ref: "#/components/schemas/CustomEventProps"
+        identifiers:
+          $ref: "#/components/schemas/Identifiers"
+      required:
+        - embeddable_id
+        - timestamp
+        - custom_event_name
+        - custom_event_props
+        - identifiers
+    CustomEventName:
+      title: CustomEventName
+      type: string
+      description: A name of your choosing for the custom event - must be snake_case
+    CustomEventProps:
+      title: CustomEventProps
+      type: string
+      description: >-
+        Any custom properties you want to attach to the custom event - must be a
+        valid JSON string
+    Identifiers:
+      title: Identifiers
+      type: array
+      items:
+        $ref: "#/components/schemas/Identifier"
+      description: >-
+        A list of key-value pairs that uniquely identify the end-user that this
+        event should be attached to. Currently supports one key-value pair.
+    Identifier:
+      title: Identifier
+      type: object
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+      required:
+        - key
+        - value
     ErrorBody:
       title: ErrorBody
       type: object
