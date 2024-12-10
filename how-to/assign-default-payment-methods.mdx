@@ -1,0 +1,79 @@
+---
+title: "How To: Automatically assign default payment methods to customers in Stripe"
+description: "..."
+---
+
+<Note>
+  Note: This requires a Stripe component that is set up to create{" "}
+  <strong>subscriptions</strong>
+</Note>
+
+<Tabs>
+  <Tab title="You have Workbench enabled">
+    <Steps>
+      <Step title="Create a new webhook in Stripe">
+        - Log in to your Stripe Dashboard.
+
+        - Open the Workbench.
+
+        - Navigate to the Webhooks tab.
+
+        - Click <strong>+ Add destination</strong>.
+
+      </Step>
+      <Step title="Configure your webhook settings">
+        - Make sure "Events" is set to as "Your account".
+
+        - Make sure "API version" is set to "Your current version".
+
+        - Under "Events", find the `payment_method.attached` event and select it.
+
+        - Click <strong>Continue</strong>.
+
+        - Make sure "Webhook endpoint" is selected and click <strong>Continue</strong>.
+
+      </Step>
+      <Step title="Add your endpoint and create the webhook">
+        - In "Endpoint URL", paste your endpoint URL, which you can grab by asking the Embeddables Team.
+
+        - It should have the format: `https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/webhook_stripe?group_id=<YOUR_GROUP_ID>`.
+
+        - Click <strong>Create destination</strong>.
+
+      </Step>
+    </Steps>
+
+  </Tab>
+  <Tab title="You don't have Workbench enabled">
+    <Steps>
+      <Step title="Create a new webhook in Stripe">
+        - Log in to your Stripe Dashboard.
+
+        - Go to the Developers section (bottom-left in your sidebar).
+
+        - Navigate to the Webhooks tab.
+
+        - Click <strong>+ Add endpoint</strong>.
+
+      </Step>
+      <Step title="Add your endpoint">
+        - In "Endpoint URL", paste your endpoint URL, which you can grab by asking the Embeddables Team.
+
+        - It should have the format: `https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/webhook_stripe?group_id=<YOUR_GROUP_ID>`
+
+        - Add a description of what the endpoint is for.
+
+      </Step>
+      <Step title="Configure your webhook settings">
+        - Make sure "Listen to" is set to as "Events on your account".
+
+        - Make sure "Version" is set to "Your current version".
+
+        - Click "Select events", find the `payment_method.attached` event and select it.
+
+        - Click <strong>Add endpoint</strong>
+      </Step>
+    </Steps>
+
+  </Tab>
+</Tabs>

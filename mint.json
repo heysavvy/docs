@@ -131,6 +131,10 @@
       ]
     },
     {
+      "group": "How Tos: Payments",
+      "pages": ["how-to/assign-default-payment-methods"]
+    },
+    {
       "group": "How Tos: Going Live",
       "pages": [
         "how-to/publish-to-your-site",
