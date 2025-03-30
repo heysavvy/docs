@@ -1,0 +1,25 @@
+---
+title: "How To: Add external scripts or style libraries in Embeddables"
+sidebarTitle: "How To: Add external scripts + libraries"
+description: "Two ways to add external scripts or style libraries toyour Embeddable"
+---
+
+There are two recommended methods to include external JavaScript packages in your Embeddable:
+
+1. **Direct HTML Inclusion (Recommended):** Add the script tag directly to the HTML of the page where you're embedding your Embeddable, alongside the Embeddables embed code.
+
+2. **JavaScript Action Method:** Load the package programmatically through an Action that triggers when the Embeddable loads.
+
+If you choose #2, here's sample code for inserting a `<link>` tag:
+
+```js
+function loadStylesheet(href) {
+  const link = document.createElement("link");
+  link.rel = "stylesheet";
+  link.href = href;
+  document.head.appendChild(link);
+}
+
+// Add the link tag
+loadStylesheet("<URL>");
+```
