@@ -1,0 +1,31 @@
+---
+title: "How To: Use Conditions in Embeddables"
+sidebarTitle: "How To: Use Conditions"
+description: "Hiding/showing content based on the user's answers and other logic"
+---
+
+Conditions are one of Embeddable's powerful logic features, and have a variety of use-cases.
+
+A Condition works by defining which values are acceptable for a property in User Data. If that property has those values, then the page or component is shown - if not, then it is hidden.
+
+## Showing/Hiding a component or page with Conditions
+
+<Steps>
+  <Step title="Go to the Page/Component Options">
+    - Select the page or component, in the Layers sidebar or (in the case of a component) in the central preview pane.
+    - Make sure you're on the Content tab at the top-left.
+    - Click on Options in the tabs at the top of the right-hand sidebar.
+  </Step>
+  <Step title="Add a Condition">
+    - Click the `+ Add condition` button.
+    - Choose the **key** in User Data that you want to impact whether this page/component is shown or hidden.
+    - Choose the type of **operator** for the Condition - usually this is `Is or includes`.
+    - Choose the **value** that should make this page/component be shown.
+
+    <Tip>
+      The way to think about key, operators and values in a Condition is like an equation. For example, you might want to display a some warning text to users under 18, so the condition would be `age_range = 'under_18'`. Here, `age_range` is the **key**, `Is or includes` is the **operator**, and `under_18` is the **value**.
+    </Tip>
+
+  </Step>
+
+</Steps>
