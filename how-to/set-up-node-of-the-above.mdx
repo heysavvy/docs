@@ -1,0 +1,27 @@
+---
+title: "How To: Set up a 'none of the above' option"
+description: "Add an option button that deselects all other options"
+---
+
+Many multi-select questions require a `None of the above` button.
+
+This button should behave differently from the other options - it should not only be selected when clicked, but should also deselect all other options.
+
+Fortunately, there's an easy way to add this functionality in Embeddables.
+
+<Warning>
+  This feature is not yet implemented in the Builder UI. For now, you will need
+  to add `single_select: true` to the button in the component JSON.
+</Warning>
+
+    <Steps>
+      <Step title="Select the component and open the button settings">
+        - Select the Option Selector component.
+        - Navigate to the Options sidebar.
+        - Click the <Icon icon="pencil" iconType="solid" /> Edit icon button next to the "None of the above" button.
+      </Step>
+      <Step title="Set the button to be a 'single select' option">
+        - Check the option called "Single select".
+        - This makes the button single-select only, meaning that once it's selected, all of the other buttons are deselected.
+      </Step>
+    </Steps>
