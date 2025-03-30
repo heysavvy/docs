@@ -124,6 +124,7 @@
     {
       "group": "How Tos: Logic",
       "pages": [
+        "how-to/set-up-split-test",
         "how-to/sync-pages-with-url",
         "how-to/decide-how-to-send-data",
         "how-to/pass-data-in-out",

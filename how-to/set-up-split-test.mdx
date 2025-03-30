@@ -1,0 +1,102 @@
+---
+title: "How To: Set up a Split Test in Embeddables"
+sidebarTitle: "How To: Set up a Split Test"
+description: "Creating an experiment, setting variants and modifying content"
+---
+
+Experiments are deeply intergated into the Embeddables platform. They make use of two of the core features of Embeddables: Conditions and User Data.
+
+<Card title="How Experiments work in Embeddables" icon="flask">
+  When an experiment is launched, it randomly assigns a variant to each user by setting it as a value in User Data.
+
+For example, an experiment with the key `split_hero_title_length` that has 2 variants (`control_no_change` and `variant_longer_title`) might set the following in User Data for a user:
+
+```
+split_hero_title_length: 'variant_longer_title'
+```
+
+Then, to change the experience for that user, you set up Conditions on various pages or components to hide/show them based on the current variant.
+
+For example, you could clone the title, change the length of the new title, and add a condition to each title component so that each one is only shown if its corresponding variant is active.
+
+</Card>
+
+## Setting up an Experiment
+
+<Steps>
+  <Step title="Create a new Experiment">
+    - Click on the Logic tab (top-left).
+    - Click on the Experiments tab beneath it to open the Experiments sidebar.
+    - Click `+ Add new experiment`.
+  </Step>
+  <Step title="Set the keys and variant percentages">
+    - Choose a key for the experiment. Experiment keys always start with `split_`.
+    <Tip>A good key is unique to the experiment and describes what is being tested, e.g. `split_hero_title_length`.</Tip>
+    - Choose keys for each variant.
+    <Tip>We recommend that the control key starts with `control_` (e.g. `control_no_change`) and `variant_` (e.g. `variant_longer_title` or `variant_shorter_title`).</Tip>
+    - Choose the percentage of traffic to be directed to each variant.
+  </Step>
+  <Step title="Change the content for each variant">
+    - Select the page or component that you want to modify based on this Experiment (if multiple pages/components, just repeat the tasks in this step for each one).
+    - Clone that page or component, and modify it to match what you want users in your first variant to see (e.g. change the title text to be longer).
+    - Go to the Options sidebar (the tab on the right-hand-side) and add an Experiment Condition to the page/component, matching the experiment key and the variant key that matches this content.
+    <Tip>This will likely make the current page/component disappear, since you are not currently viewing that variant.</Tip>
+    - Add a similar Experiment Condition onto the control version of your component/page.
+    <Tip>A `no_value` value will be added to the Experiment Condition on the control variant, so that it will always be shown by default.</Tip>
+    - Repeat for any other variants by cloning the page/component, changing the content, and updating the Experiment Condition.
+  </Step>
+  <Step title="Preview, test and push live for real users">
+    - You can now preview your changes by re-opening the Experiments sidebar, selecting the Experiment, and clicking the Preview (<Icon icon="eye" iconType="solid" />) icon buttons next to each variant in the sidebar on the right-hand side.
+    - Once you're happy, save your changes.
+    - You can now test it out by using the [`savvy_flow_version=latest` URL params](/features/testing-and-debugging/url-params).
+    - If you want to force a particular variant, you can add the key and value as a URL param. (Don't forget that once you're assigned a variant, you will be kept in that variant unless you clear local storage or switch browsers).
+    - To launch this experiment for real users, just push the version to Staging and then to Production.
+  </Step>
+
+</Steps>
+
+## Pausing an Experiment
+
+<Steps>
+  <Step title="Select Pause on the Experiment">
+    - You can pause an Experiment by selecting the Experiment, and in the
+    right-hand sidebar press <Icon icon="pause" iconType="solid" />
+    `Pause`.
+  </Step>
+  <Step title="Choose a default variant">
+    - Select which variant to display to users while the Experiment is
+    paused.
+  </Step>
+
+</Steps>
+
+<Tip>
+  Pausing an Experiment moves the `no_value` value to the Experiment Conditions
+  in the pages/components associated with that variant.
+  
+  This means that the Experiment and variant keys can be no longer added into the User Data, and the chosen variant will become the default for all new users.
+
+Existing users with previously assigned variants will be unaffected and will keep those variants.
+
+</Tip>
+
+## Ending an Experiment
+
+<Warning>
+  Ending an Experiment is final and can't be reversed. The only way to undo this
+  is to switch to a previous version where the Experiment was still active and
+  save from that version.
+</Warning>
+
+<Steps>
+  <Step title="Select End on the Experiment">
+    - To end an Experiment, select the Experiment, and in the
+    right-hand sidebar press <Icon icon="stop" iconType="solid" />
+    `End`.
+  </Step>
+  <Step title="Choose the winning variant">
+    - Select which variant to display to users moving forward.
+    - This will delete all pages/components associated with the other variants, and remove all Experiment Conditions relating to this Experiment.
+  </Step>
+
+</Steps>
