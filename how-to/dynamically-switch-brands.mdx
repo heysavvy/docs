@@ -1,0 +1,103 @@
+---
+title: "How To: Dynamically switch brands within an Embeddable"
+sidebarTitle: "How To: Dynamically switch branding"
+description: "Using CSS variables to reuse a single Embeddable for multiple brands"
+---
+
+The powerful logic available in Embeddables means that it often makes sense to re-use a single Embeddable for multiple brands, if the general logic and content is consistent across those brands.
+
+This doc shows you how to inject styles and content into an Embeddable from the parent page, so that its appearance can change based on the URL.
+
+## Updating the styles based on the URL
+
+<Tabs>
+  <Tab title="Method 1: Adding a <style> tag to the page">
+    This method works well if you have a different page for each brand, each with the same Embeddable embedded in it.
+
+    <Steps>
+      <Step title="Create CSS variables in a <style> tag in the parent page">
+        - On the parent page of the first brand, where you embed the Embeddable, add a `<style>` tag in
+        the HTML that looks like this, replacing the variable names and styles with what you need for your brand:
+
+```html
+<style>
+  body {
+    --font-headings: "Raleway", sans-serif;
+    --font-body: "Open Sans", sans-serif;
+    --color-primary: #e74c3d;
+    --color-secondary: #03c4eb;
+    --color-buttons-primary: #d9534f;
+  }
+</style>
+```
+
+        - Each of the lines inside the `body {}` creates a CSS variable, which can be referred to later from inside the Embeddable in the Builder.
+        - Repeat this for the other pages that will host the other brands.
+
+      </Step>
+      <Step title="Use those CSS variables in the Builder">
+      - In the Embeddables Builder, refer to those CSS variables in the Designer using the format `var(--font-headings)`.
+      - This will mean that the Embeddable will use whichever value is present for that CSS variable in the current page.
+      - To set a default value for the style property (e.g. to view it in the Builder, or as a backup for parent pages that might not have set up those styles), you can use the format `var(--my-variable-name, [DEFAULT_VALUE])`.
+        - For example: `var(--font-color, #676767)`.
+      </Step>
+    </Steps>
+
+  </Tab>
+  <Tab title="Method 2: Setting rules from the URL">
+
+  <Warning>
+  Depending on the exact load sequence, you may see the original styles flash up for a second.
+  </Warning>
+    
+    <Steps>
+      <Step title="Create an onload Action that sets the CSS variables">
+        - In the Builder, create an Action, and set up a Trigger so that it runs when the Embeddable Loads.
+        - In the Action custom code, set the CSS variables on the page based on the URL, like in this example:
+
+```js
+function output() {
+  const domain = window.location.host;
+  const styles = getStylesFromDomain(domain);
+
+  if (styles && typeof styles === "object") {
+    const root = document.documentElement;
+    Object.entries(styles).forEach(([key, value]) => {
+      root.style.setProperty(key, value);
+    });
+  }
+}
+
+function getStylesFromDomain(domain) {
+  switch (domain) {
+    case "example.com":
+      return {
+        "primary-color": "#ff5733",
+        "secondary-color": "#33ff57",
+        "font-size": "16px",
+      };
+    case "another-site.com":
+      return {
+        "primary-color": "#3366ff",
+        "secondary-color": "#ffcc00",
+        "font-size": "18px",
+      };
+    default:
+      return {};
+  }
+}
+```
+
+      </Step>
+      <Step title="Use those CSS variables in the Builder">
+      - In the Embeddables Builder, refer to those CSS variables in the Designer using the format `var(--font-headings)`.
+      - This will mean that the Embeddable will use whichever value is present for that CSS variable in the current page.
+      - To set a default value for the style property (e.g. to view it in the Builder, or as a backup for parent pages that might not have set up those styles), you can use the format `var(--my-variable-name, [DEFAULT_VALUE])`.
+        - For example: `var(--font-color, #676767)`.
+      </Step>
+    </Steps>
+
+  </Tab>
+</Tabs>
+
+<Note>Instructions on changing content based on the URL are coming soon.</Note>
