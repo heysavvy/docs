@@ -39,7 +39,7 @@
       "url": "features"
     },
     {
-      "name": "How-Tos",
+      "name": "How-To's",
       "url": "how-to"
     },
     {
@@ -122,7 +122,7 @@
       ]
     },
     {
-      "group": "How Tos: Logic",
+      "group": "How To's: Logic",
       "pages": [
         "how-to/use-conditions",
         "how-to/set-up-split-test",
@@ -133,12 +133,13 @@
       ]
     },
     {
-      "group": "How Tos: Payments",
+      "group": "How To's: Payments",
       "pages": ["how-to/assign-default-payment-methods"]
     },
     {
-      "group": "How Tos: Going Live",
+      "group": "How To's: Versions and Going Live",
       "pages": [
+        "how-to/use-version-control",
         "how-to/publish-to-your-site",
         "how-to/publish-in-react",
         "how-to/publish-in-react-native"

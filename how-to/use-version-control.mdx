@@ -1,0 +1,57 @@
+---
+title: "How To: Use Version Control"
+sidebarTitle: "How To: Use Version Control"
+description: "Maintaining high quality through version visibility"
+---
+
+Version Control is baked into everything in Embeddables. Almost everything you do in the Builder is tied to a version, which is available to be previewed in Embeddables or on your site, before pushing anything live.
+
+This serves to minimize mistakes, confusion and opaqueness around what edits are getting pushed live to users at any one time.
+
+## Unsaved edits and drafts
+
+Whenever you make any edit in the Builder (adding a page, changing text, setting up a Split Test, updating logic, etc), that edit becomes part of your unsaved edits.
+
+- These unsaved edits are only visible to you, but they are backed up as a Draft (once the `Save` button stops spinning).
+  <Note>
+    Drafts are tied to a particular version that you're editing from (usually
+    the last version to be saved).
+  </Note>
+- When you come back to the Builder later, it will ask you if you want to resume editing from your Draft, or discard it and edit from the last saved version.
+- It will ask you the same thing if you switch to a version that has unsaved edits from you attached to it.
+
+## Saving and switching versions
+
+Once you hit `Save`, in the top-right, your changes are saved to a **version**.
+
+- You can open the Version Control card and use it to switch between versions that you or other people have created, to view and test out the current state of the Embeddable at that time.
+- You can start making edits on an older version, and even save your changes if you want to - HOWEVER if you save then that will mean that the latest version now includes your changes but does **not** include changes made in the intervening versions. In other words, you have "skipped" all changes made since the version you were editing from.
+  <Note>
+    The Builder will warn you if you're about to skip/overwrite changes from
+    other versions, and will show a "From version XXX" message in the Version
+    Control card.
+  </Note>
+
+## Pushing to Staging and Production
+
+- Once you're happy with your updates, you can click the `Staging` button in the top-right to push to Staging (or do so in the Version Control Card).
+  <Note>
+    A version on Staging doesn't have any special properties, other than being a
+    useful way of marking a version for other people to look at, and the fact
+    that it can be access via the `staging` URL param (see below).
+  </Note>
+- Then, when you've run all your final checks, you can push that version to Product. To do this you must open the Version Control card, select the version, and click the `Production` button at the bottom of the card.
+
+## Previewing versions with URL params
+
+Embeddables comes with features for previewing and testing your updates before pushing them live to users, using [URL Params](/features/testing-and-debugging/url-params).
+
+- To preview a particular version, add `version=123` to the URL of any Embeddables preview link (starts with `preview.embeddables.com/...`), or `savvy_flow_version=123` to any live URL on your site that contains an Embeddable.
+- To preview the latest version (useful if you're making lots of updates), just use `version=latest` or `savvy_flow_version=latest`.
+- To preview the version currently on staging, use `version=staging` or `savvy_flow_version=staging`.
+
+<Tip>
+  For a full list of URL params that can be used with Embeddables, check out our
+  doc on [URL Params in
+  Embeddables](/features/testing-and-debugging/url-params).
+</Tip>
