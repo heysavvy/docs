@@ -1,0 +1,90 @@
+---
+title: "How To: Send data to Tellescope"
+description: "Setting up an Action with custom code that sends user data to Tellescope's API"
+---
+
+The best way to data to Tellescope is using custom code in an Action, that is Triggered when a user takes an action, such as entering their email or completing a purchase.
+
+<Steps>
+  <Step title="Create a custom code Action">
+    - Go to the Logic sidebar and click on the Actions tab.
+    - Click `+ Add New Action`.
+    - Give it a name like "Send Data to Tellescope".
+    - Hit `Add`.
+  </Step>
+  <Step title="Write your custom code">
+    - Add code similar to the example below, to construct the data object and send it to Tellescope's API.
+
+```js
+function output(userData, context) {
+  const tellescopeData = {
+    answers: [
+      {
+        key: "first_name",
+        value: userData.first_name,
+      },
+      {
+        key: "last_name",
+        value: userData.last_name,
+      },
+      {
+        key: "phone",
+        value: userData.phone,
+      },
+      {
+        key: "email",
+        value: userData.email,
+      },
+      // Add any other user data properties that you want to send to Tellescope here
+    ],
+    variant_label: "main",
+    variant_uuid: "<VARIANT_UUID>",
+    finalized: true,
+    created_at: generateFormattedDate(),
+    experiment_uuid: null,
+    flow_label: "<FLOW_LABEL>",
+  };
+  const apiKey = "<API_KEY>";
+  const formId = "<FORM_ID>";
+  const endpoint = `https://api.tellescope.com/v1/webhooks/formsort/${apiKey}?formId=${formId}`;
+
+  // Send POST request, using the Embeddables backend proxy to avoid CORS issues
+  fetch(
+    `https://proxy-secure.trysavvy.com/?url=${encodeURIComponent(endpoint)}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    }
+  );
+}
+
+function generateFormattedDate() {
+  const date = new Date();
+  const isoString = date.toISOString();
+  return isoString.replace("Z", "+00:00");
+}
+```
+
+  </Step>
+  <Step title="Add a Trigger for the relevant user event">
+    - Switch to the Triggers tab.
+    - Add a new Trigger.
+    - Choose the event that you want to trigger the Action on.
+      - For example: `WHEN Page KEY email_page IS Completed`.
+    - Select the `Send Data to Tellescope` Action.
+    - Hit `Add`.
+  </Step>
+
+</Steps>
+
+<Card
+  title="Learn more about Custom Code"
+  icon="code"
+  href="/features/custom-code"
+>
+  Read more about writing Custom Code in Embeddables, including all the
+  available arguments passed in to the function.
+</Card>

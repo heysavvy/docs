@@ -1,0 +1,127 @@
+---
+title: "How To: Send data to Klaviyo"
+description: "Setting up an Action with custom code that sends user data to Klaviyo's API"
+---
+
+The best way to data to Klaviyo is using custom code in an Action, that is Triggered when a user takes an action, such as entering their email or completing a purchase.
+
+<Steps>
+  <Step title="Create a custom code Action">
+    - Go to the Logic sidebar and click on the Actions tab.
+    - Click `+ Add New Action`.
+    - Give it a name like "Send Data to Klaviyo".
+    - Hit `Add`.
+  </Step>
+  <Step title="Write your custom code">
+    - Add code similar to the example below, to construct the data object and send it to Klaviyo's API.
+
+```js
+// All Actions should start with a function called output()
+async function output({ first_name, last_name, email }) {
+  // @TODO: Replace with your actual Klaviyo API key
+  const KLAVIYO_API_KEY = "<YOUR-KLAVIYO-API-KEY>";
+
+  // @TODO: Update to match your User Data keys, and add any additional data you want to send
+  const importProfileBody = {
+    data: {
+      type: "profile",
+      attributes: {
+        email: email || "",
+        first_name: first_name || "",
+        last_name: last_name || "",
+      },
+    },
+  };
+
+  // Constructs the fetch options object
+  const importProfileRequestOptions = {
+    method: "POST",
+    headers: {
+      accept: "application/vnd.api+json",
+      revision: "2024-10-15",
+      "content-type": "application/vnd.api+json",
+      Authorization: KLAVIYO_API_KEY
+    },
+    body: JSON.stringify(importProfileBody),
+  };
+
+  // Sets the URL to the Klaviyo API endpoint
+  const url = "https://a.klaviyo.com/api/profile-import/";
+
+  // Sends POST request, using the Embeddables backend proxy to keep the API key secure
+  const response = await fetch(`https://proxy-secure.trysavvy.com/?url=${encodeURIComponent(url)}`, importProfileRequestOptions)
+    .then(response => response.json())
+    .catch(err => {
+      console.error("Error importing profile", err);
+      throw err;
+    });
+
+  // If the response doesn't contain an id, throw an error
+  if (!response?.data?.id) {
+    console.error("Failed to import profile - no id returned");
+    throw new Error("Failed to import profile");
+  }
+
+  // If the response is successful, add the user to a list
+  const id = response.data.id;
+  const listId = "listID";
+  const addToListBody = {
+    data: [
+      {
+        type: "profile",
+        id: id,
+      },
+    ],
+  };
+
+  // Constructs the fetch options object
+  const addToListRequestOptions = {
+    method: "POST",
+    headers: {
+      accept: "application/vnd.api+json",
+      revision: "2024-10-15",
+      "content-type": "application/vnd.api+json",
+      Authorization: KLAVIYO_API_KEY,
+    },
+    body: JSON.stringify(addToListBody),
+  };
+
+  // Constructs the URL to the Klaviyo API endpoint
+  const url = `https://a.klaviyo.com/api/lists/${listId}/relationships/profiles`;
+
+  // Sends POST request, using the Embeddables backend proxy to keep the API key secure
+  fetch(
+    `https://proxy-secure.trysavvy.com/?url=${encodeURIComponent(url)}`,
+    addToListRequestOptions
+  )
+    .then(response => {
+      console.log("Response adding to list", response);
+    })
+    .catch(err => {
+      console.error("Error adding to list", err);
+      throw err;
+    });
+
+}
+```
+
+  </Step>
+  <Step title="Add a Trigger for the relevant user event">
+    - Switch to the Triggers tab.
+    - Add a new Trigger.
+    - Choose the event that you want to trigger the Action on.
+      - For example: `WHEN Page KEY email_page IS Completed`.
+    - Select the `Send Data to Klaviyo` Action.
+    - Hit `Add`.
+  </Step>
+
+</Steps>
+
+<Card
+  title="Learn more about Custom Code"
+  icon="code"
+  href="/features/custom-code"
+>
+  Read more about writing Custom Code in Embeddables, including all the
+  available arguments passed in to the function.
+</Card>

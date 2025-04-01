@@ -1,0 +1,100 @@
+---
+title: "How To: Send data to Telegra MD"
+description: "Setting up an Action with custom code that sends user data to Telegra MD's API"
+---
+
+The best way to data to Telegra MD is using custom code in an Action, that is Triggered when a user takes an action, such as entering their email or completing a purchase.
+
+<Steps>
+  <Step title="Create a custom code Action">
+    - Go to the Logic sidebar and click on the Actions tab.
+    - Click `+ Add New Action`.
+    - Give it a name like "Send Data to Telegra MD".
+    - Hit `Add`.
+  </Step>
+  <Step title="Write your custom code">
+    - Add code similar to the example below, to construct the data object and send it to Telegra MD's API.
+
+```js
+// All Actions should start with a function called output()
+function output(userData, {setUserData}) {
+  // If the user data has already been sent, and a portal URL has been received, don't resend it
+  if (userData.telegra_md_portal_url) return
+
+  // @TODO: Replace with your actual integration configuration ID
+  const INTEGRATION_CONFIGURATION_ID = "<INTEGRATION_CONFIGURATION_ID>";
+  const TELEGRA_MD_HOST = "https://telegramd-rest.telegramd.com";
+
+  // @TODO: Update to match your User Data keys, and add any additional data you want to send
+  const requestBody = {
+    email: userData.email,
+    firstName: userData.first_name,
+    lastName: userData.last_name,
+    name: userData.first_name + ' ' + userData.last_name,
+    gender: userData.gender,
+    phone: userData.phone,
+    requested_medications: [
+      {
+        productVariation: userData.selected_product_data.product_variation,
+        quantity: 1
+      }
+    ],
+    payment_configuration: {
+      system: "stripe",
+      system_customer_identifier: userData.customer_id,
+      system_payment_intent_identifier: userData.payment_intent_id
+    },
+    externalIdentifier: userData.payment_intent_id,
+  };
+
+  console.log('[Submit to Telegra] - requestBody:', requestBody)
+
+  // @TODO: Ask Embeddables to add the access token as a secure credential, that can be accessed by {{company---telegra---access_token}} (replace 'company' with your company name)
+  const url = `${TELEGRA_MD_HOST}/integrations/embeddables/${INTEGRATION_CONFIGURATION_ID}/visit/initiate?access_token={{company---telegra---access_token}}`;
+
+  // Sends POST request, using the Embeddables backend proxy to keep the access token secure
+  fetch(`https://proxy-secure.trysavvy.com/?url=${encodeURIComponent(url)}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(requestBody)
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log("[Submit to Telegra] - Response:", data);
+
+      // Adds the portal URL to the user data, so it can be used in future Actions
+      setUserData({ telegra_md_portal_url: data.visitUrl })
+    })
+    .catch(error => {
+      console.error("[Submit to Telegra] - Error:", error);
+    });
+}
+```
+
+  </Step>
+  <Step title="Add a Trigger for the relevant user event">
+    - Switch to the Triggers tab.
+    - Add a new Trigger.
+    - Choose the event that you want to trigger the Action on.
+      - For example: `WHEN Page KEY email_page IS Completed`.
+    - Select the `Send Data to Telegra MD` Action.
+    - Hit `Add`.
+  </Step>
+
+</Steps>
+
+<Card
+  title="Learn more about Custom Code"
+  icon="code"
+  href="/features/custom-code"
+>
+  Read more about writing Custom Code in Embeddables, including all the
+  available arguments passed in to the function.
+</Card>

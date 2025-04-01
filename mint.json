@@ -94,7 +94,9 @@
         "how-to/set-up-node-of-the-above",
         "how-to/add-external-scripts",
         "how-to/run-custom-code-on-load",
-        "how-to/send-data-to-tellescope"
+        "how-to/send-data-to-tellescope",
+        "how-to/send-data-to-telegra-md",
+        "how-to/send-data-to-klaviyo"
       ]
     },
     {
