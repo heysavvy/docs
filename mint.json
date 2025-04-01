@@ -59,7 +59,6 @@
         "features/split-testing",
         "features/computed-fields",
         "features/actions",
-        "features/actions/webhooks",
         "features/saving-and-version-control",
         "features/testing-and-debugging/url-params"
       ]
@@ -83,7 +82,8 @@
         "how-to/send-data-to-tellescope",
         "how-to/send-data-to-telegra-md",
         "how-to/send-data-to-klaviyo",
-        "how-to/send-data-to-embeddables"
+        "how-to/send-data-to-embeddables",
+        "how-to/set-up-webhooks"
       ]
     },
     {
