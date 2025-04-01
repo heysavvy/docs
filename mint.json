@@ -50,7 +50,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "10-min-tour"]
+      "pages": ["introduction", "5-min-onboarding"]
     },
     {
       "group": "Features",
@@ -93,7 +93,8 @@
         "how-to/dynamically-switch-brands",
         "how-to/set-up-node-of-the-above",
         "how-to/add-external-scripts",
-        "how-to/run-custom-code-on-load"
+        "how-to/run-custom-code-on-load",
+        "how-to/send-data-to-tellescope"
       ]
     },
     {
