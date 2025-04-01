@@ -1,0 +1,76 @@
+---
+title: "Embed in your site"
+description: "How to publish your embeddable to your website"
+icon: "rocket"
+---
+
+There are three ways to embed an Embeddable in your site:
+
+1. Embedding in your site's frontend using the embed code
+2. Setting up a reverse proxy
+3. Integrating with your site's backend using the Embeddables API
+
+
+## Embedding in your site's frontend
+
+You can use the 2-part embed code to easily embed your embeddable in your website or web app.
+
+For a more detailed guide, or to see examples of how to embed in a React app or React Native app, check out the following docs:
+
+<CardGroup cols={3}>
+  <Card title="Embed in your site" icon="code" href="/how-to/publish-to-your-site">
+    How to publish your embeddable inside your site's frontend
+  </Card>
+  <Card title="Embed in a React app" icon="react" href="/how-to/publish-in-react">  
+    How to publish your embeddable inside a React app
+  </Card>
+  <Card title="Embed in a React Native app" icon="mobile" href="/how-to/publish-in-react-native">
+    How to publish your embeddable inside a React Native app
+  </Card>
+</CardGroup>
+
+
+<Steps>
+  <Step title="Grab the embed code" titleSize="h3">
+    Head to the specific embeddable in the [Web App](https://app.embeddables.com/) and
+    view the embed code from the button at the top.
+  </Step>
+  <Step title="Insert the first part in the Head">
+    The first part of the embed code (the large part starting with `<script> const SAVVY_PRELOAD_IDS=...`) should go in the `<HEAD>` of the page.
+  </Step>
+  <Step title="Insert the second part in the Body">
+    The second part of the embed code (the small part that looks like `<savvy id="flow_abcdefhijklm"></savvy>`) should go in the `<BODY>` of the page, wherever you want the embeddable to appear on the page.
+  </Step>
+</Steps>
+
+## Setting up a reverse proxy
+
+
+{/* Point your reverse proxy to https://proxy.embeddables.com.
+Verify that by going to yourdomain.com/your-reverse-proxy-page, you see a page similar to what you see on https://proxy.embeddables.com itself.
+Pass the ID of your embeddable using the X-Embeddables-Id header.
+Verify that you now see the desired embeddable served on your page.
+Here's an example Embeddable from GT for you to use: flow_de2b127763j7hijehh3i05cab (edited)  */}
+<Steps>
+  <Step title="Point your page to our proxy server">
+    Point your reverse proxy to: `https://proxy.embeddables.com`.
+  </Step>
+  <Step title="Verify the proxy is pointing to the correct page">
+    Verify that by going to https://yourdomain.com/your-reverse-proxy-page, you see a page similar to what you see on https://proxy.embeddables.com itself.
+  </Step>
+  <Step title="Pass the correct embeddable ID">
+    Pass the ID of your embeddable using the `X-Embeddables-Id` header.
+  </Step>
+  <Step title="Verify that it's working">
+    You should now see the desired embeddable served on your page.
+  </Step>
+</Steps>
+
+## Integrating with your site's backend using the Embeddables API
+
+<Note>
+  Docs for this method are coming soon.
+</Note>
+
+
+

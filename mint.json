@@ -61,7 +61,8 @@
         "features/actions",
         "features/analytics",
         "features/saving-and-version-control",
-        "features/testing-and-debugging/url-params"
+        "features/testing-and-debugging/url-params",
+        "features/embed-in-your-site"
       ]
     },
     {
