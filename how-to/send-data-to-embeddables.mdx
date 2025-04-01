@@ -1,0 +1,63 @@
+---
+title: "How To: Send data to Embeddables"
+description: "Sending data server-side to the Embeddables API"
+---
+
+Although most user events occur when the user interacts with your Embeddable, meaning Embeddables will automatically capture that event, there are times when user events occur elsewhere.
+
+In those cases, you can send data to the Embeddables API using a server-side request.
+
+## How to send data to Embeddables
+
+<Steps>
+  <Step title="Generate an Embeddables API key">
+    - Contact the Embeddables team to generate an API key for your project.
+    - API keys are Restricted Keys, and always start with `rk_` - for example: `rk_myexampleapikey`.
+  </Step>
+
+  <Step title="Prepare your event data">
+    - Create a JSON object with the following required fields:
+      - `embeddable_id`: The ID of your Embeddable
+      - `timestamp`: The time the event occurred (in ISO 8601 format)
+      - `custom_event_name`: A name for your custom event (must be snake_case)
+      - `custom_event_props`: Any custom properties as a JSON string
+      - `identifiers`: A list of key-value pairs to identify the user (e.g., email)
+
+    <Tip>
+      The `identifiers` field is an array of objects, each containing a `key` and `value`. Currently, we only support one identifier per request (i.e. one object in the array).
+    </Tip>
+    <Warning>
+      **Watch out for this:** The `value` field must be a stringified JSON value. E.g. for email addresses, the value must be `"\"test@test.com\""` (note the double quotes).
+    </Warning>
+  </Step>
+
+
+  <Step title="Send the event to the API">
+    - Make a POST request to `/projects/{projectId}/events`
+    - Include your API key in the `X-Api-Key` header
+    - Send the event data in the request body
+
+    Example request:
+    ```bash
+    curl -X POST https://api.embeddables.com/projects/pr_myexampleproject/events \
+      -H "X-Api-Key: rk_myexampleapikey" \
+      -H "Content-Type: application/json" \
+      -d '{
+        "embeddable_id": "flow_myexampleflow",
+        "timestamp": "2022-01-01T00:00:00.000Z",
+        "custom_event_name": "my_custom_event",
+        "custom_event_props": "{\"my_prop\": \"my_val\"}",
+        "identifiers": [
+          {
+            "key": "email",
+            "value": "\"test@test.com\""
+          }
+        ]
+      }'
+    ```
+  </Step>
+</Steps>
+
+<Note>
+  The API will return a 200 status code if the event was successfully created. If there are any issues with the request (e.g., invalid API key, missing required fields), you'll receive an appropriate error response.
+</Note>
