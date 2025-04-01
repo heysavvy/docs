@@ -1,0 +1,83 @@
+---
+title: "Using Analytics in Embeddables"
+sidebarTitle: "Analytics"
+icon: "chart-line-up"
+description: "Capturing and analyzing user data"
+---
+
+**Analytics** is baked into Embeddables, and can be captured and analyzed in a variety of ways.
+
+There are various ways to capture analytics in Embeddables:
+- Automatically captured analytics
+- Custom client-side events
+- Custom server-side events
+- Conversion events
+
+## Capturing analytics
+
+### Automatically captured analytics
+
+The following analytics are automatically captured and available to analyze:
+
+- The User
+  - The entire User Data JSON object is available to be captured.
+  - You can control which of the User Data fields are sent to the Embeddables database, vs which are stored locally in the user's browser.
+- Events
+  - Page views
+  - Button Clicks, if you turn the Capature Clicks setting on for that button
+
+### Custom client-side events
+
+You can capture custom events using custom code - it's best to do this in an [Action](/features/actions):
+
+<Steps>
+  <Step title="Create a custom code Action, with a Trigger on the relevant event">
+    - Go to the Logic -> Actions, and click `+ Add New Action`.
+    - Give it a name like "Track X event", and hit `Add`.
+    - Add a Trigger for the relevant event, such as a button click, attaching the Action to that Trigger.
+  </Step>
+  <Step title="Use the `trackCustomEvent()` function">
+    - Inside the `output()` function, use the `trackCustomEvent()` function inside the `helperFunctions` argument.
+    - The first argument is the name of the event, and the second is a JSON object of properties.
+    - For example:
+      ```js
+      function output(userData, helperFunctions) {
+        // Track a custom event, with extra metadata properties
+        helperFunctions.trackCustomEvent('got_recommendation', {
+          recommendation_id: properties.recommendation_id,
+          recommendation_name: properties.recommendation_name
+        });
+      }
+      ```
+  </Step>
+</Steps>
+
+### Custom server-side events
+
+Some events will occur somewhere other than in the Embeddable, for example a user completing a doctor's appointment.
+
+To track these events in Embeddables, you can send a server-side event to the Embeddables API. This will then be available to analyze in the Embeddables Web App:
+
+<Card
+  title="How to send server-side events to the Embeddables API"
+  icon="code"
+  href="/how-to/send-data-to-embeddables"
+>
+  Read more about the Embeddables API, and how to send server-side events.
+</Card>
+
+### Conversion events
+
+Conversion events are a special status given to certain events of the other types described above.
+
+Conversion events are defined in the Embeddables Web App, and consist of a name, a type, and specific properties.
+
+Types of conversion events:
+- Page View
+  - Properties: `page_key`
+- Button Click
+  - Properties: `button_key`
+- Custom Event
+  - Properties: `event_name`
+
+Conversions that relate to a page or button in an Embeddable will be shown on the relevant pages in the Pages sidebar.

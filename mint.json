@@ -59,6 +59,7 @@
         "features/split-testing",
         "features/computed-fields",
         "features/actions",
+        "features/analytics",
         "features/saving-and-version-control",
         "features/testing-and-debugging/url-params"
       ]
