@@ -30,36 +30,11 @@
     "name": "Dashboard",
     "url": "https://app.embeddables.com"
   },
-  "primaryTab": {
-    "name": "Welcome to Embeddables"
-  },
-  "tabs": [
-    {
-      "name": "Features",
-      "url": "features"
-    },
-    {
-      "name": "How-To's",
-      "url": "how-to"
-    },
-    {
-      "name": "Tutorials",
-      "url": "tutorials"
-    },
-    {
-      "name": "API",
-      "url": "api-reference"
-    },
-    {
-      "name": "Reference",
-      "url": "reference"
-    }
-  ],
   "anchors": [
     {
-      "name": "Docs Home",
-      "icon": "house",
-      "url": "introduction"
+      "name": "API",
+      "icon": "code",
+      "url": "api-reference"
     },
     {
       "name": "Glossary",
@@ -75,23 +50,12 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["introduction", "10-min-tour", "10-min-quickstart"]
-    },
-    {
-      "group": "What can Embeddables do?",
-      "pages": [
-        "guide/content",
-        "guide/design",
-        "guide/logic",
-        "guide/next-steps"
-      ]
+      "pages": ["introduction", "10-min-tour"]
     },
     {
       "group": "Features",
       "pages": [
-        "features/designer",
-        "features/layers",
-        "features/saving-and-versions",
+        "features/conditions",
         "features/split-testing",
         {
           "group": "Payments",
@@ -111,27 +75,24 @@
           ]
         },
         "features/custom-code",
-        {
-          "group": "Testing and Debugging",
-          "icon": "microscope",
-          "pages": [
-            "features/testing-and-debugging/url-params",
-            "features/testing-and-debugging/debugger"
-          ]
-        }
+        "features/saving-and-version-control",
+        "features/testing-and-debugging/url-params"
+      ]
+    },
+    {
+      "group": "Best Practices",
+      "pages": [
+        "best-practices/how-best-to-send-data",
+        "best-practices/passing-data-in-out"
       ]
     },
     {
       "group": "How To's: Logic",
       "pages": [
-        "how-to/use-conditions",
-        "how-to/set-up-split-test",
         "how-to/sync-pages-with-url",
         "how-to/dynamically-switch-brands",
         "how-to/set-up-node-of-the-above",
         "how-to/add-external-scripts",
-        "how-to/decide-how-to-send-data",
-        "how-to/pass-data-in-out",
         "how-to/run-custom-code-on-load"
       ]
     },
@@ -142,15 +103,10 @@
     {
       "group": "How To's: Versions and Going Live",
       "pages": [
-        "how-to/use-version-control",
         "how-to/publish-to-your-site",
         "how-to/publish-in-react",
         "how-to/publish-in-react-native"
       ]
-    },
-    {
-      "group": "Tutorials",
-      "pages": ["tutorials/10-min-quickstart"]
     },
     {
       "group": "About These Docs",
