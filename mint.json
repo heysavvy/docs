@@ -57,24 +57,9 @@
       "pages": [
         "features/conditions",
         "features/split-testing",
-        {
-          "group": "Payments",
-          "icon": "credit-card",
-          "pages": ["features/payments/stripe", "features/payments/paypal"]
-        },
-        {
-          "group": "Actions",
-          "icon": "bolt",
-          "pages": [
-            "features/actions/webhooks",
-            "features/actions/airtable",
-            "features/actions/hubspot",
-            "features/actions/sendgrid",
-            "features/actions/google-sheets",
-            "features/actions/datastream"
-          ]
-        },
-        "features/custom-code",
+        "features/computed-fields",
+        "features/actions",
+        "features/actions/webhooks",
         "features/saving-and-version-control",
         "features/testing-and-debugging/url-params"
       ]
@@ -83,7 +68,8 @@
       "group": "Best Practices",
       "pages": [
         "best-practices/how-best-to-send-data",
-        "best-practices/passing-data-in-out"
+        "best-practices/passing-data-in-out",
+        "features/custom-code"
       ]
     },
     {
@@ -96,7 +82,8 @@
         "how-to/run-custom-code-on-load",
         "how-to/send-data-to-tellescope",
         "how-to/send-data-to-telegra-md",
-        "how-to/send-data-to-klaviyo"
+        "how-to/send-data-to-klaviyo",
+        "features/actions/datastream"
       ]
     },
     {

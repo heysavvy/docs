@@ -1,0 +1,75 @@
+---
+title: "Using Computed Fields in Embeddables"
+sidebarTitle: "Computed Fields"
+icon: "brackets-curly"
+description: "Writing custom code to calculate new values based on existing data"
+---
+
+**Computed Fields** are a core feature of Embeddables, allowing you to calculate new values based on existing data.
+
+They take in inputs, from the User Data JSON object, and return an output.
+
+This output is then part of the User Data JSON object, and can be used elsewhere in the Embeddable. For example, it can be displayed in a text component, used in a condition, or even used as an input for another Computed Field.
+
+Computed Fields have access to the User Data JSON object, a series of helper functions like `setUserData` and `triggerAction`, and extra context about how the Computed Field was triggered.
+
+## How to create a Computed Field
+
+<Steps>
+  <Step title="Create a Computed Field">
+    - Go to the Logic sidebar and click on the Computed Fields tab.
+    - Click `+ Add New Computed Field`.
+    - Give it a key to be used for the output value in the User Data JSON object, like `full_name`.
+    - Hit `Add`.
+  </Step>
+  <Step title="Write your custom code">
+    - Computed Fields must start with a function called `result()`.
+    - You can write any custom JS code inside the `result()` function.
+    - The first argument of `result()` is the User Data, and the other arguments
+      are [described here](/features/custom-code).
+    - The code will execute on the frontend, in the main window environment,
+      so has access to window functions and variables.
+  </Step>
+
+</Steps>
+
+## Example Computed Fields
+
+### Full Name
+
+Here's an example of a Computed Field called `full_name`, that takes the user's first and last name and concatenates them together.
+
+```js
+function result(userData, helperFunctions, triggerContext) {
+  // Get the user's first and last name from the User Data JSON object,
+  // and join them together with a space in the middle
+  return `${userData.first_name} ${userData.last_name}`;
+}
+```
+
+### BMI
+
+Here's an example of a Computed Field called `bmi`, that takes the user's weight and height and calculates their BMI.
+
+```js
+function result(userData, helperFunctions, triggerContext) {
+  // Get the user's weight and height from the User Data JSON object
+  // In this example, we're assuming the weight is in kilograms and the height is in centimeters
+  const weight = userData.weight;
+  const height = userData.height;
+  const bmi = weight / (height * height);
+
+  // Return the BMI value
+  return bmi;
+}
+```
+
+
+<Card
+  title="Learn more about Custom Code"
+  icon="code"
+  href="/features/custom-code"
+>
+  Read more about writing Custom Code in Embeddables, including all the
+  available arguments passed in to the function.
+</Card>

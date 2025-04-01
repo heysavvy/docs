@@ -1,0 +1,38 @@
+---
+title: "Using Actions in Embeddables"
+sidebarTitle: "Actions"
+icon: "code"
+description: "Running custom code when some kind of event occurs"
+---
+
+**Actions** are a core feature of Embeddables, allowing you to run custom JS code when some kind of event occurs.
+
+Actions are initiated by **Triggers**, which are events that occur in the Embeddable. For example, a Trigger might be when a user clicks a button, or when a page is loaded.
+
+Actions have access to the User Data JSON object, a series of helper functions like `setUserData` and `triggerAction`, and extra context about what triggered the Action.
+
+<Steps>
+  <Step title="Create a custom code Action">
+    - Go to the Logic sidebar and click on the Actions tab.
+    - Click `+ Add New Action`.
+    - Give it a name like "Send Data to Klaviyo".
+    - Hit `Add`.
+  </Step>
+  <Step title="Write your custom code">
+    - Add whatever custom JS you like inside the `output()` function.
+    - The first argument of `output()` is the User Data, and the other arguments
+      are [described here](/features/custom-code).
+    - The code will execute on the frontend, in the main window environment,
+      so has access to window functions and variables.
+  </Step>
+
+</Steps>
+
+<Card
+  title="Learn more about Custom Code"
+  icon="code"
+  href="/features/custom-code"
+>
+  Read more about writing Custom Code in Embeddables, including all the
+  available arguments passed in to the function.
+</Card>
