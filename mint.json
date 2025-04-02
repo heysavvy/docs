@@ -75,30 +75,45 @@
       ]
     },
     {
-      "group": "How To's: Logic",
+      "group": "How To's",
       "pages": [
-        "how-to/sync-pages-with-url",
-        "how-to/dynamically-switch-brands",
-        "how-to/set-up-node-of-the-above",
-        "how-to/add-external-scripts",
-        "how-to/run-custom-code-on-load",
-        "how-to/send-data-to-tellescope",
-        "how-to/send-data-to-telegra-md",
-        "how-to/send-data-to-klaviyo",
-        "how-to/send-data-to-embeddables",
-        "how-to/set-up-webhooks"
-      ]
-    },
-    {
-      "group": "How To's: Payments",
-      "pages": ["how-to/assign-default-payment-methods"]
-    },
-    {
-      "group": "How To's: Versions and Going Live",
-      "pages": [
-        "how-to/publish-to-your-site",
-        "how-to/publish-in-react",
-        "how-to/publish-in-react-native"
+        {
+          "group": "Logic",
+          "icon": "code-fork",
+          "pages": [
+            "how-to/sync-pages-with-url",
+            "how-to/dynamically-switch-brands",
+            "how-to/set-up-node-of-the-above"
+          ]
+        },
+        {
+          "group": "Passing Data",
+          "icon": "code-compare",
+          "pages": [
+            "how-to/send-data-to-tellescope",
+            "how-to/send-data-to-telegra-md",
+            "how-to/send-data-to-klaviyo",
+            "how-to/send-data-to-embeddables",
+            "how-to/set-up-webhooks"
+          ]
+        },
+        {
+          "group": "Custom Code",
+          "icon": "square-code",
+          "pages": [
+            "how-to/add-external-scripts",
+            "how-to/run-custom-code-on-load"
+          ]
+        },
+        {
+          "group": "Publishing",
+          "icon": "globe-pointer",
+          "pages": [
+            "how-to/publish-to-your-site",
+            "how-to/publish-in-react",
+            "how-to/publish-in-react-native"
+          ]
+        }
       ]
     },
     {
