@@ -55,6 +55,7 @@
     {
       "group": "Features",
       "pages": [
+        "features/user-data",
         "features/conditions",
         "features/split-testing",
         "features/computed-fields",

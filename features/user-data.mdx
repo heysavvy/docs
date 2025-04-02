@@ -1,0 +1,44 @@
+---
+title: "User Data in Embeddables"
+sidebarTitle: "User Data"
+icon: "database"
+description: "Storing and using data about your users"
+---
+
+In Embeddables, **User Data** refers to the current data stored on a given user.
+
+User Data exists as a JSON object of properties. These properties could be:
+- Answers the user gave to questions (the key would be the input component's key)
+- A value calculated by a [Computed Field](/features/computed-fields) (the key would be the computed field's key)
+- A value set by an [Experiment](/features/split-testing) (the key would be the experiment's key)
+- Other types of properties (see full list below)
+
+## Where is User Data stored?
+
+User Data is stored in three places, or 'contexts', and each one usually stored a different amount of data:
+
+- **Embeddable Context** - This is the full User Data, and is stored within the Embeddable itself. It is not available after the user refreshes or closes the tab.
+- **Local Storage Context** - This is the subset of User Data that is stored in the user's browser, in Local Storage. It's used to remember a user's answers and position in the flow after they close the tab and return later.
+- **Embeddables Cloud Context** - This is the smallest subset of User Data that is stored in Embeddables' databases. It is used for displaying analytics insights in the Embeddables Web App.
+
+## How to set whether/where a User Data property is stored
+
+<Note>
+  This feature is coming soon to the New Builder.
+</Note>
+
+
+## Types of User Data
+
+| Type                | Example                      | Typical Use-Case                                        |
+| ------------------- | ---------------------------- | ------------------------------------------------------- |
+| **Automatic Data**  | `current_page_key`           | Sending the user's current page to an API               |
+| **Answers**         | `weight`                     | Asking the user for their details                       |
+| **Computed Fields** | `bmi`                        | Calculating a value to decide if the user is eligible   |
+| **Experiment Data** | `split_title_length`         | Using the user's current variant to show or hide a page |
+| **URL Params**      | `utm_source`                 | Setting a condition based on the user's traffic source  |
+| **Registered Keys** | `access_token`               | Storing the result of an API request                    |
+
+
+
+
