@@ -15,11 +15,15 @@ User Data exists as a JSON object of properties. These properties could be:
 
 ## Where is User Data stored?
 
-User Data is stored in three places, or 'contexts', and each one usually stored a different amount of data:
+User Data is stored in three places, or 'contexts', and each one usually stored a different amount of data.
 
-- **Embeddable Context** - This is the full User Data, and is stored within the Embeddable itself. It is not available after the user refreshes or closes the tab.
-- **Local Storage Context** - This is the subset of User Data that is stored in the user's browser, in Local Storage. It's used to remember a user's answers and position in the flow after they close the tab and return later.
-- **Embeddables Cloud Context** - This is the smallest subset of User Data that is stored in Embeddables' databases. It is used for displaying analytics insights in the Embeddables Web App.
+<Tip>
+  Contexts are cascading, so if a property is stored in #2, it will also be stored in #1 as well.
+</Tip>
+
+1. **Embeddable Context** - This is the full User Data, and is stored within the Embeddable itself. It is not available after the user refreshes or closes the tab.
+2. **Local Storage Context** - This is the subset of User Data that is stored in the user's browser, in Local Storage. It's used to remember a user's answers and position in the flow after they close the tab and return later.
+3. **Embeddables Cloud Context** - This is the smallest subset of User Data that is stored in Embeddables' databases. It is used for displaying analytics insights in the Embeddables Web App.
 
 ## How to set whether/where a User Data property is stored
 

@@ -67,11 +67,12 @@
       ]
     },
     {
-      "group": "Best Practices",
+      "group": "Guides & Best Practices",
       "pages": [
-        "best-practices/how-best-to-send-data",
-        "best-practices/passing-data-in-out",
-        "features/custom-code"
+        "guides/how-best-to-send-data",
+        "guides/passing-data-in-out",
+        "guides/storing-data-cookies",
+        "guides/custom-code"
       ]
     },
     {

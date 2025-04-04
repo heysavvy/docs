@@ -1,0 +1,51 @@
+---
+title: "Storing data, Local Storage and Cookies"
+icon: "database"
+description: "Understanding how Embeddables stores user data in the browser"
+---
+
+# How Embeddables Stores User Data
+
+Embeddables uses **Local Storage** to persist User Data within the browser, so that when a user refreshes or returns later, they can pick up where they left off.
+
+Local Storage is similar to Cookies, but has a few key differences which are described below.
+
+## Local Storage in Embeddables
+
+As described in our [User Data](/features/user-data) documentation, Embeddables stores user data in multiple contexts.
+
+In the Embeddables Builder, you can choose which context to store each value, on a field-by-field basis.
+
+The three contexts are:
+
+1. **Embeddable Context**: In-memory storage that exists only during the current session.
+2. **Local Storage Context**: Persistent browser storage that remains after tab/browser closure. *(Data stored here is also stored in #1).*
+3. **Embeddables Cloud Context**: Data stored on our servers to provide the analytics insights in the Embeddables Web App. *(Data stored here is also stored in #1 and #2).*
+
+## Local Storage vs Cookies
+
+### Comparison table
+
+| Feature | Local Storage | Cookies |
+| ------- | ------------- | ------- |
+| **Storage Capacity** | 5-10MB | 4KB |
+| **Expiration** | Doesn't expire automatically | Can be set to expire |
+| **Sent with Requests** | No, stays in browser | Yes, sent with every HTTP request |
+| **Accessibility** | Same-origin only | Can be configured for cross-origin |
+| **Manipulation** | JavaScript only | JavaScript or HTTP headers |
+
+### Duration of Storage
+
+Data stored in Local Storage persists until:
+- The user manually clears their browser data/cache
+- The user uses private/incognito browsing
+- The user switches to a different browser or device
+
+Unlike cookies, Local Storage doesn't have built-in expiration mechanisms. This allows Embeddables to maintain a consistent user experience even if users return to your embeddable weeks or months later.
+
+### Privacy Considerations
+
+Local Storage is generally considered more privacy-friendly than cookies because:
+- It's not automatically sent with HTTP requests
+- It's limited to the domain that created it
+- It doesn't support the tracking capabilities that third-party cookies enable
