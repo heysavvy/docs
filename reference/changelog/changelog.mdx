@@ -4,242 +4,216 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
-## April 3rd 2025
+<Update label="3 April 2025">
+### 🔥 Features and Updates
 
-- **🔥 Features and Updates:**
+- 🔍 **Zoom controls** are now available for the embeddable preview—adjust it right from the top bar!
+- 🏷️ **Recently used tags** are back! Say hello to faster tagging 🎉
 
-  - 🔍 **Zoom controls** are now available for the embeddable preview—adjust it right from the top bar!
-  - 🏷️ **Recently used tags** are back! Say hello to faster tagging 🎉
+### ⚡️ Improvements
 
-- **⚡️ Improvements:**
+- The Open Old Builder button now takes you to the old builder in the same tab, with an easy way to switch back to the new one.
 
-  - The Open Old Builder button now takes you to the old builder in the same tab, with an easy way to switch back to the new one.
+### 🐞 Bug Fixes
+- Conditions that were very long were breaking in a way that you couldn't see the button to edit component conditions - that's now fixed.
+- The Add Page button was appearing on top of the CSS editor and could cause issues when manually editing CSS.
+- Toast alerts are now fully interactive—you can click or close them even with a popover or modal open.
+</Update>
 
-- **🐞 Bug Fixes:**
-  - Conditions that were very long were breaking in a way that you couldn't see the button to edit component conditions - that's now fixed.
-  - The Add Page button was appearing on top of the CSS editor and could cause issues when manually editing CSS.
-  - Toast alerts are now fully interactive—you can click or close them even with a popover or modal open.
+<Update label="15 March 2024">
+### 🔥 Features and Updates
 
----
+- 👨‍👩‍👧 **Multi-player on Embeddables** has been a little underwhelming so we're working on it. Starting today you'll seen an alert in the top left if someone else is working at the same time as you and your versions could result in a conflict.
 
-## March 15th 2024
+- 🚀 **Push-to-Prod/Staging Logs** are now in the version control card so you can see who pushed what version to prod and staging and when. No more back and forth Slack messages or scrolling through the version card for 5 minutes.
 
-- **🔥 Features and Updates:**
+### ⚡️ Improvements
 
-  - 👨‍👩‍👧 **Multi-player on Embeddables** has been a little underwhelming so we’re working on it. Starting today you’ll seen an alert in the top left if someone else is working at the same time as you and your versions could result in a conflict.
+- We've made it easier to select layers in the layer card as the hit area was a little too small for our liking.
 
-  - 🚀 **Push-to-Prod/Staging Logs** are now in the version control card so you can see who pushed what version to prod and staging and when. No more back and forth Slack messages or scrolling through the version card for 5 minutes.
+- The builder and more specifically the Logic card should now feel more snappy as we found more ways to squeeze the juice out of them.
 
-- **⚡️ Improvements:**
+### 🐞 Bug fixes
 
-  - We’ve made it easier to select layers in the layer card as the hit area was a little too small for our liking.
+- When you typed code in the code editor and click 'Save' and close the card before clicking 'Apply Changes' your code could be lost. That's now been improved so your code is no longer lost.
+</Update>
 
-  - The builder and more specifically the Logic card should now feel more snappy as we found more ways to squeeze the juice out of them.
+<Update label="8 March 2024">
+### 🐞 Bug fixes
+- The rich text component would periodically decide to become 500px tall whilst you were editing inside of it in the builder. It's now no longer doing that party trick.
+- Updating the key name in the options card sometimes caused an alert that said 'Undefined'. This was unhelpful and annoying and is now fixed.
+- Charts now load more reliably and don't go blank when you change a filter.
+- Copy and Paste keyboard shortcuts stopped working on the Layers card. Now they're working again.
+</Update>
 
-- **🐞 Bug fixes:**
+<Update label="6 March 2024">
+### 🔥 Features and Updates
 
-  - When you typed code in the code editor and click ‘Save’ and close the card before clicking ‘Apply Changes’ your code could be lost. That’s now been improved so your code is no longer lost.
+- 👥 **Updated filter component:** We re-built the filter component as it was a little clunky and unreliable. It's now simpler (we think) and more reliable.
+- 🪄 **Split test individual components:** You can now experiment withhiding/showing components within a test. Unsure if the social proof container increases click throughs? Now you can test just showing/hiding it without duplicating the entire page and running an A/B split on the page.
+- 📞 **Brand New US Phone Number formatting**: You can now specify formatting for US phone number inputs including the visual display and what formats are accepted by validation. We're looking at you, "+1".
 
----
+### ⚡️ Improvements
+- The key names on the layers tab sometimes get a little long. Now they have tooltips for when they do.
+- Scrolling within the UI of the builder felt a little off. We've made some design changes to the scroll design and action to make it feel more complete.
+- You can now duplicate an existing Computed Field. Apparently that didn't exist and this product manager is finding out for the first time.
+### 🐞 Bug fixes
+- Occasionally the 'Today' filter wouldn't apply and you'd be stuck sitting wondering what was going on. That's now back to being its useful self.
+- On the Options card it randomly scrolled you when you selected a tab. That's now behaving itself.
+- Updating the key of a computed field (or add a new one) it doesn't overwrite the name of the input or trigger keys.
+- Split testing requires snake_case and occasionally you could set the key without it being snake_case and the test would fail to run. That's now fixed.
+- The layers card now stays in place and doesn't jump around the screen every time you open it.
+</Update>
 
-## March 8th 2024
+<Update label="23 February 2024">
+### 🔥 Features and Updates
 
-- **🐞 Bug fixes:**
-  - The rich text component would periodically decide to become 500px tall whilst you were editing inside of it in the builder. It’s now no longer doing that party trick.
-  - Updating the key name in the options card sometimes caused an alert that said ‘Undefined’. This was unhelpful and annoying and is now fixed.
-  - Charts now load more reliably and don’t go blank when you change a filter.
-  - Copy and Paste keyboard shortcuts stopped working on the Layers card. Now they’re working again.
+- 🏃🏼 **Saving your embeddable is now 40% faster.** We know watching Embeddablob is fun but waiting to get something saved took a little too long. This update improved that speed.
+- ♿️ **Accessibility controls** for Embeddables launched in Alpha. You can now navigate through the embeddable using the 'tab' button to move between components and the 'Enter' key to move to the next page. To get access reach out to the team and we'll enable it.
 
----
+### ⚡️ Improvements
+- The 'Buttons' tab in the 'Options' card was too hard to access so it's been brought forward and is now available without scrolling.
+- You can now access the Custom HTML Editor in a full screen experience rather than a tiny little window. It's like the IMAX of code editors now.
+- You can now specify the maximum selection in a multi-select button e.g. up to 3 responses. This should have been added sooner but it's finally off the backlog.
+- Deleting is scary but occasionally you make a mistake. We've made it easier to delete an Option Button without clicking 4 times.
+- We increased the accuracy of click submissions across a wider range of browser types so you can trust your funnel charts even more.
+- You can now filter to the highest page a user reached. Perfect for seeing which users got to say the email page but no further in live session replay and their submission data.
+- You can now see the number of events a user had in the users table. Great for seeing at a glance if they did a little or a lot in your embeddable.
+### 🐞 Bug fixes
+- Occasionally discarding changes could cause the page to temporarily appear blank. That scared you (and us) and won't happen any longer.
+- Archived Embeddables sometimes remained archived even when you clicked 'Un-Archive'. We had a word with the archives and now they're back to behaving themselves. Sorry about that.
+- API Fix for User Submissions. Occasionally the query slug would be slow but it's now faster.
+</Update>
 
-## March 6th 2024
+<Update label="16 February 2024">
+### 🔥 Features and Updates
+- Accessibility features: alt-text is not just for images! It's now easy to add alt text and equivalent meta descriptions and labels in Buttons, Options Buttons, Dropdowns and more.
+### ⚡️ Improvements
+- Various performance updates on the Web App mean that it's now significantly faster!
+- Stability, logging and performance updates on the Builder.
+### 🐞 Bug fixes
+- Hitting `ESC` inside an input or inside a Code Editor, while the text editor is in focus, will no longer close the card lose your un-applied edits.
+- The Assets card, when first opened, no longer fails to replace images with a click.
+</Update>
 
-- **🔥 Features and Updates:**
-
-  - 👥 **Updated filter component:** We re-built the filter component as it was a little clunky and unreliable. It’s now simpler (we think) and more reliable.
-  - 🪄 **Split test individual components:** You can now experiment withhiding/showing components within a test. Unsure if the social proof container increases click throughs? Now you can test just showing/hiding it without duplicating the entire page and running an A/B split on the page.
-  - 📞 **Brand New US Phone Number formatting**: You can now specify formatting for US phone number inputs including the visual display and what formats are accepted by validation. We’re looking at you, "+1".
-
-- **⚡️ Improvements:**
-  - The key names on the layers tab sometimes get a little long. Now they have tooltips for when they do.
-  - Scrolling within the UI of the builder felt a little off. We’ve made some design changes to the scroll design and action to make it feel more complete.
-  - You can now duplicate an existing Computed Field. Apparently that didn’t exist and this product manager is finding out for the first time.
-- **🐞 Bug fixes:**
-  - Occasionally the ‘Today’ filter wouldn’t apply and you’d be stuck sitting wondering what was going on. That’s now back to being its useful self.
-  - On the Options card it randomly scrolled you when you selected a tab. That’s now behaving itself.
-  - Updating the key of a computed field (or add a new one) it doesn’t overwrite the name of the input or trigger keys.
-  - Split testing requires snake_case and occasionally you could set the key without it being snake_case and the test would fail to run. That’s now fixed.
-  - The layers card now stays in place and doesn’t jump around the screen every time you open it.
-
----
-
-## February 23rd 2024
-
-- **🔥 Features and Updates:**
-
-  - 🏃🏼 **Saving your embeddable is now 40% faster.** We know watching Embeddablob is fun but waiting to get something saved took a little too long. This update improved that speed.
-  - ♿️ **Accessibility controls** for Embeddables launched in Alpha. You can now navigate through the embeddable using the ‘tab’ button to move between components and the ‘Enter’ key to move to the next page. To get access reach out to the team and we’ll enable it.
-
-- **⚡️ Improvements:**
-  - The ‘Buttons’ tab in the ‘Options’ card was too hard to access so it’s been brought forward and is now available without scrolling.
-  - You can now access the Custom HTML Editor in a full screen experience rather than a tiny little window. It’s like the IMAX of code editors now.
-  - You can now specify the maximum selection in a multi-select button e.g. up to 3 responses. This should have been added sooner but it’s finally off the backlog.
-  - Deleting is scary but occasionally you make a mistake. We’ve made it easier to delete an Option Button without clicking 4 times.
-  - We increased the accuracy of click submissions across a wider range of browser types so you can trust your funnel charts even more.
-  - You can now filter to the highest page a user reached. Perfect for seeing which users got to say the email page but no further in live session replay and their submission data.
-  - You can now see the number of events a user had in the users table. Great for seeing at a glance if they did a little or a lot in your embeddable.
-- **🐞 Bug fixes:**
-  - Occasionally discarding changes could cause the page to temporarily appear blank. That scared you (and us) and won’t happen any longer.
-  - Archived Embeddables sometimes remained archived even when you clicked ‘Un-Archive’. We had a word with the archives and now they’re back to behaving themselves. Sorry about that.
-  - API Fix for User Submissions. Occasionally the query slug would be slow but it’s now faster.
-
----
-
-## Friday 16 February, 2024
-
-- **🔥 Features and Updates:**
-  - **Accessibility features**: alt-text is not just for images! It's now easy to add alt text and equivalent meta descriptions and labels in Buttons, Options Buttons, Dropdowns and more.
-- **⚡️ Improvements:**
-  - Various performance updates on the Web App mean that it's now significantly faster!
-  - Stability, logging and performance updates on the Builder.
-- **🐞 Bug fixes:**
-  - Hitting `ESC` inside an input or inside a Code Editor, while the text editor is in focus, will no longer close the card lose your un-applied edits.
-  - The Assets card, when first opened, no longer fails to replace images with a click.
-
----
-
-## Monday 12 February, 2024
-
-- **🔥 Features and Updates:**
-  - **Submission Table & Export CSVs**:
-    - Long-awaited and much-requested, you can now easily view and download your submissions from a particular embeddable.
-    - Head to the page of a particular embeddable in the Web App and you will now see a spreadsheet-like table of all submissions (or 'entries') for that embeddable.
-    - You can also hit the Download button to export a CSV of the last 1,000, 10,000 or 100,000 submissions, to analyze further in your software of choice.
-  - **Preset option collections** for Option Buttons and Dropdowns: select from presets like 'Countries' and 'US States' to save typing them all out.
-  - **Button tooltips**: give your users more info in case they need it, with easy-to-add tooltips on buttons.
+<Update label="12 February 2024">
+### 🔥 Features and Updates
+- Submission Table & Export CSVs
+  - Long-awaited and much-requested, you can now easily view and download your submissions from a particular embeddable.
+  - Head to the page of a particular embeddable in the Web App and you will now see a spreadsheet-like table of all submissions (or 'entries') for that embeddable.
+  - You can also hit the Download button to export a CSV of the last 1,000, 10,000 or 100,000 submissions, to analyze further in your software of choice.
+- Preset option collections** for Option Buttons and Dropdowns: select from presets like 'Countries' and 'US States' to save typing them all o
+- Button tooltips**: give your users more info in case they need it, with easy-to-add tooltips on butto
 
 <Frame caption="Adding preset option buttons with a click.">
   <img src="/images/features/preset-buttons.gif" />
 </Frame>
+</Update>
 
----
+<Update label="8 February 2024">
+### 🔥 Features and Updates
+- **Version Sizes**
+  - Ever struggled to find that version from weeks ago where you made a huge number of edits?
+  - You can now see the number of edits made in each saved version of an embeddable (applies to versions saved from Feb 8 onwards).
+- US Phone number formatting**: Our brand new US phone number formatting features are now available in `BETA` and in [`JSON-Only`](/reference/glossary/glossary#json-only-feature). Contact us if you want to try them o
+- Compare Unsaved JSON Changes**: The versions diff now has a Current JSON option, so you can review your draft updates before hitting sa
+### ⚡️ Improvements
+- Our 'Auto-Preload Next Page Images' feature now applies to images inside buttons.
+</Update>
 
-## Thursday 8 February, 2024
+<Update label="1 February 2024">
+### 🔥 Features and Updates
+- You can now find the split test that you're looking for by filtering in the search bar of the Experiments card.
+- Button components now have a 'Text Wrapper' sub-element (which contains the 'Text' and 'Description' elements) available to be styled in the Designer.
+- You can now edit Logic items (Actions and Computed Fields) by directly editing the JSON.
+### ⚡️ Improvements
+- Several aspects of the product now load faster, including various analytics features in the Web App, and the initial load of the Builder.
+- Undo/redo functionality is now visually synced with the Split Test card.
+- The versions card now shows the exact date + time of each save, rather than simply "5 days ago".
+### 🐞 Bug fixes
+- Non-images no-longer have broken thumbnails in the Assets card.
+</Update>
 
-- **🔥 Features and Updates:**
-  - **Version Sizes**:
-    - Ever struggled to find that version from weeks ago where you made a huge number of edits?
-    - You can now see the number of edits made in each saved version of an embeddable (applies to versions saved from Feb 8 onwards).
-  - **US Phone number formatting**: Our brand new US phone number formatting features are now available in `BETA` and in [`JSON-Only`](/reference/glossary/glossary#json-only-feature). Contact us if you want to try them out!
-  - **Compare Unsaved JSON Changes**: The versions diff now has a Current JSON option, so you can review your draft updates before hitting save.
-- **⚡️ Improvements:**
-  - Our 'Auto-Preload Next Page Images' feature now applies to images inside buttons.
-
----
-
-## Thursday 1 February, 2024
-
-- **🔥 Features and Updates:**
-  - You can now find the split test that you're looking for by filtering in the search bar of the Experiments card.
-  - Button components now have a 'Text Wrapper' sub-element (which contains the 'Text' and 'Description' elements) available to be styled in the Designer.
-  - You can now edit Logic items (Actions and Computed Fields) by directly editing the JSON.
-- **⚡️ Improvements:**
-  - Several aspects of the product now load faster, including various analytics features in the Web App, and the initial load of the Builder.
-  - Undo/redo functionality is now visually synced with the Split Test card.
-  - The versions card now shows the exact date + time of each save, rather than simply "5 days ago".
-- **🐞 Bug fixes:**
-  - Non-images no-longer have broken thumbnails in the Assets card.
-
----
-
-## Monday 29 January, 2024
-
-- **🔥 Features and Updates:**
-  - 🧪 **Split Testing v2** This complete rebuild of our Experiments feature makes it easy and simple to do the following:
-    - Create new experiments.
-    - Pause experiments, selecting a temporary winner\*.
-    - Complete experiments, choosing a winner\* - this will automatically remove conditions as well as losing pages and components that are no longer used.
-    - Add variants and edit variant weights.
-    - Easily add experiment-related conditions to components.
-    - Get a preview link for your experiment with the variant you choose, so you can test out that variant as a user.
-    - View which pages + components are related to a particular experiment variant - these are color-coded, both in the preview and in the Layers card.
-    - See a list of past completed experiments, when they were completed, and (for new experiments\*) which variant won.
+<Update label="29 January 2024">
+### 🔥 Features and Updates
+- 🧪 **Split Testing v2** This complete rebuild of our Experiments feature makes it easy and simple to do the following:
+  - Create new experiments.
+  - Pause experiments, selecting a temporary winner\*.
+  - Complete experiments, choosing a winner\* - this will automatically remove conditions as well as losing pages and components that are no longer used.
+  - Add variants and edit variant weights.
+  - Easily add experiment-related conditions to components.
+  - Get a preview link for your experiment with the variant you choose, so you can test out that variant as a user.
+  - View which pages + components are related to a particular experiment variant - these are color-coded, both in the preview and in the Layers card.
+  - See a list of past completed experiments, when they were completed, and (for new experiments\*) which variant won.
 
 <Info>
   *Note that this only applies to experiments created in Split Testing v2. Older
   experiments can't be paused or completed in the same way.
 </Info>
+</Update>
 
----
+<Update label="25 January 2024">
+### 🔥 Features and Updates
 
-## Thursday 25 January, 2024
-
-- **🔥 Features and Updates:**
-
-  - When you add a new component, it will now be automatically selected.
-  - When building with ChatMessages components, you can now select which
+- When you add a new component, it will now be automatically selected.
+- When building with ChatMessages components, you can now select which
     GPT model to use. (Currently [`JSON-Only`](/reference/glossary/glossary#json-only-feature) for now)
 
-- **⚡️ Improvements:**
-  - Re-rendering of pages and components is more efficient, making the builder
+### ⚡️ Improvements
+- Re-rendering of pages and components is more efficient, making the builder
     faster to work with.
-  - Initial rendering of embeddables now fills templates with data (e.g. default
+- Initial rendering of embeddables now fills templates with data (e.g. default
     userData & external content) for certain component types, which should lead to
     faster load times and better Google Lighthouse scores.
-- **🐞 Bug fixes:**
-  - The Pages card no longer sometimes plays videos or loads iframes in the background.
-  - The ChatMessages component no longer fails to work if "Handle AI Messages" is not checked.
+### 🐞 Bug fixes
+- The Pages card no longer sometimes plays videos or loads iframes in the background.
+- The ChatMessages component no longer fails to work if "Handle AI Messages" is not checked.
+</Update>
 
----
-
-## Monday 22 January, 2024
-
-- **🔥 Features and Updates:**
-  - **Conditional Tags** are now live in `BETA`!
-    - Add a condition to a tag so that it is only added to a page/component/element if that condition is met.
-    - Perfect for styles that you want to add/remove dynamically.
+<Update label="22 January 2024">
+### 🔥 Features and Updates
+- **Conditional Tags** are now live in `BET
+  - Add a condition to a tag so that it is only added to a page/component/element if that condition is met.
+  - Perfect for styles that you want to add/remove dynamically.
 
 <Frame caption="Setting up conditional tags to be applied only in certain scenarios 🎨">
   <img src="/images/features/conditional-tags.gif" />
 </Frame>
+</Update>
 
----
-
-## Thursday 18 January, 2024
-
-- **🔥 Features and Updates:**
-  - You can now **Copy/Paste components and pages between different embeddables**!
-    - Use `Ctrl/Cmd + C` to copy a component, then `Ctrl/Cmd + V` to paste it in another embeddable.
-      - This works with containers - it will copy all child components along with it.
-      - You can also use the Copy button in the Options card.
-      - This will copy across the structure **without styles**.
-    - You can also **copy with styles included** using the "Copy with Styles" button in the Options card.
-      - This will bring all the styles associated with the applied tags.
-      - If any conflict occurs you will be asked to choose whether to replace tag styles or keep them.
+<Update label="18 January 2024">
+### 🔥 Features and Updates
+- You can now **Copy/Paste components and pages between different embeddables**!
+  - Use `Ctrl/Cmd + C` to copy a component, then `Ctrl/Cmd + V` to paste it in another embeddable.
+  - This works with containers - it will copy all child components along with it.
+  - You can also use the Copy button in the Options card.
+  - This will copy across the structure **without styles**.
+  - You can also **copy with styles included** using the "Copy with Styles" button in the Options card.
+  - This will bring all the styles associated with the applied tags.
+  - If any conflict occurs you will be asked to choose whether to replace tag styles or keep them.
 
 <Frame caption="Copy/Pasting a container with styles across to a different embeddable 🪄">
   <img src="/images/features/copy-container-with-styles.gif" />
 </Frame>
+</Update>
 
----
-
-## Thursday 11 January, 2024
-
-- **🔥 Features and Updates:**
-  - **Keyboard shortcuts for selecting different components**
-    - You can now change the selection using the arrow keys.
-    - Up and Down for siblings components.
-    - Left and Right for entering or exiting a container
+<Update label="11 January 2024">
+### 🔥 Features and Updates
+- Keyboard shortcuts for selecting different component
+  - You can now change the selection using the arrow keys.
+  - Up and Down for siblings components.
+  - Left and Right for entering or exiting a container
   - Quick access button to open **list of component triggers**
-    - Click the icon above the border of a selected component to quickly view all triggers associated with that component.
+  - Click the icon above the border of a selected component to quickly view all triggers associated with that component.
   - Easily see a **list of triggers for an Action** by hovering over it.
-  - **Debounce option** for InputBox components.
-  - **Default User Data** setting available in Whole Embeddable options.
-- **⚡️ Improvements:**
-  - Easier login/logout UX.
-- **🐞 Bug fixes:**
-  - Editing text/descriptions of OptionsSelector/CustomButtons with Custom HTML no longer breaks the HTML.
-  - Dragging global components on the layers no longer breaks the entire embeddable JSON.
-  - Builder no longer allows setting keys starting with numbers.
-  - Building repeatable containers is no longer buggy.
-  - When dragging a container into a global position, it now brings the child components too.
+- Debounce option** for InputBox componen
+- Default User Data** setting available in Whole Embeddable optio
+### ⚡️ Improvements
+- Easier login/logout UX.
+### 🐞 Bug fixes
+- Editing text/descriptions of OptionsSelector/CustomButtons with Custom HTML no longer breaks the HTML.
+- Dragging global components on the layers no longer breaks the entire embeddable JSON.
+- Builder no longer allows setting keys starting with numbers.
+- Building repeatable containers is no longer buggy.
+- When dragging a container into a global position, it now brings the child components too.
+</Update>
