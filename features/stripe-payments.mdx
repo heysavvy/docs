@@ -60,9 +60,8 @@ Payments in Embeddables are handled via **Stripe**, with a dedicated Stripe comp
     - Both types of line item require you to enter a quantity.
   </Step>
 
-  <Step title="Collect a customer email address (and phone, optionally)">
-    - To insert the user's given email address into the Stripe checkout, use **Templating** along with the key of the email component in your Embeddables.
-      - E.g. `{{email}}`
+  <Step title="Include the customer email address (and, optionally, phone number)">
+    - To insert the user's given email address into the Stripe checkout, add the key name of the component you use to collect the user's email, using **Templating** (e.g. `{{email}}`).
     - You can optionally collect a user's phone number, using the same method.
 
     <Tip>
