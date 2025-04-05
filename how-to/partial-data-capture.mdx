@@ -1,0 +1,104 @@
+---
+title: "How To: Handle Partial Data Capture in Embeddables"
+sidebarTitle: "How To: Handle Partial Data Capture"
+description: "Storing incomplete user answers, even when they haven't yet completed the entire funnel."
+---
+
+**Partial data capture** is easy to achieve in Embeddables.
+
+In fact, it is typically enabled by default, because Embeddables collects users' answers as they provide them, and (depending on the field's settings) stores them for use in analytics later on.
+
+There are also ways to implement custom partial data capture where you send user answers to your own backend, e.g. your API or a CRM.
+
+## Storing partial user data in Embeddables
+
+As described in the [User Data](/features/user-data) guide, each user answer can be stored on three different levels:
+
+1. Only in the context of the current page load (i.e. data is lost when the user refreshes or closes the tab).
+2. #1 and also in Local Storage in the user's browser (i.e. the session is resumed when the user reloads the page again later).
+3. #1, #2 and also in Embeddables' database (i.e. the data is also available for use in analytics in the Embeddables Web App).
+
+Therefore, any fields that are configured with option #3 will automatically be captured as partial data, as the user enters the information, and will be visible later in the Embeddables Web App (to logged-in users with sufficient permissions).
+
+## Sending partial user data to your own backend
+
+To send partial user data to your own backend, you can:
+1. Add an Action with custom code that sends the data to your backend,
+2. Add a Trigger to execute that Action when the user reaches a key page or clicks an important button.
+
+### Instructions:
+
+<Steps>
+  <Step title="Create a custom code Action">
+    - Go to the Logic sidebar and click on the Actions tab
+    - Click `+ Add New Action`
+    - Give it a descriptive name like "Send Data to Backend"
+    - Hit `Add`
+  </Step>
+
+  <Step title="Write your custom code">
+    - Add code similar to the example below, which sends user data to your backend API:
+
+```js
+// All Actions must contain a function called output()
+function output(userData) {
+  // Construct the data object with the user's answers
+  const dataToSend = {
+    ...userData,
+  };
+
+  // Replace with your backend API endpoint
+  const url = "https://your-api.example.com/data";
+  
+  // Optional: Add any required headers
+  const headers = {
+    "Content-Type": "application/json",
+  };
+
+  // Send POST request
+  fetch(url, {
+    method: "POST",
+    headers,
+    body: JSON.stringify(dataToSend),
+  });
+}
+```
+
+  </Step>
+
+  <Step title="Add Triggers for user events">
+    - Switch to the Triggers tab
+    - Add a new Trigger
+    - Choose the event that should trigger sending data. For example:
+      - `WHEN Page IS Changed` to send data on every page change
+      - `WHEN Button KEY submit_button IS Clicked` to send on button click
+    - Select your "Send Data to Backend" Action
+    - Hit `Add`
+    - Repeat for any other events you want to trigger the Action, e.g. all key milestone pages in your funnel
+  </Step>
+
+  <Step title="Test the integration">
+    - Preview your Embeddable
+    - Open your browser's developer tools to monitor network requests
+    - Verify that data is being sent to your backend when the triggers fire
+    - Check that the data structure matches what your backend expects
+  </Step>
+</Steps>
+
+<Card
+  title="Learn more about Actions and Triggers"
+  icon="code"
+  href="/features/actions"
+>
+  Read more about Actions and Triggers in Embeddables.
+</Card>
+
+<Card
+  title="Learn more about Custom Code"
+  icon="code"
+  href="/guides/custom-code"
+>
+  Read more about writing Custom Code in Embeddables, including all the
+  available arguments passed in to the function.
+</Card>
+
