@@ -1,0 +1,86 @@
+---
+title: "How To: Retrieve User Data on Different Devices"
+description: "Resuming a user's progress after remarketing to them by email or SMS"
+---
+
+This guide explains how to implement user session recovery when users access your application from a different device, typically through email or SMS remarketing campaigns.
+
+## Overview
+
+To securely allow users to resume their session on a different device, you'll need to:
+1. Generate a **Hashed Token**, which is generated from the user's Entry ID, an expiration timestamp, and a Secret Key.
+2. Send users a secure URL that contains this Hashed Token, as well as the user's Entry ID and the expiration timestamp.
+3. When a user opens the URL, use the Hashed Token and other parameters to securely call the Embeddables API from the client, which will return the User Data.
+4. Use this retrieved User Data to restore the user's session.
+
+
+## Generating the Hashed Tokens and secure URLs
+
+To generate a Hashed Token and secure URL, you'll need a **Secret Key** - **contact Embeddables Support to get this Secret Key**.
+
+Here's how to generate the Hashed Token and secure URL:
+
+```javascript
+// Required parameters
+const secretKey = process.env.EMBEDDABLES_LOAD_ENTRY_SECRET_KEY
+const entryId = "entry_aaabbbcccdddeeefff"  // The ID of the user's entry
+const expiresAt = "2025-01-01T00:00:00.000Z"  // ISO format timestamp
+
+// Generate the hash
+const stringToHash = `${secretKey}---${entryId}---${expiresAt}`
+const token = sha256(stringToHash, 'utf8', 'hex')
+
+// Construct the final URL
+const url = `https://yourwebsite.com/flow?token=${token}&entry_id=${entryId}&expires_at=${expiresAt}`
+```
+
+## Client-Side Implementation
+
+Once the user clicks the generated URL, implement the following code to fetch and restore their session:
+
+```javascript
+// Fetch the User Data from the Embeddables API
+await fetch(
+  "https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/load_entry_data",
+  {
+    body: JSON.stringify({
+      flow_id: "flow_aaabbbcccdddeeefff", // Your Embeddable ID
+      entry_id: "entry_aaabbbcccdddeeefff", // The user's Entry ID
+      token: "<HASHED_TOKEN>", // The Hashed Token
+      expires: "2025-01-01T00:00:00.000Z", // The expiration timestamp
+    }),
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    method: "POST",
+  }
+).then(async (res) => {
+  const data = await res.json();
+  console.log('Retrieved User Data: ', data)
+
+  // If the User Data is successfully retrieved,
+  // set the user data and navigate to the user's current page
+  if (data && data.entry) {
+    window.Savvy.setUserData({ ...data.entry });
+    window.Savvy.goToPage("flow_id", data.entry.current_page_key)
+  }
+})
+```
+
+## Important Notes
+
+1. The secret key should always be stored as an encrypted backend environment variable and never exposed in client-side code.
+2. Each URL should have a reasonable expiration time, e.g. 7 days or 30 days.
+3. The Hashed Token is unique per user and expiration date.
+
+## Troubleshooting
+
+If you're experiencing issues:
+1. Verify that the secret key is correctly set in your environment variables
+2. Ensure the expiration timestamp is in the correct ISO format
+3. Check that all URL parameters (token, entry_id, expires_at) are properly encoded
+4. Confirm that the necessary permissions are enabled for your application
+
+
+
+
