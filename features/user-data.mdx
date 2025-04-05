@@ -43,6 +43,47 @@ User Data is stored in three places, or 'contexts', and each one usually stored 
 | **URL Params**      | `utm_source`                 | Setting a condition based on the user's traffic source  |
 | **Registered Keys** | `access_token`               | Storing the result of an API request                    |
 
+## User Data keys and key naming
 
+### Input component keys
+
+Input components, i.e. components that collect data from the user, are special in that they store their data in the User Data.
+
+This means that **the key name you choose for an input component will also be the property key name for that field in the User Data**.
+
+For example, if you have an input component with the key `name`, the User Data will look like this:
+
+```json
+{
+  ...
+  "name": "John Doe"
+  ...
+}
+```
+
+For this reason, it's especially important to choose good key names for input components.
+
+## Choosing good key names
+
+- All keys must be in `snake_case`, meaning:
+  - lowercase letters and underscores only
+  - no numbers
+  - no special characters
+  - no spaces
+  - no uppercase letters
+- All experiment keys must start with `split_`.
+
+### Input component keys, and other keys that end up in the User Data:
+- Should be short and descriptive (e.g. `full_name`).
+- Should describe the data it's collecting, not the component (e.g. `full_name` not `full_name_input`).
+- Should be unique within the Embeddable, except in very special cases (see below).
+
+## Keeping keys unique
+
+All keys, whether component keys or other User Data keys, must be unique within the Embeddable.
+
+The only exception to this rule is if you're handling multiple input components that will be 'swapped out' - i.e. shown/hidden such that only one of them is visible at a time.
+
+The most common use-case of this is a [Split Test](/features/split-testing), e.g. testing between two different email capture pages, both containing an input component with the key `email`.
 
 
