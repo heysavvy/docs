@@ -63,7 +63,7 @@
         "features/analytics",
         "features/saving-and-version-control",
         "features/testing-and-debugging/url-params",
-        "features/embed-in-your-site"
+        "features/publish-to-your-site"
       ]
     },
     {
@@ -111,9 +111,10 @@
           "group": "Publishing",
           "icon": "globe-pointer",
           "pages": [
-            "how-to/publish-to-your-site",
-            "how-to/publish-in-react",
-            "how-to/publish-in-react-native"
+            "how-to/embed-in-your-site",
+            "how-to/embed-in-react",
+            "how-to/embed-in-react-native",
+            "how-to/reverse-proxy-setup"
           ]
         }
       ]

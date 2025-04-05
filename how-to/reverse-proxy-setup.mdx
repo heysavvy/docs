@@ -1,0 +1,113 @@
+---
+title: "How To: Publish your Embeddable via a Reverse Proxy"
+sidebarTitle: "How To: Publish via a Reverse Proxy"
+description: "Configure a reverse proxy to serve embeddables on your domain"
+---
+
+This guide explains how to set up a reverse proxy to serve Embeddables content through your own domain.
+
+<Tip>
+  Looking for other ways to publish your Embeddable? Check out the [Publish to your site](/features/publish-to-your-site) guide.
+</Tip>
+
+## Overview
+
+Publishing your Embeddable via a reverse proxy can be done in 2 steps:
+
+1. Point your page to our proxy server (`https://proxy.embeddables.com`)
+2. Pass the `X-Embeddables-Id` header with the correct Embeddable ID
+
+## Advantages of using a reverse proxy
+
+- **Simplicity**: Unlike embedding in your site via our embed code, there is no need to set up a blank page on your site to host the Embeddable.
+- **Speed**: The Embeddable rendered directly from our proxy server, so the extra client-side fetch from our embed code is skipped.
+
+## Setting up a reverse proxy
+
+<Steps>
+  <Step title="Point your page to our proxy server">
+    Configure your reverse proxy to point to `https://proxy.embeddables.com`. This is the main endpoint that will serve your embeddable content.
+    
+    For example, in Nginx:
+    ```nginx
+    location /your-reverse-proxy-page {
+        proxy_pass https://proxy.embeddables.com;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+    ```
+  </Step>
+  
+  <Step title="Verify the proxy is pointing to the correct page">
+    Visit `https://yourdomain.com/your-reverse-proxy-page` in your browser. You should see content similar to what appears on `https://proxy.embeddables.com`.
+
+    <Frame>
+      <img src="/images/how-to/reverse-proxy.png" alt="Reverse Proxy Test" />
+    </Frame>
+  </Step>
+  
+  <Step title="Pass the correct embeddable ID">
+    Add the `X-Embeddables-Id` header to your proxy configuration. This header tells the proxy which specific embeddable to serve.
+    
+    In Nginx, add this to your configuration:
+    ```nginx
+    proxy_set_header X-Embeddables-Id "your_embeddable_id";
+    ```
+    
+    In Apache:
+    ```apache
+    RequestHeader set X-Embeddables-Id "your_embeddable_id"
+    ```
+  </Step>
+  
+  <Step title="Verify that it's working">
+    Refresh your page at `https://yourdomain.com/your-reverse-proxy-page`. You should now see your specific embeddable being served.
+    
+    Common issues at this stage:
+    - Incorrect embeddable ID
+    - Missing or malformed headers
+    - Caching issues (try clearing your browser cache)
+    - Propagation time (try waiting a few minutes)
+  </Step>
+</Steps>
+
+## Example Configurations
+
+### Apache
+
+```apache
+<Location "/your-reverse-proxy-page">
+    ProxyPass https://proxy.embeddables.com
+    ProxyPassReverse https://proxy.embeddables.com
+    RequestHeader set X-Embeddables-Id "your_embeddable_id"
+</Location>
+```
+
+### Nginx
+
+```nginx
+location /your-reverse-proxy-page {
+    proxy_pass https://proxy.embeddables.com;
+    proxy_set_header X-Embeddables-Id "your_embeddable_id";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+}
+```
+
+## Common Issues
+
+1. **Content Not Loading**
+    - Verify your reverse proxy configuration.
+    - Check that the `X-Embeddables-Id` header is correctly set.
+    - Check that the Embeddable you're trying to access has been **pushed to production**.
+      - If not, then you'll need to add the `?savvy_flow_version=latest` query parameter to the URL to preview the latest version.
+    - Ensure your domain's SSL certificate is valid.
+    - Clear your browser cache.
+    - Wait a few minutes for propagation to take effect.
+
+2. **Wrong Content Appearing**
+    - Double-check the embeddable ID.
+    - Verify the proxy_pass URL is correct.
+    - Clear your browser cache.
