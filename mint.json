@@ -60,6 +60,7 @@
         "features/split-testing",
         "features/computed-fields",
         "features/actions",
+        "features/stripe-payments",
         "features/analytics",
         "features/saving-and-version-control",
         "features/testing-and-debugging/url-params",
@@ -70,10 +71,10 @@
       "group": "Guides & Best Practices",
       "pages": [
         "guides/naming-keys",
-        "guides/how-best-to-send-data",
-        "guides/passing-data-in-out",
         "guides/storing-data-cookies",
-        "guides/custom-code"
+        "guides/custom-code",
+        "guides/how-best-to-send-data",
+        "guides/passing-data-in-out"
       ]
     },
     {

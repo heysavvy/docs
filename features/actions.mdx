@@ -28,6 +28,23 @@ Actions have access to the [User Data](/features/user-data) JSON object, a serie
 
 </Steps>
 
+## Action execution environment
+
+Actions are executed client-side, in the main window environment.
+
+This means that they have access to the main window's functions and variables, such as `window.location`, `document`, and `localStorage`.
+
+This can have useful benefits, such as:
+1. The ability to manipulate the DOM
+2. Access to read and write to `localStorage`
+3. Accessing frontend functionality that you might want to expose to the Embeddable, e.g. `window.logInToApp()`.
+
+<Warning>
+  **Be careful to avoid exposing secure information such as API Secrets in Actions.**
+  
+  One workaround for this (which can also solve CORS issues) is to use the Embeddables Proxy API - ask Embeddables for more information on this.
+</Warning>
+
 <Card
   title="Learn more about Custom Code"
   icon="code"
@@ -36,3 +53,75 @@ Actions have access to the [User Data](/features/user-data) JSON object, a serie
   Read more about writing Custom Code in Embeddables, including all the
   available arguments passed in to the function.
 </Card>
+
+
+## Example Actions
+
+### Send Data to Backend
+
+Here's an example of an Action that sends a subset of User Data to a backend.
+
+```js
+// All Actions must contain a function called output()
+function output(userData) {
+  // Create an object with the data we want to send
+  const dataToSend = {
+    email: userData.email,
+    name: userData.name,
+    favorite_color: userData.favorite_color,
+  };
+
+  // Send this data to the backend
+  fetch('https://your-backend-url.com/', {
+    method: 'POST',
+    body: JSON.stringify(dataToSend),
+  });
+}
+```
+
+## Common use-cases
+
+<CardGroup>
+  <Card
+    title="How To: Send Data to Klaviyo"
+    href="/how-to/send-data-to-klaviyo"
+  >
+    Setting up an Action with custom code that sends user data to Klaviyo's API
+  </Card>
+  <Card
+    title="How To: Send Data to Telegra MD"
+    href="/how-to/send-data-to-telegra-md"
+  >
+    Setting up an Action with custom code that sends user data to Telegram's API
+  </Card>
+  <Card
+    title="How To: Send Data to Tellescope"
+    href="/how-to/send-data-to-tellescope"
+  >
+    Setting up an Action with custom code that sends user data to Tellescope's API
+  </Card>
+  <Card
+    title="How To: Handle Partial Data Capture"
+    href="/how-to/partial-data-capture"
+  >
+    Storing incomplete user answers, even when they haven't yet completed the entire funnel.
+  </Card>
+  <Card
+    title="How To: Retrieve User Data on Different Device"
+    href="/how-to/retrieve-user-data-on-different-device"
+  >
+    Resuming a user's progress after remarketing to them by email or SMS
+  </Card>
+  <Card
+    title="How To: Add External Scripts"
+    href="/how-to/add-external-scripts"
+  >
+    Two ways to add external scripts or style libraries toyour Embeddable
+  </Card>
+  <Card
+    title="How To: Run custom code on Embeddable Load"
+    href="/how-to/run-custom-code-on-load"
+  >
+    Running JS code on first load, e.g. to run a function or add an event listener
+  </Card>
+</CardGroup>

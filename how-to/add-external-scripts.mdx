@@ -13,13 +13,17 @@ There are two recommended methods to include external JavaScript packages in you
 If you choose #2, here's sample code for inserting a `<link>` tag:
 
 ```js
+// All Actions must contain a function called output()
+function output() {
+  // Add the link tag
+  loadStylesheet("<URL>");
+}
+
+// Helper function to add a link tag to the head of the page
 function loadStylesheet(href) {
   const link = document.createElement("link");
   link.rel = "stylesheet";
   link.href = href;
   document.head.appendChild(link);
 }
-
-// Add the link tag
-loadStylesheet("<URL>");
 ```

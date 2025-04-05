@@ -33,6 +33,13 @@ Computed Fields have access to the User Data JSON object, a series of helper fun
 
 </Steps>
 
+<Tip>
+  Computed Fields are executed client-side, in the main window environment.
+
+  This means that they have access to the main window's functions and variables, such as `window.location`, `document`, and `localStorage`.
+</Tip>
+
+
 ## Example Computed Fields
 
 ### Full Name
@@ -40,6 +47,7 @@ Computed Fields have access to the User Data JSON object, a series of helper fun
 Here's an example of a Computed Field called `full_name`, that takes the user's first and last name and concatenates them together.
 
 ```js
+// All Computed Fields must contain a function called result()
 function result(userData, helperFunctions, triggerContext) {
   // Get the user's first and last name from the User Data JSON object,
   // and join them together with a space in the middle
@@ -52,6 +60,7 @@ function result(userData, helperFunctions, triggerContext) {
 Here's an example of a Computed Field called `bmi`, that takes the user's weight and height and calculates their BMI.
 
 ```js
+// All Computed Fields must contain a function called result()
 function result(userData, helperFunctions, triggerContext) {
   // Get the user's weight and height from the User Data JSON object
   // In this example, we're assuming the weight is in kilograms and the height is in centimeters

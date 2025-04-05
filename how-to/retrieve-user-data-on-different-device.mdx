@@ -36,35 +36,38 @@ const url = `https://yourwebsite.com/flow?token=${token}&entry_id=${entryId}&exp
 
 ## Client-Side Implementation
 
-Once the user clicks the generated URL, implement the following code to fetch and restore their session:
+Once the user clicks the generated URL, create a Action, triggered on Embeddable Load, with the following code to fetch and restore their session:
 
 ```javascript
-// Fetch the User Data from the Embeddables API
-await fetch(
-  "https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/load_entry_data",
-  {
-    body: JSON.stringify({
-      flow_id: "flow_aaabbbcccdddeeefff", // Your Embeddable ID
-      entry_id: "entry_aaabbbcccdddeeefff", // The user's Entry ID
-      token: "<HASHED_TOKEN>", // The Hashed Token
-      expires: "2025-01-01T00:00:00.000Z", // The expiration timestamp
-    }),
-    headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    method: "POST",
-  }
-).then(async (res) => {
-  const data = await res.json();
-  console.log('Retrieved User Data: ', data)
+// All Actions must contain a function called output()
+function output(userData, helperFunctions, triggerContext) {
+  // Fetch the User Data from the Embeddables API
+  await fetch(
+    "https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/load_entry_data",
+    {
+      body: JSON.stringify({
+        flow_id: "flow_aaabbbcccdddeeefff", // Your Embeddable ID
+        entry_id: "entry_aaabbbcccdddeeefff", // The user's Entry ID
+        token: "<HASHED_TOKEN>", // The Hashed Token
+        expires: "2025-01-01T00:00:00.000Z", // The expiration timestamp
+      }),
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      method: "POST",
+    }
+  ).then(async (res) => {
+    const data = await res.json();
+    console.log('Retrieved User Data: ', data)
 
-  // If the User Data is successfully retrieved,
-  // set the user data and navigate to the user's current page
-  if (data && data.entry) {
-    window.Savvy.setUserData({ ...data.entry });
-    window.Savvy.goToPage("flow_id", data.entry.current_page_key)
-  }
-})
+    // If the User Data is successfully retrieved,
+    // set the user data and navigate to the user's current page
+    if (data && data.entry) {
+      helperFunctions.setUserData({ ...data.entry });
+      helperFunctions.goToPage("flow_id", data.entry.current_page_key)
+    }
+  })
+}
 ```
 
 ## Important Notes

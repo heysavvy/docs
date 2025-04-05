@@ -1,0 +1,175 @@
+---
+title: "Accepting Stripe Payments in Embeddables"
+sidebarTitle: "Payments"
+description: "How to accept payments with our deep Stripe integration"
+icon: "credit-card"
+---
+
+Payments in Embeddables are handled via **Stripe**, with a dedicated Stripe component that is integrated deeply into our platform.
+
+## Keys and IDs that you'll need
+
+- Your Stripe **Publishable Key**
+- A **Restricted Key** generated in Stripe, with the following scopes/permissions:
+  - `Customers`: `Write`
+  - `Payment Intents`: `Write`
+  - `Setup Intents`: `Write`
+  - `Checkout Session`: `Write`
+  - `Credit notes`: `Read`
+  - `Subscriptions`: `Write`
+- Any **Price IDs** for specific products you want to offer
+
+## Setting up Stripe
+
+### The basics - required steps to add a Stripe component
+
+<Steps>
+  <Step title="Generate and share the necessary Stripe keys">
+    - Get your Publishable Key, and generate a Restricted Key with the required scopes/permissions, from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys).
+    - Pass these keys to the Embeddables Team (make sure to share the Restricted Key in a secure way).
+  </Step>
+
+  <Step title="Add a Stripe component to your Embeddable">
+    - In the Builder, switch to the checkout page that should contain the Stripe component.
+    - Select a Container to insert the Stripe component into, or a copmonent that it should be added next to.
+    - Open the `+` left-hand sidebar, and select `Stripe` from the list of components.
+  </Step>
+
+  <Step title="Choose the type of payment you want to accept">
+    - Under Checkout mode, select one of the following options:
+      - **Payment**: If you're accepting only one-time payments, or want to place a hold on a user's card.
+      - **Setup**: For setting up a user's payment method to take payments in the future.
+      - **Subscription**: If your line items will include at least one recurring payment.
+    <Note>
+      Please note that Stripe only supports placing a hold on one-time payments, not recurring payments.
+    </Note>
+  </Step>
+
+  <Step title="Choose which payment methods you want to accept">
+    - Under Payment methods, select the payment methods you want to accept, from the following options:
+      - **Credit card**
+      - **Link** (Stripe's own quick purchase login system)
+      - **US Bank Account**
+      - **Buy now, pay later services**: Afterpay/Clearpay, Klarna, Affirm
+  </Step>
+
+  <Step title="Add line items to the checkout">
+    - There are two different types of line item that you can add:
+      - **Price ID**: This corresponds to a product and price that you've already created in Stripe.
+      - **Custom line item**: This lets you manually enter an amount, currency and name for the line item in Embeddables.
+    - Both types of line item require you to enter a quantity.
+  </Step>
+
+  <Step title="Collect a customer email address (and phone, optionally)">
+    - To insert the user's given email address into the Stripe checkout, use **Templating** along with the key of the email component in your Embeddables.
+      - E.g. `{{email}}`
+    - You can optionally collect a user's phone number, using the same method.
+
+    <Tip>
+      By default, Stripe's credit card fields will also include Country and Zipcode / Postal Code fields.
+      These are all Stripe needs for a customer billing address, so you don't need to provide any billing address fields.
+    </Tip>
+  </Step>
+</Steps>
+
+### Optional and advanced configuration
+
+<AccordionGroup>
+  <Accordion title="Collect shipping information">
+    To collect shipping information from the user, you need to make sure you have the relevant input components in your Embeddable:
+      - Address Line 1
+      - Address Line 2
+      - City
+      - State
+      - Zipcode / Postal Code
+      - Country
+
+    Then, enter the keys of these components in the Shipping Address fields in the Stripe component using Templating, e.g. `{{address_line_1}}`.
+      
+    <Note>
+      Shipping information is optional, depending on whether you're sending the customer a physical product.
+      Billing information is required, but is handled automatically by the Stripe component, as described above.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Place a hold on the customer's card">
+    This lets you place a hold on the user's card, which:
+      1. Ensures that they have enough funds to cover the cost of the order.
+      2. Holds the funds for a certain period of time, to ensure that they're available to complete the payment.
+
+    For more information on how placing a hold works in Stripe, see the [Stripe documentation](https://docs.stripe.com/payments/place-a-hold-on-a-payment-method).
+    <Warning>
+      You will need to manually release the hold on the user's card at a later date to complete the payment.
+      This is not handled by Embeddables, since it happens at a later stage, when the user is no longer interacting with the Embeddable.
+    </Warning>
+    <Note>
+      Please note that Stripe only supports placing a hold on one-time payments, not recurring payments.
+      To achieve the effect of a hold on a recurring payment, some companies set up a one-time payment to cover the cost of the first month, and then add a recurring payment with a delay or free trial.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Add a custom success message">
+    This lets you customize the message that users see after they complete the payment.
+
+    If the payment fails, for example if the credit card is declined, the error message returned from Stripe will be displayed to the user.
+  </Accordion>
+
+  <Accordion title="Choose a layout for the Stripe component">
+    This lets you choose a layout for the Stripe component, which affects how different payment method options are displayed to the user.
+    The following options are available:
+      - **Tabs** (default): This displays different payment methods in separate tabs, in a horizontal row across the top of the component.
+      - **Accordion**: This displays different payment methods in an accordion of expanded and collapsed sections, with one payment method option open at a time.
+  </Accordion>
+
+  <Accordion title="Trigger actions on payment events">
+    You can trigger [Actions](/features/actions) on the following payment events:
+
+    | Event                    | Triggered when                                                    |
+    |------------------------- | ----------------------------------------------------------------- |
+    | **Payment attempted**    | The user clicks the Pay button (regardless of success or failure) |
+    | **Payment successful**   | The payment is completed                                          |
+    | **Payment failed**       | The payment is declined                                           |
+
+    To do this:
+    1. Create a new Action and type the JavaScript code you want to run.
+    2. Add a Trigger to the Action that fires on one of the above payment events.
+  </Accordion>
+
+  <Accordion title="Collect Stripe IDs to send to your backend">
+    You can collect the following IDs that Stripe provides when a payment is completed:
+
+    | Stripe ID              | Provided for                                                     |
+    | ---------------------- | ---------------------------------------------------------------- |
+    | **Customer ID**        | All payment types                                                |
+    | **Invoice ID**         | All payments except on-hold payments and collecting card details |
+    | **Payment Intent ID**  | One-time payments only                                           |
+    | **Subscription ID**    | Recurring payments only                                          |
+
+    #### To collect these IDs:
+    1. Specify a User Data key to store the ID in, in the relevant field in the Stripe component options.
+    2. Add that key to the Registered Keys in the Embeddable-wide settings.
+
+    #### To send them to your backend:
+    1. Set up an Action that's triggered when the payment is completed, as specified above in [Trigger actions on payment events](#trigger-actions-on-payment-events).
+    2. Use the relevant keys in `userData`, provided in the Action function's first argument.
+
+    **Example Action code:**
+
+    ```javascript
+    // All Actions must contain a function called output()
+    // Trigger this Action when the payment is completed
+    function output(userData) {
+      // Extract the relevant IDs from the userData object
+      const { customer_id, invoice_id, subscription_id } = userData;
+      console.log(customer_id, invoice_id, subscription_id);
+
+      // Send these IDs to your backend
+      fetch('https://your-backend-url.com/', {
+        method: 'POST',
+        body: JSON.stringify({ customer_id, invoice_id, subscription_id }),
+      });
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
