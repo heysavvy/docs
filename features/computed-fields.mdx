@@ -73,6 +73,25 @@ function result(userData, helperFunctions, triggerContext) {
 }
 ```
 
+### User is/is not over 18
+
+Here's an example of a Computed Field called `is_over_18`, that takes the user's date of birth and returns a boolean value indicating whether they are over 18.
+
+```js
+// All Computed Fields must contain a function called result()
+function result(userData, helperFunctions, triggerContext) {
+  // Get the user's date of birth from the User Data JSON object
+  // Assumes the date of birth is stored as a 'YYYY-MM-DD' string, e.g. '1990-01-01'
+  const dob = userData.date_of_birth;
+
+  // Calculate the date exactly 18 years ago
+  const eighteenYearsAgo = new Date();
+  eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+
+  // Return true if the user's date of birth is before 18 years ago, false otherwise
+  return new Date(dob) < eighteenYearsAgo;
+}
+```
 
 <Card
   title="Learn more about Custom Code"
