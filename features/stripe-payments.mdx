@@ -61,6 +61,7 @@ The following are the minimum steps required to add a Stripe component to your E
       - **Price ID**: This corresponds to a product and price that you've already created in Stripe.
       - **Custom line item**: This lets you manually enter an amount, currency and name for the line item in Embeddables.
     - Both types of line item require you to enter a quantity.
+    - If you need your line items to be dynamic (i.e. change based on the user's answers, like what plan they select), see below.
   </Step>
 
   <Step title="Include the customer email address (and, optionally, phone number)">
@@ -96,6 +97,47 @@ These features are not required in order to successfully accept payments, but th
 
       Billing information is required, but only country and postal code. This is handled automatically by the Stripe component, as described above, so you don't need to add your own billing address fields.
     </Info>
+  </Accordion>
+
+  <Accordion title="Add dynamic line items">
+    Sometimes you need your line items to be dynamic - i.e. change based on the user's answers, such as the plan that they select.
+
+    To do this:
+    1. Use a [Computed Field](/features/computed-fields)` to generate the JSON for the line items.
+    2. Refernce the key of that Computed Field in the Line Items section of the Stripe component.
+
+    <Note>
+      In order for the Stripe component to still work when the Embeddable is in test mode, you need to ensure that the Computed Field handles test mode correctly by returning a test price_id.
+    </Note>
+
+    **Example Computed Field code:**
+
+    ```javascript
+    // All Computed Fields must contain a function called result()
+    function result(userData) {
+      // Determine whether we're in test mode
+      const url = new URL(window.location)
+      const isTestMode = url.searchParams.get('savvy_test') === 'true'
+        || (!url.searchParams.get('savvy_test') && url.searchParams.get('savvy_env'))
+        || (!url.searchParams.get('savvy_test') && url.host.endsWith('embeddables.com'))
+      const testPriceId = 'price_1KGqjRIQ3JVMlttKzJ059opF'
+
+      // Determine which price_id the user has selected
+      const selectedProduct = userData.selected_plan === 'advanced' ? 'price_1KGqjRIQ3JVMlttKzJ059opF' : 'price_1KGqjRIQ3JVMlttKzJ059opF'
+
+      // If we're in test mode, use the test price_id, otherwise use the selected product's price_id
+      const priceId = isTestMode ? testPriceId : selectedProduct.stripe_price_id
+
+      // Return the line items
+      return [
+        {
+          price: priceId, 
+          quantity: 1,
+        },
+      ];
+    }
+    ```
+
   </Accordion>
 
   <Accordion title="Place a hold on the customer's card">
