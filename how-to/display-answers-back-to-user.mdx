@@ -1,0 +1,76 @@
+---
+title: "How To: Display answers back to the user using Templating"
+sidebarTitle: "How To: Display answers back to the user"
+description: "Using templating to show User Data in text components"
+---
+
+You can use Embeddables' **Templating** feature, a simple templating syntax available in the Builder, to display [User Data](/features/user-data) values within text components or components with text elements.
+
+This allows you to create dynamic, personalized content that updates based on user input or computed values.
+
+## Basic Templating Syntax
+
+To display a User Data value in text, wrap the key name in double curly braces:
+
+```text
+{{key_name}}
+```
+
+You can do this inside `Plain Text` and `Rich Text` components, as well as inside text fields of other components, such as Labels in `Button` components.
+
+<Check>
+  The value displayed will automatically update whenever the referenced User Data value changes.
+</Check>
+
+## Common Examples
+
+Here are some common ways to use templating:
+
+### Display user input
+If you've collected a user's name through an input component with the key `first_name`, you can display it like this:
+```text
+Thanks for that info, {{first_name}}!
+```
+
+### Display computed values
+If you have a [Computed Field](/features/computed-fields) that calculates a value (like BMI), you can display the result:
+```text
+Your BMI is {{bmi}}
+```
+
+### Display nested properties
+For User Data that contains nested objects (like API responses), you can access nested properties using dot notation:
+```text
+Error: {{api_response.error_message}}
+```
+
+## Tips for using templating
+
+- Make sure the key exists in User Data before trying to display it
+- For numbers that need formatting, consider using a [Computed Field](/features/computed-fields) to format the value first
+- If the value might be undefined, you can provide a default value using a Computed Field
+- Keys are case-sensitive and must match exactly what's in the User Data
+
+## Computed Field + Templating Example: Full name display
+
+Here's a complete example that shows how to display a user's full name using both direct input values and a Computed Field:
+
+1. Collect the first and last name in separate input components with keys `first_name` and `last_name`
+2. Create a Computed Field called `full_name` that combines them:
+```js
+function result(userData) {
+  return `${userData.first_name} ${userData.last_name}`;
+}
+```
+3. Display the full name using templating:
+```text
+Welcome back, {{full_name}}!
+```
+
+<Card
+  title="Learn more about User Data"
+  icon="database"
+  href="/features/user-data"
+>
+  Read more about how User Data works in Embeddables, including how it's stored and accessed.
+</Card>
