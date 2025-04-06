@@ -34,18 +34,32 @@ For example, you could clone the title, change the length of the new title, and 
   </Step>
   <Step title="Set the keys and variant percentages">
     - Choose a key for the experiment. Experiment keys always start with `split_`.
-    <Tip>A good key is unique to the experiment and describes what is being tested, e.g. `split_hero_title_length`.</Tip>
+      <Tip>
+        A good key is unique to the experiment and describes what is being tested, e.g. `split_hero_title_length`.
+      </Tip>
     - Choose keys for each variant.
-    <Tip>We recommend that the control key starts with `control_` (e.g. `control_no_change`) and `variant_` (e.g. `variant_longer_title` or `variant_shorter_title`).</Tip>
+      <Tip>
+        We recommend that the control key starts with `control_` (e.g. `control_no_change`).
+        
+        Similarly, we recommend that the variant keys start with `variant_` (e.g. `variant_longer_title` or `variant_shorter_title`).
+      </Tip>
     - Choose the percentage of traffic to be directed to each variant.
   </Step>
   <Step title="Change the content for each variant">
     - Select the page or component that you want to modify based on this Experiment (if multiple pages/components, just repeat the tasks in this step for each one).
     - Clone that page or component, and modify it to match what you want users in your first variant to see (e.g. change the title text to be longer).
     - Go to the Options sidebar (the tab on the right-hand-side) and add an Experiment Condition to the page/component, matching the experiment key and the variant key that matches this content.
-    <Tip>This will likely make the current page/component disappear, since you are not currently viewing that variant.</Tip>
+
+      <Tip>
+        This will likely make the current page/component disappear, since you are not currently viewing that variant.
+      </Tip>
+
     - Add a similar Experiment Condition onto the control version of your component/page.
-    <Tip>A `no_value` value will be added to the Experiment Condition on the control variant, so that it will always be shown by default.</Tip>
+    
+      <Tip>
+        A `no_value` value will be added to the Experiment Condition on the control variant, so that it will always be shown by default.
+      </Tip>
+
     - Repeat for any other variants by cloning the page/component, changing the content, and updating the Experiment Condition.
   </Step>
   <Step title="Preview, test and push live for real users">

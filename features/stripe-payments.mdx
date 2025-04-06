@@ -69,6 +69,7 @@ The following are the minimum steps required to add a Stripe component to your E
 
     <Tip>
       By default, Stripe's credit card fields will also include Country and Zipcode / Postal Code fields.
+
       These are all Stripe needs for a customer billing address, so you don't need to provide any billing address fields.
     </Tip>
   </Step>
@@ -90,10 +91,11 @@ These features are not required in order to successfully accept payments, but th
 
     Then, enter the keys of these components in the Shipping Address fields in the Stripe component using Templating, e.g. `{{address_line_1}}`.
       
-    <Note>
+    <Info>
       Shipping information is optional, depending on whether you're sending the customer a physical product.
-      Billing information is required, but is handled automatically by the Stripe component, as described above.
-    </Note>
+
+      Billing information is required, but only country and postal code. This is handled automatically by the Stripe component, as described above, so you don't need to add your own billing address fields.
+    </Info>
   </Accordion>
 
   <Accordion title="Place a hold on the customer's card">
@@ -103,11 +105,13 @@ These features are not required in order to successfully accept payments, but th
 
     For more information on how placing a hold works in Stripe, see the [Stripe documentation](https://docs.stripe.com/payments/place-a-hold-on-a-payment-method).
     <Warning>
-      You will need to manually release the hold on the user's card at a later date to complete the payment.
-      This is not handled by Embeddables, since it happens at a later stage, when the user is no longer interacting with the Embeddable.
+      **You will need to manually release the hold on the user's card at a later date to complete the payment.**
+
+      This is not handled by Embeddables, since it happens at a later stage when the user is no longer interacting with the Embeddable.
     </Warning>
     <Note>
       Please note that Stripe only supports placing a hold on one-time payments, not recurring payments.
+
       To achieve the effect of a hold on a recurring payment, some companies set up a one-time payment to cover the cost of the first month, and then add a recurring payment with a delay or free trial.
     </Note>
   </Accordion>
