@@ -5,7 +5,7 @@ description: "How to accept payments with our deep Stripe integration"
 icon: "credit-card"
 ---
 
-Payments in Embeddables are handled via **Stripe**, with a dedicated Stripe component that is integrated deeply into our platform.
+Payments in Embeddables are handled via [Stripe](https://stripe.com), with a dedicated Stripe component that is integrated deeply into our platform.
 
 ## Keys and IDs that you'll need
 
@@ -21,7 +21,7 @@ Payments in Embeddables are handled via **Stripe**, with a dedicated Stripe comp
 
 ## Setting up Stripe
 
-### The basics - required steps to add a Stripe component
+The following are the minimum steps required to add a Stripe component to your Embeddable:
 
 <Steps>
   <Step title="Generate and share the necessary Stripe keys">
@@ -51,6 +51,9 @@ Payments in Embeddables are handled via **Stripe**, with a dedicated Stripe comp
       - **Link** (Stripe's own quick purchase login system)
       - **US Bank Account**
       - **Buy now, pay later services**: Afterpay/Clearpay, Klarna, Affirm
+    <Note>
+      You need to have the relevant payment methods enabled in your Stripe account in order for them to appear for users.
+    </Note>
   </Step>
 
   <Step title="Add line items to the checkout">
@@ -71,7 +74,9 @@ Payments in Embeddables are handled via **Stripe**, with a dedicated Stripe comp
   </Step>
 </Steps>
 
-### Optional and advanced configuration
+## Optional: Additional Stripe configurations
+
+These features are not required in order to successfully accept payments, but they can be useful in different scenarios.
 
 <AccordionGroup>
   <Accordion title="Collect shipping information">
