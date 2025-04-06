@@ -120,10 +120,10 @@ These features are not required in order to successfully accept payments, but th
       const isTestMode = url.searchParams.get('savvy_test') === 'true'
         || (!url.searchParams.get('savvy_test') && url.searchParams.get('savvy_env'))
         || (!url.searchParams.get('savvy_test') && url.host.endsWith('embeddables.com'))
-      const testPriceId = 'price_1KGqjRIQ3JVMlttKzJ059opF'
+      const testPriceId = 'price_aaaaaaaaaaaa'
 
       // Determine which price_id the user has selected
-      const selectedProduct = userData.selected_plan === 'advanced' ? 'price_1KGqjRIQ3JVMlttKzJ059opF' : 'price_1KGqjRIQ3JVMlttKzJ059opF'
+      const selectedProduct = userData.selected_plan === 'advanced' ? 'price_bbbbbbbbbbbb' : 'price_cccccccccccc'
 
       // If we're in test mode, use the test price_id, otherwise use the selected product's price_id
       const priceId = isTestMode ? testPriceId : selectedProduct.stripe_price_id
