@@ -58,10 +58,24 @@ The following are the minimum steps required to add a Stripe component to your E
 
   <Step title="Add line items to the checkout">
     - There are two different types of line item that you can add:
-      - **Price ID**: This corresponds to a product and price that you've already created in Stripe.
-      - **Custom line item**: This lets you manually enter an amount, currency and name for the line item in Embeddables.
+      1. **Price ID**: This corresponds to a product and price that you've already created in Stripe.
+      <Warning>
+        Make sure to grab the **Price ID** from Stripe, rather than the Product ID.
+      </Warning>
+      <Accordion title="How to find the Price ID">
+        - Go to the [Product Catalog](https://dashboard.stripe.com/products) section of your Stripe Dashboard.
+        - Select the product you want to use.
+        - Click on the more options (three dots) icon button in the Price that you want to use.
+        - Select `Copy price ID`.
+        <Frame>
+          <img src="https://assets.embeddables.com/Screenshot2025-04-07at8_4744177826120981.02.22pm.png" alt="How to find the Price ID" />
+        </Frame>
+      </Accordion>
+      2. **Custom line item**: This lets you manually enter an amount, currency and name for the line item in Embeddables.
     - Both types of line item require you to enter a quantity.
-    - If you need your line items to be dynamic (i.e. change based on the user's answers, like what plan they select), see below.
+    <Tip>
+      If you need your line items to be dynamic (i.e. change based on the user's answers, like what plan they select), see the [Add dynamic line items](#add-dynamic-line-items) section below.
+    </Tip>
   </Step>
 
   <Step title="Include the customer email address (and, optionally, phone number)">
@@ -113,6 +127,13 @@ These features are not required in order to successfully accept payments, but th
     **Example Computed Field code:**
 
     ```javascript
+    // @TODO: Delete one of these based on whether you're charging a recurring or one-time payment
+    const TEST_PRICE_ID = 'price_1JMwNRIQ3JVMlttKsvCn3lK3' // This is a recurring Embeddables-provided test price ID
+    const TEST_PRICE_ID = 'price_1KGqjRIQ3JVMlttKzJ059opF' // This is a one-time Embeddables-provided test price ID
+    // @TODO: Replace these constants
+    const PRICE_ID_PLAN_1 = 'price_aaaaaaaaaaaaaaaaaaaaaaaa'
+    const PRICE_ID_PLAN_2 = 'price_bbbbbbbbbbbbbbbbbbbbbbbb'
+
     // All Computed Fields must contain a function called result()
     function result(userData) {
       // Determine whether we're in test mode
@@ -120,13 +141,13 @@ These features are not required in order to successfully accept payments, but th
       const isTestMode = url.searchParams.get('savvy_test') === 'true'
         || (!url.searchParams.get('savvy_test') && url.searchParams.get('savvy_env'))
         || (!url.searchParams.get('savvy_test') && url.host.endsWith('embeddables.com'))
-      const testPriceId = 'price_aaaaaaaaaaaa'
+      const testPriceId = TEST_PRICE_ID
 
       // Determine which price_id the user has selected
-      const selectedProduct = userData.selected_plan === 'advanced' ? 'price_bbbbbbbbbbbb' : 'price_cccccccccccc'
+      const selectedPriceId = userData.selected_plan === 'advanced' ? PRICE_ID_PLAN_2 : PRICE_ID_PLAN_1
 
       // If we're in test mode, use the test price_id, otherwise use the selected product's price_id
-      const priceId = isTestMode ? testPriceId : selectedProduct.stripe_price_id
+      const priceId = isTestMode ? testPriceId : selectedPriceId
 
       // Return the line items
       return [

@@ -39,33 +39,52 @@ const url = `https://yourwebsite.com/flow?token=${token}&entry_id=${entryId}&exp
 Once the user clicks the generated URL, create a Action, triggered on Embeddable Load, with the following code to fetch and restore their session:
 
 ```javascript
+// @TODO: Replace these with your own values
+const EMBEDDABLE_ID = '<EMBEDDABLE_ID>' // Your Embeddable ID
+const TOKEN_URL_PARAM_KEY = 'token' // The URL parameter key for the Hashed Token
+const ENTRY_ID_URL_PARAM_KEY = 'entry_id' // The URL parameter key for the user's Entry ID
+const EXPIRY_URL_PARAM_KEY = 'expires_at' // The URL parameter key for the expiration timestamp
+
 // All Actions must contain a function called output()
 function output(userData, helperFunctions, triggerContext) {
+  // Grab the token from the URL
+  const urlParams = (new URL(window.location)).searchParams
+  const token = urlParams.get(TOKEN_URL_PARAM_KEY)
+  const entryId = urlParams.get(ENTRY_ID_URL_PARAM_KEY)
+  const expiresAt = urlParams.get(EXPIRY_URL_PARAM_KEY)
+
+  // If we don't have all of token + entry ID + expiry date,
+  // then stop here (this is a new user or the provided data is incomplete)
+  if (!token || !entryId || !expiresAt) return
+
   // Fetch the User Data from the Embeddables API
-  await fetch(
+  console.log('Retrieving User Data', { token })
+  fetch(
     "https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/load_entry_data",
     {
       body: JSON.stringify({
-        flow_id: "flow_aaabbbcccdddeeefff", // Your Embeddable ID
-        entry_id: "entry_aaabbbcccdddeeefff", // The user's Entry ID
-        token: "<HASHED_TOKEN>", // The Hashed Token
-        expires: "2025-01-01T00:00:00.000Z", // The expiration timestamp
+        flow_id: EMBEDDABLE_ID,
+        entry_id: entryId,
+        token,
+        expires: expiresAt,
       }),
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
       method: "POST",
     }
   ).then(async (res) => {
     const data = await res.json();
-    console.log('Retrieved User Data: ', data)
+    console.log('Retrieved User Data: ', { data })
 
     // If the User Data is successfully retrieved,
     // set the user data and navigate to the user's current page
     if (data && data.entry) {
       helperFunctions.setUserData({ ...data.entry });
-      helperFunctions.goToPage("flow_id", data.entry.current_page_key)
+      window.Savvy.goToPage(EMBEDDABLE_ID, data.entry.current_page_key)
     }
+  }).catch((err) => {
+    console.error('Error Retrieving User Data:', { error })
   })
 }
 ```
