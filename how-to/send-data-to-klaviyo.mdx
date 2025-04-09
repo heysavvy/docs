@@ -18,8 +18,9 @@ The best way to data to Klaviyo is using custom code in an Action, that is Trigg
 ```js
 // All Actions should start with a function called output()
 async function output({ first_name, last_name, email }) {
-  // @TODO: Replace with your actual Klaviyo API key
-  const KLAVIYO_API_KEY = "<YOUR-KLAVIYO-API-KEY>";
+  // @TODO: Replace with your actual company name,
+  // and provide the API key to Embeddables to store securely on the backend
+  const API_KEY_IDENTIFIER = "{{YOUR_COMPANY_NAME---klaviyo---api_key}}";
 
   // @TODO: Update to match your User Data keys, and add any additional data you want to send
   const importProfileBody = {
@@ -40,7 +41,7 @@ async function output({ first_name, last_name, email }) {
       accept: "application/vnd.api+json",
       revision: "2024-10-15",
       "content-type": "application/vnd.api+json",
-      Authorization: KLAVIYO_API_KEY
+      Authorization: API_KEY_IDENTIFIER
     },
     body: JSON.stringify(importProfileBody),
   };
@@ -81,7 +82,7 @@ async function output({ first_name, last_name, email }) {
       accept: "application/vnd.api+json",
       revision: "2024-10-15",
       "content-type": "application/vnd.api+json",
-      Authorization: KLAVIYO_API_KEY,
+      Authorization: API_KEY_IDENTIFIER,
     },
     body: JSON.stringify(addToListBody),
   };

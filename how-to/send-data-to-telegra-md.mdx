@@ -21,7 +21,9 @@ function output(userData, {setUserData}) {
   // If the user data has already been sent, and a portal URL has been received, don't resend it
   if (userData.telegra_md_portal_url) return
 
-  // @TODO: Replace with your actual integration configuration ID
+  // @TODO: Replace with your actual company name,
+  // and provide the API key to Embeddables to store securely on the backend
+  const API_KEY_IDENTIFIER = "{{YOUR_COMPANY_NAME---telegra---api_key}}";
   const INTEGRATION_CONFIGURATION_ID = "<INTEGRATION_CONFIGURATION_ID>";
   const TELEGRA_MD_HOST = "https://telegramd-rest.telegramd.com";
 
@@ -49,8 +51,7 @@ function output(userData, {setUserData}) {
 
   console.log('[Submit to Telegra] - requestBody:', requestBody)
 
-  // @TODO: Ask Embeddables to add the access token as a secure credential, that can be accessed by {{company---telegra---access_token}} (replace 'company' with your company name)
-  const url = `${TELEGRA_MD_HOST}/integrations/embeddables/${INTEGRATION_CONFIGURATION_ID}/visit/initiate?access_token={{company---telegra---access_token}}`;
+  const url = `${TELEGRA_MD_HOST}/integrations/embeddables/${INTEGRATION_CONFIGURATION_ID}/visit/initiate?access_token=${API_KEY_IDENTIFIER}`;
 
   // Sends POST request, using the Embeddables backend proxy to keep the access token secure
   fetch(`https://proxy-secure.trysavvy.com/?url=${encodeURIComponent(url)}`, {

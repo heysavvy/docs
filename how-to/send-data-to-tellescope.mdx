@@ -44,9 +44,12 @@ function output(userData, context) {
     experiment_uuid: null,
     flow_label: "<FLOW_LABEL>",
   };
-  const apiKey = "<API_KEY>";
+  
+  // @TODO: Replace with your actual company name,
+  // and provide the API key to Embeddables to store securely on the backend
+  const API_KEY_IDENTIFIER = "{{YOUR_COMPANY_NAME---tellescope---api_key}}";
   const formId = "<FORM_ID>";
-  const endpoint = `https://api.tellescope.com/v1/webhooks/formsort/${apiKey}?formId=${formId}`;
+  const endpoint = `https://api.tellescope.com/v1/webhooks/formsort/${API_KEY_IDENTIFIER}?formId=${formId}`;
 
   // Send POST request, using the Embeddables backend proxy to avoid CORS issues
   fetch(
@@ -56,7 +59,7 @@ function output(userData, context) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(tellescopeData),
     }
   );
 }
