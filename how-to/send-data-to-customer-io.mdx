@@ -7,6 +7,10 @@ The best way to send data to Customer.io is using custom code in an Action, that
 
 ## Sending User Data to Customer.io
 
+<Note>
+  This is implemented using the [Customer.io Pipelines API](https://docs.customer.io/integrations/api/cdp/#operation/identify).
+</Note>
+
 <Steps>
   <Step title="Set up Customer.io HTTP Source">
     - Go to Customer.io and navigate to the Sources tab
@@ -23,9 +27,9 @@ The best way to send data to Customer.io is using custom code in an Action, that
   <Step title="Write your custom code">
     Add the following code to your Action:
 
-<Note>
+<Tip>
   If your Customer.io account is in the EU region, use `https://cdp-eu.customer.io/v1/track` as the endpoint instead.
-</Note>
+</Tip>
 
 ```js
 async function output(userData, context) {
@@ -104,12 +108,16 @@ async function output(userData, context) {
 <Accordion title="Optional: Tracking Events">
 If you also want to track specific events in Customer.io, you can create an additional Action:
 
+<Note>
+  This is implemented using the [Customer.io Pipelines API](https://docs.customer.io/integrations/api/cdp/#operation/track).
+</Note>
+
 1. Create another Action named "Track Event in Customer.io"
 2. Add this code:
 
-<Note>
+<Tip>
   If your Customer.io account is in the EU region, use `https://cdp-eu.customer.io/v1/track` as the endpoint instead.
-</Note>
+</Tip>
 
 ```js
 async function output(userData, context) {
