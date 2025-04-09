@@ -1,0 +1,192 @@
+---
+title: "How To: Send data to Customer.io"
+description: "Setting up an Action with custom code that sends user data to Customer.io's API"
+---
+
+The best way to send data to Customer.io is using custom code in an Action, that is Triggered when a user takes an action, such as entering their email or completing a purchase.
+
+## Sending User Data to Customer.io
+
+<Steps>
+  <Step title="Set up Customer.io HTTP Source">
+    - Go to Customer.io and navigate to the Sources tab
+    - Click "Add Source"
+    - Select "HTTP" and click "Next"
+    - Give the source a name and copy your API Key
+  </Step>
+  <Step title="Create a custom code Action">
+    - Go to the Logic sidebar and click on the Actions tab
+    - Click `+ Add New Action`
+    - Give it a descriptive name (e.g. "Identify User in Customer.io")
+    - Hit `Add`
+  </Step>
+  <Step title="Write your custom code">
+    Add the following code to your Action:
+
+<Note>
+  If your Customer.io account is in the EU region, use `https://cdp-eu.customer.io/v1/track` as the endpoint instead.
+</Note>
+
+```js
+async function output(userData, context) {
+  // @TODO: Replace with your actual company name,
+  // and provide the API key to Embeddables to store securely on the backend
+  const API_KEY_IDENTIFIER = "{{YOUR_COMPANY_NAME---customerio---api_key}}";
+
+  // Construct the customer data object
+  const customerData = {
+    type: "identify",
+    userId: userData.entryId, // Using entryid as the identifier
+    traits: {
+      email: userData.email,
+      name: userData.name,
+      first_name: userData.first_name,
+      last_name: userData.last_name,
+      // Add any other user attributes you want to track
+    },
+    context: {
+      // Optional: Add context about the source of the data
+      // For example, you could add the page URL or referrer
+      page: {
+        url: window.location.href,
+        title: document.title,
+        referrer: document.referrer
+      },
+      userAgent: navigator.userAgent,
+      channel: "browser",
+    }
+  };
+
+  // Construct the fetch options
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Authorization": API_KEY_IDENTIFIER,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(customerData),
+  };
+
+  // Customer.io Pipelines API endpoint (US region)
+  const url = "https://cdp.customer.io/v1/track";
+
+  try {
+    // Send POST request, using the Embeddables backend proxy to keep the API key secure
+    const response = await fetch(
+      `https://proxy-secure.trysavvy.com/?url=${encodeURIComponent(url)}`,
+      requestOptions
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error identifying/updating user in Customer.io:", error);
+    throw error;
+  }
+}
+```
+
+  </Step>
+  <Step title="Add a Trigger for your Action">
+    - Switch to the Triggers tab
+    - Add a new Trigger
+    - Choose when to identify/update the user
+    - Example: `WHEN Page KEY user_info_page IS Completed`
+    - Select your "Identify User in Customer.io" Action
+    - Hit `Add`
+  </Step>
+
+</Steps>
+
+## Optional: Tracking Events in Customer.io
+
+<Accordion title="Optional: Tracking Events">
+If you also want to track specific events in Customer.io, you can create an additional Action:
+
+1. Create another Action named "Track Event in Customer.io"
+2. Add this code:
+
+<Note>
+  If your Customer.io account is in the EU region, use `https://cdp-eu.customer.io/v1/track` as the endpoint instead.
+</Note>
+
+```js
+async function output(userData, context) {
+  // @TODO: Replace with your actual company name,
+  // and provide the API key to Embeddables to store securely on the backend
+  const API_KEY_IDENTIFIER = "{{YOUR_COMPANY_NAME---customerio---api_key}}";
+
+  // Construct the event data
+  const eventData = {
+    type: "track",
+    userId: userData.entryId, // Must match the identifier used in identify/update
+    event: "form_completed", // Change this to your event name
+    properties: {
+      form_name: context.formName,
+      // Add any other event properties you want to track
+    },
+    context: {
+      page: {
+        url: window.location.href,
+        title: document.title,
+        referrer: document.referrer
+      },
+      userAgent: navigator.userAgent,
+      channel: "browser"
+    },
+    timestamp: new Date().toISOString() // ISO 8601 timestamp
+  };
+
+  // Construct the fetch options
+  const requestOptions = {
+    method: "POST",
+    headers: {
+      "Authorization": API_KEY_IDENTIFIER,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(eventData),
+  };
+
+  // Customer.io Pipelines API endpoint (US region)
+  const url = "https://cdp.customer.io/v1/track";
+
+  try {
+    // Send POST request, using the Embeddables backend proxy to keep the API key secure
+    const response = await fetch(
+      `https://proxy-secure.trysavvy.com/?url=${encodeURIComponent(url)}`,
+      requestOptions
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Error tracking event in Customer.io:", error);
+    throw error;
+  }
+}
+```
+
+3. Add a Trigger for when you want to track an event
+   - Example: `WHEN Button KEY submit_button IS Clicked`
+   - Select your "Track Event in Customer.io" Action
+</Accordion>
+
+<Card
+  title="Learn more about Custom Code"
+  icon="code"
+  href="/features/custom-code"
+>
+  Read more about writing Custom Code in Embeddables, including all the
+  available arguments passed in to the function.
+</Card>
+
+<Card
+  title="Learn more about Customer.io's APIs"
+  icon="book"
+  href="https://customer.io/docs/api/"
+>
+  Read more about Customer.io's APIs, including detailed information about
+  available endpoints and data formats.
+</Card>
