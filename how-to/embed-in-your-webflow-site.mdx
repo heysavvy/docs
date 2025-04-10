@@ -1,0 +1,98 @@
+---
+title: "How To: Embed in your Webflow site"
+description: "How to publish your embeddable in your Webflow website"
+---
+
+You can use the 2-part embed code to easily embed your embeddable in your Webflow website.
+
+<Tip>
+  Looking for other ways to publish your Embeddable? Check out the [Publish to your site](/features/publish-to-your-site) guide.
+</Tip>
+
+## Embedding in Webflow
+
+<Steps>
+  <Step title="Grab the embed code" titleSize="h3">
+    Head to the Embeddable in the [Web App](https://app.embeddables.com/), click **Embed Code** in the top-right corner,
+    and you'll see the two-part embed code in the pop-up modal.
+    <Frame>
+      <img src="https://assets.embeddables.com/2025-04-1011_18708467466947587.12.05.gif" />
+    </Frame>
+  </Step>
+  <Step title="Add the first part to Webflow's Custom Code">
+    The first part of the embed code (the large part) should be added to the `<HEAD>` of your Webflow site in the [Custom Code settings](https://help.webflow.com/hc/en-us/articles/33961357265299-Custom-code-in-head-and-body-tags#head-code).
+
+    This is the large part that starts like this:
+
+    ```html Embed Code - Part 1/2
+    <script> const SAVVY_PRELOAD_IDS=...
+    ```
+    
+    <Note>
+    **This only needs to be added once**.
+    If it's already installed on your Webflow site then you can skip this step.
+    </Note>
+
+    <Tip>
+      Here are Webflow's [official docs on adding custom code to the `<HEAD>`](https://help.webflow.com/hc/en-us/articles/33961357265299-Custom-code-in-head-and-body-tags#head-code).
+    </Tip>
+
+    To add this in Webflow:
+    1. Go to Site Settings
+    2. Navigate to the Custom Code tab
+    3. Paste the first part of the embed code in the "Head Code" section
+    4. Click Save
+
+  </Step>
+  <Step title="Add the second part using Webflow's Embed element">
+    The second part of the embed code should be added using Webflow's Code Embed element where you want the embeddable to appear on the page.
+
+    The is the part that looks like this (where `flow_abcdefhijklm` is your embeddable ID):
+
+    ```html Embed Code - Part 2/2
+    <savvy id="flow_abcdefhijklm"></savvy>
+    ```
+    
+    <Tip>
+      Here are Webflow's [official docs on the Code Embed element](https://help.webflow.com/hc/en-us/articles/33961332238611-Custom-code-embed).
+    </Tip>
+
+    To add this in Webflow:
+    1. Drag a Code Embed element onto your page
+    2. Double-click the Embed element
+    3. Paste the second part of the embed code
+    4. Click Save & Close
+
+
+  </Step>
+</Steps>
+
+## Need to embed in a different platform?
+
+<CardGroup cols={2}>
+  <Card title="How To: Embed in a React app" icon="react" href="publish-in-react">
+    How to publish your embeddable inside a React app
+  </Card>
+
+  <Card
+    title="How To: Embed in a React Native app"
+    icon="mobile-screen-button"
+    href="publish-in-react-native"
+  >
+    How to publish your embeddable inside a React Native app
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+### The embeddable isn't showing up on my Webflow site
+
+Make sure you've:
+1. Added the first part of the code to the Head Code section in Project Settings
+2. Published your site after making these changes
+3. Checked that the Embeddable is pushed live in the Embeddables Builder (if not then you can add `?savvy_flow_version=latest` to the URL to view the latest version)
+3. Cleared your browser cache and refreshed the page
+
+### Need more help?
+
+Check out Webflow's documentation on [adding custom code to the `<HEAD>`](https://help.webflow.com/hc/en-us/articles/33961357265299-Custom-code-in-head-and-body-tags#head-code) and [adding a Code Embed element](https://help.webflow.com/hc/en-us/articles/33961332238611-Custom-code-embed) or contact our support team.

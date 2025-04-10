@@ -117,6 +117,7 @@
           "icon": "globe-pointer",
           "pages": [
             "how-to/embed-in-your-site",
+            "how-to/embed-in-your-webflow-site",
             "how-to/embed-in-react",
             "how-to/embed-in-react-native",
             "how-to/reverse-proxy-setup"
