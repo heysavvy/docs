@@ -246,5 +246,43 @@ These features are not required in order to successfully accept payments, but th
     }
     ```
   </Accordion>
+
+  <Accordion title="Store the selected plan/product and payment status in User Data">
+    Storing the plan or product that the user selected, and the status of the payment, can be useful when looking at your users' data later, or sending that data to your own backend or CRM.
+
+    The good news is that this information is almost certainly already being stored!
+
+    ### Storing the plan or product
+
+    If you're offering multiple plans or products to the user, then that probably means you're either:
+    1. Using an Option Selector component to let the user select the plan or product they want to purchase, or
+    2. Using a Computed Field to calculate the appropriate plan or product based on the user's answers.
+
+    In both cases, just make sure that the key you're using to store the plan or product is set to be
+    [stored in the 'Embedables Cloud Context'](http://localhost:3000/features/user-data#where-is-user-data-stored%3F) - i.e. stored in Embeddables' database.
+
+    <Tip>
+      If you're offering multiple plans or products, you're also probably using a Computed Field to generate the **line items** for the Stripe component, including the price_id(s).
+
+      You can then opt to store this in the 'Embedables Cloud Context' as well.
+      
+      Alternatively, you can store a simplified version with just the price_id(s), by computing with with another Computed Field.
+    </Tip>
+
+    ### Storing the payment status
+    
+    The payment status is automatically stored  in User Data, using the key of the Stripe component.
+
+    For this reason, we recommend choosing a straightforward key name for the Stripe component, e.g. `stripe_payment`.
+
+    The status will then appear in the User Data as one of the following:
+    {/* 'fresh' | 'pending' | 'error' | 'completed' */}
+
+    - `stripe_payment: 'fresh'` - The Stripe checkout has been reset and is ready for another attempt
+    - `stripe_payment: 'pending'` - The payment has just been attempted, and is awaiting a success or failure response from Stripe
+    - `stripe_payment: 'error'` - The payment failed
+    - `stripe_payment: 'completed'` - The payment was successful
+    
+  </Accordion>
 </AccordionGroup>
 
