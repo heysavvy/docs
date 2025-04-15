@@ -120,7 +120,8 @@
             "how-to/embed-in-your-webflow-site",
             "how-to/embed-in-react",
             "how-to/embed-in-react-native",
-            "how-to/reverse-proxy-setup"
+            "how-to/reverse-proxy-setup",
+            "how-to/embed-backend-integration"
           ]
         }
       ]

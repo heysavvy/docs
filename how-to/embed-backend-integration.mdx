@@ -1,0 +1,251 @@
+---
+title: "How To: Embed via backend integration"
+description: "How to publish your Embeddable from the backend via Server-Side Rendering"
+---
+
+One of the most powerful ways to publish an Embeddable is to serve it using Server-Side Rendering (SSR) from your backend.
+
+To implement this, please reach out to the Embeddables team in order to:
+
+1. Discuss your tech stack and how the integration would work in your case (optional)
+2. Get the Embeddables team to enable this approach for your account (required)
+
+
+<Tip>
+  Looking for other ways to publish your Embeddable? Check out the [Publish to your site](/features/publish-to-your-site) guide.
+</Tip>
+
+## Embedding via backend SSR integration
+
+<Steps>
+  <Step title="Fetch the Embeddable data from our Renderer API endpoint">
+    Within your backend code that serves your site, start by fetching the Embeddable data from our Renderer API endpoint.
+
+    **You must pass all query parameters from the request to the Renderer API endpoint** for all Embeddables features to work correctly.
+
+    ```javascript
+    // ... Your existing code ...
+
+    // @TODO: Replace with your Embeddable ID
+    const EMBEDDABLE_ID = 'flow_aaaaaaaaaaaaa';
+    // @TODO: Update to create an object with all query parameters appended to the URL requested by the end-user
+    const queryParams = request.query
+
+    // Construct the URL to the Renderer API endpoint
+    const embeddablesEndpointUrl = new URL(`https://renderer.trysavvy.com/${EMBEDDABLE_ID}`);
+    
+    // Copy query parameters from request to destination URL
+    Object.entries(queryParams).forEach(([key, value]) => {
+      embeddablesEndpointUrl.searchParams.append(key, value);
+    });
+
+    // Fetch the Embeddable HTML and other data from the Renderer API endpoint
+    const response = await fetch(embeddablesEndpointUrl.toString());
+    const data = await response.json();
+    ```
+
+  </Step>
+
+  <Step title="Construct the HTML">
+    Construct the necessary HTML pieces that will need to be included in the final HTML response.
+
+    This includes, in order of appearance:
+    - **Boilerplate page styles** (optional) - the minimum styles and meta tags to ensure the page is rendered correctly on all devices, if needed.
+    - **Embeddables bundle script** - this loads asynchronously and is the full JS code that makes the Embeddables interactive.
+    - **Embeddable HTML** - this is the initial rendering of the Embeddable, which is inserted here so that the end-user immediately sees the content, even before the bundle script has loaded.
+    - **Embeddables Onload Script** - this is some initial JS that runs immediately on load. It contains code that affects the initial load (e.g. choosing the correct breakpoint for the end-user's device size), meaning that we can't wait for the bundle script to load before executing it.
+
+    ```javascript
+    // Add the minimum styles and meta tags to ensure the page is rendered correctly on all devices.
+    // @TODO: Remove if you've already handled this.
+    const boilerplatePageStyles = `
+      <style>body { margin: 0; }</style>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="UTF-8">
+    `;
+
+    // Include the Embeddables bundle script.
+    const embeddablesBundleScript = `<script src="https://bundle.trysavvy.com/bundle.js" defer="defer"></script>`;
+
+    // Include the HTML of the Embeddable itself.
+    const embeddableElement = `
+      <savvy id="flow-${EMBEDDABLE_ID}">
+        ${data.html}
+      </savvy>
+    `;
+
+    // Include the JavaScript that initializes the embeddable on the client side.
+    const clientSideOnloadScript = `<script>(${data.client_side_js})()</script>`;
+    ```
+
+  </Step>
+
+  <Step title="Combine into the final HTML response">
+    Combine all the pieces. This is the final HTML response that should be sent to the client (along with any other HTML you want to include, e.g. fonts, scripts, etc.):
+
+    ```javascript
+    const fullHtml = `
+      <!-- Boilerplate Page Styles -->
+      ${boilerplatePageStyles}
+
+      <!-- Embeddables Bundle Script -->
+      ${embeddablesBundleScript}
+
+      <!-- Embeddable HTML -->
+      ${embeddableElement}
+
+      <!-- Embeddables Onload Script -->
+      ${clientSideOnloadScript}
+    `;
+
+    // @TODO: Then send the full HTML response to the client.
+    // ... the rest of your code ...
+    ```
+
+  </Step>
+</Steps>
+
+## Complete code examples
+
+<Tabs>
+  <Tab title="Node.js (Express)" icon="nodejs">
+
+    Here's the complete code example for a Node.js server using Express:
+
+    ```javascript
+    const express = require('express');
+    const app = express();
+
+    app.get('/embed/:flowId', async (req, res) => {
+      // @TODO: Replace with your Embeddable ID
+      const EMBEDDABLE_ID = 'flow_aaaaaaaaaaaaa';
+      // @TODO: Update to create an object with all query parameters appended to the URL requested by the end-user
+      const queryParams = request.query
+
+      // Construct the URL to the Renderer API endpoint
+      const embeddablesEndpointUrl = new URL(`https://renderer.trysavvy.com/${EMBEDDABLE_ID}`);
+      
+      // Copy query parameters from request to destination URL
+      Object.entries(queryParams).forEach(([key, value]) => {
+        embeddablesEndpointUrl.searchParams.append(key, value);
+      });
+
+      // Fetch the Embeddable HTML and other data from the Renderer API endpoint
+      const response = await fetch(embeddablesEndpointUrl.toString());
+      const data = await response.json();
+
+      // Boilerplate Page Styles
+      const boilerplatePageStyles = `
+        <style>body { margin: 0; }</style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta charset="UTF-8">
+      `;
+
+      // Add the minimum styles and meta tags to ensure the page is rendered correctly on all devices.
+      // @TODO: Remove if you've already handled this.
+      const embeddablesBundleScript = `<script src="https://bundle.trysavvy.com/bundle.js" defer="defer"></script>`;
+
+      // Include the HTML of the Embeddable itself.
+      const embeddableElement = `
+        <savvy id="flow-${EMBEDDABLE_ID}">
+          ${data.html}
+        </savvy>
+      `;
+
+      // Include the JavaScript that initializes the embeddable on the client side.
+      const clientSideOnloadScript = `<script>(${data.client_side_js})()</script>`;
+
+      const fullHtml = `
+        <!-- Boilerplate Page Styles -->
+        ${boilerplatePageStyles}
+
+        <!-- Embeddables Bundle Script -->
+        ${embeddablesBundleScript}
+
+        <!-- Embeddable HTML -->
+        ${embeddableElement}
+
+        <!-- Embeddables Onload Script -->
+        ${clientSideOnloadScript}
+      `;
+      
+      res.setHeader('Content-Type', 'text/html;charset=UTF-8');
+      res.send(fullHtml);
+    });
+
+    app.listen(3000, () => {
+      console.log('Server running on port 3000');
+    });
+    ```
+  </Tab>
+
+  <Tab title="Cloudflare Workers" icon="python">
+    Here's a complete code example for a page served by a Cloudflare Worker:
+
+    ```javascript
+    export default {
+      async fetch(request, env, ctx) {
+        // @TODO: Replace with your Embeddable ID
+        const EMBEDDABLE_ID = 'flow_aaaaaaaaaaaaa';
+        // @TODO: Update to create an object with all query parameters appended to the URL requested by the end-user
+        const queryParams = request.query
+
+        // Construct the URL to the Renderer API endpoint
+        const embeddablesEndpointUrl = new URL(`https://renderer.trysavvy.com/${EMBEDDABLE_ID}`);
+        
+        // Copy query parameters from request to destination URL
+        Object.entries(queryParams).forEach(([key, value]) => {
+          embeddablesEndpointUrl.searchParams.append(key, value);
+        });
+
+        // Fetch the Embeddable HTML and other data from the Renderer API endpoint
+        const response = await fetch(embeddablesEndpointUrl.toString());
+        const data = await response.json();
+
+        // Boilerplate Page Styles
+        const boilerplatePageStyles = `
+          <style>body { margin: 0; }</style>
+          <meta name="viewport" content="width=device-width, initial-scale=1">
+          <meta charset="UTF-8">
+        `;
+
+        // Add the minimum styles and meta tags to ensure the page is rendered correctly on all devices.
+        // @TODO: Remove if you've already handled this.
+        const embeddablesBundleScript = `<script src="https://bundle.trysavvy.com/bundle.js" defer="defer"></script>`;
+
+        // Include the HTML of the Embeddable itself.
+        const embeddableElement = `
+          <savvy id="flow-${EMBEDDABLE_ID}">
+            ${data.html}
+          </savvy>
+        `;
+
+        // Include the JavaScript that initializes the embeddable on the client side.
+        const clientSideOnloadScript = `<script>(${data.client_side_js})()</script>`;
+
+        const fullHtml = `
+          <!-- Boilerplate Page Styles -->
+          ${boilerplatePageStyles}
+
+          <!-- Embeddables Bundle Script -->
+          ${embeddablesBundleScript}
+
+          <!-- Embeddable HTML -->
+          ${embeddableElement}
+
+          <!-- Embeddables Onload Script -->
+          ${clientSideOnloadScript}
+        `;
+
+        return new Response(fullHtml, {
+          headers: {
+            "content-type": "text/html;charset=UTF-8",
+          },
+        });
+        
+      }
+
+    }
+    ```
+  </Tab>
+</Tabs>
