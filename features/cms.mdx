@@ -1,0 +1,147 @@
+---
+title: "Embeddables CMS"
+sidebarTitle: "CMS"
+icon: "table"
+description: "Use the Embeddables CMS to manage dynamic content for your Embeddables without code changes"
+---
+
+The **Embeddables CMS** is a powerful content management system that lets you control dynamic content in your Embeddables from outside the Builder.
+
+It provides a user-friendly interface for managing data like **Stripe prices** or **programmatic SEM page content**, that can be used across all your Embeddables.
+
+## Key Benefits
+
+- **No-Code Updates**: Make content changes without modifying or deploying code.
+- **User-Friendly Interface**: Simple table-based interface for managing data.
+- **Audit Trail**: Track changes to your content over time.
+- **Real-Time Updates**: Changes in the CMS are immediately reflected in your Embeddables.
+- **Non-Technical Users**: Enable team members to update content without coding knowledge.
+
+## How to Use the CMS
+
+### Creating Tables
+
+1. Navigate to the CMS section in the Embeddables Web App.
+2. Click "Edit Tables" to begin.
+3. Select "+ Add Table" and choose from available templates or start with a blank table.
+4. Configure your columns with appropriate names, keys, and types.
+
+### Managing Content
+
+- Add rows to your tables with the "+ Add Row" button.
+- Edit existing content by clicking on cells.
+- Each table has a unique ID that you'll use to connect it to your Embeddables.
+
+### Connecting to Embeddables
+
+To use CMS data in your Embeddable:
+
+1. Copy your table's ID.
+2. In the Embeddables Builder, go to the Embeddable Options.
+3. Open the Embeddable JSON editor and add a `content_sources` array with the following properties:
+
+```json
+{
+  "content_sources": [
+    {
+      "source_type": "embeddables_cms",
+      "source_config": {
+        "table_id": "<YOUR_TABLE_ID>" // @TODO: Replace with your table's ID
+      },
+      "key": "your_data_key", // The key to store the data in the User Data
+      "controller_type"?: "url_pattern", // Optional: If you want to control the data shown based on the URL, set this to "url_pattern"
+      "controller_key"?: "webpage_key", // Optional: The column in your table that contains the regex pattern to match against the current URL
+      "multiple_records": boolean, // Optional: Whether to return all records that match the controller pattern (if no controller pattern then just return all records), or a single record
+    }
+  ]
+}
+```
+
+4. Add your chosen User Data key to the list of Registered Keys in the Embeddable Options.
+5. You can now reference the data in your Embeddable, just like you would with any other User Data property.
+
+### Utilizing CMS Version Control
+
+Just like the Embeddables Builder, the Embeddables CMS comes with a built-in version control system that allows you to track changes to your content over time.
+
+You can save a new version, switch versions, and push a version to staging or production, from the controls in the top right of the CMS page (when Editing Tables).
+
+To preview an Embeddable with the content from a specific CMS version, you can use the `savvy_cms` URL parameter, which works in the same way as the `version` parameter:
+
+- To preview a particular version, add `savvy_cms=123` to the URL.
+- To preview the latest version (useful if you're making lots of updates), just use `savvy_cms=latest`.
+- To preview the version currently on staging, use `savvy_cms=staging`.
+
+<Tip>
+  This is a great way to preview what your CMS content updates will look like before pushing them live.
+</Tip>
+
+## Example Use Cases
+
+### 1. Managing Stripe Prices
+
+The CMS can manage your Stripe pricing configuration, making it easy to update prices without code changes.
+
+**Example Table Structure:**
+
+| Column Name        | Column Key        | Purpose                                   |
+|--------------------|-------------------|-------------------------------------------|
+| **Plan Name**      | `plan_name`       | Identifies the pricing plan               |
+| **Stripe Price ID**| `stripe_price_id` | Links to Stripe's price ID                |
+| **Price Amount**   | `price_amount`    | Displays the actual price                 |
+| **Size**           | `size`            | Distinguishes between plan sizes          |
+| **Discount Type**  | `discount`        | Identifies if this is a discounted price  |
+
+This setup allows you to:
+- Maintain multiple pricing tiers.
+- Update prices without writing code or saving new versions.
+- Give non-technical team members ability to manage pricing.
+- Keep a clear audit trail of price changes.
+
+For a full guide on how to use the CMS to manage Stripe prices, go here:
+
+<Card
+  title="How To: Control Stripe Prices from the Embeddables CMS"
+  icon="code"
+  href="/how-to/control-stripe-prices-from-cms"
+>
+  Learn how to use the Embeddables CMS to manage Stripe prices.
+</Card>
+
+### 2. Programmatic Pages
+
+Use the CMS to control content displayed on templated pages based on URL parameters.
+
+**Example Table Structure:**
+
+| Column Name         | Column Key       | Purpose                                   |
+|--------------------|-------------------|-------------------------------------------|
+| **Page URL**       | `url_slug`        | Defines the URL path for the content      |
+| **Title**          | `title`           | Page title to display                     |
+| **Description**    | `description`     | Page meta description                     |
+| **Content**        | `content`         | Main page content                         |
+| **Image URL**      | `image_url`       | Featured image for the page               |
+
+This enables you to:
+- Create hundreds of pages from a single template.
+- Target different audiences or SEO keywords.
+- Update content through the CMS interface.
+
+## Best Practices
+
+1. **Plan Your Schema**: Carefully design your table structure before creating it.
+2. **Use Clear Names**: Choose descriptive column names and `snake_case` keys.
+4. **Test Updates**: Verify changes on the latest CMS version before pushing to production.
+
+## Available Templates
+
+The CMS comes with several pre-built templates for common use cases:
+
+- **Blank Table**: Start from scratch.
+- **Prices**: Manage product/service pricing.
+- **URLs & Links**: Handle URL routing and redirects.
+- **FAQs**: Organize frequently asked questions.
+- **Programmatic Pages**: Control dynamic page content.
+- **Coupons**: Manage promotional codes and discounts.
+
+Each template comes with recommended columns and structure, which you can customize to fit your needs.

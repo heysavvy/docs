@@ -61,6 +61,7 @@
         "features/computed-fields",
         "features/actions",
         "features/stripe-payments",
+        "features/cms",
         "features/analytics",
         "features/saving-and-version-control",
         "features/testing-and-debugging/url-params",
