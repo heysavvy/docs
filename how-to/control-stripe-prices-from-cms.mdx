@@ -1,0 +1,127 @@
+---
+title: "How To: Control Stripe Prices from the Embeddables CMS"
+description: "Using the Embeddables CMS to define multiple Stripe prices, and pull them into your Embeddable"
+---
+
+If you handle multiple Stripe products or prices in your Embeddable, the **Embeddables CMS** is a great way to keep them manage them.
+
+Using the Embeddables CMS for this has the following benefits:
+
+- It lets you clearly view your list of Stripe products and prices without needing to read JS code.
+- It means non-technical users can update prices without needing to read or edit any code.
+- It makes it possible to update prices without needing to push live a new version of your Embeddable.
+- It gives you a clear audit trail if prices are changed.
+
+## How to add Stripe prices to the Embeddables CMS, and use them to control prices in your Embeddable
+
+<Steps>
+  <Step title="Add a table called Prices in the Embeddables CMS">
+    - Head to the [Embeddables Web App](https://app.embeddables.com) and select **CMS** in the sidebar.
+    - Click **Edit Tables** to start editing.
+    - Click **+ Add Table**, select the **Prices** template, and confirm by clicking the **+ Add Table** button.
+    - Edit your new table's columns so that you've included the following:
+
+    | Column Name                                      | Column Key        | What it's for                                                                                                                                             |
+    |--------------------------------------------------|-------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+    | **Plan Name**                                    | `plan_name`       | Helps you identify what the price corresponds to.                                                                                                         |
+    | **Stripe Price ID**                              | `stripe_price_id` | Stores the price ID from Stripe.                                                                                                                          |
+    | **Price** (optional)                             | `price_amount`    | Helps you remember what the amount is set to for this price in Stripe.                                                                                    |
+    | One or more price attributes e.g. **Price Plan** | `price_plan`      | Set one or more of these columns to distinguish your plans, and be used later in the logic of your Embeddable to determine which price to use for a user. |
+      
+      
+  </Step>
+
+  <Step title="Add the prices to your new table">
+    - Copy the price information across from Stripe into the new table.
+    - You can add as many prices as you like, but in order for the Embeddable's logic to choose the correct price, you'll need to make sure that each price has a unique combination of price attributes.
+  </Step>
+
+  <Step title="Pull the prices into your Embeddable">
+    - Copy the table ID of the table you just created.
+    - Head to the Embeddables Builder.
+    - Make sure you don't have any components or pages selected, then go to Options and click **Edit JSON**.
+    - Add the following JSON to your Embeddable JSON (remove the comments since JSON doesn't support comments):
+    ```json
+    {
+      // ...Your Embeddable JSON...,
+      "content_sources": [
+        {
+          "source_type": "embeddables_cms",
+          "source_config": {
+            "table_id": "<YOUR TABLE ID>"
+          },
+          "multiple_records": true,
+          "key": "stripe_prices"
+        }
+      ],
+      // ...Embeddable JSON continues...,
+    }
+    ```
+
+    What this does:
+    - Adds a new **Content Source** to your Embeddable, which is how you pull in external data.
+    - Tells the Embeddable that the type of source is the **Embeddables CMS**, and provide the ID of the table you want to pull data from.
+    - Tells the Embeddable that you want to allow **multiple records** to be returned (as opposed to pulling a single record based on the URL of the page, which is a different use-case of the Embeddables CMS).
+    - Tells the Embeddables to store the table's content under the key `stripe_prices` in the **User Data** (it will be stored as an array of objects, where each object represents a row from the table).
+
+
+    <Tip>
+      A UI for connecting an Embeddable to a table in the Embeddables CMS, so that you don't need to modify the JSON, is coming soon!
+    </Tip>
+  </Step>
+
+  <Step title="Set up a Computed Field to choose the correct price">
+    - Add `stripe_prices` to the list of **Registered Keys** in the Embeddable Options, so that you can access it in Computed Fields.
+    - Create a new Computed Field called `stripe_line_items` - this will calculate the exact line items to pass to the Stripe Checkout.
+    - Add `stripe_prices` to the inputs of the Computed Field, along with any other User Data keys you'll need in order to choose the correct price (e.g. a `chosen_price_plan` key from an Option Selector).
+    - Add the following code to the Computed Field, modifying it where necessary to match your pricing plan structure and the options you give to your users:
+
+    ```js
+    function result({ stripe_prices, chosen_price_plan }) {
+      const TEST_PRICE_ID = "price_1JMwNRIQ3JVMlttKsvCn3lK3"; // Test Recurring Price ID for use when in test mode
+
+      // Find the correct price from the CMS
+      const stripePrice = stripe_prices?.find(price => price.price_plan === chosen_price_plan)
+
+      // Return the live items
+      // If in test mode, use the test price ID; otherwise use the live price ID
+      return [
+        {
+          price: isTestMode() ? testPriceId : stripePrice?.stripe_price_id,
+          quantity: 1,
+        },
+      ];
+    }
+
+    // This function mimics the logic of the Embeddable when it uses the URL to decide whether to be in test mode or not
+    function isTestMode() {
+      const url = new URL(window.location);
+      const params = url.searchParams
+      return params.get("savvy_test") === "true" ||
+        (!params.get("savvy_test") && params.get("savvy_env")) ||
+        (!params.get("savvy_test") && url.host.endsWith("embeddables.com"));
+    }
+
+    ```
+
+    <Note>
+      It's important to use a test price ID when in test mode, because Stripe's test mode insists on using test price IDs, not live ones.
+    </Note>
+  </Step>
+
+  <Step title="Finally, update the Stripe Checkout to use the output of the Computed Field">
+    - Go to your checkout page and select your Stripe Checkout component (if you haven't already set this up, you can read how to do that [here](/features/stripe-payments)).
+    - In the Line Items section of the Stripe component, enable "Use template line items".
+    - In the "Line items template" field, enter the key of the Computed Field you created: `{{stripe_line_items}}`.
+    
+    This tells the Stripe component to use the output of your Computed Field as the value of `line_items`, which gets sent to Stripe.
+  </Step>
+</Steps>
+
+<Card
+  title="Learn more about Stripe Payments in Embeddables"
+  icon="database"
+  href="/features/stripe-payments"
+>
+  Read more about how payments works in Embeddables, including how to set up a Stripe Checkout and accept payments.
+</Card>
