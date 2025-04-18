@@ -1,0 +1,130 @@
+---
+title: "How To: Place a Hold on a Payment"
+description: "How to place a hold on a customer's payment method and handle delayed subscriptions"
+---
+
+This guide explains how to place a hold on a customer's payment method, which is particularly useful when you need to verify something (like a prescription approval) before charging the customer.
+
+## What is a Payment Hold?
+
+A payment hold:
+1. Ensures that the customer has enough funds to cover the cost of the order.
+2. Holds the funds for a certain period of time, to ensure they're available to complete the payment.
+3. Allows you to verify necessary information before actually charging the customer.
+
+## Important Limitations
+
+<Warning>
+**You will need to manually release the hold on the user's card at a later date to complete the payment.**
+
+This is not handled by Embeddables, since it happens at a later stage when the user is no longer interacting with the Embeddable.
+</Warning>
+
+<Note>
+Stripe only supports placing a hold on one-time payments, not recurring payments.
+
+To achieve the effect of a hold on a recurring payment, you'll need to use a combination of a one-time payment and a delayed subscription, as explained below.
+</Note>
+
+## Common Use Case: Prescription Approval
+
+A common use case for payment holds is when you need to verify a prescription before charging the customer. Here's how this typically works:
+
+1. At checkout, place a hold on a one-time payment for the first month's cost.
+2. When the prescription is approved, release the hold to charge the customer.
+3. At the same time, set up a subscription that's delayed by 30 days.
+
+This approach ensures that:
+- The customer isn't charged until their prescription is approved.
+- The subscription doesn't start charging until 30 days after the prescription is approved.
+- The one-time payment effectively replaces the first month of the subscription.
+
+## Implementation Steps
+
+<Steps>
+  <Step title="Set up the one-time payment hold">
+    <Note>This part is handled by **Embeddables**.</Note>
+    - In your Stripe component, select "Payment" as the Checkout mode.
+    - Enable the "Place a hold on the customer's card" option.
+    - Use a one-time payment price ID (not a subscription price ID).
+  </Step>
+
+  <Step title="Handle the prescription approval">
+    <Note>This part is handled by **your own backend systems** (not Embeddables).</Note>
+
+    - When the prescription is approved, release the hold on the payment.
+    - Create a new subscription for the customer [with a 30-day delay](https://docs.stripe.com/changelog/2018-02-05/subscriptions-delay-first-full-invoice-future-date).
+    - The subscription should hopefully use the same payment method that was used for the hold, but you will need to verify this as it's outside of Embeddables' control.
+  </Step>
+</Steps>
+
+<Tip>
+When you place a hold on a payment, Stripe automatically creates a customer record and stores the payment method. This means you can later attach a subscription to this customer without requiring them to re-enter their payment details.
+</Tip>
+
+## Best Practices
+
+1. **Clear Communication:**
+   - Clearly communicate to customers that their payment method is being held but not charged.
+   - Explain when they can expect to be charged.
+   - Provide information about the subscription that will start after the first payment.
+
+2. **Error Handling:**
+   - Have a process in place for handling declined payments when releasing the hold.
+   - Consider what happens if the prescription is not approved.
+
+3. **Subscription Management:**
+   - Ensure your backend system can handle the creation of delayed subscriptions.
+   - Consider how you'll manage the transition from the one-time payment to the subscription.
+
+For more information on how placing a hold works in Stripe, see the [Stripe documentation](https://docs.stripe.com/payments/place-a-hold-on-a-payment-method).
+
+## Frequently Asked Questions
+
+<AccordionGroup>
+  <Accordion title="Can't I just place a hold on the subscription itself?">
+    No, Stripe does not support placing holds on subscriptions. This is a limitation of Stripe's API. The only way to place a hold on a payment is to use a one-time payment, which is why we recommend the combination of a one-time payment hold followed by a delayed subscription.
+  </Accordion>
+
+  <Accordion title="Why not cancel the on-hold payment and replace it with a subscription that starts straight away?">
+    This approach isn't recommended because there can be a delay in processing the refund from the on-hold payment. During this time, the customer might not have enough funds available to cover both the refund and the new subscription charge. This could lead to failed payments and a poor customer experience.
+  </Accordion>
+
+  <Accordion title="What if I just collect card details at checkout?">
+    This is a viable approach, and would be simpler because it would enable you to begin a regular subscription as soon as the prescription is approved.
+
+    However, this wouldn't guarantee that the customer has sufficient funds to cover the subscription.
+  </Accordion>
+
+  <Accordion title="Can Embeddables handle the release of funds when we're ready to take the payment?">
+    No, Embeddables cannot handle the release of funds. This needs to be handled by your backend system when you're ready to take the payment. This is because the release of funds typically happens after the user has completed their interaction with the Embeddable (e.g., after prescription approval).
+  </Accordion>
+
+  <Accordion title="Can Embeddables handle setting up the subscription for me?">
+    We recommend that you handle the subscription setup in your own backend system. This is because if Embeddables were to set up the subscription for you, the 30-day delay would begin at checkout, rather than when the funds are relased and the customer's first month begins.
+    
+    When you release the hold on the payment, we recommend that you also create the subscription with a 30-day delay [using Stripe's API](https://docs.stripe.com/changelog/2018-02-05/subscriptions-delay-first-full-invoice-future-date).
+  </Accordion>
+
+  <Accordion title="Do I need to collect the customer's payment details again when setting up the subscription?">
+    No, you don't need to collect the payment details again. When you place a hold on a payment, Stripe automatically creates a customer record and stores the payment method. You can use this same payment method when creating the subscription.
+  </Accordion>
+
+  <Accordion title="What happens if the prescription is not approved?">
+    If the prescription is not approved, you should cancel the hold on the payment. The customer will not be charged, and no subscription will be created.
+  </Accordion>
+
+  <Accordion title="Can I use this approach for other types of verification, not just prescriptions?">
+    Yes, this approach can be used for any scenario where you need to verify something before charging the customer. The same principles apply - place a hold on a one-time payment, verify the necessary information, then release the hold and set up the subscription when ready.
+  </Accordion>
+
+  <Accordion title="Why use a delayed subscription instead of a free trial?">
+    While both approaches can achieve a similar result, delaying the subscription's first invoice is generally preferred over using a free trial. This is because:
+    
+    - It creates a clearer invoice history for the customer, showing their first payment followed by regular subscription charges.
+    - It avoids potential confusion that can arise from seeing "free trial" followed by a charge.
+    - It better matches the actual business logic (you're not giving away a free month, you're just delaying the start of the subscription).
+
+    [Stripe supports this](https://docs.stripe.com/changelog/2018-02-05/subscriptions-delay-first-full-invoice-future-date) through the `billing_cycle_anchor` parameter, which lets you set a future date for the first full invoice. This can be combined with prorations if needed.
+  </Accordion>
+</AccordionGroup>

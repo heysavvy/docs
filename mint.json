@@ -88,7 +88,9 @@
             "how-to/display-answers-back-to-user",
             "how-to/sync-pages-with-url",
             "how-to/dynamically-switch-brands",
-            "how-to/set-up-node-of-the-above"
+            "how-to/set-up-node-of-the-above",
+            "how-to/control-stripe-prices-from-cms",
+            "how-to/place-a-hold-on-payment"
           ]
         },
         {
