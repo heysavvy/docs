@@ -26,7 +26,7 @@ Computed Fields have access to the User Data JSON object, a series of helper fun
     - Computed Fields must start with a function called `result()`.
     - You can write any custom JS code inside the `result()` function.
     - The first argument of `result()` is the User Data, and the other arguments
-      are [described here](/features/custom-code).
+      are [described here](/guides/custom-code).
     - The code will execute on the frontend, in the main window environment,
       so has access to window functions and variables.
   </Step>
@@ -73,7 +73,7 @@ function result(userData, helperFunctions, triggerContext) {
 }
 ```
 
-### User is/is not over 18
+### User is/is not over 18 - from a single date input
 
 Here's an example of a Computed Field called `is_over_18`, that takes the user's date of birth and returns a boolean value indicating whether they are over 18.
 
@@ -93,10 +93,34 @@ function result(userData, helperFunctions, triggerContext) {
 }
 ```
 
+### User is/is not over 18 - from three dropdowns
+
+Here's an example of a Computed Field called `is_over_18`, that takes the user's date of birth, entered by the user into month, day and year dropdowns, and returns a boolean value indicating whether they are over 18.
+
+```js
+// All Computed Fields must contain a function called result()
+function result(userData, helperFunctions, triggerContext) {
+  // Get the user's date of birth from the User Data JSON object
+  const day = userData.dob_day;
+  const month = userData.dob_month;
+  const year = userData.dob_year;
+
+  // Calculate the date of birth from the day, month and year
+  const dob = new Date(year, month - 1, day);
+
+  // Calculate the date exactly 18 years ago
+  const eighteenYearsAgo = new Date();
+  eighteenYearsAgo.setFullYear(eighteenYearsAgo.getFullYear() - 18);
+
+  // Return true if the user's date of birth is before 18 years ago, false otherwise
+  return dob < eighteenYearsAgo;
+}
+```
+
 <Card
   title="Learn more about Custom Code"
   icon="code"
-  href="/features/custom-code"
+  href="/guides/custom-code"
 >
   Read more about writing Custom Code in Embeddables, including all the
   available arguments passed in to the function.
