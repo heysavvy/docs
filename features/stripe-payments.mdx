@@ -172,20 +172,13 @@ These features are not required in order to successfully accept payments, but th
   </Accordion>
 
   <Accordion title="Place a hold on the customer's card">
-    This lets you place a hold on the user's card, which:
-      1. Ensures that they have enough funds to cover the cost of the order.
-      2. Holds the funds for a certain period of time, to ensure that they're available to complete the payment.
+    See the [How To: Place a Hold on a Payment](/how-to/place-a-hold-on-payment) guide for more information on this feature.
 
-    For more information on how placing a hold works in Stripe, see the [Stripe documentation](https://docs.stripe.com/payments/place-a-hold-on-a-payment-method).
     <Warning>
-      **You will need to manually release the hold on the user's card at a later date to complete the payment.**
-
-      This is not handled by Embeddables, since it happens at a later stage when the user is no longer interacting with the Embeddable.
+      You will need to manually release the hold on the user's card at a later date to complete the payment.
     </Warning>
     <Note>
       Please note that Stripe only supports placing a hold on one-time payments, not recurring payments.
-
-      To achieve the effect of a hold on a recurring payment, some companies set up a one-time payment to cover the cost of the first month, and then add a recurring payment with a delay or free trial.
     </Note>
   </Accordion>
 
@@ -293,10 +286,6 @@ These features are not required in order to successfully accept payments, but th
       Just make sure that the key of the Stripe component is set to be
       [stored in the 'Embedables Cloud Context'](https://docs.embeddables.com/features/user-data#where-is-user-data-stored%3F) - i.e. stored in Embeddables' database.
     </Note>
-  </Accordion>
-
-  <Accordion title="Place a hold on a payment">
-    See the [How To: Place a Hold on a Payment](/how-to/place-a-hold-on-payment) guide for more information.
   </Accordion>
 </AccordionGroup>
 
