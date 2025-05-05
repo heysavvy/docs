@@ -64,7 +64,7 @@
         "features/cms",
         "features/analytics",
         "features/saving-and-version-control",
-        "features/testing-and-debugging/url-params",
+        "features/url-params",
         "features/publish-to-your-site"
       ]
     },
