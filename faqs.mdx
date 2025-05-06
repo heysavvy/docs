@@ -1,0 +1,65 @@
+---
+title: "Frequently Asked Questions"
+sidebarTitle: "FAQs"
+description: "Questions we get asked a lot"
+icon: "question"
+---
+
+import { Accordion } from '@site/src/components/Accordion';
+
+## Compliance & Security
+
+<AccordionGroup>
+  <Accordion title="Are you HIPAA compliant?">
+    Yes, we are HIPAA compliant. However, customers need to follow our HIPAA compliance checklists and requirements to maintain compliance.
+  </Accordion>
+
+  <Accordion title="Are you SOC2 compliant?">
+    No, we are not SOC2 compliant at this time.
+  </Accordion>
+
+  <Accordion title="Do you sign BAAs (Business Associate Agreements)?">
+    No, we do not sign BAAs.
+  </Accordion>
+</AccordionGroup>
+## Data Processing & Privacy
+
+<AccordionGroup>
+  <Accordion title="Do you process or store personal data?">
+    Our platform is used to build and embed frontend components. These components are then embedded or hosted on your website.
+
+    The amount of data we process depends on your preferences. If you want to use our platform's analytics features, then our platform collects data from your end-users such as IP addresses, browser information, and page views.
+
+    If you don't want to use our platform's analytics features, then we don't need to collect, process, or store any personal end-user data.
+
+    You can choose instead to collect and store data through your own backend. You can send directly from the user's browser to your designated backend without it passing through our infrastructure.
+  </Accordion>
+
+  <Accordion title="Do you provide DPAs (Data Processing Agreements)?">
+    Customers on our Pro and Enterprise plans can request us to review and sign a DPA.
+
+    For customers on lower plans, if you require a DPA with any vendors who process personal data, then we recommend that you send data directly from the user's browser to your backend, without passing through our infrastructure (which would disable most of Embeddables' built-in analytics features).
+  </Accordion>
+
+  <Accordion title="Do you conduct DPIAs (Data Protection Impact Assessments)?">
+    We do not currently have a DPIA.
+  </Accordion>
+</AccordionGroup>
+
+## Infrastructure & Hosting
+
+<AccordionGroup>
+  <Accordion title="Where is your code/platform hosted?">
+    Our platform is hosted on the following providers:
+
+    - Cloudflare
+    - Vercel
+    - Heroku
+    - Supabase
+    - Firebase
+    - Clickhouse
+
+    Our codebase itself is hosted on GitHub.
+  </Accordion>
+</AccordionGroup>
+

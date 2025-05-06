@@ -50,7 +50,7 @@
   "navigation": [
     {
       "group": "Get Started",
-      "pages": ["welcome", "5-min-onboarding"]
+      "pages": ["welcome", "5-min-onboarding", "faqs"]
     },
     {
       "group": "Features",
