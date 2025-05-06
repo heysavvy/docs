@@ -289,3 +289,54 @@ These features are not required in order to successfully accept payments, but th
   </Accordion>
 </AccordionGroup>
 
+## Troubleshooting
+
+
+<AccordionGroup>
+  <Accordion title="I'm getting an error about a missing publishable key">
+    This means that you need to grab your Publishable Key from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
+  </Accordion>
+
+  <Accordion title="I'm getting an error about a missing restricted key">
+    This means that you need to generate a Restricted Key with the [scopes/permissions listed above](#keys-and-ids-that-you’ll-need), from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
+  </Accordion>
+
+  <Accordion title="Error: You must provide one of `price` or `price_data` for each line item when using prices.">
+    This means that you have at least one line item that is not using a Price ID (a pre-created price in Stripe), nor is it using a Price Data object (a custom price created in the Embeddables Builder).
+
+    If you're using a Computed Field to generate the line items, check the value that it's returning, and make sure it's being passed into the Stripe component.
+  </Accordion>
+
+  <Accordion title="Error: No such price: 'price_xxxxxx'; a similar object exists in test mode, but a live mode key was used to make this request.">
+    This means that you're using a **test mode** Price ID, but are testing Stripe in **live mode**.
+
+    There are two common causes of this:
+
+    1. You're using a test mode Price ID in your Computed Field, but have not set the Embeddable to test mode.
+    <Tip>
+      To make sure that you're in Test Mode, ensure that one of the following is true:
+      - You're testing on a link with `?savvy_test=true` in the URL, OR
+      - You're testing on a `preview.embeddables.com` link
+    </Tip>
+    2. You've set the Embeddable to test mode, but the Public and Restricted keys that you gave to the Embeddables Team to use for Test Mode were actually live mode keys.
+
+
+    <Tip>
+      To check which Stripe keys are being used:
+      1. Open the Developer Tools in your browser and go to the Elements tab.
+      2. Use `Cmd+F` / `Ctrl+F` to search for `data-flow-stripe-publishable-key-value`.
+      3. Check whether the value starts with `pk_live_` or `pk_test_`.
+    </Tip>
+
+    See: [Adding dynamic line items](#add-dynamic-line-items) for more information on how to handle this.
+  </Accordion>
+  
+  <Accordion title="Error: No such price: 'price_xxxxxx'">
+    This likely means that you're testing with a Price ID that comes from a different Stripe account from the one that you're using to accept payments.
+
+    For example, you might be using a live mode Price ID from your own Stripe account, but the Embeddable is currently in Test Mode and connected to the Embeddables-provided Stripe account.
+
+    See: [Adding dynamic line items](#add-dynamic-line-items) for more information on how to handle this.
+  </Accordion>
+  
+</AccordionGroup>
