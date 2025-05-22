@@ -1,0 +1,152 @@
+---
+title: "How To: Create Programmatic SEM Pages using the Embeddables CMS"
+sidebarTitle: "How To: Run Programmatic SEM Pages from the CMS"
+description: "Learn how to use the Embeddables CMS to create and manage dynamic SEM pages from a single template"
+---
+
+The **Embeddables CMS** can be used to create and manage multiple landing pages from a single template, making it perfect for Search Engine Marketing (SEM) campaigns. This guide will show you how to set up and use the CMS for programmatic page creation.
+
+## Overview
+
+This approach allows you to:
+- Create hundreds of targeted landing pages from a single template
+- Manage all page content through a user-friendly CMS interface
+- Update content without code changes or deployments
+- Target different audiences and keywords effectively
+- Maintain consistent design while varying content
+
+## Setting Up Your CMS Table
+
+### 1. Create a New Table
+
+1. Navigate to the CMS section in the Embeddables Web App
+2. Click "Edit Tables"
+3. Click "+ Add Table"
+4. Select the "Programmatic Pages" template
+
+### 2. Configure Your Columns
+
+The template comes with recommended columns, but you can customize them based on your needs. Here's a suggested structure:
+
+| Column Name        | Column Key       | Type        | Purpose                                        |
+|--------------------|------------------|-------------|------------------------------------------------|
+| **Base Path**      | `base_path`      | Text        | Defines the URL pattern to match with the page |
+| **Title**          | `title`          | Text        | Page title to display in the h1                |
+| **Subtitle**       | `subtitle`       | Text        | Page subtitle to display in the h2             |
+| **Hero Image URL** | `hero_image_url` | Text        | URL of the hero image for the page             |
+| **CTA Text**       | `cta_text`       | Text        | Call-to-action button text                     |
+| **CTA Link**       | `cta_link`       | Text        | Call-to-action button URL                      |
+
+<Tip>
+  You can add additional columns based on your specific needs, such as:
+  - Extra columns for more custom content further down the page
+  - A `product_keys` column with a comma-separated list of keys for the products to feature on the page - you could set up a Computed Field that uses this to filter from a larger list of products, and use Repeatable Option Buttons to display them in the page's content.
+</Tip>
+
+### 3. Add some rows
+
+Add some content by adding at least the first few rows - i.e. the first few pages of content.
+
+After the next few steps, you can use this to test out your new programmatic pages.
+
+## Creating Your Embeddable Template
+
+### 1. Connect to the CMS
+
+<Steps>
+  <Step title="Add a Content Source">
+    - Create a new Embeddable
+    - In the Embeddables Builder, go to Embeddable Options
+    - Scroll to the CMS section
+    - Click "+ Add Content Source"
+  </Step>
+  <Step title="Configure the Connection">
+    - Enter a User Data key (e.g., `cms`)
+    - Select your programmatic pages table
+    - Under "Which records should get shown?", choose "Records that match a URL pattern"
+    - Set the Controller Key to `base_path`
+    - Leave "Multiple Records" unchecked since we want one page per record
+  </Step>
+  <Step title="Register the Key">
+    - Add your User Data key to the list of Registered Keys in Embeddable Options
+  </Step>
+</Steps>
+
+### 2. Design Your Template
+
+Create a single Embeddable template that will serve as the base for all your SEM pages. Include:
+
+- A dynamic title section that pulls from the CMS
+- Content areas that can be populated from the CMS
+- Image components that use the CMS image URLs
+- CTA buttons with dynamic text and links
+
+In each of the content areas, use `{{cms.title}}`, `{{cms.subtitle}}` etc to display the content from the CMS.
+
+## Previewing and Publishing
+
+<Warning>
+  When testing your Embeddable on a preview link, add <code>savvy_test=false</code> to the URL to ensure CMS data loads correctly.
+</Warning>
+
+To preview the page, open a preview link and add the part of the URL that matches the `base_path` column after a `?` in the URL. This will match the URL pattern required for the particular page.
+
+For example, if the `base_path` is `seo-services`, the URL will be `https://preview.embeddables.com/flow_aaaaaaa?savvy_test=false&base_path=/product-iphone`.
+
+- Use the `savvy_cms` URL parameter to preview the page with the latest version of the CMS data:
+  - `savvy_cms=latest` to preview the latest version
+  - `savvy_cms=123` to preview a specific version
+  - `savvy_cms=staging` to preview the staging version
+
+## Best Practices
+
+1. **URL Structure**
+   - Use SEO-friendly URL slugs
+   - Keep URLs short and descriptive
+   - Use hyphens to separate words
+
+2. **Content Management**
+   - Maintain consistent formatting across pages
+   - Use the rich text editor for content formatting
+   - Keep meta descriptions between 150-160 characters
+
+3. **Testing**
+   - Preview all pages before publishing
+   - Test different CMS versions using the version control system
+   - Verify all dynamic content loads correctly
+
+## Example Use Cases
+
+1. **Service Pages**
+   - Create targeted pages for different services
+   - Customize content for specific industries
+   - Use location-based variations
+
+2. **Campaign Landing Pages**
+   - Create pages for different marketing campaigns
+   - A/B test different content variations
+   - Target specific audience segments
+
+3. **Product Pages**
+   - Create pages for different product categories
+   - Customize content for different price points
+   - Target specific customer needs
+
+<Tip>
+  Use the CMS version control system to create and test different content variations before pushing them live. This is especially useful for A/B testing different approaches to your SEM pages.
+</Tip>
+
+## Troubleshooting
+
+1. **Content Not Loading**
+   - Verify the URL slug matches exactly
+   - Check that the Content Source is properly configured
+   - Ensure you're using `savvy_test=false` in preview URLs
+
+2. **Version Control Issues**
+   - Make sure you're using the correct `savvy_cms` parameter
+   - Verify that the version exists in the CMS
+   - Check that you have permission to access the version
+
+
+For additional help or questions, please contact the Embeddables support team. 
