@@ -9,9 +9,9 @@ description: "URL params? Embed code? Window functions? Etc..."
 
 Some common use-cases that we often see:
 
-1. I want to prefill data like email addresses into my embeddable that users have already entered previously on my site.
-2. I want to prefill data from my embeddable into an embedded component inside it, like a Calendly booker or Stripe component.
-3. I want to pass data like email addresses out of my embeddable to be used on a subsequent page on my website.
+1. I want to prefill data like email addresses into my Embeddable that users have already entered previously on my site.
+2. I want to prefill data from my Embeddable into an embedded component inside it, like a Calendly booker or Stripe component.
+3. I want to pass data like email addresses out of my Embeddable to be used on a subsequent page on my website.
 
 <Info>
 This doc is for passing data to be immediately prefilled somewhere in front of the user.
@@ -20,18 +20,18 @@ For ways of sending/receiving the data to/from an external source like an API, d
 
 </Info>
 
-## Passing data into an embeddable to prefill fields (e.g. email address)
+## Passing data into an Embeddable to prefill fields (e.g. email address)
 
 ### Method 1: URL params
 
 <Steps>
   <Step title="Add the fields into the URL as params">
     - For example: `https://mywebsite.com/onboarding?email=ada@lovelace.com`.
-    - Make sure that this is the URL when the embeddable first loads,
+    - Make sure that this is the URL when the Embeddable first loads,
       since that's when it will look for URL params.
   </Step>
   <Step title="Set those fields to be URL-controlled">
-    - Head to the embeddable-wide settings
+    - Head to the Embeddable-wide settings
     - Go to the More tab
     - Add the fields to the URL Keys block,
       separated by newlines.
@@ -48,7 +48,7 @@ For ways of sending/receiving the data to/from an external source like an API, d
       to the DOM, since that's when it will look for URL params.
   </Step>
   <Step title="Set those fields to be Embed Code-controlled">
-    - Head to the embeddable-wide settings
+    - Head to the Embeddable-wide settings
     - Go to the More tab
     - Add the fields to the Embed Code block,
       separated by newlines.
@@ -60,7 +60,7 @@ For ways of sending/receiving the data to/from an external source like an API, d
 
 <Note>
   This works best when you want to prefill data immediately (as soon as the
-  embeddable loads).
+  Embeddable loads).
 </Note>
 
 <Steps>
@@ -68,7 +68,7 @@ For ways of sending/receiving the data to/from an external source like an API, d
     - From within your website or webapp, create a variable
       in the Window scope with a unique name.
     - Add the data you want to prefill into that variable.
-    - **Make sure to that this happens before the embeddable loads.**
+    - **Make sure to that this happens before the Embeddable loads.**
 
     ```javascript Your Website/Webapp Code
     window.myEmbeddablesPrefillData = {
@@ -110,7 +110,7 @@ For ways of sending/receiving the data to/from an external source like an API, d
 ### Method 4: Custom code using custom Window event
 
 <Note>
-  This works best when you want to prefill data after the embeddable has already
+  This works best when you want to prefill data after the Embeddable has already
   loaded
 </Note>
 

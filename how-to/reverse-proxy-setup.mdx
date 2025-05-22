@@ -26,7 +26,7 @@ Publishing your Embeddable via a reverse proxy can be done in 2 steps:
 
 <Steps>
   <Step title="Point your page to our proxy server">
-    Configure your reverse proxy to point to `https://proxy.embeddables.com`. This is the main endpoint that will serve your embeddable content.
+    Configure your reverse proxy to point to `https://proxy.embeddables.com`. This is the main endpoint that will serve your Embeddable content.
     
     For example, in Nginx:
     ```nginx
@@ -46,8 +46,8 @@ Publishing your Embeddable via a reverse proxy can be done in 2 steps:
     </Frame>
   </Step>
   
-  <Step title="Pass the correct embeddable ID">
-    Add the `X-Embeddables-Id` header to your proxy configuration. This header tells the proxy which specific embeddable to serve.
+  <Step title="Pass the correct Embeddable ID">
+    Add the `X-Embeddables-Id` header to your proxy configuration. This header tells the proxy which specific Embeddable to serve.
     
     In Nginx, add this to your configuration:
     ```nginx
@@ -61,10 +61,10 @@ Publishing your Embeddable via a reverse proxy can be done in 2 steps:
   </Step>
   
   <Step title="Verify that it's working">
-    Refresh your page at `https://yourdomain.com/your-reverse-proxy-page`. You should now see your specific embeddable being served.
+    Refresh your page at `https://yourdomain.com/your-reverse-proxy-page`. You should now see your specific Embeddable being served.
     
     Common issues at this stage:
-    - Incorrect embeddable ID
+    - Incorrect Embeddable ID
     - Missing or malformed headers
     - Caching issues (try clearing your browser cache)
     - Propagation time (try waiting a few minutes)
@@ -108,6 +108,6 @@ location /your-reverse-proxy-page {
     - Wait a few minutes for propagation to take effect.
 
 2. **Wrong Content Appearing**
-    - Double-check the embeddable ID.
+    - Double-check the Embeddable ID.
     - Verify the proxy_pass URL is correct.
     - Clear your browser cache.

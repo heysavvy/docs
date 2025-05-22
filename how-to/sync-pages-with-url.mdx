@@ -1,22 +1,22 @@
 ---
 title: "How To: Sync page changes with the browser URL"
-description: "Updating the URL on page changes so that the browser back buttons control the embeddable"
+description: "Updating the URL on page changes so that the browser back buttons control the Embeddable"
 ---
 
 ## What's the issue?
 
 Because embeddables are, well, embedded in the webpage, they have a slightly strange
-relationship with the browser: namely, that pages _inside_ an embeddable are distinct
+relationship with the browser: namely, that pages _inside_ an Embeddable are distinct
 from webpages in the browser.
 
 The main consequence of this that people tend to notice is that pressing the browser's
-Back button doesn't go back a page in the embeddable - in fact, it goes back to the previous
-webpage (normally a page without an embeddable on at all).
+Back button doesn't go back a page in the Embeddable - in fact, it goes back to the previous
+webpage (normally a page without an Embeddable on at all).
 
 This is expected behavior, but in some situations can confuse users who were actually
 trying to just go back one step in the flow, and find that they've gone back to before the beginning.
 
-## The solution: syncing embeddable pages with the URL
+## The solution: syncing Embeddable pages with the URL
 
 The solution to this is our **Sync Pages With The URL** feature.
 
@@ -36,7 +36,7 @@ The solution to this is our **Sync Pages With The URL** feature.
 When turned on, this works by automatically updating the URL with an <Tooltip
 tip="Anchor links start with a '#' in the URL (e.g. 'mysite.com/about#summary') and
 link to something within a webpage, such as a section or heading."> anchor link</Tooltip>
-that corresponds to the current page key of the embeddable.
+that corresponds to the current page key of the Embeddable.
 
 So, if a user heads to `mywebsite.com/get-started` then that will immediately become
 `mywebsite.com/get-started#intro_page`, and when the user clicks next inside the embeddables their
@@ -45,8 +45,8 @@ URL bar will then show `mywebsite.com/get-started#your_name_page`, etc etc.
 Why is this helpful? Well, it means that if the user presses the browser's Back button,
 it will just return to `mywebsite.com/get-started#intro_page` - a different anchor link but still on the same webpage.
 
-Embeddables then listens for changes to the URL and updates the embeddable page accordingly,
-so the user will feel no difference between that and using the Back button inside the embeddable itself.
+Embeddables then listens for changes to the URL and updates the Embeddable page accordingly,
+so the user will feel no difference between that and using the Back button inside the Embeddable itself.
 
 The browser's Forward button works in the same way, meaning that users should have a
 smooth experience pretty much whatever they choose to do.

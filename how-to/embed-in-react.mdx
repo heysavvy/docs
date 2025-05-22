@@ -1,9 +1,9 @@
 ---
 title: "How To: Embed in a React app"
-description: "How to publish your embeddable inside a React app"
+description: "How to publish your Embeddable inside a React app"
 ---
 
-Embedding your embeddable in a React app is straightforward, and looks similar to the process of embedding in a regular website.
+Embedding your Embeddable in a React app is straightforward, and looks similar to the process of embedding in a regular website.
 
 <Tip>
   Looking for other ways to publish your Embeddable? Check out the [Publish to your site](/features/publish-to-your-site) guide.
@@ -32,9 +32,9 @@ Embedding your embeddable in a React app is straightforward, and looks similar t
 
   </Step>
   <Step title="Insert the second part in the Body">
-    The second part of the embed code should go in the `<BODY>` of the page, wherever you want the embeddable to appear on the page.
+    The second part of the embed code should go in the `<BODY>` of the page, wherever you want the Embeddable to appear on the page.
 
-    The is the part that looks like this (where `flow_abcdefhijklm` is your embeddable ID):
+    The is the part that looks like this (where `flow_abcdefhijklm` is your Embeddable ID):
 
     ```html Embed Code - Part 2/2
     <savvy id="flow_abcdefhijklm"></savvy>
@@ -87,8 +87,8 @@ insert the savvy just after the initial render using React's `useEffect` hook:
 ```javascript App.js
 useEffect(() => {
   const htmlElement = `<savvy id="flow_abcdefhijklm"></savvy>`;
-  const container = document.getElementById("my-container"); // Select the container that the embeddable should appear in
-  container.innerHTML = htmlElement; // Use '+=' if you want to append the embeddable to the contents of the container, instead of replacing the contents
+  const container = document.getElementById("my-container"); // Select the container that the Embeddable should appear in
+  container.innerHTML = htmlElement; // Use '+=' if you want to append the Embeddable to the contents of the container, instead of replacing the contents
 });
 ```
 
