@@ -40,37 +40,38 @@ It provides a user-friendly interface for managing data like **Stripe prices** o
 - Edit existing content by clicking on cells.
 - Each table has a unique ID that you'll use to connect it to your Embeddables.
 
-### Connecting to Embeddables
+### Connecting to an Embeddable
 
 To use CMS data in your Embeddable:
 
-1. Copy your table's ID.
-2. In the Embeddables Builder, go to the Embeddable Options.
-3. Open the Embeddable JSON editor and add a `content_sources` array with the following properties:
 
-```json
-{
-  "content_sources": [
-    {
-      "source_type": "embeddables_cms",
-      "source_config": {
-        "table_id": "<YOUR_TABLE_ID>" // @TODO: Replace with your table's ID
-      },
-      "key": "your_data_key", // The key to store the data in the User Data
-      "controller_type"?: "url_pattern", // Optional: If you want to control the data shown based on the URL, set this to "url_pattern"
-      "controller_key"?: "webpage_key", // Optional: The column in your table that contains the regex pattern to match against the current URL
-      "multiple_records": boolean, // Optional: Whether to return all records that match the controller pattern (if no controller pattern then just return all records), or a single record
-    }
-  ]
-}
-```
+<Steps>
+  <Step title="Add a new Content Source">
+    - In the Embeddables Builder, go to the Embeddable Options (make sure to deselect any pages or components by pressing Escape).
+    - Scroll down to the CMS section and click `+ Add Content Source`.
+  </Step>
+  <Step title="Choose a User Data key">
+    <Title>Enter a key under which to store the data in the User Data.</Title>
+  </Step>
+  <Step title="Select a table">
+    <Title>Select the table you want to connect to (if you don't see any tables, make sure that you've saved the new table as a version in the CMS).</Title>
+  </Step>
+  <Step title="Configure which records are fetched">
+    - Under "Which records should get shown?", choose the method by which you want to control which record(s) are included
+      - `Show all records` - All records in the table will be fetched (or just the first record if `Multiple Records` is left unchecked)
+      - `Records that match a URL pattern` - Only records that match the URL pattern will be fetched (or the first record that matches if `Multiple Records` is left unchecked)
+    - If you choose `Records that match a URL pattern`, under "Controller Key", enter a column key that will be used to match the URL pattern.
+    - Check the "Multiple Records" checkbox if you want to fetch multiple records - e.g. to display a list of items like FAQs or Prices.
+  </Step>
+  <Step title="Finish setting it up">
+    - Add your chosen User Data key to the list of Registered Keys in the Embeddable Options.
+    - You can now reference the data in your Embeddable, just like you would with any other User Data property.
+  </Step>
+</Steps>
 
-<Tip>
-  A UI for connecting an Embeddable to a table in the Embeddables CMS, so that you don't need to modify the JSON, is coming soon!
-</Tip>
-
-4. Add your chosen User Data key to the list of Registered Keys in the Embeddable Options.
-5. You can now reference the data in your Embeddable, just like you would with any other User Data property.
+<Warning>
+  When testing your Embeddable on a preview link, you must add <code>savvy_test=false</code> to the URL to ensure CMS data loads as expected.
+</Warning>
 
 ### Utilizing CMS Version Control
 
