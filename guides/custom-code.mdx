@@ -5,13 +5,9 @@ description: "How to get the most out of custom code blocks in Embeddables"
 icon: "code"
 ---
 
-Custom Code blocks provide various bits of context through arguments in the root functions. They are, in order:
+Custom Code blocks in Embeddables are where you can escape the confines of no-code and create entirely custom functionality.
 
-| #   | Argument          | Description                                                                                                                  |
-| --- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| 1   | `userData`        | The current User Data                                                                                                        |
-| 2   | `helperFunctions` | An object containing various helper functions (see [full list below](#available-helper-functions))                           |
-| 3   | `triggerContext`  | An object containing data on what triggered the Computed Field or Action (see [full list below](#available-trigger-context)) |
+Custom Code exists in two main places: [Computed Fields](#computed-fields) and [Actions](#actions).
 
 <CodeGroup>
 
@@ -29,40 +25,206 @@ function output(userData, helperFunctions, triggerContext) {
 
 </CodeGroup>
 
-## Available Helper Functions
 
-### `setUserData(updates: Record<string, unknown>)`
+### Available arguments in Custom Code functions
 
-This can be used to update the current User Data.
+Custom Code blocks provide various bits of context through arguments in the root functions. They are, in order:
 
-It accepts a JSON object, which can contain one or more key/value pairs.
+| #   | Argument          | Description                                                                                                                  |
+| --- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| 1   | `userData`        | The current User Data                                                                                                        |
+| 2   | `helperFunctions` | An object containing various helper functions (see [full list below](#available-helper-functions))                           |
+| 3   | `triggerContext`  | An object containing data on what triggered the Computed Field or Action (see [full list below](#available-trigger-context)) |
 
-It's treated as a subset of data that is merged into the existing User Data, although please note that any nested objects will be replaced not merged.
 
-### `resetUserData()`
+## Helper Functions
 
-This can be used to reset the current User Data to the same value as for a brand new user.
+The following helper functions are available in both Computed Fields and Actions through the `helperFunctions` argument:
 
-All previous data will be lost.
+### Page Navigation Functions
 
-### `triggerAction(actionId: string)`
+<AccordionGroup>
+  <Accordion title="goToNextPage()">
+    Navigates to the next page in the flow.
+    
+    This is useful when you want to navigate to the next page in the flow, but don't want to use the default navigation logic.
+    
+    ```javascript
+    // Example usage
+    await helperFunctions.goToNextPage();
+    ```
+  </Accordion>
 
-This can be used to programmatically trigger an action from custom code.
+  <Accordion title="goToPrevPage()">
+    Navigates to the previous page in the flow.
+    
+    This is useful when you want to navigate to the previous page in the flow, but don't want to use the default navigation logic.
+    
+    ```javascript
+    // Example usage
+    await helperFunctions.goToPrevPage();
+    ```
+  </Accordion>
 
-One common use-case for this is when you want two actions to occur, but need one of them to complete before the other one starts.
+  <Accordion title="goToPage(pageKeyOrIdOrIndex: string | number)">
+    Navigates to a page with the specified key, ID, or index - you can choose which type of identifier to pass in.
+    
+    ```javascript
+    // Example usage
+    await helperFunctions.goToPage('page_key_1234567890');  
+    ```
 
-<Note>
-  This list is not exhaustive - more helper functions will be added to these
-  docs soon.
-</Note>
+  </Accordion>
+</AccordionGroup>
 
-## Available Trigger Context variables
 
-<Note>
-  **Please note** that `old_user_data` and `new_user_data` currently only
-  contain the input keys for the Computed Field, not all of User Data. This may
-  change in the future.
-</Note>
+
+
+
+### Data Management Functions
+<AccordionGroup>
+  <Accordion title="getUserData()">
+    Returns the current [User Data](/features/user-data) from the flow controller.
+    
+    This is useful when you need to read the current state of User Data, as opposed to the initial userData value that was passed in as the first argument.
+
+    ```javascript
+    // Example usage
+    const currentData = helperFunctions.getUserData();
+    ```
+  </Accordion>
+
+  <Accordion title="setUserData(key: string, value: any)">
+    Updates a specific key/value pair in the [User Data](/features/user-data).
+
+    ```javascript
+    // Example usage
+    helperFunctions.setUserData('userName', 'John');
+    ```
+  </Accordion>
+
+  <Accordion title="setUserData(updates: Record<string, unknown>)">
+    Updates multiple fields in the User Data at once.
+    
+    Accepts an object containing key/value pairs to update - i.e. to merge into the existing User Data.
+    
+    Note that nested objects will be replaced entirely, not merged.
+
+    ```javascript
+    // Example usage
+    helperFunctions.setUserData({
+      userName: 'John',
+      age: 30,
+      preferences: { theme: 'dark' }
+    });
+    ```
+  </Accordion>
+
+  <Accordion title="resetUserData()">
+    Resets all User Data to its initial state, effectively starting fresh.
+    
+    Use with caution as this will clear all previously stored User Data.
+
+    ```javascript
+    // Example usage
+    helperFunctions.resetUserData();
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Component and UI Functions
+<AccordionGroup>
+  <Accordion title="getComponentElement(key: string)">
+    Returns the DOM element for a component with the specified key.
+    
+    Useful for direct DOM manipulation, accessing element properties (such as `value` for a password input field), or setting up custom event listeners.
+
+    ```javascript
+    // Example usage
+    const element = helperFunctions.getComponentElement('submit_button');
+    element.disabled = true;
+    ```
+  </Accordion>
+
+  <Accordion title="openInfoBox(infoBoxPageKey: string)">
+    Opens an info box with the specified page key.
+    
+    The page key must refer to a page which is designed to be shown within an info box.
+
+    Returns a Promise that resolves when the info box is opened.
+
+    ```javascript
+    // Example usage
+    await helperFunctions.openInfoBox('infobox_faqs_popup_page');
+    ```
+  </Accordion>
+
+  <Accordion title="closeInfoBox()">
+    Closes the currently open info box. Returns a Promise that resolves when the info box is closed.
+
+    ```javascript
+    // Example usage
+    await helperFunctions.closeInfoBox();
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Action and Flow Control
+<AccordionGroup>
+  <Accordion title="triggerAction(actionId: string)">
+    Programmatically triggers an action by its ID.
+    
+    Returns a Promise that resolves when the action is complete.
+    
+    Useful for chaining actions or conditional action execution.
+
+    ```javascript
+    // Example usage
+    await helperFunctions.triggerAction('action_aaaaaaaaaaaa');
+    ```
+  </Accordion>
+
+  <Accordion title="triggerValidation()">
+    Triggers form validation on the flow controller.
+    
+    Useful when you need to validate form inputs programmatically.
+
+    ```javascript
+    // Example usage
+    helperFunctions.triggerValidation();
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Analytics and Events
+<AccordionGroup>
+  <Accordion title="trackCustomEvent(customEventName: string, customEventProps: any)">
+    Tracks a custom analytics event with the given name and properties.
+
+    ```javascript
+    // Example usage
+    helperFunctions.trackCustomEvent('button_clicked', {
+      buttonId: 'submit',
+      timestamp: Date.now()
+    });
+    ```
+  </Accordion>
+</AccordionGroup>
+
+### Additional Helpers
+<AccordionGroup>
+  <Accordion title="helpers">
+    An object containing various utility helper functions. The exact available helpers depend on the context and implementation.
+
+    ```javascript
+    // Example usage
+    const { formatDate, validateEmail } = helperFunctions.helpers;
+    ```
+  </Accordion>
+</AccordionGroup>
+
+
+## Trigger Context variables
 
 <CodeGroup>
 
@@ -87,3 +249,9 @@ type TriggerContext = {
 ```
 
 </CodeGroup>
+
+<Note>
+  **Please note** that `old_user_data` and `new_user_data` currently only
+  contain the input keys for the Computed Field, not all of User Data. This may
+  change in the future.
+</Note>
