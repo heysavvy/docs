@@ -1,0 +1,247 @@
+---
+title: "How To: Control FAQs from the Embeddables CMS"
+sidebarTitle: "How To: Control FAQs from the CMS"
+description: "Learn how to manage your FAQs through the Embeddables CMS and display them using an OptionSelector"
+---
+
+The **Embeddables CMS** provides an excellent way to manage your Frequently Asked Questions (FAQs) without needing to modify code. This guide will show you how to set up and use the CMS to control your FAQ content, making it easy for non-technical team members to update questions and answers.
+
+## Overview
+
+This approach allows you to:
+- Manage all FAQs through a user-friendly CMS interface
+- Store FAQs in a single place for all Embeddables in your project
+- Maintain a single source of truth for your FAQs
+- Update questions and answers without code changes or deployments
+- Keep an audit trail of FAQ changes, via the Embeddables CMS's version control system
+
+## Setting Up Your FAQ Table
+
+### 1. Create a New Table
+
+1. Navigate to the CMS section in the Embeddables Web App
+2. Click "Edit Tables"
+3. Click "+ Add Table"
+4. Select the "FAQs" template
+
+### 2. Configure Your Columns
+
+The template comes with recommended columns, but here's the essential structure you'll need:
+
+| Column Name    | Column Key    | Type        | Purpose                                    |
+|----------------|---------------|-------------|--------------------------------------------|
+| **Question**   | `question`    | Text        | The FAQ question to display on the button  |
+| **Answer**     | `answer`      | Text        | The detailed answer to display when selected|
+| **Order**      | `order`       | Number      | Optional: Control the display order of FAQs|
+
+<Info>
+  You could add additional columns based on your needs, such as:
+  - A `category` column to group FAQs by topic
+  - A `tags` column for better organization
+  - A `last_updated` column to track when FAQs were modified
+</Info>
+
+<Tip>
+  You can use a column like `category` or `tags` above to show different subsets of FAQs in different places.
+
+  For example, you could have a tag called "Pricing", and then filter the FAQs in a Computed Field called `pricing_faqs`.
+  
+  Then you could [display the results of this](#optional-filter-faqs-by-tags) in an OptionSelector component on your pricing page, or [offer users tabs to let them filter FAQs by tag](#optional-add-a-selector-so-users-can-filter-faqs-by-tag).
+</Tip>
+
+### 3. Add Your FAQs
+
+Add your FAQ content by adding rows to the table. Each row represents one FAQ item.
+
+## Connecting FAQs to Your Embeddable
+
+### 1. Connect to the CMS
+
+<Steps>
+  <Step title="Add a Content Source">
+    - Create a new Embeddable or open your existing one
+    - In the Embeddables Builder, go to Embeddable Options
+    - Scroll to the CMS section
+    - Click "+ Add Content Source"
+  </Step>
+  <Step title="Configure the Connection">
+    - Enter a User Data key (e.g., `faqs`)
+    - Select your FAQs table
+    - Under "Which records should get shown?", choose "Show all records"
+    - Check "Multiple Records" since we want to display all FAQs
+  </Step>
+  <Step title="Register the Key">
+    - Add your User Data key to the list of Registered Keys in Embeddable Options
+  </Step>
+</Steps>
+
+### 2. Create a Computed Field
+
+You'll need a Computed Field to transform the CMS data into the format required by the OptionSelector:
+
+- Go to Embeddable Options
+- Create a new Computed Field (e.g., `faq_options`)
+- Add `faqs` to the inputs
+- Add the following code:
+```js
+// Computed Field: faq_options
+function result({ faqs }) {
+  // Sort FAQs by order if the order column exists
+  const sortedFaqs = faqs?.sort((a, b) => (a.order || 0) - (b.order || 0)) || [];
+  
+  // Transform the FAQs into the format needed by the OptionSelector
+  return sortedFaqs.map(faq => ({
+    text: faq.question,
+    description: faq.answer
+  }));
+}
+```
+
+<AccordionGroup>
+  <Accordion title="Optional: Filter FAQs by Tags">
+    If you added a `tags` column to your FAQs table, you can filter FAQs in your computed field. For example, to show only pricing-related FAQs:
+
+    ```js
+    // Computed Field: faq_options
+    function result({ faqs }) {
+      // Filter for pricing FAQs and sort them
+      const pricingFaqs = faqs?.filter(faq => faq.tags?.includes('pricing'))
+        .sort((a, b) => (a.order || 0) - (b.order || 0)) || [];
+      
+      return pricingFaqs.map(faq => ({
+        text: faq.question,
+        description: faq.answer
+      }));
+    }
+    ```
+
+    This lets you create different FAQ sections (like pricing, features, or support) using the same CMS table.
+  </Accordion>
+
+  <Accordion title="Optional: Add a selector so users can filter FAQs by tag">
+    You can create a dynamic tag filter by adding an OptionSelector above your FAQs. Here's how:
+
+    1. First, create a computed field to get unique tags (e.g., `faq_tags`) - this will power the OptionSelector that lets users filter FAQs by tag.
+
+    ```js
+    // Computed Field: faq_tags
+    function result({ faqs }) {
+      // Get all unique tags from FAQs
+      const tags = [...new Set(faqs?.flatMap(faq => faq.tags || []) || [])];
+      return tags.map(tag => ({
+        text: tag,
+        value: tag
+      }));
+    }
+    ```
+
+    2. Then modify your FAQ computed field to accept a selected tag - this will filter the FAQs based on the selected tag, and the results will be passed to the main FAQs OptionSelector:
+    ```js
+    function result({ faqs, selected_tag }) {
+      // Filter FAQs by selected tag if one is chosen
+      const filteredFaqs = selected_tag 
+        ? faqs?.filter(faq => faq.tags?.includes(selected_tag))
+        : faqs;
+      
+      // Sort and transform the FAQs
+      return (filteredFaqs || [])
+        .sort((a, b) => (a.order || 0) - (b.order || 0))
+        .map(faq => ({
+          text: faq.question,
+          description: faq.answer
+        }));
+    }
+    ```
+
+    3. Finally, add the two OptionSelectors to your page:
+    - First OptionSelector: Set its key to `selected_tag` and its "Repeatable Buttons" field to `{{faq_tags}}` (which uses the first computed field above).
+    - Second OptionSelector: Set its key to `expanded_faq` and its "Repeatable" field to `{{faq_options}}` (which uses the second computed field above).
+
+    This creates an interactive FAQ section where users can filter FAQs by selecting different tags.
+  </Accordion>
+</AccordionGroup>
+
+### 3. Set Up the OptionSelector
+
+<Steps>
+  <Step title="Add an OptionSelector">
+    - Add an OptionSelector component to your page
+    - Enable "Repeatable Buttons"
+    - In the "Repeatable" field, enter `{{faq_options}}`
+    - Configure the OptionSelector to show descriptions only when selected
+  </Step>
+  <Step title="Style Your FAQs">
+    - Use the Designer to style the buttons and descriptions
+    - Consider adding transitions for smooth description reveals
+    - Ensure the text is readable and properly spaced
+  </Step>
+</Steps>
+
+## Previewing and Publishing
+
+<Warning>
+  When testing your Embeddable on a preview link, add <code>savvy_test=false</code> to the URL to ensure CMS data loads correctly.
+</Warning>
+
+To preview your FAQs with different CMS versions:
+- Use `savvy_cms=latest` to preview with the latest CMS version
+- Use `savvy_cms=123` to preview a specific version
+- Use `savvy_cms=staging` to preview the staging version
+
+## Best Practices
+
+1. **Content Organization**
+   - Keep questions clear and concise
+   - Use consistent formatting in answers
+   - Consider grouping related FAQs using categories
+   - Maintain a logical order for your FAQs
+
+2. **User Experience**
+   - Keep answers concise but informative
+   - Use formatting (like lists or bold text) in answers where appropriate
+   - Ensure the OptionSelector is easily accessible
+   - Consider adding a search function for longer FAQ lists
+
+3. **Content Management**
+   - Regularly review and update FAQs
+   - Use the CMS version control for major updates
+   - Keep an audit trail of changes
+   - Consider seasonal or temporary FAQs
+
+## Example Use Cases
+
+1. **Product FAQs**
+   - Common questions about features
+   - Pricing and subscription details
+   - Technical requirements
+   - Support information
+
+2. **Service FAQs**
+   - Process explanations
+   - Service limitations
+   - Contact information
+   - Terms and conditions
+
+3. **Company FAQs**
+   - About the company
+   - Team information
+   - Office locations
+   - Career opportunities
+
+<Tip>
+  Use the CMS version control system to create and test different FAQ variations before pushing them live. This is especially useful when making major updates to your FAQ content.
+</Tip>
+
+## Troubleshooting
+
+1. **FAQs Not Loading**
+   - Verify the Content Source is properly configured
+   - Check that you're using `savvy_test=false` in preview URLs
+   - Ensure the Computed Field is correctly transforming the data
+
+2. **Formatting Issues**
+   - Check that the OptionSelector is properly configured
+   - Verify the Computed Field output format
+   - Ensure all required columns are present in the CMS table
+
+For additional help or questions, please contact the Embeddables support team. 
