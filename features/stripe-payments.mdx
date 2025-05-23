@@ -405,7 +405,14 @@ These features are not required in order to successfully accept payments, but th
 
 <AccordionGroup>
   <Accordion title="I'm getting an error about a missing publishable key">
-    This means that you need to grab your Publishable Key from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
+    This likely means that you need to grab your Publishable Key from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
+
+    It might also mean that the Stripe publishable key has not been set up for your Embeddable.
+
+    **How to fix:**
+    - Make sure you have sent your Stripe <b>Publishable Key</b> to the Embeddables team.
+    - If you are testing, ensure you are using the correct mode (test or live) and that the corresponding key is set up. See: [I'm seeing test mode errors on a live link](#im-seeing-test-mode-errors-on-a-live-link).
+    - To use test keys, add <code>?savvy_test=true</code> to your URL.
   </Accordion>
 
   <Accordion title="I'm getting an error about a missing restricted key">
@@ -449,5 +456,24 @@ These features are not required in order to successfully accept payments, but th
 
     See: [Adding dynamic line items](#add-dynamic-line-items) for more information on how to handle this.
   </Accordion>
-  
+
+  <Accordion title="I'm seeing test mode errors on a live link">
+    If you see errors about test keys or test Price IDs while using a live link, it usually means that the keys provided to Embeddables are for test mode only.<br/>
+    <b>How to fix:</b>
+    <ul>
+      <li>Confirm with your team which keys (publishable and restricted) have been sent to Embeddables.</li>
+      <li>If you want to test in live mode, you must provide <b>live mode</b> keys to Embeddables.</li>
+      <li>If both keys are test keys, you can only test in test mode (<code>?savvy_test=true</code>).</li>
+    </ul>
+  </Accordion>
+
+  <Accordion title="I'm seeing live mode errors on a test link">
+    If you see errors about live keys or live Price IDs while using a test link (or with <code>?savvy_test=true</code>), it usually means that the keys provided to Embeddables are for live mode only.<br/>
+    <b>How to fix:</b>
+    <ul>
+      <li>Confirm with your team which keys (publishable and restricted) have been sent to Embeddables.</li>
+      <li>If you want to test in test mode, you must provide <b>test mode</b> keys to Embeddables.</li>
+      <li>If both keys are live keys, you can only test in live mode (remove <code>?savvy_test=true</code> from the URL).</li>
+    </ul>
+  </Accordion>
 </AccordionGroup>
