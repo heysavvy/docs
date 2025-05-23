@@ -36,3 +36,116 @@ To set up a Condition, you define which values are acceptable for a User Data pr
   </Step>
 
 </Steps>
+
+## Available Condition Operators
+
+Below is a detailed explanation of each operator type you can use in Conditions, and exactly how they work:
+
+<AccordionGroup>
+  <Accordion title="Is or includes (==)">
+    This operator checks if the user data value matches any of the specified values.
+    
+    For single values:
+    - Returns true if the user data exactly matches any of the specified values
+    - Returns true if `_no_value` is specified and the user data is undefined/null
+    - Returns false otherwise
+    
+    For arrays:
+    - Returns true if any of the specified values are included in the user data array
+    - Returns true if `_no_value` is specified and any value in the user data array is undefined/null
+    - Returns false otherwise
+
+    <Tip>
+      Special values like `_true` and `_false` will be automatically converted to their boolean equivalents.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="Is not or excludes (!=)">
+    This operator checks if the user data value does NOT match any of the specified values.
+    
+    For single values:
+    - Returns true if the user data does not match any of the specified values
+    - Returns true if `_no_value` is specified and the user data exists
+    - Returns false otherwise
+    
+    For arrays:
+    - Returns true if none of the specified values are included in the user data array
+    - Returns true if `_no_value` is specified and all values in the user data array exist
+    - Returns false otherwise
+
+    <Tip>
+      Special values like `_true` and `_false` will be automatically converted to their boolean equivalents.
+    </Tip>
+  </Accordion>
+
+  <Accordion title="Exists">
+    Checks if the user data value exists (is not undefined or null).
+    
+    For single values:
+    - Returns true if the value is defined and not null
+    - Returns false otherwise
+    
+    For arrays:
+    - Returns true if the array contains any defined, non-null values
+    - Returns false if the array is empty or contains only undefined/null values
+  </Accordion>
+
+  <Accordion title="Does not exist (!exists)">
+    Checks if the user data value does not exist (is undefined or null).
+    
+    For single values:
+    - Returns true if the value is undefined or null
+    - Returns false otherwise
+    
+    For arrays:
+    - Returns true if the array is empty or contains only undefined/null values
+    - Returns false if the array contains any defined, non-null values
+  </Accordion>
+
+  <Accordion title="Is value (is-true)">
+    Checks if the user data value is exactly the value `_true`.
+    - Returns true only if the value is strictly equal to `_true`
+    - Returns false for any other value
+  </Accordion>
+
+  <Accordion title="Is not value (is-false)">
+    Checks if the user data value is exactly the value `_false`.
+    - Returns true only if the value is strictly equal to `_false`
+    - Returns false for any other value
+  </Accordion>
+
+  <Accordion title="Is not value (is-not-true)">
+    Checks if the user data value is not the value `_true`.
+    - Returns true for any value that is not strictly equal to `_true`
+    - Returns false only if the value is strictly equal to `_true`
+  </Accordion>
+
+  <Accordion title="Is not value (is-not-false)">
+    Checks if the user data value is not the value `_false`.
+    - Returns true for any value that is not strictly equal to `_false`
+    - Returns false only if the value is strictly equal to `_false`
+  </Accordion>
+
+  <Accordion title="Is empty (is-empty)">
+    Checks if the user data value is empty. A value is considered empty if it is:
+    - undefined
+    - null
+    - An empty array (length = 0)
+    - An empty string (or string containing only whitespace)
+  </Accordion>
+
+  <Accordion title="Is not empty (is-not-empty)">
+    Checks if the user data value is not empty. A value is considered not empty if it is:
+    - defined and not null
+    - A non-empty array (length > 0)
+    - A non-empty string (containing at least one non-whitespace character)
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  When working with arrays in conditions, remember that the behavior can be different from single values. For example, the "Is or includes" operator will match if ANY of the specified values are found in the array, while "Is not or excludes" will only match if NONE of the specified values are found.
+</Tip>
+
+<Tip>
+  Special values like `_true`, `_false`, and `_no_value` are automatically converted to their appropriate types when used in conditions. For example, `_true` becomes the boolean value `true` when evaluated.
+</Tip>
