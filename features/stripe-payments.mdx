@@ -270,10 +270,20 @@ These features are not required in order to successfully accept payments, but th
       - Have Apple Pay set up on their device
     - No additional configuration is required in Embeddables
 
-
     <Note>
       Both Apple Pay and Google Pay will only appear as payment options when the user's browser and account settings support them. If a user doesn't meet the requirements, they won't see these payment options.
     </Note>
+  </Accordion>
+
+  <Accordion title="Set up Stripe Link">
+    Stripe Link is a fast-checkout payment method that lets users save and reuse their payment info across Stripe merchants.
+
+    1. **Enable Stripe Link in your [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods)** under Payment Methods.
+    2. **Enable Stripe Link in Embeddables:**  
+       In the Stripe component Options sidebar, select "Link" under the list of available Payment method types.
+    3. Once enabled in both places, Stripe Link will automatically appear as a payment option for users who:
+       - Have a Link account (or choose to create one at checkout)
+       - Are using a supported browser and device
   </Accordion>
 
   <Accordion title="Trigger actions on payment events">
