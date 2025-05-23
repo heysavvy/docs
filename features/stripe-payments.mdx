@@ -247,6 +247,35 @@ These features are not required in order to successfully accept payments, but th
       - **Accordion**: This displays different payment methods in an accordion of expanded and collapsed sections, with one payment method option open at a time.
   </Accordion>
 
+  <Accordion title="Set up Apple Pay and Google Pay">
+    Apple Pay and Google Pay can be enabled as payment methods in your Stripe checkout. Here's how to set them up:
+
+    ### Google Pay
+    - Enable Google Pay in your [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods) under Payment Methods
+    - Once enabled, Google Pay will automatically appear as a payment option for users who:
+      - Are using Chrome browser
+      - Are logged into a Google account
+      - Have Google Pay set up on their account
+    - No additional configuration is required in Embeddables
+
+    ### Apple Pay
+    - Enable Apple Pay in your [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods) under Payment Methods
+    - You must verify your domain with Apple through the Stripe Dashboard:
+      1. Go to the Apple Pay Settings in your Stripe Dashboard
+      2. Add and verify your domain(s) where you'll be accepting Apple Pay
+      3. Follow Stripe's verification process to complete domain verification
+    - Once enabled and verified, Apple Pay will automatically appear as a payment option for users who:
+      - Are using Safari browser
+      - Are logged into an Apple account
+      - Have Apple Pay set up on their device
+    - No additional configuration is required in Embeddables
+
+
+    <Note>
+      Both Apple Pay and Google Pay will only appear as payment options when the user's browser and account settings support them. If a user doesn't meet the requirements, they won't see these payment options.
+    </Note>
+  </Accordion>
+
   <Accordion title="Trigger actions on payment events">
     You can trigger [Actions](/features/actions) on the following payment events:
 
@@ -364,7 +393,7 @@ These features are not required in order to successfully accept payments, but th
   </Accordion>
 
   <Accordion title="I'm getting an error about a missing restricted key">
-    This means that you need to generate a Restricted Key with the [scopes/permissions listed above](#keys-and-ids-that-you’ll-need), from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
+    This means that you need to generate a Restricted Key with the [scopes/permissions listed above](#keys-and-ids-that-you'll-need), from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
   </Accordion>
 
   <Accordion title="Error: You must provide one of `price` or `price_data` for each line item when using prices.">
