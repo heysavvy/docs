@@ -339,6 +339,20 @@ These features are not required in order to successfully accept payments, but th
       [stored in the 'Embedables Cloud Context'](https://docs.embeddables.com/features/user-data#where-is-user-data-stored%3F) - i.e. stored in Embeddables' database.
     </Note>
   </Accordion>
+
+  <Accordion title="Send custom metadata to Stripe">
+    You can send custom metadata to Stripe with each payment, which is useful for tracking additional information about the customer or transaction.
+
+    In the Stripe component settings, look for the <b>Metadata</b> section. Here, you can add key-value pairs that will be sent to Stripe as metadata on the Checkout Session or Payment Intent.
+
+    - Enter a key (e.g., `user_id`, `order_source`, etc.) and a value.
+    - You can use templating in the value field, such as `{{user_id}}` or `{{email}}`, to dynamically insert user data. You can even compute a new value in a Computed Field and use that in the metadata.
+    - Click the `+` button to add more metadata fields.
+
+    <Info>
+      Metadata is visible in the Stripe Dashboard and can be used for reporting, searching, or integrating with your backend.
+    </Info>
+  </Accordion>
 </AccordionGroup>
 
 ## Troubleshooting
