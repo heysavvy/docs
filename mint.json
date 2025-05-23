@@ -90,9 +90,16 @@
             "how-to/dynamically-switch-brands",
             "how-to/set-up-none-of-the-above",
             "how-to/programmatic-sem-pages-from-cms",
-            "how-to/control-faqs-from-cms",
+            "how-to/control-faqs-from-cms"
+          ]
+        },
+        {
+          "group": "Payments",
+          "icon": "credit-card",
+          "pages": [
             "how-to/control-stripe-prices-from-cms",
-            "how-to/place-a-hold-on-payment"
+            "how-to/place-a-hold-on-payment",
+            "how-to/use-stripe-coupons-and-promo-codes"
           ]
         },
         {
