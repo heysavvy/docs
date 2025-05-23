@@ -165,6 +165,58 @@ These features are not required in order to successfully accept payments, but th
 
   </Accordion>
 
+  <Accordion title="Set values based on dynamic data">
+    You can set pretty much any value in the Stripe component based on dynamic data, such as the user's answers to a question (e.g. their email address), or a value that's computed from an answer (e.g. the post-purchase success message).
+
+    <Tabs>
+      <Tab title="Simple Templating">
+        For values that come directly from user answers (like email, phone number, or shipping address):
+
+        1. Add an input component (like Email Input, Phone Input, etc.) to your Embeddable where you want to collect the user's information.
+
+        2. In the Stripe component settings, locate the field you want to set dynamically.
+
+        3. Use templating syntax to reference the input component's key, e.g. `{{email}}` or `{{phone}}`.
+
+        <Note>
+          This works for any field in the Stripe component that accepts templating, including:
+          - Customer email
+          - Customer phone
+          - Shipping address fields
+          - Success message
+        </Note>
+      </Tab>
+
+      <Tab title="Computed Fields">
+        For values that need to be calculated or transformed (like a dynamic success message):
+
+        <Steps>
+          <Step title="Create a Computed Field">
+            Create a [Computed Field](/features/computed-fields) that will generate the value you want.
+          </Step>
+
+          <Step title="Write the computation logic">
+            In the Computed Field, write code that returns the final value. For example:
+            ```javascript
+            function result(userData) {
+              const name = userData.first_name || 'there';
+              return `Thanks ${name}! Your payment has been processed successfully.`;
+            }
+            ```
+          </Step>
+
+          <Step title="Reference in Stripe component">
+            In the Stripe component settings, use templating to reference the Computed Field's key, e.g. `{{success_message}}`.
+          </Step>
+        </Steps>
+      </Tab>
+    </Tabs>
+
+    <Tip>
+      You can mix and match both approaches - some fields might use simple templating while others use computed fields, depending on your needs.
+    </Tip>
+  </Accordion>
+
   <Accordion title="Control Stripe prices from the Embeddables CMS">
     If you handle multiple Stripe products or prices in your Embeddable, we recommend adding them to a table in the [Embeddables CMS](/features/cms), and pulling those records into your Embeddable to use in your Stripe component.
 
@@ -243,7 +295,7 @@ These features are not required in order to successfully accept payments, but th
         body: JSON.stringify({ customer_id, invoice_id, subscription_id }),
       });
     }
-    ```
+    ``` 
   </Accordion>
 
   <Accordion title="Store the selected plan/product and payment status in User Data">
