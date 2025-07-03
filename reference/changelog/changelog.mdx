@@ -4,6 +4,39 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="17 June 2025">
+### 🔥 Features and Updates
+
+- 🛡️ **Builder Safe Mode** – Launch the Builder in safe mode using `?embeddables_safe_mode=true` to prevent actions and computed fields from running. Great for troubleshooting, or reverting some accidental code that managed to break the Builder!
+- 🖼️ **Dynamic Button Image URLs** – The Image URL field for buttons now supports computed field values like `{{example_value}}` for dynamic image switching.
+
+### ⚡️ Improvements
+
+- Open Builder from Experiments – Added a quick-access button to open the Builder directly from the experiments page.
+- Experiment Variant Preview Links – You can now preview variants of draft experiments with a dedicated link.
+- CMS Setup UI Improvements – Enhanced the Builder's CMS configuration with a clearer interface and new options, making content management more intuitive.
+</Update>
+
+<Update label="03 June 2025">
+### 🔥 Features and Updates
+
+- 👥 **Persona Preview Dropdown** – Added a "Personas" dropdown in Preview mode so you can add, edit or switch between personas more easily.
+- 📎 **File Type Options Expanded** – Added "All types" and "Images only" options to the File Upload component's existing type selection. More flexibility for your file uploads!
+
+### ⚡️ Improvements
+
+- Experiment View Calculation Fix – Improved percentage view to properly calculate all bars relative to the tallest bar of each type, ensuring accurate visual comparisons.
+- Cleaner Breadcrumb Navigation – Current page is now hidden from breadcrumbs when selecting global components, making navigation clearer and more intuitive.
+
+### 🐞 Bug Fixes
+
+- Missing Experiments Display – New experiments now properly appear in the embeddable overview's experiments tab.
+- Stripe Checkout Phone Collection – Phone numbers are now correctly collected during Stripe Checkout process.
+- Better Breadcrumb Text Wrapping – Long names no longer cause awkward wrapping in breadcrumb navigation.
+- Firefox Breadcrumb Visibility – Breadcrumbs no longer get buried at the bottom of the page in Firefox.
+-️ File Upload Type Warning – Adding a file upload component that accepts all file types no longer triggers incorrect type warnings.
+</Update>
+
 <Update label="19 May 2025">
 ### 🔥 Features and Updates
 
@@ -13,15 +46,15 @@ icon: "list"
 
 ### ⚡️ Improvements
 
-- 🌐 Published URL Editing – Change your Embeddable’s published URL anytime from the General Information settings (after publishing).
-- 💡 Helpful HIPAA Tooltips – Added tooltips for "Health Data", "Personally Identifiable Information", and "Contact Info" in the Data Schema table. No more guessing!
-- 📝 Auto-Prefilled Conversion Values – Creating a conversion now uses a dropdown of available options instead of a text box. No more typos or broken analytics!
-- 🟣 Improved Page Selection Clarity – It's now easier to tell when a page is selected in the builder's page tab, helping you quickly identify what you're working on.
+- Published URL Editing – Change your Embeddable’s published URL anytime from the General Information settings (after publishing).
+- Helpful HIPAA Tooltips – Added tooltips for "Health Data", "Personally Identifiable Information", and "Contact Info" in the Data Schema table. No more guessing!
+- Auto-Prefilled Conversion Values – Creating a conversion now uses a dropdown of available options instead of a text box. No more typos or broken analytics!
+- Improved Page Selection Clarity – It's now easier to tell when a page is selected in the Builder's page tab, helping you quickly identify what you're working on.
 
 ### 🐞 Bug Fixes
 
-- 🔀 Experiment Variant Switching Fixed – You can now switch between experiment variants as many times as you like.
-- 🔍 Region Dropdown Search – Added a search bar to the region selection dropdown so you can quickly find what you need.
+- Experiment Variant Switching Fixed – You can now switch between experiment variants as many times as you like.
+- Region Dropdown Search – Added a search bar to the region selection dropdown so you can quickly find what you need.
 </Update>
 
 <Update label="14 May 2025">
@@ -89,7 +122,7 @@ icon: "list"
 
 ### 🐞 Bug Fixes
 
-- Fixed loading builder edit mode access - Now automatically enters edit mode as expected
+- Fixed loading Builder edit mode access - Now automatically enters edit mode as expected
 - Blank Embeddables no longer miss parent_id - New creations are properly linked from the start
 </Update>
 
@@ -123,7 +156,7 @@ icon: "list"
 
 ### ⚡️ Improvements
 
-- The Open Old Builder button now takes you to the old builder in the same tab, with an easy way to switch back to the new one.
+- The Open Old Builder button now takes you to the old Builder in the same tab, with an easy way to switch back to the new one.
 
 ### 🐞 Bug Fixes
 - Conditions that were very long were breaking in a way that you couldn't see the button to edit component conditions - that's now fixed.
@@ -158,7 +191,7 @@ icon: "list"
 
 - We've made it easier to select layers in the layer card as the hit area was a little too small for our liking.
 
-- The builder and more specifically the Logic card should now feel more snappy as we found more ways to squeeze the juice out of them.
+- The Builder and more specifically the Logic card should now feel more snappy as we found more ways to squeeze the juice out of them.
 
 ### 🐞 Bug fixes
 
@@ -167,7 +200,7 @@ icon: "list"
 
 <Update label="8 March 2024">
 ### 🐞 Bug fixes
-- The rich text component would periodically decide to become 500px tall whilst you were editing inside of it in the builder. It's now no longer doing that party trick.
+- The rich text component would periodically decide to become 500px tall whilst you were editing inside of it in the Builder. It's now no longer doing that party trick.
 - Updating the key name in the options card sometimes caused an alert that said 'Undefined'. This was unhelpful and annoying and is now fixed.
 - Charts now load more reliably and don't go blank when you change a filter.
 - Copy and Paste keyboard shortcuts stopped working on the Layers card. Now they're working again.
@@ -182,7 +215,7 @@ icon: "list"
 
 ### ⚡️ Improvements
 - The key names on the layers tab sometimes get a little long. Now they have tooltips for when they do.
-- Scrolling within the UI of the builder felt a little off. We've made some design changes to the scroll design and action to make it feel more complete.
+- Scrolling within the UI of the Builder felt a little off. We've made some design changes to the scroll design and action to make it feel more complete.
 - You can now duplicate an existing Computed Field. Apparently that didn't exist and this product manager is finding out for the first time.
 ### 🐞 Bug fixes
 - Occasionally the 'Today' filter wouldn't apply and you'd be stuck sitting wondering what was going on. That's now back to being its useful self.
@@ -287,7 +320,7 @@ icon: "list"
     GPT model to use. (Currently [`JSON-Only`](/reference/glossary/glossary#json-only-feature) for now)
 
 ### ⚡️ Improvements
-- Re-rendering of pages and components is more efficient, making the builder
+- Re-rendering of pages and components is more efficient, making the Builder
     faster to work with.
 - Initial rendering of embeddables now fills templates with data (e.g. default
     userData & external content) for certain component types, which should lead to
