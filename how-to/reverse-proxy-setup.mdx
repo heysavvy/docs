@@ -60,8 +60,16 @@ Publishing your Embeddable via a reverse proxy can be done in 2 steps:
     ```
   </Step>
   
+  <Step title="Add metadata headers (optional)">
+    You can customize the page metadata by adding these optional headers:
+    
+    - `X-Embeddables-Title`: Sets the page title
+    - `X-Embeddables-Description`: Sets the page meta description
+    - `X-Embeddables-Favicon`: Sets the page favicon URL
+  </Step>
+  
   <Step title="Verify that it's working">
-    Refresh your page at `https://yourdomain.com/your-reverse-proxy-page`. You should now see your specific Embeddable being served.
+    Refresh your page at `https://yourdomain.com/your-reverse-proxy-page`. You should now see your specific Embeddable being served with your custom metadata.
     
     Common issues at this stage:
     - Incorrect Embeddable ID
@@ -80,6 +88,9 @@ Publishing your Embeddable via a reverse proxy can be done in 2 steps:
     ProxyPass https://proxy.embeddables.com
     ProxyPassReverse https://proxy.embeddables.com
     RequestHeader set X-Embeddables-Id "your_embeddable_id"
+    RequestHeader set X-Embeddables-Title "Your Custom Title"
+    RequestHeader set X-Embeddables-Description "Your custom description for SEO"
+    RequestHeader set X-Embeddables-Favicon "https://yourdomain.com/favicon.ico"
 </Location>
 ```
 
@@ -89,6 +100,9 @@ Publishing your Embeddable via a reverse proxy can be done in 2 steps:
 location /your-reverse-proxy-page {
     proxy_pass https://proxy.embeddables.com;
     proxy_set_header X-Embeddables-Id "your_embeddable_id";
+    proxy_set_header X-Embeddables-Title "Your Custom Title";
+    proxy_set_header X-Embeddables-Description "Your custom description for SEO";
+    proxy_set_header X-Embeddables-Favicon "https://yourdomain.com/favicon.ico";
     proxy_set_header Host $host;
     proxy_set_header X-Real-IP $remote_addr;
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

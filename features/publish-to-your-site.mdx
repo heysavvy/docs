@@ -54,6 +54,13 @@ Publishing your Embeddable via a reverse proxy can be done in 4 steps:
   <Step title="Pass the correct Embeddable ID">
     Pass the ID of your Embeddable using the `X-Embeddables-Id` header.
   </Step>
+  <Step title="Add metadata headers (optional)">
+    You can customize the page metadata by adding these optional headers:
+    
+    - `X-Embeddables-Title`: Sets the page title
+    - `X-Embeddables-Description`: Sets the page meta description
+    - `X-Embeddables-Favicon`: Sets the page favicon URL
+  </Step>
   <Step title="Verify that it's working">
     You should now see the desired Embeddable served on your page.
   </Step>
