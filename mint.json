@@ -75,7 +75,8 @@
         "guides/storing-data-cookies",
         "guides/custom-code",
         "guides/how-best-to-send-data",
-        "guides/passing-data-in-out"
+        "guides/passing-data-in-out",
+        "guides/user-roles-permissions"
       ]
     },
     {
