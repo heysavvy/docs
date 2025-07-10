@@ -1,0 +1,63 @@
+---
+title: "HIPAA Compliance in Embeddables"
+sidebarTitle: "HIPAA Compliance"
+icon: "shield-check"
+description: "Understanding best practices for being fully HIPAA compliant in Embeddables"
+---
+
+Embeddables provides a set of features to help you ensure that your data is HIPAA compliant. This guide outlines the main steps and best practices for maintaining HIPAA compliance in your workspace.
+
+<Tip>
+  The **Compliance** tab in the sidebar of the Embeddables Web App contains a complete checklist of all the steps you need to take to be fully HIPAA compliant.
+
+  We strongly recommend completing all the steps in the checklist to ensure that your workspace is fully HIPAA compliant.
+</Tip>
+
+### 1. Set Your Team Permissions
+
+Properly configuring your team’s roles and permissions is the foundation of HIPAA compliance. For a full overview of roles and permissions, see [User Roles & Permissions](./user-roles-permissions.mdx).
+
+- **Assign a Data Privacy Officer**: Designate a single, trusted team member as your Data Privacy Officer. This person will be responsible for managing data privacy settings and completing the HIPAA checklist.
+- **Restrict Access to De-Anonymized Data**: Only grant Full Data Access to users who have a clear, documented need to view personally identifiable or health information. All other users should have Anonymized Data Access.
+- **Review Regularly**: Periodically review team roles and permissions to ensure they remain appropriate as your team or requirements change.
+
+### 2. Label Health Data and Personally Identifiable Data Fields
+
+For each live embeddable, you must label which fields count as:
+- **Health Data** (Protected Health Information, PHI)
+- **Personally Identifiable Data** (PII)
+- **Contact Info** (e.g., email, phone number)
+
+<Note>
+When defining field types, we recommend that the Data Privacy Officer be familiar with the following document:
+
+[Guidance Regarding Methods for De-identification of Protected Health Information](https://www.hhs.gov/hipaa/for-professionals/privacy/special-topics/de-identification/index.html)
+
+This guidance will help you determine what counts as identifiable health information and how to properly de-identify data.
+</Note>
+
+
+This labeling determines which users can access sensitive data and ensures that data is handled according to HIPAA requirements.
+
+- The Data Privacy Officer is responsible for defining these fields for each embeddable.
+- Data that is not correctly labeled will be hidden from all users except those with Full Data Access.
+
+<Warning>
+**Make sure that your list of live (published) Embeddables is up-to-date.**
+
+Use this list as your checklist of Embeddables for which you need to label fields.
+
+</Warning>
+
+
+### 4. Ongoing Responsibility
+
+HIPAA compliance is not a one-time task. The Data Privacy Officer must ensure that:
+- All new embeddables are reviewed and labeled appropriately before going live.
+- Existing embeddables are kept up-to-date as fields or data requirements change.
+- Team permissions are regularly reviewed and updated as needed.
+
+---
+
+By following these steps and best practices, you can help ensure that your workspace remains HIPAA compliant and that sensitive data is protected according to regulatory requirements.
+

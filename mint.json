@@ -72,6 +72,7 @@
       "group": "Guides & Best Practices",
       "pages": [
         "guides/naming-keys",
+        "guides/hipaa-compliance",
         "guides/storing-data-cookies",
         "guides/custom-code",
         "guides/how-best-to-send-data",
