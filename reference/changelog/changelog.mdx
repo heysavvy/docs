@@ -4,6 +4,29 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="01 July 2025">
+### 🔥 Features and Updates
+
+- 📁 **FileUploader v2: Multi-File & Validation** – The FileUploader component now supports uploading multiple files, setting a maximum file limit, and displaying custom validation error messages. Upgrade to version 2 for these features.
+- 🧪 **Experiment Results Conversion Picker** – The experiments page now features a dropdown to select which conversion is used for the results table when several are available.
+- 🗂️ **OptionSelector Missing Key Warnings** – The layers tab now warns you if any buttons inside an OptionSelector are missing a key, helping prevent configuration issues.
+- 💸 **Stripe Checkout Discounts** – You can now apply a promo code or coupon to a Stripe Checkout component automatically on load.
+
+### ⚡️ Improvements
+
+- AI chat now shows detailed error messages, making it easier to understand and resolve issues.
+- Switching personas in the Builder now resets userdata, ensuring a clean slate instead of combining data from different personas.
+
+### 🐞 Bug Fixes
+
+- Downloading 10,000 submissions at a time now works as expected.
+- AI now uses HTML tags in the rich text component, ensuring correct formatting instead of markdown.
+- Plain Text components now set the correct `parent_id` property when added to a container.
+- Searching for style tags by number (e.g., typing `500` for `font_weight_500`) now returns the correct results.
+- You can no longer delete the last remaining page from layers in an Embeddable.
+- Experiments now filter out time periods when they were paused from the displayed results.
+</Update>
+
 <Update label="17 June 2025">
 ### 🔥 Features and Updates
 
