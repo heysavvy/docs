@@ -1,0 +1,89 @@
+---
+title: "How To: Call APIs securely via the Embeddables Secure Proxy"
+sidebarTitle: "How To: Call APIs securely via the Secure Proxy"
+description: "Learn how to securely call external APIs using the Embeddables Proxy by configuring credentials and endpoints in your project settings."
+---
+
+The Embeddables Secure Proxy is great for solving one or both of the following when calling APIs from the frontend in an Embeddable:
+
+- You want to call an API that requires a credential, but you don't want to that credential to be exposed on the frontend.
+- You're having issues with CORS when calling an API from the frontend.
+
+
+## How the Secure Proxy Works
+
+The new proxy comes with the following features:
+
+- **Allowlisting of endpoints and credentials**: Only allowlisted endpoints and credentials can be used for the specific environment + project combination. Disallowlisted endpoints or credentials will be blocked.
+- **Request results are returned as-is**: The proxy does not tamper with the received requests in any way. What you see is what you get.
+- **`X-Proxy-Worker-Success` header**: This header will be `true` if the proxy made your request, and `false` if it wasn't able to for some reason. If you receive a 400 response and are unsure if it's coming from the proxy or the final destination, check this header.
+
+## Adding Credentials and Endpoints in Project Settings
+
+<Steps>
+  <Step title="Go to Project Settings">
+    Navigate to your project's settings and select the <strong>Credentials & Endpoints</strong> tab.
+  </Step>
+  <Step title="Add Credentials">
+    Click the <strong>+ New Credential</strong> button and fill in the required fields:
+    <ul>
+      <li><strong>Service Type</strong>: Select the type of service (e.g., EHR, CRM, etc.)</li>
+      <li><strong>Service Name</strong>: The name of the service (e.g., Tellescope, CareGLP, etc.)</li>
+      <li><strong>Key Type</strong>: The type of key (e.g., API Key, Token, etc.)</li>
+      <li><strong>Environment</strong>: Choose the environment (Production, Staging, etc.)</li>
+      <li><strong>Label</strong>: A descriptive label for your credential</li>
+      <li><strong>Value</strong>: The actual credential value (the secret that you're protecting)</li>
+    </ul>
+    Your credentials will appear in the list, each with a unique identifier and label.
+  </Step>
+  <Step title="Add Endpoints">
+    Click the <strong>+ New Endpoint</strong> button and fill in the required fields:
+    <ul>
+      <li><strong>Label</strong>: A descriptive label for the endpoint</li>
+      <li><strong>Environment</strong>: Select the environment</li>
+      <li><strong>Allowed Origins (Regex)</strong>: Regex for allowlisted origins (e.g., your frontend domains)</li>
+      <li><strong>Allowed Destinations (Regex)</strong>: Regex for allowlisted API destinations</li>
+      <li><strong>Credential IDs</strong>: Select the credentials that can be used with this endpoint</li>
+    </ul>
+    Your endpoints will appear in the list, showing the allowlisted origins, destinations, and associated credentials.
+  </Step>
+</Steps>
+
+## Using Credentials in Your API Requests
+
+Once your credentials and endpoints are set up, you can use them in your API calls through the proxy. Here’s an example of how to use a credential in your request headers:
+
+```js
+const weightLossProductsOptions = {
+    method: "POST",
+    headers: {
+      "My-Secret-Header": '{{cred_aaaaaaaaaaaaaa}}', // Use the credential reference here
+      "Content-Type": "application/json",
+      'X-Environment': 'production',
+      'X-Project-ID': "pr_bbbbbbbbbbbbbb"
+    },
+    body: JSON.stringify(weightLossProductsBody),
+  };
+
+fetch(
+  `https://proxy-worker.heysavvy.workers.dev/?url=${encodeURIComponent(
+    'https://api.example.com/api/v1/endpoint'
+  )}`,
+  weightLossProductsOptions
+)
+  .then((response) => {
+    // handle response
+  })
+  .catch((err) => console.error(err));
+```
+
+- Replace the following placeholders with your actual values:
+  - `My-Secret-Header` --> the header name that you want to use to pass the credential value.
+  - `{{cred_aaaaaaaaaaaaaa}}` --> the credential ID that you created previously. You might alternatively want to use a credential in the URL or body instead of a header. Either way, the proxy will inject the actual credential value for you. 
+  - `production` --> the environment you want to call the endpoint in.
+  - `pr_bbbbbbbbbbbbbb` --> the project ID for your project (grab it from the URL in the Embeddables Web App - it's the ID after `/project/`).
+  - `https://api.example.com/api/v1/endpoint` --> the actual endpoint you want to call.
+- Make sure the endpoint and credential are both allowlisted with the project and environment that you're using.
+
+
+

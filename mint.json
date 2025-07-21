@@ -116,7 +116,8 @@
             "how-to/set-up-webhooks",
             "how-to/retrieve-user-data-on-different-device",
             "how-to/partial-data-capture",
-            "how-to/send-data-to-embeddables"
+            "how-to/send-data-to-embeddables",
+            "how-to/securely-call-apis-via-proxy"
           ]
         },
         {
