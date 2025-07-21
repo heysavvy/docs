@@ -101,7 +101,8 @@
           "pages": [
             "how-to/control-stripe-prices-from-cms",
             "how-to/place-a-hold-on-payment",
-            "how-to/use-stripe-coupons-and-promo-codes"
+            "how-to/use-stripe-coupons-and-promo-codes",
+            "how-to/assign-default-payment-methods"
           ]
         },
         {
