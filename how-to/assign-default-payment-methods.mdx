@@ -10,6 +10,9 @@ description: "How to set up a webhook in Stripe so that, when a payment method i
 
 <Tabs>
   <Tab title="You have Workbench enabled">
+
+  #### Adding the webhook to Stripe with Workbench enabled
+
     <Steps>
       <Step title="Create a new webhook in Stripe">
         - Log in to your Stripe Dashboard.
@@ -34,9 +37,17 @@ description: "How to set up a webhook in Stripe so that, when a payment method i
 
       </Step>
       <Step title="Add your endpoint and create the webhook">
-        - In "Endpoint URL", paste your endpoint URL, which you can grab by asking the Embeddables Team.
+        - Grab your Project ID from the URL in the Embeddables Web App - it's the ID after `/project/` that starts with `pr_`.
 
-        - It should have the format: `https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/webhook_stripe?group_id=<YOUR_GROUP_ID>`.
+        - In the "Endpoint URL" field in Stripe, paste the following URL, replacing `<YOUR_PROJECT_ID>` with your Project ID:
+
+        ```
+        https://webhooks.embeddables.com/webhooks/stripe/payment_method.attached?project_id=<YOUR_PROJECT_ID>&test=true
+        ```
+
+        <Tip>
+          If you're setting up a webhook for Stripe's test environment, add `&test=true` to the end of the endpoint URL.
+        </Tip>
 
         - Click <strong>Create destination</strong>.
 
@@ -45,6 +56,9 @@ description: "How to set up a webhook in Stripe so that, when a payment method i
 
   </Tab>
   <Tab title="You don't have Workbench enabled">
+
+  #### Adding the webhook to Stripe with Workbench disabled
+
     <Steps>
       <Step title="Create a new webhook in Stripe">
         - Log in to your Stripe Dashboard.
@@ -57,9 +71,17 @@ description: "How to set up a webhook in Stripe so that, when a payment method i
 
       </Step>
       <Step title="Add your endpoint">
-        - In "Endpoint URL", paste your endpoint URL, which you can grab by asking the Embeddables Team.
+        - Grab your Project ID from the URL in the Embeddables Web App - it's the ID after `/project/` that starts with `pr_`.
 
-        - It should have the format: `https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/webhook_stripe?group_id=<YOUR_GROUP_ID>`
+        - In the "Endpoint URL" field in Stripe, paste the following URL, replacing `<YOUR_PROJECT_ID>` with your Project ID:
+
+        ```
+        https://webhooks.embeddables.com/webhooks/stripe/payment_method.attached?project_id=<YOUR_PROJECT_ID>
+        ```
+
+        <Tip>
+          If you're setting up a webhook for Stripe's test environment, add `&test=true` to the end of the endpoint URL.
+        </Tip>
 
         - Add a description of what the endpoint is for.
 
@@ -72,8 +94,66 @@ description: "How to set up a webhook in Stripe so that, when a payment method i
         - Click "Select events", find the `payment_method.attached` event and select it.
 
         - Click <strong>Add endpoint</strong>
+
       </Step>
     </Steps>
 
+  </Tab>
+</Tabs>
+
+---
+
+## Migrating from the old webhook URL to the new format
+
+<Tabs>
+  <Tab title="You have Workbench enabled">
+
+  #### Migrating to the new webhook URL with Workbench enabled
+
+    <Steps>
+      <Step title="Update your webhook endpoint URL">
+        - Go to your Stripe Dashboard and open the Workbench.
+        
+        - Navigate to the Webhooks tab and find your existing webhook for `payment_method.attached`.
+
+        - Edit the endpoint URL to use the new format:
+
+        ```
+        https://webhooks.embeddables.com/webhooks/stripe/payment_method.attached?project_id=<YOUR_PROJECT_ID>
+        ```
+
+        <Tip>
+          If you're setting up a webhook for Stripe's test environment, add `&test=true` to the end of the endpoint URL.
+        </Tip>
+
+        - You can get your project ID from the URL in the Embeddables Web App - it's the ID after `/project/` that starts with `pr_`.
+        - Save your changes.
+      </Step>
+    </Steps>
+  </Tab>
+  <Tab title="You don't have Workbench enabled">
+
+    #### Migrating to the new webhook URL with Workbench disabled
+
+    <Steps>
+      <Step title="Update your webhook endpoint URL">
+        - Go to your Stripe Dashboard and open the Developers > Webhooks section.
+
+        - Find your existing webhook for `payment_method.attached`.
+        
+        - Edit the endpoint URL to use the new format:
+
+        ```
+        https://webhooks.embeddables.com/webhooks/stripe/payment_method.attached?project_id=<YOUR_PROJECT_ID>
+        ```
+
+        <Tip>
+          If you're setting up a webhook for Stripe's test environment, add `&test=true` to the end of the endpoint URL.
+        </Tip>
+
+        - You can get your project ID from the URL in the Embeddables Web App - it's the ID after `/project/` that starts with `pr_`.
+        - Save your changes.
+      </Step>
+    </Steps>
   </Tab>
 </Tabs>
