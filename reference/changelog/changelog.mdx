@@ -4,6 +4,30 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="22 July 2025">
+### 🔥 Features and Updates
+
+- 🛠️ **JSON Error Fix Button** - Added a button in the Builder layers section to automatically fix all detected JSON errors.
+- 🔄 **Automatic Key Replacement** - Deprecated `parent_key` is now automatically replaced with `parent_id` when copying and pasting JSON.
+- 🔒 **Secure Proxy** - Added a secure proxy with an allow-list for endpoints and credentials. [Learn more](https://docs.embeddables.com/how-to/securely-call-apis-via-proxy).
+- ⚠️ **Key Update Warning** - Alerts now appear when updating a key used in conditions, preventing unintended display logic changes!
+- 🚨 **Missing Key Alert** - Conditions referring to non-existent keys now trigger an alert for easier debugging.
+- 👥 **Persona Reset Button** - Added a button to reset a persona's user data in the Builder for cleaner testing scenarios.
+- ✅ **Validation Enforcement Toggle** - Stripe and PayPal components now include a toggle to enable or disable validation, which is enabled by default for better error handling.
+- 📝 **Draft Management** - Manage multiple drafts per version and load them separately in your edit history. Great for iterative workflows!
+
+### ⚡️ Improvements
+
+- Updated the warning text for scenarios where `parent_id` matches `parent_key`.
+- Improved the message displayed when attempting to re-use a key already assigned to another component.
+- Personas are now automatically deselected when User Data changes (except for current page values like `key`, `id`, or `index`).
+
+### 🐞 Bug Fixes
+
+- Fixed PBB (Probability to Be Best) calculation for experiments with low traffic variants to ensure accurate results.
+- Newly-created Embeddables now use the `parent_id` attribute instead of the deprecated `parent_key`.
+</Update>
+
 <Update label="01 July 2025">
 ### 🔥 Features and Updates
 
