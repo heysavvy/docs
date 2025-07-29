@@ -31,8 +31,8 @@ In those cases, you can send data to the Embeddables API using a server-side req
     <Warning>
       **Watch out for this:** The `value` field must be a stringified JSON value. E.g. for email addresses, the value must be `"\"test@test.com\""` (note the double quotes).
     </Warning>
-  </Step>
 
+  </Step>
 
   <Step title="Send the event to the API">
     - Make a POST request to `/projects/{projectId}/events`
@@ -57,9 +57,26 @@ In those cases, you can send data to the Embeddables API using a server-side req
         ]
       }'
     ```
+
   </Step>
 </Steps>
 
 <Note>
-  The API will return a 200 status code if the event was successfully created. If there are any issues with the request (e.g., invalid API key, missing required fields), you'll receive an appropriate error response.
+  The API will return a 200 status code if the event was successfully created.
+  If there are any issues with the request (e.g., invalid API key, missing
+  required fields), you'll receive an appropriate error response.
 </Note>
+
+## Troubleshooting
+
+### I'm getting a 404 `ENTRY_NOT_FOUND` response
+
+This means that the Embeddables API is trying to find a user that matches the `identifiers` you provided, for the `embeddable_id` you provided, but couldn't find one.
+
+Things to look out for:
+
+1. Check that you are passing the correct `embeddable_id` - this should be the ID of the Embeddable that matches the user you're trying to add an event for.
+2. Check that you are passing the correct `key` inside `identifiers` - this should be the key in the User Data that matches the input component that the user typed in, such as `email` or `user_email`.
+3. Check that you are passing the correct `value` inside `identifiers` - make sure that this matches the user that you're trying to track, and matches the key and embeddable ID that you're using.
+4. Check that you are formatting `identifiers` correctly - the value must be a stringified JSON value. E.g. for email addresses, the value must be `"\"test@test.com\""` (note the double quotes). This can become double-escaped (e.g. `"\\"test@test.com\\""`) in certain code environments.
+5. Check that the user has definitely provided their unique identifier before the track event is triggered - trying to track a user based on an email address that hasn't been captured yet is impossible.
