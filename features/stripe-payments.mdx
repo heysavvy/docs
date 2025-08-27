@@ -329,7 +329,7 @@ These features are not required in order to successfully accept payments, but th
 
     | Stripe ID              | Provided for                                                     |
     | ---------------------- | ---------------------------------------------------------------- |
-    | **Customer ID**        | All payment types                                                |
+    | **Customer ID**        | All payment types (for Payment and Setup modes, `Customer Creation` must be set up `Always`)                                               |
     | **Invoice ID**         | All payments except on-hold payments and collecting card details |
     | **Payment Intent ID**  | One-time payments only                                           |
     | **Subscription ID**    | Recurring payments only                                          |
@@ -434,7 +434,7 @@ These features are not required in order to successfully accept payments, but th
     - Click **Create** to save the credential.
 
     <Note>
-      If you are testing, ensure you are using the correct mode (test or live) and that the corresponding key is set up. See: [I'm seeing test mode errors on a live link](#im-seeing-test-mode-errors-on-a-live-link).
+      If you are testing, ensure you are using the correct environment (test or live) and that the corresponding key is set up. See: [I'm seeing test mode errors on a live link](#im-seeing-test-mode-errors-on-a-live-link).
     </Note>
 
     <Tip>
