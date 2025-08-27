@@ -5,8 +5,6 @@ description: "Questions we get asked a lot"
 icon: "question"
 ---
 
-import { Accordion } from "@site/src/components/Accordion";
-
 ## The Embeddables Platform
 
 ### Compliance & Security
@@ -167,7 +165,7 @@ import { Accordion } from "@site/src/components/Accordion";
     **Method 1: Using URL Keys (Recommended)**
     1. In the builder, select nothing (press ESC) to see the Options tab for the Entire Embeddable settings.
     2. Go to the **Options tab** and find the **URL Keys** section.
-    3. Add the UTM parameters you want to capture (e.g., `utm_source`, `utm_campaign`, `utm_medium`).
+    3. Add the UTM parameters you want to capture (e.g., `utm_source`, `utm_campaign`, `utm_medium`) - add one on each line.
     4. These values will automatically be stored in UserData when users visit your page.
 
     **Method 2: Using Custom Code**
@@ -220,6 +218,109 @@ import { Accordion } from "@site/src/components/Accordion";
     </CodeGroup>
 
     The computed field receives a single object containing all your form element results. Make sure the property names in the destructuring match exactly with your form element names.
+
+  </Accordion>
+
+  <Accordion title="How do I add a phone number input field?">
+    1. Add a regular Input component.
+    2. In the Options tab, set the `Input Type` to `Phone`.
+    
+    Optional: To validate the phone number:
+    1. Under the `Validation` section, check `Validate value`.
+    2. Set `Formula` to `Phone Number (US)` or `Custom formula`.
+    3. If you choose `Phone Number (US)`, the phone number will be automatically formatted as `(xxx) xxx-xxxx`.
+    4. If you choose `Custom formula`, you can use the something like the following formula to validate the phone number:
+    ```javascript
+    function validate(value) {
+      return /^[\d\s\(\)\-]+$/.test(value);
+    }
+    ```
+
+    This formula will allow numbers, parentheses, spaces, and dashes.
+
+  </Accordion>
+
+  <Accordion title="Can I prevent users from entering text in a phone input field?">
+    Yes, there are several approaches to restrict phone input to numbers only:
+
+    #### Option 1: Use the built-in US phone validation (Recommended)
+
+    The simplest and most reliable approach is to use the built-in phone validation:
+
+    1. Set the Input component's `Input Type` to `Phone`
+    2. In the Validation section, check `Validate value`
+    3. Set the Formula to `Phone Number (US)`
+
+    This automatically:
+    - Formats the number as `(xxx) xxx-xxxx` as the user types
+    - Validates the format is correct
+    - Provides a consistent user experience
+    - Handles edge cases and formatting automatically
+
+    <Tip>
+    The built-in validation is the most reliable option and handles all US phone number formats automatically.
+    </Tip>
+
+    #### Option 2: Custom validation with regex
+
+    For more control over the validation rules, you can use a custom formula:
+
+    1. Set the Input component's `Input Type` to `Phone`
+    2. In the Validation section, check `Validate value`
+    3. Set the Formula to `Custom formula`
+    4. Write a custom function to validate the phone number, for example:
+
+    ```javascript
+    function validate(value) {
+      return /^[\d\s\(\)\-]+$/.test(value);
+    }
+    ```
+
+    <Warning>
+    Custom validation gives you more control but requires more testing and maintenance. The built-in option is recommended for most use cases.
+    </Warning>
+
+
+    #### Option 3: Remove disallowed characters immediately on type, using a custom action
+
+    Create an action that runs on page load to restrict input to numeric characters only:
+
+    ```javascript
+    function output(_, { setUserData }) {
+      const input = document.querySelector(".ComponentKey-phone input");
+      if (!input) return;
+
+      input.setAttribute("inputmode", "numeric");
+
+      input.addEventListener("input", (e) => {
+        let value = e.target.value;
+        let digits = value.replace(/\D/g, '');
+
+        if (digits.length > 10) {
+          digits = digits.slice(0, 10);
+        }
+
+        // Remove letters but keep formatting characters
+        value = value.replace(/[A-Za-z]/g, '');
+        e.target.value = value;
+      });
+    }
+    ```
+
+    <Warning>
+    Using custom actions to restrict input may interfere with the automatic phone number formatting. The built-in phone validation is simpler and more reliable.
+    </Warning>
+
+  </Accordion>
+
+  <Accordion title="Does the phone input automatically format numbers?">
+    Yes! When you set an Input component's type to `Phone`, and choose `Phone Number (US)` for validation, it automatically formats the number as `(xxx) xxx-xxxx` as the user types.
+    
+    This provides a better user experience and ensures consistent formatting across all submissions.
+
+    <Tip>
+    The automatic validation won't prevent users from entering text, but it will prevent them from submitting the form if the phone number is invalid, showing them a validation error message.
+    </Tip>
 
   </Accordion>
 </AccordionGroup>
