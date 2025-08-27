@@ -310,6 +310,44 @@ These features are not required in order to successfully accept payments, but th
        - Are using a supported browser and device
 
   </Accordion>
+  <Accordion title="Control which payment method tabs are shown">
+    The logic for which payment methods appear to users in your Stripe component (e.g. in the tabs at the top of the component) is controlled by two different systems:
+    1. **Embeddables Builder:** the settings your choose in the Stripe component Options sidebar.
+    2. **Stripe Dashboard Settings:** the settings you choose when logged into your Stripe Dashboard.
+
+    <Tip>
+      If you're seeing payment methods that you didn't expect, check both your Embeddables builder settings and your Stripe Dashboard configuration to identify where the setting is controlled.
+    </Tip>
+
+
+    <Note>
+
+    The payment methods currently supported in Embeddables are:
+    - Credit/debit cards
+    - Apple Pay
+    - Google Pay
+    - Bank Account
+    - Link
+    - Afterpay/Clearpay
+    - Klarna
+    - PayPal (please note PayPal is NOT supported by Stripe in the US - for US PayPal payments, please use our dedicated PayPal component)
+
+    </Note>
+
+    In general, a payment method will appear in the Stripe component if it is enabled in both the Embeddables builder and the Stripe Dashboard.
+
+    However, there are various exceptions to this rule, including:
+
+    **Bank Account**
+    - When Stripe Link is enabled in your Stripe Dashboard, the Bank Account payment method will automatically appear.
+    - This happens even if you haven't enabled bank transfers in Stripe's payment methods settings.
+    - To completely remove the Bank Account tab, you must disable Stripe Link entirely in your Stripe Dashboard.
+
+    <Warning>
+      Disabling Stripe Link will remove all Link-related payment options, not just bank transfers.
+    </Warning>
+
+  </Accordion>
   <Accordion title="Trigger actions on payment events">
     You can trigger [Actions](/features/actions) on the following payment events:
 
