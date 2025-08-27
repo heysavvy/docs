@@ -160,6 +160,41 @@ import { Accordion } from "@site/src/components/Accordion";
         - **All data (including both production and test data)**
 
   </Accordion>
+
+  <Accordion title="How do I capture UTM parameters and campaign IDs from incoming links?">
+    You can capture UTM parameters and campaign IDs from incoming links in two ways:
+
+    **Method 1: Using URL Keys (Recommended)**
+    1. In the builder, select nothing (press ESC) to see the Options tab for the Entire Embeddable settings.
+    2. Go to the **Options tab** and find the **URL Keys** section.
+    3. Add the UTM parameters you want to capture (e.g., `utm_source`, `utm_campaign`, `utm_medium`).
+    4. These values will automatically be stored in UserData when users visit your page.
+
+    **Method 2: Using Custom Code**
+    Create an Action with custom code, and set up a Trigger that executes the Action when the Embeddable is loaded:
+
+    ```javascript
+    function output(userData) {
+      // Get UTM parameters from the URL
+      const params = new URLSearchParams(window.location.search);
+      const utmSource = params.get("utm_source");
+      const utmCampaign = params.get("utm_campaign");
+      const utmMedium = params.get("utm_medium");
+
+      // Store in UserData or use as needed
+      return {
+        utm_source: utmSource,
+        utm_campaign: utmCampaign,
+        utm_medium: utmMedium
+      };
+    }
+    ```
+
+    <Tip>
+    The URL Keys method is simpler and automatically handles the capture. Use custom code when you need more complex logic or want to process the UTM parameters before storing them.
+    </Tip>
+
+  </Accordion>
 </AccordionGroup>
 
 ## Form Elements
