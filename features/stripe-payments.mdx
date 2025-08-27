@@ -32,13 +32,11 @@ The following are the minimum steps required to add a Stripe component to your E
     - Get your Publishable Key, and generate a Restricted Key with the scopes/permissions listed above, from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys).
     - Pass these keys to the Embeddables Team (make sure to share the Restricted Key in a secure way).
   </Step>
-
   <Step title="Add a Stripe component to your Embeddable">
     - In the Builder, switch to the checkout page that should contain the Stripe component.
     - Select a Container to insert the Stripe component into, or a copmonent that it should be added next to.
     - Open the `+` left-hand sidebar, and select `Stripe` from the list of components.
   </Step>
-
   <Step title="Choose the type of payment you want to accept">
     - Under Checkout mode, select one of the following options:
       - **Payment**: If you're accepting only one-time payments, or want to place a hold on a user's card.
@@ -48,7 +46,6 @@ The following are the minimum steps required to add a Stripe component to your E
       Please note that Stripe only supports placing a hold on one-time payments, not recurring payments.
     </Note>
   </Step>
-
   <Step title="Choose which payment methods you want to accept">
     - Under Payment methods, select the payment methods you want to accept, from the following options:
       - **Credit card**
@@ -59,7 +56,6 @@ The following are the minimum steps required to add a Stripe component to your E
       You need to have the relevant payment methods enabled in your Stripe account in order for them to appear for users.
     </Note>
   </Step>
-
   <Step title="Add line items to the checkout">
     - There are two different types of line item that you can add:
       1. **Price ID**: This corresponds to a product and price that you've already created in Stripe.
@@ -81,7 +77,6 @@ The following are the minimum steps required to add a Stripe component to your E
       If you need your line items to be dynamic (i.e. change based on the user's answers, like what plan they select), see the [Add dynamic line items](#add-dynamic-line-items) section below.
     </Tip>
   </Step>
-
   <Step title="Include the customer email address (and, optionally, phone number)">
     - To insert the user's given email address into the Stripe checkout, add the key name of the component you use to collect the user's email, using **Templating** (e.g. `{{email}}`).
     - You can optionally collect a user's phone number, using the same method.
@@ -91,6 +86,7 @@ The following are the minimum steps required to add a Stripe component to your E
 
       These are all Stripe needs for a customer billing address, so you don't need to provide any billing address fields.
     </Tip>
+
   </Step>
 </Steps>
 
@@ -109,14 +105,14 @@ These features are not required in order to successfully accept payments, but th
       - Country
 
     Then, enter the keys of these components in the Shipping Address fields in the Stripe component using Templating, e.g. `{{address_line_1}}`.
-      
+
     <Info>
       Shipping information is optional, depending on whether you're sending the customer a physical product.
 
       Billing information is required, but only country and postal code. This is handled automatically by the Stripe component, as described above, so you don't need to add your own billing address fields.
     </Info>
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Add dynamic line items">
     Sometimes you need your line items to be dynamic - i.e. change based on the user's answers, such as the plan that they select.
 
@@ -156,7 +152,7 @@ These features are not required in order to successfully accept payments, but th
       // Return the line items
       return [
         {
-          price: priceId, 
+          price: priceId,
           quantity: 1,
         },
       ];
@@ -164,7 +160,6 @@ These features are not required in order to successfully accept payments, but th
     ```
 
   </Accordion>
-
   <Accordion title="Set values based on dynamic data">
     You can set pretty much any value in the Stripe component based on dynamic data, such as the user's answers to a question (e.g. their email address), or a value that's computed from an answer (e.g. the post-purchase success message).
 
@@ -215,20 +210,20 @@ These features are not required in order to successfully accept payments, but th
     <Tip>
       You can mix and match both approaches - some fields might use simple templating while others use computed fields, depending on your needs.
     </Tip>
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Control Stripe prices from the Embeddables CMS">
     If you handle multiple Stripe products or prices in your Embeddable, we recommend adding them to a table in the [Embeddables CMS](/features/cms), and pulling those records into your Embeddable to use in your Stripe component.
 
     See the [How To: Control Stripe Prices from the Embeddables CMS](/how-to/control-stripe-prices-from-cms) guide for more information.
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Apply coupons and promo codes">
     You can offer discounts to your customers using Stripe's coupon and promo code system. This lets you create both customer-facing promo codes (like "BLACKFRIDAY50") and automatic discounts.
 
     See the [How To: Use Stripe Coupons and Promo Codes](/how-to/use-stripe-coupons-and-promo-codes) guide for more information.
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Place a hold on the customer's card">
     See the [How To: Place a Hold on a Payment](/how-to/place-a-hold-on-payment) guide for more information on this feature.
 
@@ -238,27 +233,25 @@ These features are not required in order to successfully accept payments, but th
     <Note>
       Please note that Stripe only supports placing a hold on one-time payments, not recurring payments.
     </Note>
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Automatically set default payment methods in Stripe">
     You can automatically set the first payment method added to a customer as their default in Stripe by setting up a webhook from Stripe to Embeddables.
     
     See the [How To: Automatically set default payment methods in Stripe](/how-to/assign-default-payment-methods) guide for step-by-step instructions.
   </Accordion>
-
   <Accordion title="Add a custom success message">
     This lets you customize the message that users see after they complete the payment.
 
     If the payment fails, for example if the credit card is declined, the error message returned from Stripe will be displayed to the user.
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Choose a layout for the Stripe component">
     This lets you choose a layout for the Stripe component, which affects how different payment method options are displayed to the user.
     The following options are available:
       - **Tabs** (default): This displays different payment methods in separate tabs, in a horizontal row across the top of the component.
       - **Accordion**: This displays different payment methods in an accordion of expanded and collapsed sections, with one payment method option open at a time.
   </Accordion>
-
   <Accordion title="Set up Apple Pay and Google Pay">
     Apple Pay and Google Pay can be enabled as payment methods in your Stripe checkout. Here's how to set them up:
 
@@ -285,19 +278,19 @@ These features are not required in order to successfully accept payments, but th
     <Note>
       Both Apple Pay and Google Pay will only appear as payment options when the user's browser and account settings support them. If a user doesn't meet the requirements, they won't see these payment options.
     </Note>
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Set up Stripe Link">
     Stripe Link is a fast-checkout payment method that lets users save and reuse their payment info across Stripe merchants.
 
     1. **Enable Stripe Link in your [Stripe Dashboard](https://dashboard.stripe.com/settings/payment_methods)** under Payment Methods.
-    2. **Enable Stripe Link in Embeddables:**  
+    2. **Enable Stripe Link in Embeddables:**
        In the Stripe component Options sidebar, select "Link" under the list of available Payment method types.
     3. Once enabled in both places, Stripe Link will automatically appear as a payment option for users who:
        - Have a Link account (or choose to create one at checkout)
        - Are using a supported browser and device
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Trigger actions on payment events">
     You can trigger [Actions](/features/actions) on the following payment events:
 
@@ -310,8 +303,8 @@ These features are not required in order to successfully accept payments, but th
     To do this:
     1. Create a new Action and type the JavaScript code you want to run.
     2. Add a Trigger to the Action that fires on one of the above payment events.
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Collect Stripe IDs to send to your backend">
     You can collect the following IDs that Stripe provides when a payment is completed:
 
@@ -346,9 +339,9 @@ These features are not required in order to successfully accept payments, but th
         body: JSON.stringify({ customer_id, invoice_id, subscription_id }),
       });
     }
-    ``` 
-  </Accordion>
+    ```
 
+  </Accordion>
   <Accordion title="Store the selected plan/product and payment status in User Data">
     Storing the plan or product that the user selected, and the status of the payment, can be useful when looking at your users' data later, or sending that data to your own backend or CRM.
 
@@ -367,12 +360,12 @@ These features are not required in order to successfully accept payments, but th
       If you're offering multiple plans or products, you're also probably using a Computed Field to generate the **line items** for the Stripe component, including the price_id(s).
 
       You can then opt to store this in the 'Embedables Cloud Context' as well.
-      
+
       Alternatively, you can store a simplified version with just the price_id(s), by computing with with another Computed Field.
     </Tip>
 
     ### Storing the payment status
-    
+
     The payment status is automatically stored  in User Data, using the key of the Stripe component.
 
     For this reason, we recommend choosing a straightforward key name for the Stripe component, e.g. `stripe_payment`.
@@ -384,13 +377,13 @@ These features are not required in order to successfully accept payments, but th
     - `stripe_payment: 'pending'` - The payment has just been attempted, and is awaiting a success or failure response from Stripe
     - `stripe_payment: 'error'` - The payment failed
     - `stripe_payment: 'completed'` - The payment was successful
-    
+
     <Note>
       Just make sure that the key of the Stripe component is set to be
       [stored in the 'Embedables Cloud Context'](https://docs.embeddables.com/features/user-data#where-is-user-data-stored%3F) - i.e. stored in Embeddables' database.
     </Note>
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Send custom metadata to Stripe">
     You can send custom metadata to Stripe with each payment, which is useful for tracking additional information about the customer or transaction.
 
@@ -403,11 +396,11 @@ These features are not required in order to successfully accept payments, but th
     <Info>
       Metadata is visible in the Stripe Dashboard and can be used for reporting, searching, or integrating with your backend.
     </Info>
+
   </Accordion>
 </AccordionGroup>
 
 ## Troubleshooting
-
 
 <AccordionGroup>
   <Accordion title="I'm getting an error about a missing publishable key">
@@ -419,18 +412,17 @@ These features are not required in order to successfully accept payments, but th
     - Make sure you have sent your Stripe <b>Publishable Key</b> to the Embeddables team.
     - If you are testing, ensure you are using the correct mode (test or live) and that the corresponding key is set up. See: [I'm seeing test mode errors on a live link](#im-seeing-test-mode-errors-on-a-live-link).
     - To use test keys, add <code>?savvy_test=true</code> to your URL.
-  </Accordion>
 
+  </Accordion>
   <Accordion title="I'm getting an error about a missing restricted key">
     This means that you need to generate a Restricted Key with the [scopes/permissions listed above](#keys-and-ids-that-you'll-need), from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
   </Accordion>
-
   <Accordion title="Error: You must provide one of `price` or `price_data` for each line item when using prices.">
     This means that you have at least one line item that is not using a Price ID (a pre-created price in Stripe), nor is it using a Price Data object (a custom price created in the Embeddables Builder).
 
     If you're using a Computed Field to generate the line items, check the value that it's returning, and make sure it's being passed into the Stripe component.
-  </Accordion>
 
+  </Accordion>
   <Accordion title="Error: No such price: 'price_xxxxxx'; a similar object exists in test mode, but a live mode key was used to make this request.">
     This means that you're using a **test mode** Price ID, but are testing Stripe in **live mode**.
 
@@ -453,16 +445,16 @@ These features are not required in order to successfully accept payments, but th
     </Tip>
 
     See: [Adding dynamic line items](#add-dynamic-line-items) for more information on how to handle this.
-  </Accordion>
-  
+
+  </Accordion>  
   <Accordion title="Error: No such price: 'price_xxxxxx'">
     This likely means that you're testing with a Price ID that comes from a different Stripe account from the one that you're using to accept payments.
 
     For example, you might be using a live mode Price ID from your own Stripe account, but the Embeddable is currently in Test Mode and connected to the Embeddables-provided Stripe account.
 
     See: [Adding dynamic line items](#add-dynamic-line-items) for more information on how to handle this.
-  </Accordion>
 
+  </Accordion>
   <Accordion title="I'm seeing test mode errors on a live link">
     If you see errors about test keys or test Price IDs while using a live link, it usually means that the keys provided to Embeddables are for test mode only.<br/>
     <b>How to fix:</b>
@@ -472,7 +464,6 @@ These features are not required in order to successfully accept payments, but th
       <li>If both keys are test keys, you can only test in test mode (<code>?savvy_test=true</code>).</li>
     </ul>
   </Accordion>
-
   <Accordion title="I'm seeing live mode errors on a test link">
     If you see errors about live keys or live Price IDs while using a test link (or with <code>?savvy_test=true</code>), it usually means that the keys provided to Embeddables are for live mode only.<br/>
     <b>How to fix:</b>
