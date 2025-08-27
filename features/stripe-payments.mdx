@@ -13,24 +13,43 @@ Payments in Embeddables are handled via [Stripe](https://stripe.com), with a ded
 
 ## Keys and IDs that you'll need
 
-- Your Stripe **Publishable Key**
-- A **Restricted Key** generated in Stripe, with the following scopes/permissions:
-  - `Customers`: `Write`
-  - `Payment Intents`: `Write`
-  - `Setup Intents`: `Write`
-  - `Checkout Session`: `Write`
-  - `Credit notes`: `Read`
-  - `Subscriptions`: `Write`
-- Any **Price IDs** for specific products you want to offer
+1. Your Stripe **Publishable Key** - grab this from the [API Keys](https://dashboard.stripe.com/apikeys) section of your Stripe Dashboard.
+2. A **Restricted Key** generated in Stripe (also from the [API Keys](https://dashboard.stripe.com/apikeys) page in Stripe), with the following scopes/permissions:
+
+   <Note>
+
+   Restricted Key - required scopes:
+
+   - `Customers`: `Write`
+   - `Payment Intents`: `Write`
+   - `Setup Intents`: `Write`
+   - `Checkout Session`: `Write`
+   - `Credit notes`: `Read`
+   - `Subscriptions`: `Write`
+
+   </Note>
+
+3. Any **Price IDs** for specific products you want to offer - grab these from the [Products](https://dashboard.stripe.com/products) page in Stripe.
 
 ## Setting up Stripe
 
 The following are the minimum steps required to add a Stripe component to your Embeddable:
 
 <Steps>
-  <Step title="Generate and share the necessary Stripe keys">
-    - Get your Publishable Key, and generate a Restricted Key with the scopes/permissions listed above, from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys).
-    - Pass these keys to the Embeddables Team (make sure to share the Restricted Key in a secure way).
+  <Step title="Add your Stripe credentials">  
+    - Go to **Settings** → **Credentials & Endpoints** in your Embeddables dashboard.
+    - In the **Stripe Credentials** section, click **+ New Stripe Credential**.
+    - Choose the **Key Type** (Publishable Key or Restricted Key).
+    - Select the Live **Environment**.
+    - Add a **Label** to help identify the credential (e.g., "Stripe Live Publishable Key").
+    - Enter your **Value** (the actual Stripe key). (See above for details on the keys to grab/generate).
+    - Click **Create** to save the credential.
+    
+    
+    <Tip>
+      You can also add credentials for the `Test` environment if you want to - if so, these will be used when in test mode instead of the default Embeddables-provided test keys.
+    </Tip>
+
   </Step>
   <Step title="Add a Stripe component to your Embeddable">
     - In the Builder, switch to the checkout page that should contain the Stripe component.
@@ -404,18 +423,37 @@ These features are not required in order to successfully accept payments, but th
 
 <AccordionGroup>
   <Accordion title="I'm getting an error about a missing publishable key">
-    This likely means that you need to grab your Publishable Key from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
-
-    It might also mean that the Stripe publishable key has not been set up for your Embeddable.
+    This likely means that you need to add your Stripe Publishable Key to your Embeddables project, for the appropriate environment.
 
     **How to fix:**
-    - Make sure you have sent your Stripe <b>Publishable Key</b> to the Embeddables team.
-    - If you are testing, ensure you are using the correct mode (test or live) and that the corresponding key is set up. See: [I'm seeing test mode errors on a live link](#im-seeing-test-mode-errors-on-a-live-link).
-    - To use test keys, add <code>?savvy_test=true</code> to your URL.
+    - Go to **Settings** → **Credentials & Endpoints** in your Embeddables dashboard.
+    - In the **Stripe Credentials** section, click **+ New Stripe Credential**.
+    - Choose **Publishable Key** as the Key Type.
+    - Select the appropriate **Environment** (Test or Live).
+    - Add a descriptive **Label** and enter your Stripe publishable key.
+    - Click **Create** to save the credential.
+
+    <Note>
+      If you are testing, ensure you are using the correct mode (test or live) and that the corresponding key is set up. See: [I'm seeing test mode errors on a live link](#im-seeing-test-mode-errors-on-a-live-link).
+    </Note>
+
+    <Tip>
+      To use test keys, add <code>?savvy_test=true</code> to your URL.
+    </Tip>
 
   </Accordion>
   <Accordion title="I'm getting an error about a missing restricted key">
-    This means that you need to generate a Restricted Key with the [scopes/permissions listed above](#keys-and-ids-that-you'll-need), from the [API Keys section of your Stripe Dashboard](https://dashboard.stripe.com/apikeys), and pass it to the Embeddables Team to set up for you.
+    This means that you need to add a Stripe Restricted Key with the [scopes/permissions listed above](#keys-and-ids-that-you'll-need) to your Embeddables project.
+
+    **How to fix:**
+    - Go to **Settings** → **Credentials & Endpoints** in your Embeddables dashboard.
+    - In the **Stripe Credentials** section, click **+ New Stripe Credential**.
+    - Choose **Restricted Key** as the Key Type.
+    - Select the appropriate **Environment** (Test or Live).
+    - Add a descriptive **Label** and enter your Stripe restricted key.
+    - Make sure the key has the correct permissions, listed [above](#keys-and-ids-that-you’ll-need).
+    - Click **Create** to save the credential.
+
   </Accordion>
   <Accordion title="Error: You must provide one of `price` or `price_data` for each line item when using prices.">
     This means that you have at least one line item that is not using a Price ID (a pre-created price in Stripe), nor is it using a Price Data object (a custom price created in the Embeddables Builder).
@@ -456,21 +494,24 @@ These features are not required in order to successfully accept payments, but th
 
   </Accordion>
   <Accordion title="I'm seeing test mode errors on a live link">
-    If you see errors about test keys or test Price IDs while using a live link, it usually means that the keys provided to Embeddables are for test mode only.<br/>
-    <b>How to fix:</b>
-    <ul>
-      <li>Confirm with your team which keys (publishable and restricted) have been sent to Embeddables.</li>
-      <li>If you want to test in live mode, you must provide <b>live mode</b> keys to Embeddables.</li>
-      <li>If both keys are test keys, you can only test in test mode (<code>?savvy_test=true</code>).</li>
-    </ul>
+    If you see errors about test keys or test Price IDs while using a live link, it usually means that the keys you've added to your project are for test mode only.
+
+    **Fixes to try:**
+
+    - Check your project's Stripe credentials in **Settings** → **Credentials & Endpoints**.
+    - If you want to test in live mode, you must add **live mode** keys to your project.
+    - If both keys are test keys, you can only test in test mode (`?savvy_test=true`).
+
   </Accordion>
   <Accordion title="I'm seeing live mode errors on a test link">
-    If you see errors about live keys or live Price IDs while using a test link (or with <code>?savvy_test=true</code>), it usually means that the keys provided to Embeddables are for live mode only.<br/>
-    <b>How to fix:</b>
-    <ul>
-      <li>Confirm with your team which keys (publishable and restricted) have been sent to Embeddables.</li>
-      <li>If you want to test in test mode, you must provide <b>test mode</b> keys to Embeddables.</li>
-      <li>If both keys are live keys, you can only test in live mode (remove <code>?savvy_test=true</code> from the URL).</li>
-    </ul>
+
+    If you see errors about live keys or live Price IDs while using a test link (or with `?savvy_test=true`), it usually means that the keys you've added to your project are for live mode only.
+
+    **Fixes to try:**
+    - Check your project's Stripe credentials in **Settings** → **Credentials & Endpoints**.
+    - If you want to test in test mode, you must add **test mode** keys to your project.
+    - If both keys are live keys, you can only test in live mode (remove `?savvy_test=true` from the URL).
+
   </Accordion>
+
 </AccordionGroup>
