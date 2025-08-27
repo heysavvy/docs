@@ -5,24 +5,29 @@ description: "Questions we get asked a lot"
 icon: "question"
 ---
 
-import { Accordion } from '@site/src/components/Accordion';
+import { Accordion } from "@site/src/components/Accordion";
 
-## Compliance & Security
+## The Embeddables Platform
+
+### Compliance & Security
 
 <AccordionGroup>
   <Accordion title="Are you HIPAA compliant?">
     Yes, we are HIPAA compliant. However, customers need to follow our HIPAA compliance checklists and requirements to maintain compliance.
   </Accordion>
 
-  <Accordion title="Are you SOC2 compliant?">
-    No, we are not SOC2 compliant at this time.
-  </Accordion>
+{" "}
+
+<Accordion title="Are you SOC2 compliant?">
+  No, we are not SOC2 compliant at this time.
+</Accordion>
 
   <Accordion title="Do you sign BAAs (Business Associate Agreements)?">
     No, we do not sign BAAs.
   </Accordion>
 </AccordionGroup>
-## Data Processing & Privacy
+
+### Data Processing & Privacy
 
 <AccordionGroup>
   <Accordion title="Do you process or store personal data?">
@@ -33,12 +38,14 @@ import { Accordion } from '@site/src/components/Accordion';
     If you don't want to use our platform's analytics features, then we don't need to collect, process, or store any personal end-user data.
 
     You can choose instead to collect and store data through your own backend. You can send directly from the user's browser to your designated backend without it passing through our infrastructure.
+
   </Accordion>
 
   <Accordion title="Do you provide DPAs (Data Processing Agreements)?">
     Customers on our Pro and Enterprise plans can request us to review and sign a DPA.
 
     For customers on lower plans, if you require a DPA with any vendors who process personal data, then we recommend that you send data directly from the user's browser to your backend, without passing through our infrastructure (which would disable most of Embeddables' built-in analytics features).
+
   </Accordion>
 
   <Accordion title="Do you conduct DPIAs (Data Protection Impact Assessments)?">
@@ -46,7 +53,7 @@ import { Accordion } from '@site/src/components/Accordion';
   </Accordion>
 </AccordionGroup>
 
-## Infrastructure & Hosting
+### Infrastructure & Hosting
 
 <AccordionGroup>
   <Accordion title="Where is your code/platform hosted?">
@@ -60,6 +67,124 @@ import { Accordion } from '@site/src/components/Accordion';
     - Clickhouse
 
     Our codebase itself is hosted on GitHub.
+
   </Accordion>
 </AccordionGroup>
 
+## Building with Embeddables
+
+### Design, Styling, and Layouts
+
+<AccordionGroup>
+  <Accordion title="How do I place components side by side?">
+    To place components side by side (horizontally), first those components need to be inside a container.
+
+    1. **Add a container** to the page if it does not already exist.
+    2. For each component that you want to align horizontally, **move it into the container**.
+    3. Select the container, and in the Designer sidebar, set the **display property to `flex`**.
+    4. Ensure the **flex direction is set to `row`** (this is usually the default).
+
+    <Tip>
+    If components are still stacking vertically, check that the container does not have `flex-direction: column` set.
+    </Tip>
+
+  </Accordion>
+
+  <Accordion title="How do I center a button in my design?">
+    When you want to center a button horizontally on your page, place the button inside a container and use flexbox to center it.
+
+    1. **Select the container** that includes ONLY the button (or create one if it doesn't exist).
+    2. In the Designer sidebar, **set the container's width to `100%`**.
+    3. **Set the `display` property** of the container to `flex`.
+    4. Ensure the **flex direction is set to `row`** (this is usually the default).
+
+  </Accordion>
+
+  <Accordion title="How do I edit styles for specific screen sizes?">
+    To apply different styles for mobile, tablet, and desktop:
+
+    1. **Select the component** you want to style.
+    2. **In the Designer sidebar**, look for the "On" dropdown.
+    3. **Choose the specific screen size** you want to style for:
+       - Mobile: up to 520px width
+       - Tablet: 521px to 720px width
+       - Desktop: 721px width and above
+    4. **Apply your styles** while that screen size is selected - this will set the styles for only that screen size and smaller screen sizes.
+
+  </Accordion>
+
+  <Accordion title="What do the device screen type options (Desktop/Mobile/Tablet) do?">
+    The device screen type options in the builder allow you to preview how your content will appear on different screen sizes:
+
+    - **Mobile**: Shows layout for devices with width up to 520px.
+    - **Tablet**: Shows layout for devices with width between 521px and 720px.
+    - **Desktop**: Shows layout for devices with width of 721px and above.
+
+    These are preview modes that help you see how your design will look on different devices. To actually edit styles for specific screen sizes, use the "On" dropdown in the Designer sidebar. You can also use the "On" dropdown to preview how your design will look on different screen sizes.
+
+  </Accordion>
+
+  <Accordion title="What are the different button elements I can style?">
+    Button components contain several elements you can style individually:
+
+    - **Whole thing**: Apply styles to the entire button (background, border, etc.).
+    - **Text Wrapper**: Style the container that holds the button's text.
+    - **Text**: Style the text itself (font, color, size, etc.).
+    - **Description**: Style any description text (if present).
+    - **Icon**: Style the icon (if present).
+    - **Image**: Style any image within the button (if present).
+
+    The available elements depend on what content your button contains. For a simple text button, you'll primarily use "Whole thing", "Text Wrapper", and "Text".
+
+  </Accordion>
+</AccordionGroup>
+
+## Data & Analytics
+
+<AccordionGroup>
+  <Accordion title="How do I find my funnel submissions data?">
+    Your users' data can be found in two places:
+
+    - **Users page**: Shows individual user sessions - you can click on a user to see their activity and their submission data for each Embeddable.
+    - **Embeddable --> Submissions tab**: Shows the User Data for completed form submissions - each user will have a separate row for each Embeddable they have interacted with.
+
+  </Accordion>
+
+  <Accordion title="How do I access production data vs. test data?">
+    To switch between viewing production data vs viewing all data (including test data):
+
+    1. **Go to your funnel dashboard**.
+    2. **Look for the "Data collected in production version" button**.
+    3. **Click it to toggle** between:
+        - **Production data only**
+        - **All data (including both production and test data)**
+
+  </Accordion>
+</AccordionGroup>
+
+## Form Elements
+
+<AccordionGroup>
+  <Accordion title="How do I reference multiple form elements in computed fields?">
+    To access multiple form element values in a computed field, you can pull the keys of each input component from the first argument of the function.
+
+    <CodeGroup>
+    ```javascript Basic
+    // Computed Field: full_name
+    function result(userData) {
+      return `${userData.first_name} ${userData.last_name}`;
+    }
+    ```
+
+    ```javascript With Destructuring
+    // Computed Field: full_name
+    function result({ first_name, last_name }) {
+      return `${first_name} ${last_name}`;
+    }
+    ```
+    </CodeGroup>
+
+    The computed field receives a single object containing all your form element results. Make sure the property names in the destructuring match exactly with your form element names.
+
+  </Accordion>
+</AccordionGroup>
