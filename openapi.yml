@@ -383,7 +383,7 @@ paths:
           in: query
           required: false
           schema:
-            type: boolean
+            type: string
             nullable: true
         - name: X-Api-Key
           in: header
@@ -861,6 +861,160 @@ paths:
                   identifiers:
                     - key: email
                       value: '"test@test.com"'
+  /projects/{projectId}/experiments:
+    get:
+      description: Retrieve all experiments in a project with optional status filtering
+      operationId: experiments_getExperiments
+      tags:
+        - Experiments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: "#/components/schemas/ExperimentStatus"
+            nullable: true
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Experiment"
+              examples:
+                Example1:
+                  value:
+                    - id: exp_abc123
+                      experimentId: exp_abc123
+                      flowId: flow_123
+                      name: Button Color A/B Test
+                      hypothesis: Changing button color will improve conversion rates
+                      impact_metrics:
+                        - conversion_rate
+                        - click_through_rate
+                      no_impact_metrics:
+                        - bounce_rate
+                      created_at: "2024-01-01T00:00:00Z"
+                      updated_at: "2024-01-01T00:00:00Z"
+                      observations: Users seem to prefer blue buttons
+                      outcome: Blue variant shows 15% higher conversion
+                      attachments: >-
+                        [{"url":"/project/pr_rIu92Y0RXzLYemTB/library/?libraryItemId=recmqyMdB2FHK0WOC","name":"HIMS
+                        - Weight Loss Plans"}]
+                      variants: >-
+                        {"control": {"name": "Control (Red)", "color":
+                        "#ff0000"}, "variant_a": {"name": "Blue Button",
+                        "color": "#0000ff"}}
+                      flow_ids:
+                        - flow_123
+                        - flow_456
+                      paused_showing_variant: null
+                      winner_variant: variant_a
+                      status: running
+                    - id: exp_def456
+                      experimentId: exp_def456
+                      flowId: flow_789
+                      name: Headline Test
+                      hypothesis: Different headlines will affect engagement
+                      impact_metrics:
+                        - engagement_rate
+                      no_impact_metrics: []
+                      created_at: "2024-01-02T00:00:00Z"
+                      updated_at: "2024-01-02T00:00:00Z"
+                      observations: null
+                      outcome: null
+                      attachments: "[]"
+                      variants: >-
+                        {"control": {"headline": "Original"}, "variant_a":
+                        {"headline": "New"}}
+                      flow_ids:
+                        - flow_789
+                      paused_showing_variant: null
+                      winner_variant: null
+                      status: draft
+        "401":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UnauthorizedErrorBody"
+        "404":
+          description: ""
+  /projects/{projectId}/experiments/{experimentId}:
+    get:
+      description: Retrieve an experiment from the database based on the experiment ID
+      operationId: experiments_getExperiment
+      tags:
+        - Experiments
+      parameters:
+        - name: projectId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ProjectId"
+          examples:
+            Example1:
+              value: pr_myexampleproject
+            Example2:
+              value: pr_myexampleproject
+        - name: experimentId
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/ExperimentId"
+          examples:
+            Example1:
+              value: exp_abc123
+            Example2:
+              value: exp_does_not_exist
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Experiment"
+              examples:
+                Example1:
+                  value:
+                    id: exp_abc123
+                    experimentId: exp_abc123
+                    flowId: flow_123
+                    name: Button Color A/B Test
+                    hypothesis: Changing button color will improve conversion rates
+                    impact_metrics:
+                      - conversion_rate
+                      - click_through_rate
+                    no_impact_metrics:
+                      - bounce_rate
+                    created_at: "2024-01-01T00:00:00Z"
+                    updated_at: "2024-01-01T00:00:00Z"
+                    observations: Users seem to prefer blue buttons
+                    outcome: Blue variant shows 15% higher conversion
+                    attachments: >-
+                      [{"url":"/project/pr_rIu92Y0RXzLYemTB/library/?libraryItemId=recmqyMdB2FHK0WOC","name":"HIMS
+                      - Weight Loss Plans"}]
+                    variants: >-
+                      {"control": {"name": "Control (Red)", "color": "#ff0000"},
+                      "variant_a": {"name": "Blue Button", "color": "#0000ff"}}
+                    flow_ids:
+                      - flow_123
+                      - flow_456
+                    paused_showing_variant: null
+                    winner_variant: variant_a
+                    status: running
+        "404":
+          description: ""
   /projects/{projectId}:
     get:
       description: Retrieve a project from the database based on the ID
@@ -1220,6 +1374,89 @@ components:
       required:
         - key
         - value
+    ExperimentId:
+      title: ExperimentId
+      type: string
+      description: The unique identifier for an experiment
+    FlowId:
+      title: FlowId
+      type: string
+      description: The unique identifier for a flow
+    ExperimentStatus:
+      title: ExperimentStatus
+      type: string
+      enum:
+        - draft
+        - running
+        - paused
+        - winner_picked
+        - completed
+        - discarded
+      description: The current status of the experiment
+    Experiment:
+      title: Experiment
+      type: object
+      properties:
+        id:
+          type: string
+          example: exp_abc123
+        experimentId:
+          type: string
+          example: exp_abc123
+        flowId:
+          $ref: "#/components/schemas/FlowId"
+        name:
+          type: string
+          nullable: true
+        hypothesis:
+          type: string
+          nullable: true
+        impact_metrics:
+          type: array
+          items:
+            type: string
+          nullable: true
+        no_impact_metrics:
+          type: array
+          items:
+            type: string
+          nullable: true
+        created_at:
+          $ref: "#/components/schemas/DateTime"
+        updated_at:
+          $ref: "#/components/schemas/DateTime"
+        observations:
+          type: string
+          nullable: true
+        outcome:
+          type: string
+          nullable: true
+        attachments:
+          type: string
+          nullable: true
+        variants:
+          type: string
+          nullable: true
+        flow_ids:
+          type: array
+          items:
+            type: string
+          nullable: true
+        paused_showing_variant:
+          type: string
+          nullable: true
+        winner_variant:
+          type: string
+          nullable: true
+        status:
+          $ref: "#/components/schemas/ExperimentStatus"
+          nullable: true
+      required:
+        - id
+        - experimentId
+        - flowId
+        - created_at
+        - updated_at
     ErrorBody:
       title: ErrorBody
       type: object

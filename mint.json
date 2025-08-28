@@ -166,6 +166,13 @@
       ]
     },
     {
+      "group": "Experiments",
+      "pages": [
+        "api-reference/experiments/get-experiments",
+        "api-reference/experiments/get-experiment"
+      ]
+    },
+    {
       "group": "Entries",
       "pages": [
         "api-reference/entries/get-entries",
