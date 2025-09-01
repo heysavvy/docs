@@ -5,9 +5,17 @@ icon: "flask"
 description: "Creating an experiment, setting variants and modifying content"
 ---
 
+import { TellaVideo } from "/snippets/tella-video.mdx";
+
 **Experiments** are deeply intergated into the Embeddables platform.
 
-They make use of two of the core features of Embeddables: [Conditions](/features/conditions) and [User Data](/features/user-data).
+Watch this video to learn how to manage Experiments in the Web App and/or Builder:
+
+<TellaVideo url="https://www.tella.tv/video/cmek260o5000e0bif0dqug9jv/embed?b=1&title=1&a=1&loop=0&t=0&muted=0&wt=1" />
+
+## How Experiments work in Embeddables
+
+Experiments make use of two of the core features of Embeddables: [Conditions](/features/conditions) and [User Data](/features/user-data).
 
 <Card title="How Experiments work in Embeddables" icon="flask">
   When an experiment is launched, it randomly assigns a variant to each user by setting it as a value in User Data.
@@ -55,12 +63,13 @@ For example, you could clone the title, change the length of the new title, and 
       </Tip>
 
     - Add a similar Experiment Condition onto the control version of your component/page.
-    
+
       <Tip>
         A `no_value` value will be added to the Experiment Condition on the control variant, so that it will always be shown by default.
       </Tip>
 
     - Repeat for any other variants by cloning the page/component, changing the content, and updating the Experiment Condition.
+
   </Step>
   <Step title="Preview, test and push live for real users">
     - You can now preview your changes by re-opening the Experiments sidebar, selecting the Experiment, and clicking the Preview (<Icon icon="eye" iconType="solid" />) icon buttons next to each variant in the sidebar on the right-hand side.
