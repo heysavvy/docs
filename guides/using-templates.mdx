@@ -1,0 +1,158 @@
+---
+title: "Using Embeddables Templates"
+icon: "file-circle-plus"
+description: "Starting a build from one of our pre-built templates"
+---
+
+Embeddables templates are a great way to get started and go live in a matter of days not weeks.
+
+<Tip>
+**Ask the Embeddables team for advice on what templates are available** to match your industry, product catalog and other specific needs.
+
+</Tip>
+
+## Quickstart
+
+The following is a list of things that must be modified once you've cloned from a template.
+
+1. **Stripe Component & Computed Field**
+
+   - Update product_data CF with product info.
+   - Configure the Stripe component in the **Options** tab.
+
+2. **POST Tellescope Action**
+
+   - Requires `apikey`, `formid`, and `endpoint`.
+     - Endpoint is preconfigured with Tellescope.
+     - API key and form ID come from credentials in the webapp.
+
+3. **Fetch Headers**
+
+   - **Project ID** → Embeddables project number (`pr_123` in builder URL).
+   - **Environment** → must match both fetch and credentials.
+
+4. **Webapp Configuration (Settings → Credentials & Endpoints)**
+
+   - **Stripe**: Create a new Stripe credential (type + environment).
+   - **Tellescope**: Create a Custom Credential:
+     - Type: EHR
+     - Service: Tellescope
+     - Key Type: API key
+     - Environment: desired one
+   - **Endpoint**:
+     - Environment must match credentials.
+     - Add regex URLs:
+       - **Allowed Origins** → embedding URL.
+       - **Allowed Destinations** → Tellescope API.
+     - Link the Credential ID.
+
+## Full template guides
+
+See below for complete guides to some of our most popular templates.
+
+<AccordionGroup>
+
+  <Accordion title="Medvi Template">
+
+    **Card & Actions**
+
+    - The button on the product card that’s on the checkout page triggers an **Action**. (there’s one for each specific card button, Semaglutide value and Tirzepatide value)
+    - This Action sets **UserData** with the selected product and slides to the **Stripe** component.
+
+    **Product Data & Stripe**
+
+    - product_data is a **Computed Field (CF)** that stores all products. These are saved in **UserData** and passed to **Stripe** via their price_id.
+    - stripe_line_items is another CF that retrieves the price_id from product_data (based on the environment) and passes it to Stripe.
+    - The Stripe component is configured in the **Options tab**, where the template value stripe_line_items is already loaded. Several inputs are linked via their **keys**.
+
+    **Payment Complete → POST Tellescope**
+
+    - When payment is complete, the **POST Tellescope** Action is triggered.
+    - This Action contains a **template** with a pre-set answers object that is sent as payload to Tellescope.
+    - The answers are linked to builder components via their keys.
+    - The Action also requires **apikey**, **formid**, and **endpoint**:
+        - The **endpoint** is already configured with Tellescope information.
+        - The **apikey** and **formid** are set up through **credentials** in the webapp (where we paste their template values).
+
+    **Headers in the Fetch**
+
+    - In the **fetch** (specifically in the headers), two values must be filled/replaced:
+        - **Project ID** → matches the Embeddables project number (found in the builder URL as pr_123).
+        - **Environment** → must match the environment used for the fetch and the one defined in the credentials.
+
+    **Configuration in the Webapp (Settings → Credentials & Endpoints)**
+
+    - In the webapp, the last option in the side menu is **Settings**. Inside, go to the **Credentials & Endpoints** tab to configure **Stripe** and **Tellescope**.
+    - **Stripe Credentials**:
+        - The first option is for Stripe.
+        - By clicking **New Stripe Credential**, you can create new credentials by providing **type** and **environment**.
+    - **Custom Credentials (Tellescope)**:
+        - The second option is **Custom Credentials**, where we configure the credentials for Tellescope.
+        - Click **New Custom Credential** and provide:
+            - **Type**: EHR (for Tellescope).
+            - **Service Name**: Tellescope.
+            - **Key Type**: API key.
+            - **Environment**: the desired one.
+    - **Endpoints**:
+        - Finally, configure an endpoint by clicking **New Endpoint**.
+        - The **environment** of the endpoint must match the one from the credentials.
+        - Two URLs in **regex** format must be filled:
+            - **Allowed Origins** → the URL where the flow is embedded (where the fetch will be executed).
+            - **Allowed Destinations** → the URL of the Tellescope API.
+        - The **Credential ID** must be the one configured in the previous step.
+
+  </Accordion>
+
+  <Accordion title="NewlyMeds Template">
+
+    **Option Selector & Product Data**
+
+    - On the **checkout page**, there is an **option selector** with 4 default products.
+    - The **keys** of these options match and connect the option selector with the products defined in a **Computed Field (CF)** called product_data.
+    - This way, when a user selects an option, that product is stored in the **UserData**.
+
+    **Product Data & Stripe**
+
+    - product_data is a **Computed Field (CF)** that stores all products. These are saved in **UserData** and passed to **Stripe** via their price_id.
+    - stripe_line_items is another CF that retrieves the price_id from product_data (based on the environment) and passes it to Stripe.
+    - The Stripe component is configured in the **Options tab**, where the template value stripe_line_items is already loaded. Several inputs are linked via their **keys**.
+
+    **Payment Complete → POST Tellescope**
+
+    - When payment is complete, the **POST Tellescope** Action is triggered.
+    - This Action contains a **template** with a pre-set answers object that is sent as payload to Tellescope.
+    - The answers are linked to builder components via their keys.
+    - The Action also requires **apikey**, **formid**, and **endpoint**:
+        - The **endpoint** is already configured with Tellescope information.
+        - The **apikey** and **formid** are set up through **credentials** in the webapp (where we paste their template values).
+
+    **Headers in the Fetch**
+
+    - In the **fetch** (specifically in the headers), two values must be filled/replaced:
+        - **Project ID** → matches the Embeddables project number (found in the builder URL as pr_123).
+        - **Environment** → must match the environment used for the fetch and the one defined in the credentials.
+
+    **Configuration in the Webapp (Settings → Credentials & Endpoints)**
+
+    - In the webapp, the last option in the side menu is **Settings**. Inside, go to the **Credentials & Endpoints** tab to configure **Stripe** and **Tellescope**.
+    - **Stripe Credentials**:
+        - The first option is for Stripe.
+        - By clicking **New Stripe Credential**, you can create new credentials by providing **type** and **environment**.
+    - **Custom Credentials (Tellescope)**:
+        - The second option is **Custom Credentials**, where we configure the credentials for Tellescope.
+        - Click **New Custom Credential** and provide:
+            - **Type**: EHR (for Tellescope).
+            - **Service Name**: Tellescope.
+            - **Key Type**: API key.
+            - **Environment**: the desired one.
+    - **Endpoints**:
+        - Finally, configure an endpoint by clicking **New Endpoint**.
+        - The **environment** of the endpoint must match the one from the credentials.
+        - Two URLs in **regex** format must be filled:
+            - **Allowed Origins** → the URL where the flow is embedded (where the fetch will be executed).
+            - **Allowed Destinations** → the URL of the Tellescope API.
+        - The **Credential ID** must be the one configured in the previous step.
+
+  </Accordion>
+
+</AccordionGroup>

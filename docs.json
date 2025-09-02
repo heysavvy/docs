@@ -16,11 +16,7 @@
         "groups": [
           {
             "group": "Get Started",
-            "pages": [
-              "welcome",
-              "5-min-onboarding",
-              "faqs"
-            ]
+            "pages": ["welcome", "5-min-onboarding", "faqs"]
           },
           {
             "group": "Features",
@@ -41,6 +37,7 @@
           {
             "group": "Guides & Best Practices",
             "pages": [
+              "guides/using-templates",
               "guides/naming-keys",
               "guides/hipaa-compliance",
               "guides/storing-data-cookies",
@@ -116,10 +113,7 @@
           },
           {
             "group": "About These Docs",
-            "pages": [
-              "about/who-are-these-docs-for",
-              "about/how-we-write-docs"
-            ]
+            "pages": ["about/who-are-these-docs-for", "about/how-we-write-docs"]
           }
         ]
       },
@@ -129,9 +123,7 @@
         "groups": [
           {
             "group": "API Documentation",
-            "pages": [
-              "api-reference/introduction"
-            ]
+            "pages": ["api-reference/introduction"]
           },
           {
             "group": "Embeddables",
@@ -160,9 +152,7 @@
           },
           {
             "group": "Events",
-            "pages": [
-              "api-reference/events/create-event"
-            ]
+            "pages": ["api-reference/events/create-event"]
           }
         ]
       },
@@ -172,9 +162,7 @@
         "groups": [
           {
             "group": "Reference",
-            "pages": [
-              "reference/glossary/glossary"
-            ]
+            "pages": ["reference/glossary/glossary"]
           }
         ]
       },
@@ -184,9 +172,7 @@
         "groups": [
           {
             "group": "Reference",
-            "pages": [
-              "reference/changelog/changelog"
-            ]
+            "pages": ["reference/changelog/changelog"]
           }
         ]
       }
@@ -197,9 +183,7 @@
     "dark": "/logo/embeddables-dark.png"
   },
   "api": {
-    "openapi": [
-      "openapi.yml"
-    ]
+    "openapi": ["openapi.yml"]
   },
   "navbar": {
     "links": [
