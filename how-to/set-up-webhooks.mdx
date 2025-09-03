@@ -23,25 +23,35 @@ whereas with webhooks each event is triggered by the webhook provider themselves
 
 </Info>
 
+<Note>
+  Currently, you can add multiple destination URLs, but they will all receive
+  all events. You cannot subscribe to specific events.
+</Note>
+
 ## How to use Webhooks in Embeddables
 
 Webhooks in Embeddables are powered by [Svix](https://svix.com/), an excellent service that integrates nicely into our systems and handles all the detailed features that we would ever want to build.
 
 <Steps>
   <Step title="Create a Webhook in the Embeddables Builder">
+
     - In the Builder, go to the Logic sidebar and click on the Actions tab.
     - Click `+ Add New Action`.
     - Give it a name, and select `Webhook` as the Action type.
     - Hit `Add`.
+
   </Step>
   <Step title="Trigger the Webhook from an event">
+
     - Go to the Triggers tab.
     - Add a new Trigger.
     - Choose the event that you want to trigger the Action on.
     - Select the Webhook Action you just created.
     - Hit `Add`.
+
   </Step>
   <Step title="Add your destination URL to the list of endpoints in Embeddables">
+
     - In the [Embeddables Web App](https://app.embeddables.com), go to Settings > Integrations.
     - In the Webhooks card, click `Manage Webhooks`.
     - Your Svix portal will open in a new tab.
@@ -49,10 +59,14 @@ Webhooks in Embeddables are powered by [Svix](https://svix.com/), an excellent s
     - Add your URL into the `Endpoint URL` field.
     - Leave the `Subscribe to events` field blank to receive all events.
     - Hit `Add`.
-    <Note>
-      Currently, you can add multiple destination URLs, but they will all receive all events. The ability to subscribe to specific events is coming soon.
-    </Note>
+
   </Step>
 </Steps>
 
+## What events can I subscribe to?
 
+Using the above method, you can trigger Webhook events at any point during the user's journey.
+
+**The main limitation is that you cannot currently define and subscribe to specific events.** All Webhook events triggered will be sent to all destination endpoints URLs.
+
+To handle different event types with different destinations, we recommend using a service like Zapier, or your own backend, to route the events to the appropriate destination based on a User Data property such as `current_page_key`.
