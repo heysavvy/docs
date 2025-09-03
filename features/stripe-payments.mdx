@@ -259,6 +259,24 @@ These features are not required in order to successfully accept payments, but th
     
     See the [How To: Automatically set default payment methods in Stripe](/how-to/assign-default-payment-methods) guide for step-by-step instructions.
   </Accordion>
+  <Accordion title="Make sure a Customer is created in Stripe">
+    When using **Setup** or **Payment** checkout modes, you can control whether a customer is created in Stripe.
+
+    Use the **Create a Customer in Stripe?** option in the Stripe component options, below the **Checkout Mode** setting.
+
+    <Note>
+    This setting is not available for **Subscription** mode since customers are always created for recurring payments.
+    </Note>
+
+    **Available options:**
+    - **If Required** (Default): A customer is only created if Stripe requires it for the specific payment method or transaction type.
+    - **Always**: A customer is always created in Stripe, regardless of whether it's required for the transaction.
+
+    <Tip>
+      If you choose to create customers, you can collect the Customer ID using the [Collect Stripe IDs](#collect-stripe-ids-to-send-to-your-backend) feature.
+    </Tip>
+
+  </Accordion>
   <Accordion title="Add a custom success message">
     This lets you customize the message that users see after they complete the payment.
 
