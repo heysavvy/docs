@@ -107,6 +107,14 @@ The following are the minimum steps required to add a Stripe component to your E
     </Tip>
 
   </Step>
+  <Step title="Review any other settings you need to configure">
+
+    - Most brands want to [make sure a Customer is created in Stripe](#make-sure-a-customer-is-created-in-stripe) for new purchases, and [automatically set default payment methods in Stripe](#automatically-set-default-payment-methods-in-stripe) for those customers.
+    - It's worth deciding on [which payment method tabs](#control-which-payment-method-tabs-are-shown) you want to show to customers, including setting up [Apple Pay and Google Pay](#set-up-apple-pay-and-google-pay) if desired, and deciding whether to enable [Stripe Link](#set-up-stripe-link).
+    - You may want to [collect shipping information](#collect-shipping-information) if you're sending a physical product (billing information is usually collected automatically by Stripe using the zipcode/postal code field).
+    - See below for a full list of optional settings you might want to configure.
+
+  </Step>
 </Steps>
 
 ## Optional: Additional Stripe configurations
