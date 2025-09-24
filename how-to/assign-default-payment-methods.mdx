@@ -1,8 +1,17 @@
 ---
-title: "How To: Automatically set default payment methods in Stripe"
+title: "How To: Automatically set default payment methods in Stripe for subscriptions"
 sidebarTitle: "How To: Automatically set default payment methods"
-description: "How to set up a webhook in Stripe so that, when a payment method is first added to a customer, it is automatically set as the default payment method."
+description: "How to set up a webhook in Stripe so that, when a payment method is first added to a customer's subscription, it is automatically set as the default payment method."
 ---
+
+<Note>
+  This guide is only relevant for **Subscription** checkout mode.
+
+For **Payment** mode, all you need to do is set "Setup Future Usage" to "Off Session" in the Stripe component options.
+
+For **Setup** mode, you don't need to do anything - payment methods are automatically set as default in this mode.
+
+</Note>
 
 When a customer enters their credit card or other payment method for a subscription in Stripe, that payment method is not automatically set as the <strong>default</strong> payment method.
 
@@ -11,7 +20,9 @@ Without this, the next payment in the customer's subscription may fail, unless y
 This guide explains how to set up a Webhook to ensure that when a new payment method is added to a Stripe customer, it is automatically set as the default payment method.
 
 <Frame caption="Example: The top customer has a default payment method set; the bottom customer does not, which can cause payment issues.">
-![Example: Top customer has a default payment method set; bottom customer does not, which can cause payment issues.](https://assets.embeddables.com/Screenshot2025-07-21at9_19167427955247518.33.08am.png)
+  ![Example: Top customer has a default payment method set; bottom customer does
+  not, which can cause payment
+  issues.](https://assets.embeddables.com/Screenshot2025-07-21at9_19167427955247518.33.08am.png)
 </Frame>
 
 ## Adding a webhook to automatically set the default payment method in Stripe
@@ -19,11 +30,12 @@ This guide explains how to set up a Webhook to ensure that when a new payment me
 <Tabs>
   <Tab title="You have Workbench enabled">
 
+{" "}
 
-  <Note>
-    Note: This requires a Stripe component that is set up to create{" "}
-    <strong>subscriptions</strong>
-  </Note>
+<Note>
+  Note: This requires a Stripe component that is set up to create{" "}
+  <strong>subscriptions</strong>
+</Note>
 
     <Steps>
       <Step title="Create a new webhook in Stripe">
@@ -69,11 +81,12 @@ This guide explains how to set up a Webhook to ensure that when a new payment me
   </Tab>
   <Tab title="You don't have Workbench enabled">
 
+{" "}
 
-  <Note>
-    Note: This requires a Stripe component that is set up to create{" "}
-    <strong>subscriptions</strong>
-  </Note>
+<Note>
+  Note: This requires a Stripe component that is set up to create{" "}
+  <strong>subscriptions</strong>
+</Note>
 
     <Steps>
       <Step title="Create a new webhook in Stripe">
@@ -124,12 +137,12 @@ This guide explains how to set up a Webhook to ensure that when a new payment me
 <Tabs>
   <Tab title="You have Workbench enabled">
 
-  #### Migrating to the new webhook URL with Workbench enabled
+#### Migrating to the new webhook URL with Workbench enabled
 
     <Steps>
       <Step title="Update your webhook endpoint URL">
         - Go to your Stripe Dashboard and open the Workbench.
-        
+
         - Navigate to the Webhooks tab and find your existing webhook for `payment_method.attached`.
 
         - Edit the endpoint URL to use the new format:
@@ -146,6 +159,7 @@ This guide explains how to set up a Webhook to ensure that when a new payment me
         - Save your changes.
       </Step>
     </Steps>
+
   </Tab>
   <Tab title="You don't have Workbench enabled">
 
@@ -156,7 +170,7 @@ This guide explains how to set up a Webhook to ensure that when a new payment me
         - Go to your Stripe Dashboard and open the Developers > Webhooks section.
 
         - Find your existing webhook for `payment_method.attached`.
-        
+
         - Edit the endpoint URL to use the new format:
 
         ```
@@ -171,5 +185,6 @@ This guide explains how to set up a Webhook to ensure that when a new payment me
         - Save your changes.
       </Step>
     </Steps>
+
   </Tab>
 </Tabs>
