@@ -122,6 +122,27 @@ icon: "question"
 
   </Accordion>
 
+  <Accordion title="Why do my desktop styles affect mobile too?">
+    In our builder, styles cascade downward from larger screens to smaller screens, similar to how CSS works. This means:
+
+    - **Desktop styles** (721px+) apply to desktop, tablet, and mobile
+    - **Tablet styles** (521px-720px) apply to tablet and mobile
+    - **Mobile styles** (up to 520px) apply only to mobile
+
+    This design choice was made based on feedback because most Embeddables users design for desktop first, then adapt for smaller screens.
+
+    **To fix unwanted style inheritance:**
+
+    1. **Select the component** that has unwanted styles on mobile
+    2. **Switch to Mobile view** using the "On" dropdown in the Designer sidebar
+    3. **Override the problematic styles** by setting different values for mobile
+
+    **Example:** If you set a width of 300px on desktop but want full width on mobile:
+    - Desktop: width = 300px
+    - Mobile: width = 100%
+
+  </Accordion>
+  
   <Accordion title="What are the different button elements I can style?">
     Button components contain several elements you can style individually:
 
@@ -135,6 +156,7 @@ icon: "question"
     The available elements depend on what content your button contains. For a simple text button, you'll primarily use "Whole thing", "Text Wrapper", and "Text".
 
   </Accordion>
+
 </AccordionGroup>
 
 ### Form Elements
