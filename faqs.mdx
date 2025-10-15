@@ -137,71 +137,7 @@ icon: "question"
   </Accordion>
 </AccordionGroup>
 
-## Data & Analytics
-
-<AccordionGroup>
-  <Accordion title="How do I find my funnel submissions data?">
-    Your users' data can be found in two places:
-
-    1. **Users page**
-        - Shows individual user sessions.
-        - You can click on a user to see their activity and their submission data for each Embeddable.
-
-    2. **Embeddable --> Submissions tab**
-        - Shows the User Data for completed form submissions.
-        - Each user will have a separate row for each Embeddable they have interacted with, meaning there could be multiple rows for the same user.
-        - All users from all stages of the funnel are included, so the majority of rows will likely correspond to users who did not reach the end of the funnel.
-
-  </Accordion>
-
-  <Accordion title="How do I access production data vs. test data?">
-    To switch between viewing production data vs viewing all data (including test data):
-
-    1. **Go to your funnel dashboard**.
-    2. **Look for the "Data collected in production version" button**.
-    3. **Click it to toggle** between:
-        - **Production data only**
-        - **All data (including both production and test data)**
-
-  </Accordion>
-
-  <Accordion title="How do I capture UTM parameters and campaign IDs from incoming links?">
-    You can capture UTM parameters and campaign IDs from incoming links in two ways:
-
-    **Method 1: Using URL Keys (Recommended)**
-    1. In the builder, select nothing (press ESC) to see the Options tab for the Entire Embeddable settings.
-    2. Go to the **Options tab** and find the **URL Keys** section.
-    3. Add the UTM parameters you want to capture (e.g., `utm_source`, `utm_campaign`, `utm_medium`) - add one on each line.
-    4. These values will automatically be stored in UserData when users visit your page.
-
-    **Method 2: Using Custom Code**
-    Create an Action with custom code, and set up a Trigger that executes the Action when the Embeddable is loaded:
-
-    ```javascript
-    function output(userData) {
-      // Get UTM parameters from the URL
-      const params = new URLSearchParams(window.location.search);
-      const utmSource = params.get("utm_source");
-      const utmCampaign = params.get("utm_campaign");
-      const utmMedium = params.get("utm_medium");
-
-      // Store in UserData or use as needed
-      return {
-        utm_source: utmSource,
-        utm_campaign: utmCampaign,
-        utm_medium: utmMedium
-      };
-    }
-    ```
-
-    <Tip>
-    The URL Keys method is simpler and automatically handles the capture. Use custom code when you need more complex logic or want to process the UTM parameters before storing them.
-    </Tip>
-
-  </Accordion>
-</AccordionGroup>
-
-## Form Elements
+### Form Elements
 
 <AccordionGroup>
   <Accordion title="How do I reference multiple form elements in computed fields?">
@@ -326,6 +262,70 @@ icon: "question"
 
     <Tip>
     The automatic validation won't prevent users from entering text, but it will prevent them from submitting the form if the phone number is invalid, showing them a validation error message.
+    </Tip>
+
+  </Accordion>
+</AccordionGroup>
+
+## Data & Analytics
+
+<AccordionGroup>
+  <Accordion title="How do I find my funnel submissions data?">
+    Your users' data can be found in two places:
+
+    1. **Users page**
+        - Shows individual user sessions.
+        - You can click on a user to see their activity and their submission data for each Embeddable.
+
+    2. **Embeddable --> Submissions tab**
+        - Shows the User Data for completed form submissions.
+        - Each user will have a separate row for each Embeddable they have interacted with, meaning there could be multiple rows for the same user.
+        - All users from all stages of the funnel are included, so the majority of rows will likely correspond to users who did not reach the end of the funnel.
+
+  </Accordion>
+
+  <Accordion title="How do I access production data vs. test data?">
+    To switch between viewing production data vs viewing all data (including test data):
+
+    1. **Go to your funnel dashboard**.
+    2. **Look for the "Data collected in production version" button**.
+    3. **Click it to toggle** between:
+        - **Production data only**
+        - **All data (including both production and test data)**
+
+  </Accordion>
+
+  <Accordion title="How do I capture UTM parameters and campaign IDs from incoming links?">
+    You can capture UTM parameters and campaign IDs from incoming links in two ways:
+
+    **Method 1: Using URL Keys (Recommended)**
+    1. In the builder, select nothing (press ESC) to see the Options tab for the Entire Embeddable settings.
+    2. Go to the **Options tab** and find the **URL Keys** section.
+    3. Add the UTM parameters you want to capture (e.g., `utm_source`, `utm_campaign`, `utm_medium`) - add one on each line.
+    4. These values will automatically be stored in UserData when users visit your page.
+
+    **Method 2: Using Custom Code**
+    Create an Action with custom code, and set up a Trigger that executes the Action when the Embeddable is loaded:
+
+    ```javascript
+    function output(userData) {
+      // Get UTM parameters from the URL
+      const params = new URLSearchParams(window.location.search);
+      const utmSource = params.get("utm_source");
+      const utmCampaign = params.get("utm_campaign");
+      const utmMedium = params.get("utm_medium");
+
+      // Store in UserData or use as needed
+      return {
+        utm_source: utmSource,
+        utm_campaign: utmCampaign,
+        utm_medium: utmMedium
+      };
+    }
+    ```
+
+    <Tip>
+    The URL Keys method is simpler and automatically handles the capture. Use custom code when you need more complex logic or want to process the UTM parameters before storing them.
     </Tip>
 
   </Accordion>
