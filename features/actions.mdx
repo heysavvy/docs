@@ -35,14 +35,15 @@ Actions are executed client-side, in the main window environment.
 This means that they have access to the main window's functions and variables, such as `window.location`, `document`, and `localStorage`.
 
 This can have useful benefits, such as:
+
 1. The ability to manipulate the DOM
 2. Access to read and write to `localStorage`
 3. Accessing frontend functionality that you might want to expose to the Embeddable, e.g. `window.logInToApp()`.
 
 <Warning>
-  **Be careful to avoid exposing secure information such as API Secrets in Actions.**
-  
-  One workaround for this (which can also solve CORS issues) is to use the Embeddables Proxy API - ask Embeddables for more information on this.
+  **Be careful to avoid exposing secure information such as API Secrets in
+  Actions.** One workaround for this (which can also solve CORS issues) is to
+  use the Embeddables Proxy API - ask Embeddables for more information on this.
 </Warning>
 
 <Card
@@ -53,7 +54,6 @@ This can have useful benefits, such as:
   Read more about writing Custom Code in Embeddables, including all the
   available arguments passed in to the function.
 </Card>
-
 
 ## Example Actions
 
@@ -72,8 +72,8 @@ function output(userData) {
   };
 
   // Send this data to the backend
-  fetch('https://your-backend-url.com/', {
-    method: 'POST',
+  fetch("https://your-backend-url.com/", {
+    method: "POST",
     body: JSON.stringify(dataToSend),
   });
 }
@@ -98,13 +98,15 @@ function output(userData) {
     title="How To: Send Data to Tellescope"
     href="/how-to/send-data-to-tellescope"
   >
-    Setting up an Action with custom code that sends user data to Tellescope's API
+    Setting up an Action with custom code that sends user data to Tellescope's
+    API
   </Card>
   <Card
     title="How To: Handle Partial Data Capture"
     href="/how-to/partial-data-capture"
   >
-    Storing incomplete user answers, even when they haven't yet completed the entire funnel.
+    Storing incomplete user answers, even when they haven't yet completed the
+    entire funnel.
   </Card>
   <Card
     title="How To: Retrieve User Data on Different Device"
@@ -116,12 +118,13 @@ function output(userData) {
     title="How To: Add External Scripts"
     href="/how-to/add-external-scripts"
   >
-    Two ways to add external scripts or style libraries toyour Embeddable
+    Two ways to add external scripts or style libraries to your Embeddable
   </Card>
   <Card
     title="How To: Run custom code on Embeddable Load"
     href="/how-to/run-custom-code-on-load"
   >
-    Running JS code on first load, e.g. to run a function or add an event listener
+    Running JS code on first load, e.g. to run a function or add an event
+    listener
   </Card>
 </CardGroup>
