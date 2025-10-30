@@ -76,7 +76,9 @@ window.initEmbeddables()
   <Step title="Replace the old embed code with the new one">
     In your website or web app, look for a script element (likely in the `<HEAD>` of your page) that starts with `<script>const SAVVY_PRELOAD_IDS=...`.
 
-    This is the one to replace with the new one. Make sure that when you're done, the new one is sandwiched inside two `<script>` tags.
+    This is the part to replace with the new script. Make sure that when you're done, the new one is sandwiched inside two `<script>` tags.
+
+    Make sure to do this on a staging URL/environment first, so that you can QA your Stripe changes (described below) on both the old and new embed code.
 
   </Step>
   
@@ -147,6 +149,12 @@ The main changes to watch out for are:
     Stripe's latest SDK version has changed the response schema of `applyPromotionCode`: instead of `response.success` it now returns `response.session`, which contains a new object format.
 
     Make sure your function logic handles both formats, so that you can smoothly upgrade to the new embed code.
+
+    <Tip>
+      If you prefer, you can get your changes ready on the latest version of each Embeddable, and then push all of those versions live at the same time that you push the new embed code live. That way, you can avoid the additional logic of handling both old and new formats in your code.
+
+      However, the risk here is that there is a window of time when one is live and not the other, or that you later need to roll back for some reason, so take this approach at your own risk!
+    </Tip>
 
     1. Find all references to `applyPromotionCode` in your custom code.
 
