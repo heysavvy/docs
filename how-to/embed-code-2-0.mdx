@@ -1,0 +1,295 @@
+---
+title: "How To: Upgrade to the Embed Code 2.0"
+description: "How to install the new embed code and upgrade the Stripe component to match"
+---
+
+The Embeddables new Embed Code 2.0 is **now available in beta**.
+
+<Warning>
+  The old Embed Code will be **deprecated on Monday November 17th, 2025**.
+</Warning>
+
+## The new Embed Code 2.0
+
+### The HEAD script
+
+```javascript
+<script>
+window.initEmbeddables = () => {
+  // Get the engine domain from the URL parameters
+  const engineDomain =
+    new URL(window.location.href).searchParams.get('embeddables_engine_domain') ||
+    'engine.embeddables.com'
+  const urlRoot = engineDomain.startsWith('http') ? engineDomain : 'https://' + engineDomain
+
+  // Inject the bundle script dynamically
+  const script = document.createElement('script')
+  script.src = `${urlRoot}/bundle.js`
+  document.head.appendChild(script)
+
+  const initializeEmbeddables = function () {
+    const allUserData = JSON.parse(localStorage.getItem('SavvyFormUserData') || '{}')
+    const embeddablesToLoad = [...document.querySelectorAll('savvy, embeddable')].map((el) => {
+      const attrs = Object.fromEntries([...el.attributes].map((a) => [a.name, a.value]))
+      const flowId = attrs.id
+      if (flowId && allUserData[flowId]) {
+        attrs.userData = Object.fromEntries(Object.entries(allUserData[flowId]||{}).filter(([sk])=>sk==='current_page_id'||sk.startsWith('split_')))
+      }
+      return attrs
+    })
+    const originUrl = window.location.href
+    const url =
+      `${urlRoot}/init?load=` +
+      encodeURIComponent(JSON.stringify({ embeddablesToLoad, originUrl }))
+
+    fetch(url)
+      .then((res) => res.json())
+      .then((response) => eval('(' + response.init_js + ')(response.embeddables_data)'))
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initializeEmbeddables)
+  } else {
+    initializeEmbeddables()
+  }
+}
+window.initEmbeddables()
+</script>
+```
+
+### The BODY script
+
+<Tip>This part is unchanged from before.</Tip>
+
+```html
+<savvy id="YOUR_EMBEDDABLE_ID"></savvy>
+```
+
+## Upgrading to the Embed Code 2.0
+
+<Steps>
+  
+  <Step title="Grab the new embed code">
+    Copy the `<HEAD>` script from above.
+  </Step>
+
+  <Step title="Replace the old embed code with the new one">
+    In your website or web app, look for a script element (likely in the `<HEAD>` of your page) that starts with `<script>const SAVVY_PRELOAD_IDS=...`.
+
+    This is the one to replace with the new one. Make sure that when you're done, the new one is sandwiched inside two `<script>` tags.
+
+  </Step>
+  
+  <Step title="Make any Stripe changes that you need to">
+    See the Stripe section below for a list of things to watch out for and update before
+    pushing your changes live.
+  </Step>
+
+  <Step title="Test your changes thoroughly">
+    Run some end-to-end tests, including testing any payments and promo codes, to make sure that everything is working as expected.
+
+    Then push live!
+
+  </Step>
+  
+  
+</Steps>
+
+## Upgrading Stripe components
+
+{/* todo - add more things to this warning? */}
+
+<Note>
+  The Embed Code 2.0 comes with the latest version of Stripe's JS SDK, which
+  includes [certain breaking changes](https://docs.stripe.com/checkout/elements-with-checkout-sessions-api/changelog) to account for.
+
+See below for a list of things to watch out for and update before upgrading to the new embed code.
+
+</Note>
+
+The main changes to watch out for are:
+
+1. The default layout for Stripe components has changed from 'Tabs' to 'Accordion'. _(Step 1 below)_
+2. The `create_element_options` settings structure has changed. _(Step 2 below)_
+3. The `applyPromotionCode` response structure has changed. _(Steps 3-4 below)_
+
+<Steps>
+
+  <Step title="Set any unset Stripe component 'layout' settings to 'Tabs'">
+
+    In Stripe's latest version, the default layout is switching from 'Tabs' to 'Accordion'. Therefore, if you have any Stripe components with the 'layout' setting unset, you'll need to set it to 'Tabs' before upgrading to the Embed Code 2.0.
+
+    1. Select your Stripe component in the Web App editor. In the right sidebar under **Options**, find the **Layout** setting.
+
+    2. Select the **Tabs** option (only if no option is currently selected).
+
+  </Step>
+
+  <Step title="Update create_element_options if applicable">
+
+    <Note>
+      This step only applies if you've customized the `create_element_options` settings in your Stripe component.
+    </Note>
+
+    Open your Stripe component's JSON by clicking the three-dot icon (**⁝**) in the **Options** tab, then select **Edit JSON**.
+
+    Check if the `create_element_options` key exists. If it contains a `billingDetails` property with multiple keys set to `never`, update `create_element_options.fields.billingDetails` to `never`.
+
+  </Step>
+
+  <Step title="Update your applyPromotionCode function logic to handle both 'success' and 'session' response formats">
+
+    Stripe's latest SDK version has changed the response schema of `applyPromotionCode`: instead of `response.success` it now returns `response.session`, which contains a new object format.
+
+    Make sure your function logic handles both formats, so that you can smoothly upgrade to the new embed code.
+
+    1. Find all references to `applyPromotionCode` in your custom code.
+
+    2. Replace conditional checks that use `response.type === 'success'` with a structure that supports both formats (*see the next step for details on the new format*):
+
+    ```javascript
+    if (response.success) {
+      // Keep your existing logic here
+    } else if (response.session) {
+      // Add new logic here (see next step)
+    }
+    ```
+
+    3. Ensure there are no early `return` statements or `throw` errors that would prevent reaching the `session` branch.
+
+    <Tip>
+      Once you've upgrade to the new embed code, and are confident that you won't need to revert to the old one, you can safely simplify the logic to stop handling the old `response.success` format.
+    </Tip>
+
+  </Step>
+
+  <Step title="Copy and adapt logic for the new response schema">
+    Copy all logic from inside the `response.success` branch into the `response.session` branch.
+
+    Update field accesses to use the new structure:
+
+    - Replace `response.success.total` with `response.session.total`.
+    - Access numeric values through `minorUnitsAmount`:
+      - `total`: `response.session.total.total.minorUnitsAmount`
+      - `subtotal`: `response.session.total.subtotal.minorUnitsAmount`
+      - `discount`: `response.session.total.discount.minorUnitsAmount`
+      - `appliedBalance`: `response.session.total.appliedBalance.minorUnitsAmount`
+      - `shippingRate`: `response.session.total.shippingRate.minorUnitsAmount`
+      - `taxExclusive`: `response.session.total.taxExclusive.minorUnitsAmount`
+      - `taxInclusive`: `response.session.total.taxInclusive.minorUnitsAmount`
+
+    <Tip>
+      For other keys not listed here, refer to the [Stripe Custom Checkout Session object documentation](https://docs.stripe.com/js/custom_checkout/session_object).
+    </Tip>
+
+  </Step>
+  
+  <Step title="Add error handling">
+    You can access errors via `response.error?.message`. See the
+    [Stripe applyPromotionCode documentation](https://docs.stripe.com/js/custom_checkout/apply_promotion_code)
+    for details.
+    
+  </Step>
+
+  <Step title="Test your changes">
+    Test the modified logic thoroughly:
+
+    - **With old Stripe component**: Apply a promo code and verify it's reflected in the UI, applied to the amount, and that payment completes successfully.
+    - **With updated Stripe component**: Repeat the same tests.
+
+  </Step>
+  
+</Steps>
+
+### Example: Before and After
+
+**Before:**
+
+```javascript
+async function applyPromoCode() {
+  try {
+    const response = await window.StripeCheckout.applyPromotionCode(
+      discountCodeUppercase
+    );
+
+    if (response.type === "success") {
+      context.setUserData({
+        promo_code_message: `Your discount $${(
+          response.success.total.discount / 100
+        ).toFixed(2)} has been applied`,
+        discount_code_applied: discountCodeUppercase,
+        subtotal: (response.success.total.subtotal / 100).toFixed(2),
+        discount: (response.success.total.discount / 100).toFixed(2),
+        total: (response.success.total.total / 100).toFixed(2),
+        checking_promo_code: false,
+      });
+    } else {
+      context.setUserData({
+        promo_code_message: response.error.message,
+        checking_promo_code: false,
+      });
+    }
+  } catch (error) {
+    console.error("Error applying promo code:", error);
+    context.setUserData({
+      promo_code_message: `Error trying to apply the promo code ${userData.discount_code}`,
+      checking_promo_code: false,
+    });
+  }
+}
+```
+
+**After:**
+
+```javascript
+async function applyPromoCode() {
+  try {
+    const response = await window.StripeCheckout.applyPromotionCode(
+      discountCodeUppercase
+    );
+
+    let subtotal, discount, total, message;
+
+    if (response.success) {
+      // Old response structure
+      subtotal = (response.success.total.subtotal / 100).toFixed(2);
+      discount = (response.success.total.discount / 100).toFixed(2);
+      total = (response.success.total.total / 100).toFixed(2);
+      message = `Your discount $${discount} has been applied`;
+    } else if (response.session) {
+      // New response structure
+      subtotal = (
+        response.session.total.subtotal.minorUnitsAmount / 100
+      ).toFixed(2);
+      discount = (
+        response.session.total.discount.minorUnitsAmount / 100
+      ).toFixed(2);
+      total = (response.session.total.total.minorUnitsAmount / 100).toFixed(2);
+      message = `Your discount $${discount} has been applied`;
+    }
+
+    if (response.success || response.session) {
+      context.setUserData({
+        promo_code_message: message,
+        discount_code_applied: discountCodeUppercase,
+        subtotal,
+        discount,
+        total,
+        checking_promo_code: false,
+      });
+    } else {
+      context.setUserData({
+        promo_code_message:
+          response.error?.message || "Unknown error applying promo code",
+        checking_promo_code: false,
+      });
+    }
+  } catch (error) {
+    console.error("Error applying promo code:", error);
+    context.setUserData({
+      promo_code_message: `Error trying to apply the promo code ${userData.discount_code}`,
+      checking_promo_code: false,
+    });
+  }
+}
+```
