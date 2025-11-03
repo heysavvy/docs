@@ -281,6 +281,25 @@ icon: "question"
       To avoid accidentally overwriting recent changes, always check the Version Control card to see which version you're currently editing before making changes.
     </Tip>
   </Accordion>
+  <Accordion title="How do I roll back to a previous version?">
+    To roll back to a previous version:
+
+    1. **Open the Version Control card** in the Builder sidebar.
+    2. **Find the version** you want to roll back to in the version history list.
+    3. **Click on that version** to load it in the Builder.
+    4. **Make any edits** (even a small change) or simply click Save.
+    5. **Save the version** - this creates a new version based on the old one.
+
+    When you save, you'll see a warning that you're about to skip/overwrite changes from intervening versions. This is expected when rolling back.
+
+    <Warning>
+      Rolling back creates a new version based on the old one, but does **not** include changes made in versions between the old version and the current version. Those changes will be skipped.
+    </Warning>
+
+    <Tip>
+      The rolled-back version becomes your newest version. You can always access any previous version (including the ones you rolled back from) in the version history.
+    </Tip>
+  </Accordion>
 </AccordionGroup>
 
 ## Data & Analytics
