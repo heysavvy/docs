@@ -2,8 +2,14 @@
 title: "Best Practices: Deciding how best to send/receive data"
 sidebarTitle: "Deciding how best to send/receive data"
 icon: "paper-plane"
-description: "Data Pipelines? API requests? Something else?"
+description: "Webhooks? API requests? Secure Proxy? Something else?"
 ---
+
+<Info>
+This guide is for sending/receiving data to/from external sources like APIs, databases, or SaaS apps.
+
+For passing data to be immediately prefilled in your Embeddable or on your website, check out [Passing data in/out to be prefilled](/guides/passing-data-in-out).
+</Info>
 
 ## Use-cases
 
@@ -13,7 +19,10 @@ Some common use-cases that we often see:
 2. I want to trigger an email to be sent to me, or to the end-user.
 3. I want to send data to my own backend/API.
 4. I want to fetch content to display in my Embeddable, similar to a CMS.
-5. ...many other combinations of the above...
+5. I want to send analytics events from my backend to Embeddables.
+6. I want to retrieve a user's session data on a different device.
+7. I want to capture partial data as users progress through my funnel.
+8. ...many other combinations of the above...
 
 ## Questions to ask yourself
 
