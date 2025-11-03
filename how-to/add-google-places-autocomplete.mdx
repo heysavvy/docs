@@ -133,7 +133,7 @@ This guide shows you how to add address autocomplete functionality to a text inp
           streetInput.value = streetValue;
           streetInput.dispatchEvent(new Event('input', { bubbles: true }));
           // Update user data
-          window.savvy.updateUserData({ street: streetValue });
+          setUserData({ street: streetValue });
         }
         
         if (cityInput) {
@@ -141,7 +141,7 @@ This guide shows you how to add address autocomplete functionality to a text inp
           cityInput.value = cityValue;
           cityInput.dispatchEvent(new Event('input', { bubbles: true }));
           // Update user data
-          window.savvy.updateUserData({ city: cityValue });
+          setUserData({ city: cityValue });
         }
         
         if (stateInput) {
@@ -149,7 +149,7 @@ This guide shows you how to add address autocomplete functionality to a text inp
           stateInput.value = stateValue;
           stateInput.dispatchEvent(new Event('input', { bubbles: true }));
           // Update user data
-          window.savvy.updateUserData({ state: stateValue });
+          setUserData({ state: stateValue });
         }
         
         if (zipInput) {
@@ -157,7 +157,7 @@ This guide shows you how to add address autocomplete functionality to a text inp
           zipInput.value = zipValue;
           zipInput.dispatchEvent(new Event('input', { bubbles: true }));
           // Update user data
-          window.savvy.updateUserData({ zip: zipValue });
+          setUserData({ zip: zipValue });
         }
       }
     });
