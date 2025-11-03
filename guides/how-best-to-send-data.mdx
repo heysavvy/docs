@@ -44,36 +44,90 @@ Some common use-cases that we often see:
 
 ## Which solution to choose - Sending data
 
-### DataPipes - Integrations
+### Webhooks
+
+<Card title="How To: Set up Webhooks" icon="webhook" href="/how-to/set-up-webhooks">
+  Learn how to configure Webhooks in Embeddables
+</Card>
+
+This is usually the best solution if:
+
+- ✅ You want to send data to Zapier or your own backend/database/API.
+- ✅ You don't need to access it instantly (can take up to a minute to process).
+- ✅ You want Embeddables to handle the sending automatically when certain events occur.
+
+**Key features:**
+- Powered by [Svix](https://svix.com/) for reliable delivery
+- Can trigger on any user event (page changes, button clicks, etc.)
+- All webhook events are sent to all configured endpoint URLs
+- Asynchronous processing (not instant)
+
+### Built-in Integrations (DataPipes)
 
 This is usually the best solution if:
 
 - ✅ You want to send data to one of these SaaS apps: HubSpot, Airtable, Sendgrid, Google Sheets.
 - ✅ You don't need to access it instantly (can take up to a minute to process).
 
-### DataPipes - Webhooks
+### API request via the Embeddables Secure Proxy
+
+<Card title="How To: Call APIs securely via the Secure Proxy" icon="shield" href="/how-to/securely-call-apis-via-proxy">
+  Learn how to use the Secure Proxy to call APIs with credentials
+</Card>
 
 This is usually the best solution if:
 
-- ✅ You want to send data to Zapier or your own backend/database/API.
-- ✅ You don't need to access it instantly (can take up to a minute to process).
-
-### Frontend API request, using the Embeddables Secure Proxy
-
-This is usually the best solution if:
-
-- ✅ You want to send data to an external SaaS app, Zapier or your own backend/database/API.
+- ✅ You want to send data to an external SaaS app or your own backend/database/API.
 - ✅ You need to access it instantly (sooner than within 1 minute), or it will block the end-user from progressing.
 - ✅ You need to include some kind of private API key or token in the request - OR - you'll be sending to a domain that might be blocked by browsers or ad blockers.
 
-### Frontend API request, direct
+**Key features:**
+- Credentials are stored securely and never exposed on the frontend
+- Allowlisting of endpoints and credentials for security
+- Solves CORS issues
+- Returns results as-is from the destination API
+
+### Direct API request from frontend
 
 This is usually the best solution if:
 
-- ✅ You want to send data to an external SaaS app, Zapier or your own backend/database/API.
+- ✅ You want to send data to an external SaaS app or your own backend/database/API.
 - ✅ You need to access it instantly (sooner than within 1 minute), or it will block the end-user from progressing.
 - ✅ You don't need to include any kind of private API key or token in the request.
 - ✅ You won't need to send to a domain that risks being blocked by browsers or ad blockers.
+
+### Server-side API request to Embeddables
+
+<Card title="How To: Send analytics events to Embeddables" icon="server" href="/how-to/send-data-to-embeddables">
+  Learn how to send events from your backend to the Embeddables API
+</Card>
+
+This is usually the best solution if:
+
+- ✅ You have events occurring outside of the Embeddable (e.g. appointment completions, purchases).
+- ✅ You want to track these events in Embeddables analytics.
+- ✅ You have access to the user's identifier (e.g. email address).
+
+**Key features:**
+- Send custom events with custom properties
+- Associate events with existing user entries
+- Requires an Embeddables API key (contact support)
+
+### Partial data capture
+
+<Card title="How To: Handle Partial Data Capture" icon="database" href="/how-to/partial-data-capture">
+  Learn how to capture user data as they progress through your funnel
+</Card>
+
+This is usually the best solution if:
+
+- ✅ You want to capture user answers even if they don't complete the entire flow.
+- ✅ You want to send data to your backend at key milestones.
+
+**Key features:**
+- Automatically enabled for fields stored in Embeddables' database
+- Can trigger custom Actions to send data to your backend at any point
+- Useful for remarketing and analytics
 
 ## Which solution to choose - Fetching data
 
