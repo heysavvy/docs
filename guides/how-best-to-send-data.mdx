@@ -26,18 +26,21 @@ Some common use-cases that we often see:
 
 ## Questions to ask yourself
 
-If you're sending data somewhere:
+### If you're sending data somewhere:
 
 - Am I sending to an external SaaS app, or to my own backend/database/API?
 - Am I sending the data somewhere to access later, or will I need to access it instantly to avoid blocking the end-user?
 - Am I sending data to a domain that might be blocked by browsers or ad blockers?
 - Will I need to include some kind of private API key or token in the request?
+- Do I need to send data from my backend (server-side) or from the Embeddable (client-side)?
+- Do I want to capture partial data as users progress, or only when they complete the entire flow?
 
-If you're fetching data from somewhere:
+### If you're fetching data from somewhere:
 
 - Do I need the content to load instantly on page load, or later (e.g. on a subsequent page, or after a button click)?
 - Does the data need to be secure, or is it public data that it's OK for people to access?
 - Am I fetching data from a domain that might be blocked by browsers or ad blockers?
+- Do I need to retrieve a user's session on a different device?
 
 ## Which solution to choose - Sending data
 
