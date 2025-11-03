@@ -129,23 +129,35 @@ This guide shows you how to add address autocomplete functionality to a text inp
         const zipInput = document.querySelector('input[name="zip"]');
         
         if (streetInput) {
-          streetInput.value = `${components.street_number || ''} ${components.route || ''}`.trim();
+          const streetValue = `${components.street_number || ''} ${components.route || ''}`.trim();
+          streetInput.value = streetValue;
           streetInput.dispatchEvent(new Event('input', { bubbles: true }));
+          // Update user data
+          window.savvy.updateUserData({ street: streetValue });
         }
         
         if (cityInput) {
-          cityInput.value = components.locality || '';
+          const cityValue = components.locality || '';
+          cityInput.value = cityValue;
           cityInput.dispatchEvent(new Event('input', { bubbles: true }));
+          // Update user data
+          window.savvy.updateUserData({ city: cityValue });
         }
         
         if (stateInput) {
-          stateInput.value = components.administrative_area_level_1 || '';
+          const stateValue = components.administrative_area_level_1 || '';
+          stateInput.value = stateValue;
           stateInput.dispatchEvent(new Event('input', { bubbles: true }));
+          // Update user data
+          window.savvy.updateUserData({ state: stateValue });
         }
         
         if (zipInput) {
-          zipInput.value = components.postal_code || '';
+          const zipValue = components.postal_code || '';
+          zipInput.value = zipValue;
           zipInput.dispatchEvent(new Event('input', { bubbles: true }));
+          // Update user data
+          window.savvy.updateUserData({ zip: zipValue });
         }
       }
     });
