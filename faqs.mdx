@@ -13,13 +13,11 @@ icon: "question"
   <Accordion title="Are you HIPAA compliant?">
     Yes, we are HIPAA compliant. However, customers need to follow our HIPAA compliance checklists and requirements to maintain compliance.
   </Accordion>
+  {" "}
 
-{" "}
-
-<Accordion title="Are you SOC2 compliant?">
-  No, we are not SOC2 compliant at this time.
-</Accordion>
-
+  <Accordion title="Are you SOC2 compliant?">
+    No, we are not SOC2 compliant at this time.
+  </Accordion>
   <Accordion title="Do you sign BAAs (Business Associate Agreements)?">
     No, we do not sign BAAs.
   </Accordion>
@@ -36,16 +34,12 @@ icon: "question"
     If you don't want to use our platform's analytics features, then we don't need to collect, process, or store any personal end-user data.
 
     You can choose instead to collect and store data through your own backend. You can send directly from the user's browser to your designated backend without it passing through our infrastructure.
-
   </Accordion>
-
   <Accordion title="Do you provide DPAs (Data Processing Agreements)?">
     Customers on our Pro and Enterprise plans can request us to review and sign a DPA.
 
     For customers on lower plans, if you require a DPA with any vendors who process personal data, then we recommend that you send data directly from the user's browser to your backend, without passing through our infrastructure (which would disable most of Embeddables' built-in analytics features).
-
   </Accordion>
-
   <Accordion title="Do you conduct DPIAs (Data Protection Impact Assessments)?">
     We do not currently have a DPIA.
   </Accordion>
@@ -65,7 +59,6 @@ icon: "question"
     - Clickhouse
 
     Our codebase itself is hosted on GitHub.
-
   </Accordion>
 </AccordionGroup>
 
@@ -79,25 +72,21 @@ icon: "question"
 
     1. **Add a container** to the page if it does not already exist.
     2. For each component that you want to align horizontally, **move it into the container**.
-    3. Select the container, and in the Designer sidebar, set the **display property to `flex`**.
-    4. Ensure the **flex direction is set to `row`** (this is usually the default).
+    3. Select the container, and in the Designer sidebar, set the **`display property to flex`**.
+    4. Ensure the **`flex direction is set to row`** (this is usually the default).
 
     <Tip>
-    If components are still stacking vertically, check that the container does not have `flex-direction: column` set.
+      If components are still stacking vertically, check that the container does not have `flex-direction: column` set.
     </Tip>
-
   </Accordion>
-
   <Accordion title="How do I center a button in my design?">
     When you want to center a button horizontally on your page, place the button inside a container and use flexbox to center it.
 
     1. **Select the container** that includes ONLY the button (or create one if it doesn't exist).
-    2. In the Designer sidebar, **set the container's width to `100%`**.
-    3. **Set the `display` property** of the container to `flex`.
-    4. Ensure the **flex direction is set to `row`** (this is usually the default).
-
+    2. In the Designer sidebar, **`set the container's width to 100%`**.
+    3. **`Set the display property`** of the container to `flex`.
+    4. Ensure the **`flex direction is set to row`** (this is usually the default).
   </Accordion>
-
   <Accordion title="How do I edit styles for specific screen sizes?">
     To apply different styles for mobile, tablet, and desktop:
 
@@ -108,9 +97,7 @@ icon: "question"
        - Tablet: 521px to 720px width
        - Desktop: 721px width and above
     4. **Apply your styles** while that screen size is selected - this will set the styles for only that screen size and smaller screen sizes.
-
   </Accordion>
-
   <Accordion title="What do the device screen type options (Desktop/Mobile/Tablet) do?">
     The device screen type options in the builder allow you to preview how your content will appear on different screen sizes:
 
@@ -119,9 +106,7 @@ icon: "question"
     - **Desktop**: Shows layout for devices with width of 721px and above.
 
     These are preview modes that help you see how your design will look on different devices. To actually edit styles for specific screen sizes, use the "On" dropdown in the Designer sidebar. You can also use the "On" dropdown to preview how your design will look on different screen sizes.
-
   </Accordion>
-
   <Accordion title="Why do my desktop styles affect mobile too?">
     In our builder, styles cascade downward from larger screens to smaller screens, similar to how CSS works. This means:
 
@@ -138,11 +123,10 @@ icon: "question"
     3. **Override the problematic styles** by setting different values for mobile
 
     **Example:** If you set a width of 300px on desktop but want full width on mobile:
+
     - Desktop: width = 300px
     - Mobile: width = 100%
-
   </Accordion>
-  
   <Accordion title="What are the different button elements I can style?">
     Button components contain several elements you can style individually:
 
@@ -154,9 +138,7 @@ icon: "question"
     - **Image**: Style any image within the button (if present).
 
     The available elements depend on what content your button contains. For a simple text button, you'll primarily use "Whole thing", "Text Wrapper", and "Text".
-
   </Accordion>
-
 </AccordionGroup>
 
 ### Form Elements
@@ -166,6 +148,7 @@ icon: "question"
     To access multiple form element values in a computed field, you can pull the keys of each input component from the first argument of the function.
 
     <CodeGroup>
+
     ```javascript Basic
     // Computed Field: full_name
     function result(userData) {
@@ -173,27 +156,29 @@ icon: "question"
     }
     ```
 
+    
     ```javascript With Destructuring
     // Computed Field: full_name
     function result({ first_name, last_name }) {
       return `${first_name} ${last_name}`;
     }
     ```
+
     </CodeGroup>
 
     The computed field receives a single object containing all your form element results. Make sure the property names in the destructuring match exactly with your form element names.
-
   </Accordion>
-
   <Accordion title="How do I add a phone number input field?">
     1. Add a regular Input component.
     2. In the Options tab, set the `Input Type` to `Phone`.
-    
+
     Optional: To validate the phone number:
+
     1. Under the `Validation` section, check `Validate value`.
     2. Set `Formula` to `Phone Number (US)` or `Custom formula`.
     3. If you choose `Phone Number (US)`, the phone number will be automatically formatted as `(xxx) xxx-xxxx`.
     4. If you choose `Custom formula`, you can use the something like the following formula to validate the phone number:
+
     ```javascript
     function validate(value) {
       return /^[\d\s\(\)\-]+$/.test(value);
@@ -201,9 +186,7 @@ icon: "question"
     ```
 
     This formula will allow numbers, parentheses, spaces, and dashes.
-
   </Accordion>
-
   <Accordion title="Can I prevent users from entering text in a phone input field?">
     Yes, there are several approaches to restrict phone input to numbers only:
 
@@ -216,15 +199,15 @@ icon: "question"
     3. Set the Formula to `Phone Number (US)`
 
     This automatically:
+
     - Formats the number as `(xxx) xxx-xxxx` as the user types
     - Validates the format is correct
     - Provides a consistent user experience
     - Handles edge cases and formatting automatically
 
     <Tip>
-    The built-in validation is the most reliable option and handles all US phone number formats automatically.
+      The built-in validation is the most reliable option and handles all US phone number formats automatically.
     </Tip>
-
     #### Option 2: Custom validation with regex
 
     For more control over the validation rules, you can use a custom formula:
@@ -241,10 +224,8 @@ icon: "question"
     ```
 
     <Warning>
-    Custom validation gives you more control but requires more testing and maintenance. The built-in option is recommended for most use cases.
+      Custom validation gives you more control but requires more testing and maintenance. The built-in option is recommended for most use cases.
     </Warning>
-
-
     #### Option 3: Remove disallowed characters immediately on type, using a custom action
 
     Create an action that runs on page load to restrict input to numeric characters only:
@@ -253,17 +234,17 @@ icon: "question"
     function output(_, { setUserData }) {
       const input = document.querySelector(".ComponentKey-phone input");
       if (!input) return;
-
+    
       input.setAttribute("inputmode", "numeric");
-
+    
       input.addEventListener("input", (e) => {
         let value = e.target.value;
         let digits = value.replace(/\D/g, '');
-
+    
         if (digits.length > 10) {
           digits = digits.slice(0, 10);
         }
-
+    
         // Remove letters but keep formatting characters
         value = value.replace(/[A-Za-z]/g, '');
         e.target.value = value;
@@ -272,20 +253,33 @@ icon: "question"
     ```
 
     <Warning>
-    Using custom actions to restrict input may interfere with the automatic phone number formatting. The built-in phone validation is simpler and more reliable.
+      Using custom actions to restrict input may interfere with the automatic phone number formatting. The built-in phone validation is simpler and more reliable.
     </Warning>
-
   </Accordion>
-
   <Accordion title="Does the phone input automatically format numbers?">
     Yes! When you set an Input component's type to `Phone`, and choose `Phone Number (US)` for validation, it automatically formats the number as `(xxx) xxx-xxxx` as the user types.
-    
+
     This provides a better user experience and ensures consistent formatting across all submissions.
 
     <Tip>
-    The automatic validation won't prevent users from entering text, but it will prevent them from submitting the form if the phone number is invalid, showing them a validation error message.
+      The automatic validation won't prevent users from entering text, but it will prevent them from submitting the form if the phone number is invalid, showing them a validation error message.
     </Tip>
+  </Accordion>
+</AccordionGroup>
 
+### Versions & Publishing
+
+<AccordionGroup>
+  <Accordion title="If I edit an old version, do those edits become the newest version?">
+    Yes. When you edit an old version and save it, those edits become the newest version.
+
+    However, you'll receive a warning before saving that alerts you that you're about to skip/overwrite changes from other versions. This means your new version will include your changes but will **not** include changes made in the intervening versions.
+
+    The Builder will show a "From version XXX" message in the Version Control card to indicate which version you're editing from.
+
+    <Tip>
+      To avoid accidentally overwriting recent changes, always check the Version Control card to see which version you're currently editing before making changes.
+    </Tip>
   </Accordion>
 </AccordionGroup>
 
@@ -296,38 +290,33 @@ icon: "question"
     Your users' data can be found in two places:
 
     1. **Users page**
-        - Shows individual user sessions.
-        - You can click on a user to see their activity and their submission data for each Embeddable.
-
-    2. **Embeddable --> Submissions tab**
-        - Shows the User Data for completed form submissions.
-        - Each user will have a separate row for each Embeddable they have interacted with, meaning there could be multiple rows for the same user.
-        - All users from all stages of the funnel are included, so the majority of rows will likely correspond to users who did not reach the end of the funnel.
-
+       - Shows individual user sessions.
+       - You can click on a user to see their activity and their submission data for each Embeddable.
+    2. **Embeddable --\> Submissions tab**
+       - Shows the User Data for completed form submissions.
+       - Each user will have a separate row for each Embeddable they have interacted with, meaning there could be multiple rows for the same user.
+       - All users from all stages of the funnel are included, so the majority of rows will likely correspond to users who did not reach the end of the funnel.
   </Accordion>
-
   <Accordion title="How do I access production data vs. test data?">
     To switch between viewing production data vs viewing all data (including test data):
 
     1. **Go to your funnel dashboard**.
     2. **Look for the "Data collected in production version" button**.
     3. **Click it to toggle** between:
-        - **Production data only**
-        - **All data (including both production and test data)**
-
+       - **Production data only**
+       - **All data (including both production and test data)**
   </Accordion>
-
   <Accordion title="How do I capture UTM parameters and campaign IDs from incoming links?">
     You can capture UTM parameters and campaign IDs from incoming links in two ways:
 
     **Method 1: Using URL Keys (Recommended)**
+
     1. In the builder, select nothing (press ESC) to see the Options tab for the Entire Embeddable settings.
     2. Go to the **Options tab** and find the **URL Keys** section.
     3. Add the UTM parameters you want to capture (e.g., `utm_source`, `utm_campaign`, `utm_medium`) - add one on each line.
     4. These values will automatically be stored in UserData when users visit your page.
 
-    **Method 2: Using Custom Code**
-    Create an Action with custom code, and set up a Trigger that executes the Action when the Embeddable is loaded:
+    **Method 2: Using Custom Code** Create an Action with custom code, and set up a Trigger that executes the Action when the Embeddable is loaded:
 
     ```javascript
     function output(userData) {
@@ -336,7 +325,7 @@ icon: "question"
       const utmSource = params.get("utm_source");
       const utmCampaign = params.get("utm_campaign");
       const utmMedium = params.get("utm_medium");
-
+    
       // Store in UserData or use as needed
       return {
         utm_source: utmSource,
@@ -347,8 +336,7 @@ icon: "question"
     ```
 
     <Tip>
-    The URL Keys method is simpler and automatically handles the capture. Use custom code when you need more complex logic or want to process the UTM parameters before storing them.
+      The URL Keys method is simpler and automatically handles the capture. Use custom code when you need more complex logic or want to process the UTM parameters before storing them.
     </Tip>
-
   </Accordion>
 </AccordionGroup>
