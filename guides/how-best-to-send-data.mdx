@@ -138,19 +138,45 @@ This is usually the best solution if:
 - ✅ You want to fetch data from an Airtable.
 - ✅ You need the content to load instantly on page load.
 
-### Frontend API request, using the Embeddables Secure Proxy
+### API request via the Embeddables Secure Proxy
+
+<Card title="How To: Call APIs securely via the Secure Proxy" icon="shield" href="/how-to/securely-call-apis-via-proxy">
+  Learn how to use the Secure Proxy to call APIs with credentials
+</Card>
 
 This is usually the best solution if:
 
-- ✅ You want to fetch data from an external SaaS app, Zapier or your own backend/database/API.
+- ✅ You want to fetch data from an external SaaS app or your own backend/database/API.
 - ✅ The content doesn't need to load instantly on page load (it can be e.g. on a subsequent page, or after a button click).
 - ✅ You need to include some kind of private API key or token in the request - OR - you're fetching from a domain that might be blocked by browsers or ad blockers.
 
-### Frontend API request, direct
+**Key features:**
+- Credentials are stored securely and never exposed on the frontend
+- Allowlisting of endpoints and credentials for security
+- Solves CORS issues
+
+### Direct API request from frontend
 
 This is usually the best solution if:
 
-- ✅ You want to fetch data from an external SaaS app, Zapier or your own backend/database/API.
+- ✅ You want to fetch data from an external SaaS app or your own backend/database/API.
 - ✅ The content doesn't need to load instantly on page load (it can be e.g. on a subsequent page, or after a button click).
 - ✅ You don't need to include any kind of private API key or token in the request.
 - ✅ You won't need to send to a domain that risks being blocked by browsers or ad blockers.
+
+### Retrieve user session on different device
+
+<Card title="How To: Retrieve User Data on Different Devices" icon="mobile" href="/how-to/retrieve-user-data-on-different-device">
+  Learn how to resume a user's session on a different device
+</Card>
+
+This is usually the best solution if:
+
+- ✅ You want users to resume their session after clicking a link in an email or SMS.
+- ✅ You need to securely retrieve their previous answers and progress.
+
+**Key features:**
+- Uses hashed tokens for security
+- Requires a secret key from Embeddables support
+- Fetches user data from Embeddables API
+- Automatically restores session and navigates to current page
