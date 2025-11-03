@@ -75,6 +75,26 @@ icon: "question"
 
 ## Building with Embeddables
 
+### Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="Builder not loading or stuck in infinite loop">
+    If your Builder is not loading or appears to be stuck in an infinite loop, check if any Computed Field keys share the same name as other keys in your User Data (such as option button keys or other input field keys).
+
+    **Problem**: Computed Fields with the same name as other keys can cause infinite loops that prevent the Builder from loading.
+
+    **Solution**: Rename the Computed Field to have a unique key name. For example, if you have an option buttons field called `health_conditions_options`, rename your Computed Field to something like `health_conditions_options_cf` (adding a suffix like `_cf` for "Computed Field").
+
+    <Warning>
+      Computed Field keys must be unique and cannot share the same name as any other key in your User Data JSON object.
+    </Warning>
+
+    <Tip>
+      If you can't fix your changes because the Builder doesn't load, the problem is likely on the latest version. Switch to the previous version (if possible) and save from there. You'll need to redo your latest changes without causing the bug.
+    </Tip>
+  </Accordion>
+</AccordionGroup>
+
 ### Design, Styling, and Layouts
 
 <AccordionGroup>
@@ -110,7 +130,7 @@ icon: "question"
     4. **Apply your styles** while that screen size is selected - this will set the styles for only that screen size and smaller screen sizes.
   </Accordion>
   <Accordion title="What do the device screen type options (Desktop/Mobile/Tablet) do?">
-    The device screen type options in the builder allow you to preview how your content will appear on different screen sizes:
+    The device screen type options in the Builder allow you to preview how your content will appear on different screen sizes:
 
     - **Mobile**: Shows layout for devices with width up to 520px.
     - **Tablet**: Shows layout for devices with width between 521px and 720px.
@@ -119,7 +139,7 @@ icon: "question"
     These are preview modes that help you see how your design will look on different devices. To actually edit styles for specific screen sizes, use the "On" dropdown in the Designer sidebar. You can also use the "On" dropdown to preview how your design will look on different screen sizes.
   </Accordion>
   <Accordion title="Why do my desktop styles affect mobile too?">
-    In our builder, styles cascade downward from larger screens to smaller screens, similar to how CSS works. This means:
+    In our Builder, styles cascade downward from larger screens to smaller screens, similar to how CSS works. This means:
 
     - **Desktop styles** (721px+) apply to desktop, tablet, and mobile
     - **Tablet styles** (521px-720px) apply to tablet and mobile
@@ -189,8 +209,8 @@ icon: "question"
 ### Form Elements
 
 <AccordionGroup>
-  <Accordion title="How do I reference multiple form elements in computed fields?">
-    To access multiple form element values in a computed field, you can pull the keys of each input component from the first argument of the function.
+  <Accordion title="How do I reference multiple form elements in Computed Fields?">
+    To access multiple form element values in a Computed Field, you can pull the keys of each input component from the first argument of the function.
 
     <CodeGroup>
 
@@ -211,7 +231,7 @@ icon: "question"
 
     </CodeGroup>
 
-    The computed field receives a single object containing all your form element results. Make sure the property names in the destructuring match exactly with your form element names.
+    The Computed Field receives a single object containing all your form element results. Make sure the property names in the destructuring match exactly with your form element names.
   </Accordion>
   <Accordion title="How do I add a phone number input field?">
     1. Add a regular Input component.
@@ -358,7 +378,7 @@ icon: "question"
 
     **Method 1: Using URL Keys (Recommended)**
 
-    1. In the builder, select nothing (press ESC) to see the Options tab for the Entire Embeddable settings.
+    1. In the Builder, select nothing (press ESC) to see the Options tab for the Entire Embeddable settings.
     2. Go to the **Options tab** and find the **URL Keys** section.
     3. Add the UTM parameters you want to capture (e.g., `utm_source`, `utm_campaign`, `utm_medium`) - add one on each line.
     4. These values will automatically be stored in UserData when users visit your page.
