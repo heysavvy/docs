@@ -43,7 +43,7 @@ This guide shows you how to add address autocomplete functionality to a text inp
     Add the following code inside the `output()` function. Replace `"address"` with the key of your address input field:
 
     ```js
-    function output() {
+    function output(userData, { setUserData }) {
       // Wait for the input field to be available in the DOM
       const checkInput = setInterval(() => {
         const addressInput = document.querySelector('input[name="address"]');
