@@ -164,7 +164,7 @@ This guide shows you how to add address autocomplete functionality to a text inp
     ```
 
     <Note>
-      The `dispatchEvent(new Event('input', { bubbles: true }))` calls ensure that Embeddables recognizes the value changes in the input fields, while `window.savvy.updateUserData()` explicitly updates the User Data for each field.
+      The `dispatchEvent(new Event('input', { bubbles: true }))` calls ensure that Embeddables recognizes the value changes in the input fields, while `setUserData()` explicitly updates the User Data for each field.
     </Note>
   </Step>
 </Steps>
