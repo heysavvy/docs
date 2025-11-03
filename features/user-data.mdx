@@ -98,4 +98,58 @@ The only exception to this rule is if you're handling multiple input components 
 
 The most common use-case of this is a [Split Test](/features/split-testing), e.g. testing between two different email capture pages, both containing an input component with the key `email`.
 
+## Default User Data
+
+Default User Data allows you to set initial values for User Data properties when an Embeddable loads. These values are automatically added to the User Data object before the user interacts with your Embeddable.
+
+### How it works
+
+When you set default User Data:
+
+1. The values are stored in the `defaults.userData` property of your Embeddable configuration
+2. When a user loads the Embeddable, these default values are automatically added to their User Data
+3. Default values are applied during the reset process - when User Data is cleared, default values are preserved and reapplied
+
+### Setting default User Data
+
+You can set default User Data through the Builder UI:
+
+1. In the Builder, navigate to the Options panel for your Embeddable
+2. Look for the "Edit default user data JSON" option
+3. Click to open the JSON editor modal
+4. Add your default values as key-value pairs in JSON format
+
+Example:
+
+```json
+{
+  "user_type": "new_visitor",
+  "source": "organic",
+  "language": "en"
+}
+```
+
+### Use cases
+
+Default User Data is useful for:
+
+- **Pre-filling form fields** - Set default values that users can modify
+- **Setting initial state** - Define starting values for conditions or computed fields
+- **Tracking metadata** - Add default tracking parameters that persist throughout the user's session
+- **A/B testing setup** - Initialize experiment-related data
+
+### Behavior with reset
+
+When you reset User Data (either programmatically or through user actions), default User Data values are preserved and reapplied. This ensures that your Embeddable always starts with the correct initial state.
+
+The reset process:
+1. Clears most User Data properties
+2. Preserves system properties (like `entryId`, `current_page_id`, etc.)
+3. Preserves computed fields and experiment keys
+4. Reapplies all default User Data values
+
+<Note>
+  Default User Data values will not override existing User Data. If a user already has a value for a key, the default will not replace it unless the User Data is reset.
+</Note>
+
 
