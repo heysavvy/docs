@@ -134,9 +134,22 @@ Example:
 Default User Data is useful for:
 
 - **Pre-filling form fields** - Set default values that users can modify
-- **Setting initial state** - Define starting values for conditions or computed fields
+- **Setting initial state** - Define starting values for conditions or logic
 - **Tracking metadata** - Add default tracking parameters that persist throughout the user's session
-- **A/B testing setup** - Initialize experiment-related data
+
+### Important limitations
+
+<Warning>
+  **Not recommended for Computed Fields** - Default User Data should not be used to set values for computed fields. The update sequence could cause computed fields to override default values before you intend them to. Computed fields should set their own default values, and using both would create conflicts.
+</Warning>
+
+<Warning>
+  **Not recommended for Experiment data** - Default User Data should not be used to initialize experiment-related data. The Experiments feature handles setting that data automatically, and using both would create conflicts.
+</Warning>
+
+<Note>
+  **Requires Registered Keys** - If you want to set default User Data for keys that aren't already created by components, computed fields, or other features, you must add those keys to Registered Keys. This ensures the Embeddable is aware of them and can watch for changes.
+</Note>
 
 ### Behavior with reset
 
