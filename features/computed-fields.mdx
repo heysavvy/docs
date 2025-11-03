@@ -141,14 +141,6 @@ async function result(userData) {
 // if (userData.my_field === "_loading") { show loading spinner }
 ```
 
-### Cache Data
-
-When enabled, the computed field result is cached and won't recalculate if the inputs haven't changed. This is useful for expensive computations.
-
-<Note>
-Caching is done by comparing the input values. If the inputs are the same as the last computation, the cached result is returned without re-running the function.
-</Note>
-
 ### Set Value as Class on Flow
 
 When enabled, the computed field's value is added as a CSS class to the flow container element in the format: `field-value-{key}-{value}`
