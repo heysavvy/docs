@@ -79,15 +79,19 @@ icon: "question"
 
 <AccordionGroup>
   <Accordion title="Builder not loading or stuck in infinite loop">
-    If your builder is not loading or appears to be stuck in an infinite loop, check if any computed field keys share the same name as other keys in your User Data (such as option button keys or other input field keys).
+    If your Builder is not loading or appears to be stuck in an infinite loop, check if any Computed Field keys share the same name as other keys in your User Data (such as option button keys or other input field keys).
 
-    **Problem**: Computed fields with the same name as other keys can cause infinite loops that prevent the builder from loading.
+    **Problem**: Computed Fields with the same name as other keys can cause infinite loops that prevent the Builder from loading.
 
-    **Solution**: Rename the computed field to have a unique key name. For example, if you have an option buttons field called `health_conditions_options`, rename your computed field to something like `health_conditions_options_cf` (adding a suffix like `_cf` for "computed field").
+    **Solution**: Rename the Computed Field to have a unique key name. For example, if you have an option buttons field called `health_conditions_options`, rename your Computed Field to something like `health_conditions_options_cf` (adding a suffix like `_cf` for "Computed Field").
 
     <Warning>
-      Computed field keys must be unique and cannot share the same name as any other key in your User Data JSON object.
+      Computed Field keys must be unique and cannot share the same name as any other key in your User Data JSON object.
     </Warning>
+
+    <Tip>
+      If you can't fix your changes because the Builder doesn't load, the problem is likely on the latest version. Switch to the previous version (if possible) and save from there. You'll need to redo your latest changes without causing the bug.
+    </Tip>
   </Accordion>
 </AccordionGroup>
 
