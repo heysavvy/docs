@@ -294,57 +294,7 @@ icon: "question"
   </Accordion>
 </AccordionGroup>
 
-### Embedding & Display Issues
 
-<AccordionGroup>
-  <Accordion title="Why does my Embeddable look different on my website than in the preview?">
-    If your Embeddable appears different when embedded on your website compared to the builder preview, this is typically caused by CSS conflicts between your website's global styles and the Embeddable's styles.
-
-    **Common causes:**
-
-    - **Global CSS styles** on your page are overriding the Embeddable's styles
-    - **Margin or padding** applied to elements inside the Embeddable (e.g., body margins preventing edge-to-edge display)
-    - **Font styles** or other inherited CSS properties from your page
-    - **CSS reset or normalize** stylesheets affecting the Embeddable's layout
-
-    **How to fix:**
-
-    1. **Inspect the Embeddable** on your website using browser developer tools (right-click → Inspect)
-    2. **Look for conflicting styles** that are being applied from your website's CSS
-    3. **Override the conflicting styles** by adding more specific CSS rules to your page:
-
-    ```css
-    /* Example: Remove body margin affecting the Embeddable */
-    .embeddables-container body {
-      margin: 0;
-    }
-
-    /* Example: Reset specific styles for the Embeddable */
-    .embeddables-container * {
-      box-sizing: border-box;
-    }
-    ```
-
-    4. **Test the changes** to ensure the Embeddable displays correctly
-
-    <Tip>
-      The Embeddable is embedded as native HTML/CSS/JavaScript (not an iframe), which means it inherits styles from your page. This provides better performance and integration but requires careful CSS management.
-    </Tip>
-  </Accordion>
-  <Accordion title="Why is my progress bar behaving unexpectedly?">
-    If your progress bar is jumping between stages unexpectedly (e.g., going from "Start" to "Preliminary" and back to "Start"), this is controlled by the progress bar configuration in the builder.
-
-    **How to fix:**
-
-    1. **Open your Embeddable in the builder**
-    2. **Navigate to each page** where the progress bar appears
-    3. **Select the progress bar component**
-    4. **Check the progress bar settings** in the Options tab to ensure each page is mapped to the correct stage
-    5. **Update the stage mapping** for any pages that are showing the wrong progress
-
-    The progress bar stage is set per page, so you'll need to verify the configuration on each page of your funnel.
-  </Accordion>
-</AccordionGroup>
 
 ## Data & Analytics
 
