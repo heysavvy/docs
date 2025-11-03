@@ -1,0 +1,217 @@
+---
+title: "How To: Add address autocomplete with Google Places"
+sidebarTitle: "How To: Add Google Places autocomplete"
+description: "Add address autocomplete to your Embeddable using Google Places API"
+---
+
+This guide shows you how to add address autocomplete functionality to a text input field in your Embeddable using the Google Places API.
+
+## Prerequisites
+
+- A Google Cloud Platform account
+- A Google Places API key ([get one here](https://developers.google.com/maps/documentation/javascript/get-api-key))
+- A text input field in your Embeddable for the address
+
+## Steps
+
+<Steps>
+  <Step title="Load the Google Places API script">
+    Add the Google Places API script to the HTML of the page where you're embedding your Embeddable. Place this alongside your Embeddables embed code:
+
+    ```html
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script>
+    ```
+
+    Replace `YOUR_API_KEY` with your actual Google Places API key.
+  </Step>
+
+  <Step title="Add a Trigger for on first load">
+    - Open the Logic card.
+    - Switch to the Triggers tab.
+    - Add a new Trigger.
+    - Select `When "Flow" Is "Loaded"`.
+  </Step>
+
+  <Step title="Create a custom code Action">
+    - Click "Create New Action".
+    - Give it a name like "Initialize Google Places Autocomplete".
+    - Hit Apply.
+  </Step>
+
+  <Step title="Add the autocomplete initialization code">
+    Add the following code inside the `output()` function. Replace `"address"` with the key of your address input field:
+
+    ```js
+    function output() {
+      // Wait for the input field to be available in the DOM
+      const checkInput = setInterval(() => {
+        const addressInput = document.querySelector('input[name="address"]');
+        
+        if (addressInput && window.google && window.google.maps) {
+          clearInterval(checkInput);
+          
+          // Initialize the autocomplete
+          const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+            types: ['address'],
+            componentRestrictions: { country: 'us' } // Optional: restrict to specific country
+          });
+          
+          // Optional: Handle place selection
+          autocomplete.addListener('place_changed', () => {
+            const place = autocomplete.getPlace();
+            
+            if (place.address_components) {
+              // Extract address components
+              const addressComponents = {};
+              
+              place.address_components.forEach(component => {
+                const type = component.types[0];
+                addressComponents[type] = component.long_name;
+              });
+              
+              // You can now populate other fields with the address components
+              // For example:
+              // - addressComponents.street_number
+              // - addressComponents.route (street name)
+              // - addressComponents.locality (city)
+              // - addressComponents.administrative_area_level_1 (state)
+              // - addressComponents.postal_code (zip code)
+              // - addressComponents.country
+            }
+          });
+        }
+      }, 100);
+      
+      // Clear interval after 10 seconds if input not found
+      setTimeout(() => clearInterval(checkInput), 10000);
+    }
+    ```
+  </Step>
+
+  <Step title="Customize the autocomplete options (optional)">
+    You can customize the autocomplete behavior by modifying the options object:
+
+    ```js
+    const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+      types: ['address'],              // Restrict to addresses only
+      componentRestrictions: { 
+        country: ['us', 'ca']          // Restrict to US and Canada
+      },
+      fields: [                        // Specify which data to return
+        'address_components', 
+        'formatted_address',
+        'geometry'
+      ]
+    });
+    ```
+  </Step>
+
+  <Step title="Populate other fields with address components (optional)">
+    If you have separate fields for street, city, state, and zip code, you can automatically populate them when a user selects an address:
+
+    ```js
+    autocomplete.addListener('place_changed', () => {
+      const place = autocomplete.getPlace();
+      
+      if (place.address_components) {
+        const components = {};
+        
+        place.address_components.forEach(component => {
+          const type = component.types[0];
+          components[type] = component.long_name;
+        });
+        
+        // Populate other input fields
+        const streetInput = document.querySelector('input[name="street"]');
+        const cityInput = document.querySelector('input[name="city"]');
+        const stateInput = document.querySelector('input[name="state"]');
+        const zipInput = document.querySelector('input[name="zip"]');
+        
+        if (streetInput) {
+          streetInput.value = `${components.street_number || ''} ${components.route || ''}`.trim();
+          streetInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        
+        if (cityInput) {
+          cityInput.value = components.locality || '';
+          cityInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        
+        if (stateInput) {
+          stateInput.value = components.administrative_area_level_1 || '';
+          stateInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+        
+        if (zipInput) {
+          zipInput.value = components.postal_code || '';
+          zipInput.dispatchEvent(new Event('input', { bubbles: true }));
+        }
+      }
+    });
+    ```
+
+    <Note>
+      The `dispatchEvent(new Event('input', { bubbles: true }))` calls ensure that Embeddables recognizes the value changes and updates the User Data accordingly.
+    </Note>
+  </Step>
+</Steps>
+
+## Alternative: Load the API via Action
+
+If you prefer not to add the script tag to your HTML, you can load the Google Places API programmatically through an Action:
+
+```js
+function output() {
+  // Load the Google Places API script
+  const script = document.createElement('script');
+  script.src = 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places';
+  script.async = true;
+  script.defer = true;
+  
+  script.onload = () => {
+    // Initialize autocomplete after script loads
+    const addressInput = document.querySelector('input[name="address"]');
+    
+    if (addressInput) {
+      const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+        types: ['address']
+      });
+    }
+  };
+  
+  document.head.appendChild(script);
+}
+```
+
+## Additional resources
+
+<CardGroup cols={2}>
+  <Card
+    title="Add external scripts"
+    icon="code"
+    href="/how-to/add-external-scripts"
+  >
+    Learn more about adding external scripts to your Embeddable
+  </Card>
+  <Card
+    title="Custom code guide"
+    icon="square-code"
+    href="/guides/custom-code"
+  >
+    Read more about writing custom code in Embeddables
+  </Card>
+  <Card
+    title="Google Places API documentation"
+    icon="globe"
+    href="https://developers.google.com/maps/documentation/javascript/places-autocomplete"
+  >
+    Official Google Places Autocomplete documentation
+  </Card>
+  <Card
+    title="Run custom code on load"
+    icon="play"
+    href="/how-to/run-custom-code-on-load"
+  >
+    Learn how to run custom code when your Embeddable loads
+  </Card>
+</CardGroup>
