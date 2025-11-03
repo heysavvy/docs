@@ -1,0 +1,284 @@
+---
+title: "Design in Embeddables"
+sidebarTitle: "Design"
+icon: "paintbrush"
+description: "Styling your Embeddables with tags, selectors, and breakpoints"
+---
+
+The Design sidebar in the Builder allows you to style your Embeddables using a powerful CSS-based system. You can apply styles to components, pages, and the entire Embeddable using tags, element selectors, and breakpoints.
+
+## How styling works in Embeddables
+
+Embeddables uses a tag-based styling system that generates CSS selectors. When you apply styles in the Design sidebar, you're creating CSS rules that target specific elements in your Embeddable.
+
+### The selector constructor
+
+The Design sidebar includes a selector constructor that helps you build precise CSS selectors. The selector is built from several components:
+
+1. **Styling tag** - The primary identifier for what you're styling
+2. **Breakpoint** - The screen size at which the styles apply
+3. **Element** - The specific part of a component you're styling
+4. **State** - The interaction state (hover, focus, etc.)
+5. **Scope** - Where the styles apply (entire Embeddable, specific pages, etc.)
+
+## Styling tags
+
+Tags are the foundation of the styling system in Embeddables. They allow you to apply styles to multiple components at once or create reusable style patterns.
+
+### Adding tags to components
+
+<Steps>
+  <Step title="Select a component or page">
+    Click on the component or page you want to style in the Layers sidebar or preview pane.
+  </Step>
+  <Step title="Open the Design sidebar">
+    Click on the Design tab in the left sidebar.
+  </Step>
+  <Step title="Add a styling tag">
+    - Click on the "Add a tag" dropdown in the Design sidebar
+    - Either select an existing tag or type a new tag name
+    - Press Enter or click to add the tag
+  </Step>
+</Steps>
+
+### Tag naming conventions
+
+- Tags should be descriptive and indicate their purpose (e.g., `primary_button`, `section_header`)
+- Use `snake_case` for tag names (lowercase with underscores)
+- Tags are reusable across your Embeddable
+
+### Managing tags on components
+
+Once a tag is added to a component:
+
+- You can see all tags applied to the selected component in the Design sidebar
+- Click on a tag to select it and view/edit its styles
+- You can add multiple tags to a single component
+- Tags can be removed by clicking the X next to the tag name
+
+### Conditional tags
+
+You can also apply tags conditionally based on [User Data](/features/user-data) using [Conditions](/features/conditions). This allows you to change the styling of components dynamically based on user input or other logic.
+
+To add a conditional tag:
+1. In the Options panel for a component, find the "Conditional tags" section
+2. Add a condition that determines when the tag should be applied
+3. Specify the tag name that should be added when the condition is met
+
+## Element selectors
+
+Element selectors allow you to style specific parts of a component. Different component types have different elements you can target.
+
+### Common elements
+
+Most components have these basic elements:
+
+- **Whole thing** - The entire component container
+- **Contents** - The inner content area
+- **Text** - Text elements within the component
+- **Icon** - Icon elements
+
+### Component-specific elements
+
+Different component types have specialized elements:
+
+<AccordionGroup>
+  <Accordion title="Input Box elements">
+    - **Input** - The input field itself
+    - **Label** - The label text
+    - **Placeholder** - The placeholder text
+    - **Invalid message** - Error message text
+    - **Text area** - For multi-line inputs
+  </Accordion>
+
+  <Accordion title="Custom Button elements">
+    - **Button** - The button element
+    - **Text** - Button text
+    - **Icon** - Button icon
+    - **Description** - Secondary text
+  </Accordion>
+
+  <Accordion title="Option Selector elements">
+    - **Button list** - Container for all buttons
+    - **Button** - Individual option button
+    - **Text** - Button text
+    - **Checkbox** - Checkbox element (for multi-select)
+    - **Icon** - Button icon
+    - **Description** - Button description text
+  </Accordion>
+
+  <Accordion title="File Upload elements">
+    - **Uploader** - The upload area
+    - **Label** - Upload label text
+    - **Sub label** - Secondary label text
+    - **File list** - List of uploaded files
+    - **File item** - Individual file in the list
+  </Accordion>
+
+  <Accordion title="Stripe Checkout elements">
+    - **Payment box** - Container for payment form
+    - **Payment form** - The form element
+    - **Stripe checkout button** - Submit button
+    - **Message list** - Container for messages
+    - **Error message** - Error text
+    - **Success message** - Success text
+  </Accordion>
+</AccordionGroup>
+
+### Selecting elements
+
+In the Design sidebar, use the "Element" dropdown to choose which part of the component you want to style. The available options will change based on the type of component you have selected.
+
+## Breakpoints
+
+Breakpoints allow you to create responsive designs that adapt to different screen sizes. Embeddables includes default breakpoints and supports custom breakpoints.
+
+### Default breakpoints
+
+Embeddables comes with three default breakpoints:
+
+- **Desktop** - Styles that apply to all screen sizes (no max-width)
+- **Tablet** - Styles for screens 720px and below
+- **Mobile** - Styles for screens 520px and below
+
+### How breakpoints work
+
+Breakpoints in Embeddables use CSS media queries with `max-width`. When you apply styles at a specific breakpoint:
+
+1. The styles are wrapped in a media query targeting that maximum width
+2. Styles cascade from larger to smaller breakpoints
+3. Desktop styles apply to all sizes unless overridden
+4. Tablet styles override desktop styles on screens 720px and below
+5. Mobile styles override both desktop and tablet styles on screens 520px and below
+
+### Creating custom breakpoints
+
+Custom breakpoints allow you to target specific screen sizes beyond the default options.
+
+<Note>
+  Custom breakpoints are currently configured through the Embeddable JSON. Contact Embeddables support for assistance setting up custom breakpoints.
+</Note>
+
+To add a custom breakpoint, you need to add it to the `breakpoints` array in your Embeddable configuration:
+
+```json
+{
+  "breakpoints": [
+    {
+      "name": "large_tablet",
+      "max_width": 1024
+    },
+    {
+      "name": "small_mobile",
+      "max_width": 375
+    }
+  ]
+}
+```
+
+Each breakpoint requires:
+- **name** - A descriptive name for the breakpoint (use `snake_case`)
+- **max_width** - The maximum screen width in pixels where these styles apply
+
+### Breakpoint ordering
+
+In the generated CSS, breakpoints are automatically ordered from highest to lowest max-width. This ensures that styles cascade correctly and more specific (smaller) breakpoints override broader (larger) ones.
+
+### Using breakpoints in the Builder
+
+1. Select a component or page
+2. Open the Design sidebar
+3. Choose your breakpoint from the "On" dropdown
+4. Apply your styles - they will only affect screens at or below that breakpoint's max-width
+
+<Tip>
+  Start by styling for desktop, then add breakpoint-specific overrides for tablet and mobile. This approach (desktop-first) is more efficient than styling each breakpoint from scratch.
+</Tip>
+
+## Advanced selector options
+
+The Design sidebar includes additional options for creating more specific selectors:
+
+### State selectors
+
+State selectors allow you to style components based on user interaction:
+
+- **Always** - Default state (no state selector)
+- **Hover** - When the user hovers over the element
+- **Focus** - When the element has focus
+- **Active** - When the element is being clicked
+- **Disabled** - When the element is disabled
+
+<Note>
+  Hover states are automatically wrapped in a `@media (hover:hover)` query to prevent issues on touch devices where hover doesn't work as expected.
+</Note>
+
+### Scope selectors
+
+Scope selectors determine where your styles apply:
+
+- **Entire Embeddable** - Styles apply everywhere the tag is used
+- **This page only** - Styles only apply on the current page
+- **Pages with tag** - Styles apply only on pages that have a specific tag
+
+### By key selector
+
+For Option Selector and Advanced Dropdown components, you can target specific buttons by their key. This is useful when you want to style individual options differently.
+
+## Custom CSS selectors
+
+For advanced users, Embeddables also supports custom CSS selectors. This allows you to write your own CSS selectors directly.
+
+<Note>
+  Custom CSS selectors are an advanced feature. Contact Embeddables support for guidance on using custom selectors.
+</Note>
+
+## Best practices
+
+### Tag organization
+
+- Use descriptive tag names that indicate purpose (e.g., `cta_button`, `form_section`)
+- Create reusable tags for common patterns (e.g., `card`, `highlight`)
+- Avoid overly specific tags that will only be used once
+
+### Responsive design
+
+- Start with desktop styles, then add breakpoint overrides
+- Test your Embeddable at different screen sizes
+- Use the breakpoint toggle in the Builder to preview different sizes
+- Consider touch targets on mobile (buttons should be at least 44x44px)
+
+### Performance
+
+- Avoid overly complex selectors when possible
+- Reuse tags instead of creating many unique ones
+- Group related styles under the same tag
+
+### Styling workflow
+
+1. Select the component or page you want to style
+2. Add or select a styling tag
+3. Choose the appropriate element selector
+4. Select your breakpoint (start with desktop)
+5. Apply your styles in the style panels
+6. Add breakpoint-specific overrides as needed
+7. Test across different screen sizes
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card
+    title="Conditions"
+    icon="split"
+    href="/features/conditions"
+  >
+    Use conditions to show/hide components based on user data
+  </Card>
+  <Card
+    title="User Data"
+    icon="database"
+    href="/features/user-data"
+  >
+    Learn about the data system that powers conditional styling
+  </Card>
+</CardGroup>
