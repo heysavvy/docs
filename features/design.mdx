@@ -56,26 +56,6 @@ Once a tag is added to a component:
 - You can add multiple tags to a single component
 - Tags can be removed by clicking the X next to the tag name
 
-### Tag best practices
-
-Use a structured approach to organizing tags for maintainability and reusability:
-
-**Primary tags**
-
-Each component should have one main ("primary") tag that defines its default appearance and behavior (e.g., `standard_button` or `pricing_card`). The primary tag includes all base styles for a component, except styles from secondary tags or single-style overrides.
-
-**Secondary tags**
-
-Secondary tags build on primary tags to create specific variations without repeating styles. They can overwrite primary tag styles, but shouldn't replace the majority of them.
-
-Examples:
-- `standard_button` + `primary_button` (adds color change)
-- `standard_option_buttons` + `option_buttons_2_cols` (adds 2-column layout, modifies padding/margins, centers text)
-
-**Spacing and Tailwind-style tags**
-
-For single-style overrides (like margin or padding), use Tailwind-style tags in snake_case (e.g., `mt_10`, `mb_0`, `pt_8`) instead of creating new secondary tags. Include spacing styles in the primary tag only if they're universally useful across all instances. For layout spacing between components, consider using the `gap` property in the parent container instead.
-
 ### Conditional tags
 
 You can also apply tags conditionally based on [User Data](/features/user-data) using [Conditions](/features/conditions). This allows you to change the styling of components dynamically based on user input or other logic.
