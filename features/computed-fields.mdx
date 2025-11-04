@@ -40,6 +40,122 @@ Computed Fields have access to the User Data JSON object, a series of helper fun
 </Tip>
 
 
+## Computed Field Options
+
+Computed Fields have several configuration options that control how they behave:
+
+<AccordionGroup>
+  <Accordion title="Storage">
+    Controls where and how the computed field result is stored:
+
+    - **Save to User Data** (default): The result is saved to the User Data JSON object and persisted in cookies/localStorage
+    - **Do Not Save**: The result is calculated but not saved to storage. It's still available in the User Data during the session
+    - **Save to Cloud Only**: The result is saved to the Embeddables database but not stored locally in cookies/localStorage
+  </Accordion>
+
+  <Accordion title="Inputs">
+    Specifies which User Data keys the computed field depends on. When any of these keys change, the computed field will have access to their values in the `userData` parameter.
+
+    **Example:** If you add `first_name` and `last_name` as inputs, your computed field will receive these values:
+    ```js
+    function result(userData) {
+      // userData.first_name and userData.last_name are available
+      return `${userData.first_name} ${userData.last_name}`;
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Triggers">
+    Specifies which User Data keys will trigger the computed field to re-run. This is useful when you want the field to recalculate only when specific values change, even if it depends on other inputs.
+
+    **Use case:** You might have a computed field that uses many inputs but should only recalculate when a specific key changes (like `recalculate_total`).
+  </Accordion>
+
+  <Accordion title="Include and Watch Full User Data">
+    When enabled, the computed field:
+    - Receives the entire User Data object (excluding its own key to prevent circular references)
+    - Re-runs whenever **any** User Data value changes
+    - Useful for computed fields that need access to all data or should update frequently
+
+    **Example:**
+    ```js
+    function result(userData) {
+      // All User Data keys are available
+      // This will re-run whenever ANY User Data changes
+      return Object.keys(userData).length;
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Include, but Not Watch Full User Data">
+    When enabled, the computed field:
+    - Receives the entire User Data object (excluding its own key)
+    - Only re-runs when the keys specified in **Inputs** or **Triggers** change
+    - Useful when you need access to all data but want to control when recalculation happens
+
+    **Example:**
+    ```js
+    function result(userData) {
+      // All User Data keys are available
+      // But this only re-runs when specified inputs/triggers change
+      return userData.first_name + userData.last_name + userData.email;
+    }
+    ```
+  </Accordion>
+
+  <Accordion title="Async">
+    Marks the computed field as asynchronous, allowing you to use `await` and promises inside the function.
+
+    **Example:**
+    ```js
+    async function result(userData, helperFunctions) {
+      const response = await fetch('https://api.example.com/data');
+      const data = await response.json();
+      return data.value;
+    }
+    ```
+
+    <Note>
+    Async computed fields are evaluated separately from synchronous ones. Sync fields are computed first for faster updates, then async fields are computed afterward.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Wait Before Updating [ms]">
+    Only available when **Async** is enabled. Adds a debounce delay (in milliseconds) before the computed field recalculates. This prevents excessive recalculations when inputs change rapidly.
+
+    **Use case:** If a user is typing in an input field and you're making an API call based on that input, you might set this to 500ms to wait until they stop typing.
+  </Accordion>
+
+  <Accordion title="Include Loading State">
+    When enabled, the computed field key will be set to `"_loading"` while the async computation is in progress. This allows you to show loading indicators in your UI.
+
+    **Example:**
+    ```js
+    // In your computed field
+    async function result(userData) {
+      const data = await fetch('https://api.example.com/data');
+      return data.value;
+    }
+
+    // In your UI, you can check:
+    // if (userData.my_field === "_loading") { show loading spinner }
+    ```
+  </Accordion>
+
+  <Accordion title="Set Value as Class on Flow">
+    When enabled, the computed field's value is added as a CSS class to the flow container element in the format: `field-value-{key}-{value}`
+
+    **Example:** If your computed field key is `user_type` and it returns `"premium"`, the class `field-value-user_type-premium` will be added to the flow container.
+
+    **Use case:** This allows you to style your flow differently based on computed values using CSS:
+    ```css
+    .field-value-user_type-premium .pricing-section {
+      background-color: gold;
+    }
+    ```
+  </Accordion>
+</AccordionGroup>
+
 ## Example Computed Fields
 
 ### Full Name
