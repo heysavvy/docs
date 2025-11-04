@@ -209,6 +209,20 @@ icon: "question"
 ### Form Elements
 
 <AccordionGroup>
+  <Accordion title="How do I disable a button based on input validation?">
+    You can disable a button based on whether inputs on the page are completed or validated directly from the button settings.
+
+    1. **Select the button** you want to configure.
+    2. In the button settings, find the **Validation** section.
+    3. Look for the option **"React if page requirements not met"**.
+    4. **Set it to "Disable"**.
+
+    The button will automatically be disabled if the inputs on the page aren't completed or validated. Once all required inputs are filled and validated, the button will become enabled.
+
+    <Tip>
+      This works with any input fields that have validation rules set up. The button will check all inputs on the page and disable itself if any requirements aren't met.
+    </Tip>
+  </Accordion>
   <Accordion title="How do I reference multiple form elements in Computed Fields?">
     To access multiple form element values in a Computed Field, you can pull the keys of each input component from the first argument of the function.
 
