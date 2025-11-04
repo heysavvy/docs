@@ -29,15 +29,15 @@ Tags are the foundation of the styling system in Embeddables. They allow you to 
 
 <Steps>
   <Step title="Select a component or page">
-    Click on the component or page you want to style in the Layers sidebar or preview pane.
+    Click on the component or page you want to style in the Layers sidebar or
+    preview pane.
   </Step>
   <Step title="Open the Design sidebar">
     Click on the Design tab in the left sidebar.
   </Step>
   <Step title="Add a styling tag">
-    - Click on the "Add a tag" dropdown in the Design sidebar
-    - Either select an existing tag or type a new tag name
-    - Press Enter or click to add the tag
+    - Click on the "Add a tag" dropdown in the Design sidebar - Either select an
+    existing tag or type a new tag name - Press Enter or click to add the tag
   </Step>
 </Steps>
 
@@ -56,9 +56,10 @@ You can also apply tags conditionally based on [User Data](/features/user-data) 
 
 To add a conditional tag:
 
-1. In the Options panel for a component, find the "Conditional tags" section
-2. Add a condition that determines when the tag should be applied
-3. Specify the tag name that should be added when the condition is met
+1. In the component Designer sidebar, find the "Styling tag" section at the top and open the dropdown.
+2. Click the "Convert to conditional tag" button inside the tag, to convert it to a conditional tag (it will move down into a new "Conditional tags" section).
+3. Click the "Conditions" or "Experiment conditions" button in the tag.
+4. In the popup, specify the condition for when the tag should apply based on the User Data or Experiment variants.
 
 ## Tags best practices
 
@@ -108,49 +109,38 @@ Different component types have specialized elements:
 
 <AccordionGroup>
   <Accordion title="Input Box elements">
-    - **Input** - The input field itself
-    - **Label** - The label text
-    - **Placeholder** - The placeholder text
-    - **Invalid message** - Error message text
-    - **Text area** - For multi-line inputs
+    - **Input** - The input field itself - **Label** - The label text -
+    **Placeholder** - The placeholder text - **Invalid message** - Error message
+    text - **Text area** - For multi-line inputs
   </Accordion>
   <Accordion title="Button elements">
-    - **Button** - The button element
-    - **Text** - Button text
-    - **Icon** - Button icon
-    - **Description** - Secondary text
+    - **Button** - The button element - **Text** - Button text - **Icon** -
+    Button icon - **Description** - Secondary text
   </Accordion>
   <Accordion title="Image elements">
-    - **Image element** - The image itself
-    - **Alt text** - Alternative text for accessibility
+    - **Image element** - The image itself - **Alt text** - Alternative text for
+    accessibility
   </Accordion>
   <Accordion title="Option Buttons elements">
-    - **Button list** - Container for all buttons
-    - **Button** - Individual option button
-    - **Text** - Button text
-    - **Checkbox** - Checkbox element (for multi-select)
-    - **Icon** - Button icon
-    - **Description** - Button description text
+    - **Button list** - Container for all buttons - **Button** - Individual
+    option button - **Text** - Button text - **Checkbox** - Checkbox element
+    (for multi-select) - **Icon** - Button icon - **Description** - Button
+    description text
   </Accordion>
   <Accordion title="Dropdown elements">
-    - **Dropdown main** - The main dropdown container
-    - **Dropdown list** - The list of options
-    - **List option** - Individual dropdown option
+    - **Dropdown main** - The main dropdown container - **Dropdown list** - The
+    list of options - **List option** - Individual dropdown option
   </Accordion>
   <Accordion title="File Upload elements">
-    - **Uploader** - The upload area
-    - **Label** - Upload label text
-    - **Sub label** - Secondary label text
-    - **File list** - List of uploaded files
-    - **File item** - Individual file in the list
+    - **Uploader** - The upload area - **Label** - Upload label text - **Sub
+    label** - Secondary label text - **File list** - List of uploaded files -
+    **File item** - Individual file in the list
   </Accordion>
   <Accordion title="Stripe Checkout elements">
-    - **Payment box** - Container for payment form
-    - **Payment form** - The form element
-    - **Stripe checkout button** - Submit button
-    - **Message list** - Container for messages
-    - **Error message** - Error text
-    - **Success message** - Success text
+    - **Payment box** - Container for payment form - **Payment form** - The form
+    element - **Stripe checkout button** - Submit button - **Message list** -
+    Container for messages - **Error message** - Error text - **Success
+    message** - Success text
   </Accordion>
 </AccordionGroup>
 
@@ -185,7 +175,8 @@ Breakpoints in Embeddables use CSS media queries with `max-width`. When you appl
 Custom breakpoints allow you to target specific screen sizes beyond the default options.
 
 <Note>
-  Custom breakpoints are currently configured through the Embeddable JSON. Contact Embeddables support for assistance setting up custom breakpoints.
+  Custom breakpoints are currently configured through the Embeddable JSON.
+  Contact Embeddables support for assistance setting up custom breakpoints.
 </Note>
 
 To add a custom breakpoint, you need to add it to the `breakpoints` array in your Embeddable configuration:
@@ -222,7 +213,9 @@ In the generated CSS, breakpoints are automatically ordered from highest to lowe
 4. Apply your styles - they will only affect screens at or below that breakpoint's max-width
 
 <Tip>
-  Start by styling for desktop, then add breakpoint-specific overrides for tablet and mobile. This approach (desktop-first) is more efficient than styling each breakpoint from scratch.
+  Start by styling for desktop, then add breakpoint-specific overrides for
+  tablet and mobile. This approach (desktop-first) is more efficient than
+  styling each breakpoint from scratch.
 </Tip>
 
 ## Advanced selector options
@@ -240,7 +233,8 @@ State selectors allow you to style components based on user interaction:
 - **Disabled** - When the element is disabled
 
 <Note>
-  Hover states are automatically wrapped in a `@media (hover:hover)` query to prevent issues on touch devices where hover doesn't work as expected.
+  Hover states are automatically wrapped in a `@media (hover:hover)` query to
+  prevent issues on touch devices where hover doesn't work as expected.
 </Note>
 
 ### Scope selectors
@@ -260,7 +254,8 @@ For Option Selector and Advanced Dropdown components, you can target specific bu
 For advanced users, Embeddables also supports custom CSS selectors. This allows you to write your own CSS selectors directly.
 
 <Note>
-  Custom CSS selectors are an advanced feature. Contact Embeddables support for guidance on using custom selectors.
+  Custom CSS selectors are an advanced feature. Contact Embeddables support for
+  guidance on using custom selectors.
 </Note>
 
 ## Best practices
