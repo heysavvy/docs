@@ -55,6 +55,7 @@ Once a tag is added to a component:
 You can also apply tags conditionally based on [User Data](/features/user-data) using [Conditions](/features/conditions). This allows you to change the styling of components dynamically based on user input or other logic.
 
 To add a conditional tag:
+
 1. In the Options panel for a component, find the "Conditional tags" section
 2. Add a condition that determines when the tag should be applied
 3. Specify the tag name that should be added when the condition is met
@@ -67,27 +68,26 @@ Use a structured approach to organizing tags for maintainability and reusability
 
 - Tags should be descriptive and indicate their purpose (e.g., `primary_button`, `section_header`)
 - Use `snake_case` for tag names (lowercase with underscores)
-- Tags are reusable across your Embeddable
 
 ### Primary tags
 
-• Each component should have **one main ("primary") tag** that defines its default appearance and behavior, e.g. `standard_button` or `pricing_card`.
-• The primary tag typically includes all styles for a component, except any styles that come from secondary tags or single-style overrides.
+- Each component should have **one main ("primary") tag** that defines its default appearance and behavior, e.g. `standard_button` or `pricing_card`.
+- The primary tag typically includes all styles for a component, except any styles that come from secondary tags or single-style overrides.
 
 ### Secondary tags
 
-• **Secondary tags** are commonly used to build on primary tags to create a more specific version of a component type, without needing to repeat all/most of the styles in the primary tag.
-• Secondary tags can overwrite styles in primary tags, as long as it's not overwriting the vast majority of the primary tag's styles.
-• **Examples:**
-  • `standard_button` + `primary_button` (adds color change)
-  • `standard_option_buttons` + `option_buttons_2_cols` (adds 2-column layout, modifies padding/margins, centers text)
+- **Secondary tags** are commonly used to build on primary tags to create a more specific version of a component type, without needing to repeat all/most of the styles in the primary tag.
+- Secondary tags can overwrite styles in primary tags, as long as it's not overwriting the vast majority of the primary tag's styles.
+- **Examples:**
+  - `standard_button` + `primary_button` (adds color change)
+  - `standard_option_buttons` + `option_buttons_2_cols` (adds 2-column layout, modifies padding/margins, centers text)
 
 ### Spacing and Tailwind-style tags
 
-• When applying a **single style** (like a margin or padding), use a **Tailwind-style tag in snake_case** (e.g. `mt_10`, `mb_0`, `pt_8`).
-• These tags should usually be used instead of creating a new secondary tag for one-off overrides.
-• If a spacing style (e.g. `margin: 10px;`) is **universally useful across all instances**, it can be included in the **primary tag**.
-• For layout spacing between components, see whether you can instead use the **`gap` property** in the parent container.
+- When applying a **single style** (like a margin or padding), use a **Tailwind-style tag in snake_case** (e.g. `mt_10`, `mb_0`, `pt_8`).
+- These tags should usually be used instead of creating a new secondary tag for one-off overrides.
+- If a spacing style (e.g. `margin: 10px;`) is **universally useful across all instances**, it can be included in the **primary tag**.
+- For layout spacing between components, see whether you can instead use the `gap` property in the parent container.
 
 ## Element selectors
 
@@ -114,19 +114,16 @@ Different component types have specialized elements:
     - **Invalid message** - Error message text
     - **Text area** - For multi-line inputs
   </Accordion>
-
   <Accordion title="Button elements">
     - **Button** - The button element
     - **Text** - Button text
     - **Icon** - Button icon
     - **Description** - Secondary text
   </Accordion>
-
   <Accordion title="Image elements">
     - **Image element** - The image itself
     - **Alt text** - Alternative text for accessibility
   </Accordion>
-
   <Accordion title="Option Buttons elements">
     - **Button list** - Container for all buttons
     - **Button** - Individual option button
@@ -135,13 +132,11 @@ Different component types have specialized elements:
     - **Icon** - Button icon
     - **Description** - Button description text
   </Accordion>
-
   <Accordion title="Dropdown elements">
     - **Dropdown main** - The main dropdown container
     - **Dropdown list** - The list of options
     - **List option** - Individual dropdown option
   </Accordion>
-
   <Accordion title="File Upload elements">
     - **Uploader** - The upload area
     - **Label** - Upload label text
@@ -149,7 +144,6 @@ Different component types have specialized elements:
     - **File list** - List of uploaded files
     - **File item** - Individual file in the list
   </Accordion>
-
   <Accordion title="Stripe Checkout elements">
     - **Payment box** - Container for payment form
     - **Payment form** - The form element
@@ -212,6 +206,7 @@ To add a custom breakpoint, you need to add it to the `breakpoints` array in you
 ```
 
 Each breakpoint requires:
+
 - **name** - A descriptive name for the breakpoint (use `snake_case`)
 - **max_width** - The maximum screen width in pixels where these styles apply
 
@@ -302,18 +297,10 @@ For advanced users, Embeddables also supports custom CSS selectors. This allows 
 ## Related features
 
 <CardGroup cols={2}>
-  <Card
-    title="Conditions"
-    icon="split"
-    href="/features/conditions"
-  >
+  <Card title="Conditions" icon="split" href="/features/conditions">
     Use conditions to show/hide components based on user data
   </Card>
-  <Card
-    title="User Data"
-    icon="database"
-    href="/features/user-data"
-  >
+  <Card title="User Data" icon="database" href="/features/user-data">
     Learn about the data system that powers conditional styling
   </Card>
 </CardGroup>
