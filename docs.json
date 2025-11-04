@@ -23,6 +23,7 @@
             "pages": [
               "features/user-data",
               "features/conditions",
+              "features/design",
               "features/split-testing",
               "features/computed-fields",
               "features/actions",
