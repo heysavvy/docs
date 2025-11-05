@@ -463,4 +463,31 @@ icon: "question"
       The URL Keys method is simpler and automatically handles the capture. Use custom code when you need more complex logic or want to process the UTM parameters before storing them.
     </Tip>
   </Accordion>
+  <Accordion title="Why can't I see user details or search by email address?">
+    If you cannot see user details or search for users by email address, this is due to your data access permissions. This restriction is in place to maintain HIPAA compliance and protect sensitive user information.
+
+    **Why this happens:**
+
+    - Your workspace has HIPAA compliance enabled, which restricts access to personally identifiable information (PII) and protected health information (PHI).
+    - Your account has **Anonymized Data Access**, which means you can only view anonymized data—personally identifiable information about end-users is hidden.
+    - Email addresses are classified as contact information and PII, so they are not visible to users with Anonymized Data Access.
+
+    **How to get access:**
+
+    To view user details and search by email address, you need **Full Data Access** permissions. Contact your workspace Admin or Data Privacy Officer to request an access level upgrade.
+
+    Your Admin can update your permissions by:
+
+    1. Going to **Settings** → **Team** tab
+    2. Finding your user in the table
+    3. Changing your Data Access Level to **Full Data Access**
+
+    <Warning>
+      Full Data Access should only be granted to team members who have a clear, documented need to view personally identifiable or health information. This is a HIPAA compliance requirement.
+    </Warning>
+
+    For more information, see:
+    - [User Roles & Permissions](/guides/user-roles-permissions)
+    - [HIPAA Compliance](/guides/hipaa-compliance)
+  </Accordion>
 </AccordionGroup>
