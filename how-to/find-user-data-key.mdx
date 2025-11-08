@@ -1,0 +1,24 @@
+---
+title: "Find where a User Data key is being created/updated"
+description: "Learn how to search through your Embeddable to find where a specific User Data key is being created or updated"
+---
+
+If you need to find where a specific User Data key is being created or updated in your Embeddable, you can search through the entire Embeddable JSON.
+
+## How to search
+
+1. **Open the Builder** for your Embeddable
+2. **Press ESC** to deselect any components (so nothing is selected)
+3. **In the Options sidebar**, click the **three dots menu** (⋮) in the top right corner
+4. **Click "Edit JSON"** to open the JSON editor modal
+5. **Use the search inside the code editor box** (Ctrl+F with the code editor in focus) to search for the key name within the JSON
+
+This will show you all locations where that key appears in your Embeddable configuration, including:
+- Input fields and form components that create the key
+- Actions that update the key
+- Computed Fields that are set with their key as the key you're looking for, or that reference the key
+- Conditions that use the key
+
+<Tip>
+  We're working on shipping a better global search feature that will make this process easier. For now, searching the Entire Embeddable JSON is the most reliable way to find where keys are being used.
+</Tip>
