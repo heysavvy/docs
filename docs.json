@@ -55,6 +55,7 @@
                 "group": "Logic",
                 "icon": "code-fork",
                 "pages": [
+                  "how-to/find-user-data-key",
                   "how-to/display-answers-back-to-user",
                   "how-to/sync-pages-with-url",
                   "how-to/dynamically-switch-brands",
