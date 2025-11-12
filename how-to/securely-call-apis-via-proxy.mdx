@@ -117,3 +117,17 @@ fetch(
   - `pr_bbbbbbbbbbbbbb` --> the project ID for your project (grab it from the URL in the Embeddables Web App - it's the ID after `/project/`).
   - `https://api.example.com/api/v1/endpoint` --> the actual endpoint you want to call.
 - Make sure the endpoint and credential are both allowlisted with the project and environment that you're using.
+
+## Troubleshooting
+
+### Empty credentials dropdown when creating an endpoint
+
+If the **Credential IDs** dropdown is empty when you try to create a new endpoint, this means there are no credentials available for the selected environment.
+
+**Solution:**
+
+1. First, create a credential in the **Credentials & Endpoints** tab by clicking **+ New Credential**.
+2. Make sure the credential's **Environment** matches the environment you selected for your endpoint (e.g., Production, Staging).
+3. After creating the credential, return to create your endpoint. The credential should now appear in the dropdown.
+
+**Note:** The credentials dropdown only shows credentials that match the selected environment. If you change the environment after creating an endpoint, you cannot modify it later.
