@@ -120,36 +120,132 @@ To let customers enter their own promo codes:
 
 ### 2. Automatic Application
 
-Use this method to automatically apply a promo code for all customers.
+Use this method to automatically apply a discount for all customers. You can configure this directly in the builder UI.
 
-<Note>
-  A UI for handling this without editing the JSON is coming soon!
-</Note>
+#### Using the Builder UI
 
-In your Stripe component Options, open the JSON editor and add the following to the checkout session configuration:
+<Steps>
+  <Step title="Navigate to Discount Settings">
+    - Select your Stripe Checkout component in the builder.
+    - In the Options panel on the right, scroll to the **Checkout session** section.
+    - Find the **Discount** section.
+  </Step>
 
-```json
-{
-  "checkout_session": {
-    // ... other checkout session configuration ...
-    "discounts": [  // Stripe currently only supports one object in the array
-      {
-        "promotion_code": "YOUR_PROMO_CODE_ID", // EITHER THIS
-        "coupon": "YOUR_COUPON_ID"              // OR THIS
-      }
-    ]
-  }
+  <Step title="Choose Your Discount Type">
+    You have two options for applying discounts:
+
+    **Option 1: Static Discount (Promo Code or Coupon)**
+    - Toggle off "Use template discounts" (if it's enabled).
+    - Choose between **Promo code** or **Coupon** using the tabs.
+    - Enter your Stripe promo code ID (e.g., `promo_1MiM6KLkdIwHu7ixrIaX4wgn`) or coupon ID (e.g., `jMT0WJUD`).
+    
+    <Note>
+      You can only use either a promo code OR a coupon, not both. Stripe currently only supports one discount per checkout session.
+    </Note>
+
+    **Option 2: Dynamic Discount (Using Templating)**
+    - Toggle on "Use template discounts".
+    - Enter a template variable in the **Discounts template** field (e.g., `{{my_discounts}}`).
+    - This allows you to dynamically set the discount based on user data, computed fields, or actions.
+  </Step>
+</Steps>
+
+#### Understanding Templating
+
+Templating allows you to dynamically apply discounts based on runtime data. This is useful when:
+- Different users should receive different discounts.
+- The discount is calculated based on user behavior or data.
+- You want to A/B test different discount strategies.
+
+**How Templating Works:**
+
+When you enable "Use template discounts", the engine replaces your template variable with the actual discount data at runtime. The template variable should resolve to an array containing a discount object:
+
+```javascript
+// Example: Setting discount via a Computed Field
+function output(userData) {
+  // Return an array with a single discount object
+  return [
+    {
+      promotion_code: "promo_1MiM6KLkdIwHu7ixrIaX4wgn"  // OR
+      // coupon: "jMT0WJUD"
+    }
+  ];
 }
 ```
-Tips:
-- Replace `YOUR_PROMO_CODE_ID` or `YOUR_COUPON_ID` with your actual promo code ID from Stripe.
-- Or, if you prefer, replace them with `{{promo_code_id}}` or `{{coupon_id}}` to use an ID calculated from a Computed Field or Action.
-- Make sure to remove either the `promotion_code` or `coupon` key, not both.
-- Make sure to remove all the comments (`// ...`) since JSON doesn't support comments.
-- Make sure to remove the `// ... other checkout session configuration ...` line, since you're only adding the discounts section.
+
+You can set the discount data using:
+- **Computed Fields**: Calculate the discount based on user data.
+- **Actions**: Set the discount dynamically based on user interactions.
+- **URL Parameters**: Pass discount codes via URL parameters.
+
+**Example: Dynamic Discount Based on User Type**
+
+```javascript
+// Computed Field: calculate_discount
+function output(userData) {
+  const userType = userData.user_type;
+  
+  if (userType === "vip") {
+    return [{ coupon: "VIP_DISCOUNT_50" }];
+  } else if (userType === "new_customer") {
+    return [{ promotion_code: "promo_WELCOME20" }];
+  }
+  
+  // No discount for regular users
+  return [];
+}
+```
+
+Then in your Stripe component, set the **Discounts template** field to: `{{calculate_discount}}`
 
 <Warning>
-  When using automatic application, make sure you're using the correct promo code for your environment (test vs live mode).
+  When using templating, ensure your template variable resolves to a valid array format. The engine expects an array containing discount objects with either a `promotion_code` or `coupon` field.
+</Warning>
+
+#### Replacing the Entire Checkout Session with Templating
+
+For advanced use cases, you can replace the entire checkout session configuration using templating. This is useful when you need complete control over all checkout session parameters.
+
+**How to Enable:**
+
+In the Stripe component Options:
+1. Scroll to the **Checkout session** section.
+2. Look for the **Enable template checkout session** option (or similar toggle).
+3. When enabled, you can provide a template variable that resolves to a complete Stripe checkout session object.
+
+This allows you to:
+- Dynamically set line items, discounts, metadata, and all other checkout session parameters.
+- Create different checkout experiences for different user segments.
+- Calculate complex pricing logic in a Computed Field or Action.
+
+**Example:**
+
+```javascript
+// Computed Field: dynamic_checkout_session
+function output(userData) {
+  return {
+    mode: "payment",
+    currency: "usd",
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: userData.product_name || "Default Product"
+          },
+          unit_amount: userData.calculated_price || 1000
+        },
+        quantity: 1
+      }
+    ],
+    discounts: userData.has_discount ? [{ coupon: "SPECIAL_OFFER" }] : []
+  };
+}
+```
+
+<Warning>
+  When using automatic application, make sure you're using the correct promo code or coupon for your environment (test vs live mode).
 </Warning>
 
 ## Troubleshooting
