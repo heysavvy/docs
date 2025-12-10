@@ -399,7 +399,10 @@ These features are not required in order to successfully accept payments, but th
     | **Customer ID**        | All payment types (for Payment and Setup modes, `Customer Creation` must be set up `Always`)                                               |
     | **Invoice ID**         | All payments except on-hold payments and collecting card details |
     | **Payment Intent ID**  | One-time payments only                                           |
-    | **Subscription ID**    | Recurring payments only                                          |
+
+    <Note>
+      Stripe used to provide a Subscription ID for recurring payments, but in their newer API version this is no longer the case. You can access this separately via the Stripe API.
+    </Note>
 
     #### To collect these IDs:
     1. Specify a User Data key to store the ID in, in the relevant field in the Stripe component options.
