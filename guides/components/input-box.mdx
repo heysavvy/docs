@@ -6,11 +6,28 @@ description: "How to use the Input Box component in Embeddables"
 
 The Input Box component collects user input data and stores it in your User Data. Configure it through four main sections: Configuration, Content, Validation, and More.
 
+This documentation includes both **InputBox-specific settings** (unique to Input Box components) and **general settings** (shared across multiple component types but also available for Input Box).
+
 ## Configuration settings
 
 Configure basic input behavior and appearance.
 
 <AccordionGroup>
+  <Accordion title="User Input">
+    Control whether users are required to complete this input before proceeding.
+
+    **Options**:
+    - Optional (value: `false`)
+    - Required (value: `true`)
+
+    <Info>
+    This is a general setting that applies to InputBox, OptionSelector, CustomButton, Calendly, Hubspot, FileUpload (with uploadFile), and PaypalCheckout components.
+    </Info>
+
+    When set to Required, users cannot proceed until they provide a value for this input field.
+
+  </Accordion>
+
   <Accordion title="Height (Multiline)">
     Control whether the input renders as a single-line field or a multi-line textarea.
 
@@ -277,6 +294,38 @@ Configure validation rules and error messages to ensure data quality.
 Additional configuration options for advanced use cases.
 
 <AccordionGroup>
+  <Accordion title="Repeat Component">
+    Use this to programmatically repeat this component for each item in an array.
+
+    **Toggle Options**:
+    - Off (value: `"hide"`)
+    - On (value: `"show"`)
+
+    When enabled, you can select a repeater key from a dropdown:
+
+    **Repeater key**: The User Data property that contains the array to use for repeating this component. The dropdown shows a dynamic list of embeddable keys (excluding keys starting with `"split_"`).
+
+    <Info>
+    This is a general setting that applies to all components (except Page and Embeddable). The component will be repeated for each item in the specified array.
+    </Info>
+
+  </Accordion>
+
+  <Accordion title="Ignore in QA tests">
+    Whether to avoid clicking on this element during Embeddables' automated QA tests.
+
+    **Options**:
+    - Off (value: `false`)
+    - On (value: `true`)
+
+    <Info>
+    This is a general setting that applies to CustomButton and InputBox components.
+    </Info>
+
+    Enable this if you want the automated QA system to skip interacting with this component during tests.
+
+  </Accordion>
+
   <Accordion title="Input Debounce Time">
     Delay before updating User Data after the user types a character.
 
@@ -291,6 +340,17 @@ Additional configuration options for advanced use cases.
     <Tip>
     Use debouncing when you have computed fields or actions that depend on this input, as it prevents unnecessary recalculations while the user is still typing.
     </Tip>
+
+  </Accordion>
+
+  <Accordion title="Element ID">
+    Unique identifier for the component element.
+
+    <Info>
+    This is a general setting that applies to all components except Page. Use this to set a custom HTML element ID for styling or JavaScript targeting.
+    </Info>
+
+    Set a unique identifier that can be used to target this specific component with custom CSS or JavaScript code.
 
   </Accordion>
 </AccordionGroup>
