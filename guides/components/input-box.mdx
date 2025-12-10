@@ -1,0 +1,296 @@
+---
+title: "Components: Input Box"
+sidebarTitle: "Input Box"
+description: "How to use the Input Box component in Embeddables"
+---
+
+The Input Box component collects user input data and stores it in your User Data. Configure it through four main sections: Configuration, Content, Validation, and More.
+
+## Configuration settings
+
+Configure basic input behavior and appearance.
+
+<AccordionGroup>
+  <Accordion title="Height (Multiline)">
+    Control whether the input renders as a single-line field or a multi-line textarea.
+
+    **Options**:
+    - Single-Line (value: `false`)
+    - Multi-Line (value: `true`)
+
+    When enabled, the input field expands vertically to support multiple lines of text.
+
+  </Accordion>
+
+  <Accordion title="Autofocus">
+    Automatically focus this input when the page loads.
+
+    **Options**:
+    - Off (value: `false`)
+    - On (value: `true`)
+
+    <Warning>
+    Only use autofocus on one element per page to avoid accessibility issues and unexpected behavior.
+    </Warning>
+
+  </Accordion>
+
+  <Accordion title="Range Min">
+    Set the minimum value for number, range, date, or month inputs.
+
+    <Info>
+    Only available when subtype is `"range"`, `"date"`, or `"month"`.
+    </Info>
+
+    For number and range inputs, this prevents users from entering values below the specified minimum. For date and month inputs, it sets the earliest selectable date.
+
+  </Accordion>
+
+  <Accordion title="Range Max">
+    Set the maximum value for number, range, date, or month inputs.
+
+    <Info>
+    Only available when subtype is `"range"`, `"date"`, or `"month"`.
+    </Info>
+
+    For number and range inputs, this prevents users from entering values above the specified maximum. For date and month inputs, it sets the latest selectable date.
+
+  </Accordion>
+
+  <Accordion title="Range Step">
+    Set the step increment for number and range inputs.
+
+    <Info>
+    Only available when subtype is `"range"`.
+    </Info>
+
+    Defines the amount by which the value changes when using increment/decrement controls or arrow keys. For example, a step of `10` means values will increment by 10 (0, 10, 20, 30, etc.).
+
+  </Accordion>
+</AccordionGroup>
+
+## Content settings
+
+Customize labels and placeholder text shown to users.
+
+<AccordionGroup>
+  <Accordion title="Label">
+    Text label displayed before the input field.
+
+    Use this to provide context about what information you're collecting. The label appears above or beside the input field depending on your design settings.
+
+  </Accordion>
+
+  <Accordion title="Placeholder">
+    Placeholder text shown inside the input when it's empty.
+
+    <Info>
+    Not available when subtype is `"switch"`.
+    </Info>
+
+    Placeholders provide hints about expected input format or example values. They disappear when the user starts typing.
+
+  </Accordion>
+
+  <Accordion title="Show Labels on both sides">
+    Display labels on both sides of toggle switches.
+
+    <Info>
+    Only available when subtype is `"switch"`.
+    </Info>
+
+    When enabled, you can provide separate labels for the on and off states of a switch component, making the toggle's states clearer to users.
+
+  </Accordion>
+
+  <Accordion title="Off label">
+    Label for the 'off' state of toggle switches.
+
+    <Info>
+    Only available when subtype is `"switch"` AND "Show Labels on both sides" is enabled.
+    </Info>
+
+    This appears on the side of the switch representing the inactive state, helping users understand what happens when the switch is turned off.
+
+  </Accordion>
+</AccordionGroup>
+
+## Validation settings
+
+Configure validation rules and error messages to ensure data quality.
+
+<AccordionGroup>
+  <Accordion title="Validate Value">
+    Enable or disable validation for this input field.
+
+    **Options**:
+    - Disabled (value: `false`)
+    - Enabled (value: `true`)
+
+    When enabled, the input will warn or block users from entering values that don't meet your specified validation criteria. All other validation settings depend on this being enabled.
+
+  </Accordion>
+
+  <Accordion title="Formula">
+    Choose a validation formula or expression to validate the input value.
+
+    <Info>
+    Only available when "Validate Value" is enabled.
+    </Info>
+
+    Available options (dynamic based on subtype):
+
+    | Option | Value | Available For |
+    |--------|-------|---------------|
+    | None | `"none"` | All subtypes |
+    | Full Name | `"full_name"` | Text subtype only |
+    | Email | `"email_address"` | Email subtype only |
+    | Business Email | `"business_email"` | Email subtype only |
+    | Phone Number (US) | `"phone_number_us"` | Phone subtype only |
+    | Number Range | `"number_range"` | Number subtype only |
+    | Custom formula | `"custom"` | All subtypes (opens JS editor) |
+
+    <Tip>
+    When you select "Custom formula", a JavaScript editor opens where you can write custom validation logic that returns `true` for valid values and `false` for invalid ones.
+    </Tip>
+
+  </Accordion>
+
+  <Accordion title="Validate on blur">
+    Trigger validation when the field loses focus.
+
+    **Options**:
+    - Off (value: `false`)
+    - On (value: `true`)
+
+    <Info>
+    Only available when "Validate Value" is enabled.
+    </Info>
+
+    When enabled, validation runs after the user clicks away from the field, providing immediate feedback without interrupting typing.
+
+  </Accordion>
+
+  <Accordion title="Trim whitespace on blur">
+    Remove leading and trailing whitespace when the field loses focus.
+
+    **Options**:
+    - Off (value: `false`)
+    - On (value: `true`)
+
+    <Info>
+    Only available when "Validate Value" is enabled.
+    </Info>
+
+    Automatically cleans up user input by removing spaces at the beginning and end of the entered value, which helps prevent validation errors from accidental spaces.
+
+  </Accordion>
+
+  <Accordion title="Format email on blur">
+    Format email addresses when the field loses focus.
+
+    **Options**:
+    - Off (value: `false`)
+    - On (value: `true`)
+
+    <Info>
+    Only available when "Validate Value" is enabled AND subtype is `"email"` or `"text"`.
+    </Info>
+
+    Automatically formats email addresses to a standard format (e.g., converting `JOHN@EXAMPLE.COM` to `john@example.com`) when the user leaves the field.
+
+  </Accordion>
+
+  <Accordion title="Empty message">
+    Error message displayed when the field is empty but required.
+
+    <Info>
+    Only available when "Validate Value" is enabled AND field is required (isRequired is true).
+    </Info>
+
+    Customize the message users see when they try to proceed without filling in a required field.
+
+  </Accordion>
+
+  <Accordion title="Invalid message">
+    Error message displayed when input fails validation.
+
+    <Info>
+    Only available when "Validate Value" is enabled.
+    </Info>
+
+    Provide clear, actionable feedback when users enter invalid data. For example: "Please enter a valid email address" or "Phone number must be 10 digits".
+
+  </Accordion>
+
+  <Accordion title="Max length of input">
+    Maximum number of characters allowed in the input.
+
+    <Info>
+    Only available when subtype is `"text"` or `"password"`.
+    </Info>
+
+    Limits the length of text inputs to prevent overly long entries. Users cannot type beyond this limit.
+
+  </Accordion>
+
+  <Accordion title="Range min (Validation)">
+    Minimum value for number inputs when using number range validation.
+
+    <Info>
+    Only available when "Validate Value" is enabled AND "Formula" is `"number_range"` AND subtype is `"number"`.
+    </Info>
+
+    Validates that entered numbers are not below this minimum value. Different from the Configuration "Range Min" setting, which affects the input control's constraints.
+
+  </Accordion>
+
+  <Accordion title="Range max (Validation)">
+    Maximum value for number inputs when using number range validation.
+
+    <Info>
+    Only available when "Validate Value" is enabled AND "Formula" is `"number_range"` AND subtype is `"number"`.
+    </Info>
+
+    Validates that entered numbers are not above this maximum value. Different from the Configuration "Range Max" setting, which affects the input control's constraints.
+
+  </Accordion>
+
+  <Accordion title="Allow Integers only">
+    Restrict input to whole numbers only (no decimals).
+
+    **Options**:
+    - Off (value: `false`)
+    - On (value: `true`)
+
+    <Info>
+    Only available when "Validate Value" is enabled AND "Formula" is `"number_range"` AND subtype is `"number"`.
+    </Info>
+
+    When enabled, users can only enter integers (e.g., 1, 42, 100) and decimal values (e.g., 3.14, 99.9) will be rejected.
+
+  </Accordion>
+</AccordionGroup>
+
+## More settings
+
+Additional configuration options for advanced use cases.
+
+<AccordionGroup>
+  <Accordion title="Input Debounce Time">
+    Delay before updating User Data after the user types a character.
+
+    <Info>
+    Not available when subtype is `"switch"` or `"checkbox"`.
+    </Info>
+
+    Debouncing waits for the user to finish typing before updating the User Data. This reduces the number of updates and can improve performance, especially when other components or computed fields react to this input.
+
+    For example, setting this to `500` means User Data will only update 500 milliseconds after the user stops typing.
+
+    <Tip>
+    Use debouncing when you have computed fields or actions that depend on this input, as it prevents unnecessary recalculations while the user is still typing.
+    </Tip>
+
+  </Accordion>
+</AccordionGroup>

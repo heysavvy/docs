@@ -45,7 +45,12 @@
               "guides/custom-code",
               "guides/how-best-to-send-data",
               "guides/passing-data-in-out",
-              "guides/user-roles-permissions"
+              "guides/user-roles-permissions",
+              {
+                "group": "Components",
+                "icon": "cube",
+                "pages": ["guides/components/input-box"]
+              }
             ]
           },
           {
