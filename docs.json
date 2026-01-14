@@ -98,7 +98,8 @@
                 "icon": "square-code",
                 "pages": [
                   "how-to/add-external-scripts",
-                  "how-to/run-custom-code-on-load"
+                  "how-to/run-custom-code-on-load",
+                  "how-to/add-google-places-autocomplete"
                 ]
               },
               {
