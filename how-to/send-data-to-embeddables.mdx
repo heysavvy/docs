@@ -22,7 +22,7 @@ In those cases, you can [send data to the Embeddables API using a server-side re
       - `embeddable_id`: The ID of your Embeddable
       - `timestamp`: The time the event occurred (in ISO 8601 format)
       - `custom_event_name`: A name for your custom event (must be snake_case)
-      - `custom_event_props`: Any custom properties as a JSON string
+      - `custom_event_props`: Any custom properties as a JSON string. For purchase events, we recommend sending an object with `payload_metrics` (numbers) and `payload_dimensions` (strings) as described below.
       - `identifiers`: A list of key-value pairs to identify the user (e.g., email)
 
     <Tip>
@@ -60,6 +60,37 @@ In those cases, you can [send data to the Embeddables API using a server-side re
 
   </Step>
 </Steps>
+
+## Example: Purchase events with structured payload
+
+For purchase or revenue-related events, we recommend structuring `custom_event_props` as a JSON string containing:
+
+- **payload_metrics**: A key–value object where all values are numbers (e.g. `order_value`, `revenue`, `subtotal`).
+- **payload_dimensions**: A key–value object where all values are strings (e.g. `plan`, `bundle`, `purchase_type`).
+
+This follows a metrics-vs-dimensions approach and keeps your data easy to analyze. The same schema applies when tracking [custom client-side events](/features/analytics#custom-client-side-events).
+
+Example request for a purchase event:
+
+```bash
+curl -X POST https://api.embeddables.com/projects/pr_myexampleproject/events \
+  -H "X-Api-Key: rk_myexampleapikey" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "embeddable_id": "flow_myexampleflow",
+    "timestamp": "2022-01-01T00:00:00.000Z",
+    "custom_event_name": "purchase_completed",
+    "custom_event_props": "{\"payload_metrics\": {\"order_value\": 99.99, \"revenue\": 89.99}, \"payload_dimensions\": {\"plan\": \"premium\", \"bundle\": \"annual\", \"purchase_type\": \"subscription\"}}",
+    "identifiers": [
+      {
+        "key": "email",
+        "value": "\"test@test.com\""
+      }
+    ]
+  }'
+```
+
+Inside `custom_event_props`, the JSON object has numeric values under `payload_metrics` and string values under `payload_dimensions`. You can add your own keys while respecting those types.
 
 <Note>
   The API will return a 200 status code if the event was successfully created.
