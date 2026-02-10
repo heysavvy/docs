@@ -52,16 +52,16 @@ You can capture custom events using custom code - it's best to do this in an [Ac
   </Step>
 </Steps>
 
-**Structured payload for purchase data**
+**Structured payload for custom event data**
 
-For purchase or revenue-related events, we recommend sending properties in a controlled schema so they can be analyzed consistently. Use two optional objects inside your props:
+For custom events where you want to send a mix of numeric metrics and categorical dimensions, we recommend using a controlled schema so they can be analyzed consistently. Use two optional objects inside your props:
 
-- **payload_metrics**: A key–value object where all values are numbers (e.g. `order_value`, `revenue`, `subtotal`, `tax`).
-- **payload_dimensions**: A key–value object where all values are strings (e.g. `plan`, `bundle`, `purchase_type`, `currency`).
+- **payload_metrics**: A key–value object where all values are numbers (for example `order_value`, `revenue`, `subtotal`, `tax`, `score`, `duration_ms`).
+- **payload_dimensions**: A key–value object where all values are strings (for example `plan`, `bundle`, `purchase_type`, `currency`, `segment`, `experiment_variant`).
 
 This follows a metrics-vs-dimensions approach and gives you flexibility without locking into fixed columns. You can use your own keys as long as values match the types above.
 
-Example for a purchase completion event:
+Example for a purchase completion event using this schema:
 
 ```js
 function output(userData, helperFunctions) {

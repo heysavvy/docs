@@ -22,7 +22,7 @@ In those cases, you can [send data to the Embeddables API using a server-side re
       - `embeddable_id`: The ID of your Embeddable
       - `timestamp`: The time the event occurred (in ISO 8601 format)
       - `custom_event_name`: A name for your custom event (must be snake_case)
-      - `custom_event_props`: Any custom properties as a JSON string. For purchase events, we recommend sending an object with `payload_metrics` (numbers) and `payload_dimensions` (strings) as described below.
+      - `custom_event_props`: Any custom properties as a JSON string. For events where you want to send structured metrics and dimensions (for example purchase events), we recommend sending an object with `payload_metrics` (numbers) and `payload_dimensions` (strings) as described below.
       - `identifiers`: A list of key-value pairs to identify the user (e.g., email)
 
     <Tip>
@@ -61,16 +61,16 @@ In those cases, you can [send data to the Embeddables API using a server-side re
   </Step>
 </Steps>
 
-## Example: Purchase events with structured payload
+## Example: Structured metrics and dimensions payload
 
-For purchase or revenue-related events, we recommend structuring `custom_event_props` as a JSON string containing:
+For events where you want to send a mix of numeric metrics and categorical dimensions, we recommend structuring `custom_event_props` as a JSON string containing:
 
-- **payload_metrics**: A key–value object where all values are numbers (e.g. `order_value`, `revenue`, `subtotal`).
-- **payload_dimensions**: A key–value object where all values are strings (e.g. `plan`, `bundle`, `purchase_type`).
+- **payload_metrics**: A key–value object where all values are numbers (for example `order_value`, `revenue`, `subtotal`).
+- **payload_dimensions**: A key–value object where all values are strings (for example `plan`, `bundle`, `purchase_type`).
 
 This follows a metrics-vs-dimensions approach and keeps your data easy to analyze. The same schema applies when tracking [custom client-side events](/features/analytics#custom-client-side-events).
 
-Example request for a purchase event:
+Example request for a purchase event using this schema:
 
 ```bash
 curl -X POST https://api.embeddables.com/projects/pr_myexampleproject/events \
