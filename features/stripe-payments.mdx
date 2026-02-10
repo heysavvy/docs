@@ -11,6 +11,19 @@ Payments in Embeddables are handled via [Stripe](https://stripe.com), with a ded
   <img src="https://assets.embeddables.com/Screenshot2025-04-10at11_0007433720443051905.35.46am.png" />
 </Frame>
 
+## Checkout types
+
+The Stripe Checkout component supports two checkout types:
+
+- **Payment**: The standard checkout experience where customers enter their payment details (credit card, bank account, etc.) directly in the embedded form. This is the default and most common type.
+- **Express Checkout**: A streamlined checkout experience that displays quick-pay buttons such as Apple Pay, Google Pay, and Link. Express Checkout lets returning customers complete purchases faster using saved payment methods in their wallets.
+
+You select the checkout type when configuring the Stripe component in the Builder. You can enable both types at the same time — for example, offering Express Checkout buttons alongside the standard payment form. The checkout type(s) you choose determine which configuration options and triggers are available.
+
+<Note>
+Some configuration fields and triggers only apply to Express Checkout. These are clearly marked throughout this documentation.
+</Note>
+
 ## Keys and IDs that you'll need
 
 1. Your Stripe **Publishable Key** - grab this from the [API Keys](https://dashboard.stripe.com/apikeys) section of your Stripe Dashboard.
@@ -380,15 +393,52 @@ These features are not required in order to successfully accept payments, but th
   <Accordion title="Trigger actions on payment events">
     You can trigger [Actions](/features/actions) on the following payment events:
 
-    | Event                    | Triggered when                                                    |
-    |------------------------- | ----------------------------------------------------------------- |
-    | **Payment attempted**    | The user clicks the Pay button (regardless of success or failure) |
-    | **Payment successful**   | The payment is completed                                          |
-    | **Payment failed**       | The payment is declined                                           |
+    | Event                    | Triggered when                                                    | Checkout type      |
+    |------------------------- | ----------------------------------------------------------------- | ------------------ |
+    | **Payment attempted**    | The user clicks the Pay button (regardless of success or failure) | All                |
+    | **Payment successful**   | The payment is completed                                          | All                |
+    | **Payment failed**       | The payment is declined                                           | All                |
 
     To do this:
     1. Create a new Action and type the JavaScript code you want to run.
     2. Add a Trigger to the Action that fires on one of the above payment events.
+
+  </Accordion>
+  <Accordion title="Prevent default click action on Express Checkout buttons">
+    <Warning>
+      This setting only appears and applies when the Stripe component is configured as **Express Checkout**. It has no effect on the standard Payment checkout type.
+    </Warning>
+
+    When **Prevent default click action** is enabled, clicking an Express Checkout button (e.g. Apple Pay or Google Pay) does **not** immediately initiate the payment flow. Instead, the click is intercepted so you can run custom logic before the payment proceeds.
+
+    This is useful when you need to perform an action before the payment starts — for example, validating user input, updating line items, or fetching data from an external source.
+
+    To enable this:
+    1. In the Stripe component settings, locate the **Prevent default click action** toggle.
+    2. Enable it to prevent the default click behavior on Express Checkout buttons.
+
+    <Note>
+      When this setting is enabled, you must use the [**Payment button click**](#trigger-actions-on-express-checkout-button-click) trigger to handle the intercepted click and continue the payment flow.
+    </Note>
+
+  </Accordion>
+  <Accordion title="Trigger actions on Express Checkout button click">
+    <Warning>
+      This trigger only applies when the Stripe component is configured as **Express Checkout** and **Prevent default click action** is enabled. It does **not** fire for the standard Payment checkout type.
+    </Warning>
+
+    The **Payment button click** trigger fires when a user clicks an Express Checkout button (e.g. Apple Pay, Google Pay) and the default click behavior has been prevented via the [**Prevent default click action**](#prevent-default-click-action-on-express-checkout-buttons) setting.
+
+    This trigger allows you to run custom logic — such as validating data, making API calls, or updating line items — before the payment flow continues.
+
+    To use this trigger:
+    1. Enable **Prevent default click action** in the Stripe component settings.
+    2. Create a new Action with the logic you want to run when the Express Checkout button is clicked.
+    3. Add a Trigger to the Action that fires on **Payment button click**.
+
+    <Note>
+      If **Prevent default click action** is not enabled, this trigger will not fire, and Express Checkout buttons will behave as usual.
+    </Note>
 
   </Accordion>
   <Accordion title="Collect Stripe IDs to send to your backend">
@@ -471,6 +521,22 @@ These features are not required in order to successfully accept payments, but th
       Just make sure that the key of the Stripe component is set to be
       [stored in the 'Embedables Cloud Context'](https://docs.embeddables.com/features/user-data#where-is-user-data-stored%3F) - i.e. stored in Embeddables' database.
     </Note>
+
+  </Accordion>
+  <Accordion title="Configure a Return url for the Checkout Session">
+    You can specify a **Return url** in the Stripe component's Checkout Session configuration. This URL is passed to Stripe when creating the Checkout Session and determines where the customer is redirected after completing an external payment flow (e.g. a bank redirect or 3D Secure authentication).
+
+    <Note>
+      **Return url** is used by Stripe for payment methods that redirect the customer away from your page during the checkout process. If you are only accepting credit card payments without redirects, this field is optional.
+    </Note>
+
+    To configure a return URL:
+    1. In the Stripe component settings, locate the **Checkout Session** configuration section.
+    2. Enter the desired URL in the **Return url** field.
+
+    <Tip>
+      You can use templating in the **Return url** field to include dynamic values, e.g. `https://example.com/confirmation?email={{email}}`.
+    </Tip>
 
   </Accordion>
   <Accordion title="Send custom metadata to Stripe">
