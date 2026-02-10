@@ -1,0 +1,92 @@
+---
+title: "Translations in Embeddables"
+sidebarTitle: "Translations"
+icon: "language"
+description: "Add and edit multiple languages for your Embeddable content in the Builder"
+---
+
+**Translations** let you offer your Embeddable in multiple languages. You configure which languages are available, then edit the content for each language in the Builder. End users see the language that matches their choice (for example via [User Data](/features/user-data) or URL params).
+
+## How translations work in the Builder
+
+Every Embeddable has a **default language** (English). You can add more languages at the Embeddable level. Once you have more than one language:
+
+- A **content language** dropdown appears in the Builder top bar when you're in editing mode.
+- The dropdown controls **which language you are currently editing**. All content you add or change is saved for that language.
+- Text and other translatable fields (labels, placeholders, button text, etc.) are stored per language. The default language uses the normal property keys; other languages use language-prefixed keys internally.
+
+So you switch the active language in the top bar, then edit normally: either in the **Options** panel (Content section) or by **clicking and editing text directly** in the preview. Both respect the selected content language.
+
+## Setting languages
+
+Languages are configured at the **Embeddable** level, not per page or component.
+
+<Steps>
+  <Step title="Deselect any selection">
+    Click in empty space in the preview or press Escape so that nothing (no page, no component) is selected. The Options panel will show Embeddable-level options.
+  </Step>
+  <Step title="Open the Translations section">
+    In the left sidebar, open the **Options** tab, then expand the **Translations** accordion section.
+  </Step>
+  <Step title="Add a language">
+    Click **Add** and fill in:
+    - **Key** – A short code for the language (e.g. <code>es</code>, <code>en_us</code>, <code>fr</code>). The key should follow Embeddable's key name conventions, see [Naming keys](/guides/naming_keys).
+    - **Name** – The display name (e.g. Español, English (US), Français). This is only used inside the builder.
+    Click to add. The new language appears in the list below the default language.
+  </Step>
+</Steps>
+
+- **Default language** – English is always the default and cannot be removed. It appears first in the list and does not have an Edit/Delete action.
+- **Editing a language** – Use **Edit** on a language card to change its **Name** only. The **Key** cannot be changed after creation.
+- **Removing a language** – Use **Delete** on a language card to remove that language. Content already stored for that language will no longer be shown to end users.
+
+## Editing translations
+
+After you have at least two languages, you can edit content per language in two ways.
+
+### Switching the content language
+
+When in **editing mode** and more than one language is configured, the **content language dropdown** appears in the top bar (next to the breakpoint toggle). It shows a short label for the current language (e.g. En, Es).
+
+1. Click the dropdown and select the language you want to edit.
+2. All subsequent edits (in the Options panel or in the preview) apply to that language until you switch again.
+
+The selected language is remembered for your session in the Builder (stored in User Data for the Builder preview).
+
+### Editing in the Options panel
+
+1. Select the content language you want to edit from the top bar dropdown.
+2. Select a component or page in the Layers sidebar or in the preview.
+3. In the **Options** tab, open the **Content** section. Fields that support translations (text, label, placeholder, button labels, descriptions, etc.) will show and save values for the **currently selected language**.
+4. Change any of those fields; they are stored for the active content language.
+
+This applies to components that expose translatable fields in the Content section: **Plain Text**, **Rich Text**, **Rich Text Markdown**, **Custom HTML**, **Input Box**, **Option Selector**, **Custom Button**, **File Upload**, and **Media Image**, as well as page-level content where applicable.
+
+### Editing text in the preview
+
+You can also edit translatable text **in place** in the preview:
+
+1. Select the content language from the top bar dropdown.
+2. Click the text you want to change in the preview. The text becomes editable.
+3. Type your changes. They are saved for the currently selected language.
+
+In-place editing uses the same language as the dropdown, so you can work in one language at a time without opening the Options panel.
+
+## End-user language
+
+How an end user sees a given language depends on your setup. The runtime uses the value of <code>embeddable_language</code> in [User Data](/features/user-data) (when present) to decide which language to show. You can:
+
+- Set a default or detect locale and call <code>setUserData</code> (or equivalent) with <code>embeddable_language: 'es'</code> (or another key you configured).
+- Pass the language via a [URL param](/features/url-params) if you expose that key in your allowed URL keys.
+
+If no value is present for <code>embeddable_language</code>, or the provided value does not match any configured languages, the default language will be loaded.
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="User Data" icon="database" href="/features/user-data">
+    Use User Data to drive which language the end user sees (e.g. embeddable_language).
+  </Card>
+  <Card title="URL Params" icon="vial" href="/features/url-params">
+    Prefill or override User Data (including language) via URL params.
+  </Card>
+</CardGroup>
