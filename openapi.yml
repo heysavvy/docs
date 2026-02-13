@@ -1,7 +1,7 @@
 openapi: 3.0.1
 info:
   title: api
-  version: ""
+  version: ''
 paths:
   /projects/{projectId}/embeddables:
     get:
@@ -14,7 +14,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -31,14 +31,14 @@ paths:
             Example2:
               value: rk_myexampleapikey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Embeddable"
+                  $ref: '#/components/schemas/Embeddable'
               examples:
                 Example1:
                   value:
@@ -54,14 +54,14 @@ paths:
                       title: My Example Embeddable 3
                       group_id: flow_myexamplegroup
                       project_id: pr_myexampleproject
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
-        "404":
-          description: ""
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
+        '404':
+          description: ''
   /projects/{projectId}/embeddables/{embeddableId}:
     get:
       description: Retrieve an embeddable from the database based on the ID
@@ -73,7 +73,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -83,7 +83,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/EmbeddableId"
+            $ref: '#/components/schemas/EmbeddableId'
           examples:
             Example1:
               value: flow_myexampleembeddable
@@ -100,12 +100,12 @@ paths:
             Example2:
               value: rk_myexampleapikey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EmbeddableWithJson"
+                $ref: '#/components/schemas/EmbeddableWithJson'
               examples:
                 Example1:
                   value:
@@ -114,18 +114,18 @@ paths:
                     group_id: flow_myexamplegroup
                     project_id: pr_myexampleproject
                     json_string_prod: '{ "pages": [] }'
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
-        "404":
-          description: ""
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
+        '404':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EmbeddableDoesNotExistErrorBody"
+                $ref: '#/components/schemas/EmbeddableDoesNotExistErrorBody'
               examples:
                 Example1:
                   value:
@@ -145,7 +145,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -155,7 +155,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/EmbeddableId"
+            $ref: '#/components/schemas/EmbeddableId'
           examples:
             Example1:
               value: flow_myexampleembeddable
@@ -165,7 +165,7 @@ paths:
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Limit"
+            $ref: '#/components/schemas/Limit'
             nullable: true
           examples:
             Example1:
@@ -174,7 +174,7 @@ paths:
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Direction"
+            $ref: '#/components/schemas/Direction'
             nullable: true
           examples:
             Example1:
@@ -190,38 +190,38 @@ paths:
             Example2:
               value: rk_myexampleapikey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/EmbeddableVersion"
+                  $ref: '#/components/schemas/EmbeddableVersion'
               examples:
                 Example1:
                   value:
                     - embeddable_id: flow_myexampleembeddable
                       version_number: 1
-                      saved_at: "2022-01-01T00:00:00Z"
+                      saved_at: '2022-01-01T00:00:00Z'
                     - embeddable_id: flow_myexampleembeddable
                       version_number: 2
-                      saved_at: "2022-01-02T00:00:00Z"
+                      saved_at: '2022-01-02T00:00:00Z'
                     - embeddable_id: flow_myexampleembeddable
                       version_number: 3
-                      saved_at: "2022-01-03T00:00:00Z"
-        "401":
-          description: ""
+                      saved_at: '2022-01-03T00:00:00Z'
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
-        "404":
-          description: ""
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
+        '404':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EmbeddableDoesNotExistErrorBody"
+                $ref: '#/components/schemas/EmbeddableDoesNotExistErrorBody'
               examples:
                 Example1:
                   value:
@@ -243,7 +243,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -255,7 +255,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/EmbeddableId"
+            $ref: '#/components/schemas/EmbeddableId'
           examples:
             Example1:
               value: flow_myexampleembeddable
@@ -267,7 +267,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/EmbeddableVersionNumber"
+            $ref: '#/components/schemas/EmbeddableVersionNumber'
           examples:
             Example1:
               value: 123
@@ -288,31 +288,31 @@ paths:
             Example3:
               value: rk_myexampleapikey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EmbeddableVersionWithJson"
+                $ref: '#/components/schemas/EmbeddableVersionWithJson'
               examples:
                 Example1:
                   value:
                     embeddable_id: flow_myexampleembeddable
                     version_number: 123
-                    saved_at: "2022-01-01T00:00:00Z"
+                    saved_at: '2022-01-01T00:00:00Z'
                     json_string: '{ "pages": [] }'
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
-        "404":
-          description: ""
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
+        '404':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EmbeddableDoesNotExistErrorBody"
+                $ref: '#/components/schemas/EmbeddableDoesNotExistErrorBody'
               examples:
                 Example1:
                   value:
@@ -321,12 +321,12 @@ paths:
                       message: The embeddable does not exist
                     projectId: pr_myexampleproject
                     embeddableId: flow_doesnotexist
-        "405":
-          description: ""
+        '405':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EmbeddableVersionDoesNotExistErrorBody"
+                $ref: '#/components/schemas/EmbeddableVersionDoesNotExistErrorBody'
               examples:
                 Example1:
                   value:
@@ -349,7 +349,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -359,25 +359,25 @@ paths:
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Limit"
+            $ref: '#/components/schemas/Limit'
             nullable: true
         - name: direction
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Direction"
+            $ref: '#/components/schemas/Direction'
             nullable: true
         - name: updated_after
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/DateTime"
+            $ref: '#/components/schemas/DateTime'
             nullable: true
         - name: updated_before
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/DateTime"
+            $ref: '#/components/schemas/DateTime'
             nullable: true
         - name: include_urls
           in: query
@@ -396,14 +396,14 @@ paths:
             Example2:
               value: rk_incorrectkey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/EntryPageViews"
+                  $ref: '#/components/schemas/EntryPageViews'
               examples:
                 Example1:
                   value:
@@ -412,10 +412,10 @@ paths:
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_1
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      created_at: '2022-01-01T00:00:00Z'
+                      updated_at: '2022-01-01T00:00:00Z'
                       page_views:
-                        - timestamp: "2022-01-01T00:00:00Z"
+                        - timestamp: '2022-01-01T00:00:00Z'
                           page_id: page_myexamplepageid1
                           page_key: page_myexamplepagekey1
                           page_index: 1
@@ -424,10 +424,10 @@ paths:
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_2
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      created_at: '2022-01-01T00:00:00Z'
+                      updated_at: '2022-01-01T00:00:00Z'
                       page_views:
-                        - timestamp: "2022-01-01T00:00:00Z"
+                        - timestamp: '2022-01-01T00:00:00Z'
                           page_id: page_myexamplepageid1
                           page_key: page_myexamplepagekey1
                           page_index: 1
@@ -436,19 +436,19 @@ paths:
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_3
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      created_at: '2022-01-01T00:00:00Z'
+                      updated_at: '2022-01-01T00:00:00Z'
                       page_views:
-                        - timestamp: "2022-01-01T00:00:00Z"
+                        - timestamp: '2022-01-01T00:00:00Z'
                           page_id: page_myexamplepageid1
                           page_key: page_myexamplepagekey1
                           page_index: 1
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
               examples:
                 Example1:
                   value:
@@ -469,7 +469,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -479,31 +479,31 @@ paths:
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Limit"
+            $ref: '#/components/schemas/Limit'
             nullable: true
         - name: sort
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Sort"
+            $ref: '#/components/schemas/Sort'
             nullable: true
         - name: direction
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Direction"
+            $ref: '#/components/schemas/Direction'
             nullable: true
         - name: updated_after
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/DateTime"
+            $ref: '#/components/schemas/DateTime'
             nullable: true
         - name: updated_before
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/DateTime"
+            $ref: '#/components/schemas/DateTime'
             nullable: true
         - name: X-Api-Key
           in: header
@@ -516,14 +516,14 @@ paths:
             Example2:
               value: rk_incorrectkey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Entry"
+                  $ref: '#/components/schemas/Entry'
               examples:
                 Example1:
                   value:
@@ -532,31 +532,31 @@ paths:
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_1
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      created_at: '2022-01-01T00:00:00Z'
+                      updated_at: '2022-01-01T00:00:00Z'
                       entry_data: '{ "email": "ada@lovelace.com" }'
                     - entry_id: entry_myexampleentry_2
                       group_id: group_myexamplegroup
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_2
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      created_at: '2022-01-01T00:00:00Z'
+                      updated_at: '2022-01-01T00:00:00Z'
                       entry_data: '{ "email": "grace@hopper.com" }'
                     - entry_id: entry_myexampleentry_3
                       group_id: group_myexamplegroup
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_3
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      created_at: '2022-01-01T00:00:00Z'
+                      updated_at: '2022-01-01T00:00:00Z'
                       entry_data: '{ "email": "alan@turing.com" }'
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
               examples:
                 Example1:
                   value:
@@ -577,7 +577,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -589,7 +589,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/EntryId"
+            $ref: '#/components/schemas/EntryId'
           examples:
             Example1:
               value: entry_myexampleentry
@@ -610,12 +610,12 @@ paths:
             Example3:
               value: rk_myexampleapikey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Entry"
+                $ref: '#/components/schemas/Entry'
               examples:
                 Example1:
                   value:
@@ -624,15 +624,15 @@ paths:
                     project_id: pr_myexampleproject
                     embeddable_id: flow_myexampleflow
                     contact_id: contact_myexamplecontact
-                    created_at: "2022-01-01T00:00:00Z"
-                    updated_at: "2022-01-01T00:00:00Z"
+                    created_at: '2022-01-01T00:00:00Z'
+                    updated_at: '2022-01-01T00:00:00Z'
                     entry_data: '{ "email": "ada@lovelace.com" }'
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
               examples:
                 Example1:
                   value:
@@ -642,12 +642,12 @@ paths:
                         You are not authorized to access this project with the
                         API key provided.
                     projectId: pr_myexampleproject
-        "404":
-          description: ""
+        '404':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EntryNotFoundErrorBody"
+                $ref: '#/components/schemas/EntryNotFoundErrorBody'
               examples:
                 Example1:
                   value:
@@ -668,7 +668,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -680,7 +680,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/EntryId"
+            $ref: '#/components/schemas/EntryId'
           examples:
             Example1:
               value: entry_myexampleentry
@@ -692,13 +692,13 @@ paths:
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Limit"
+            $ref: '#/components/schemas/Limit'
             nullable: true
         - name: direction
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/Direction"
+            $ref: '#/components/schemas/Direction'
             nullable: true
         - name: X-Api-Key
           in: header
@@ -713,14 +713,14 @@ paths:
             Example3:
               value: rk_myexampleapikey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Event"
+                  $ref: '#/components/schemas/Event'
               examples:
                 Example1:
                   value:
@@ -730,7 +730,7 @@ paths:
                       group_id: group_myexamplegroup
                       embeddable_id: flow_myexampleflow
                       embeddable_version_number: 1
-                      timestamp: "2022-01-01T00:00:00Z"
+                      timestamp: '2022-01-01T00:00:00Z'
                       page_id: page_myexamplepageid1
                       page_key: page_myexamplepagekey1
                       page_index: 1
@@ -748,7 +748,7 @@ paths:
                       group_id: group_myexamplegroup
                       embeddable_id: flow_myexampleflow
                       embeddable_version_number: 1
-                      timestamp: "2022-01-01T00:01:00Z"
+                      timestamp: '2022-01-01T00:01:00Z'
                       page_id: page_myexamplepageid2
                       page_key: page_myexamplepagekey2
                       page_index: 2
@@ -760,12 +760,12 @@ paths:
                       view_type: flowpage
                       custom_event_name: my_custom_event
                       custom_event_props: '{ "key": "value" }'
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
               examples:
                 Example1:
                   value:
@@ -775,12 +775,12 @@ paths:
                         You are not authorized to access this project with the
                         API key provided.
                     projectId: pr_myexampleproject
-        "404":
-          description: ""
+        '404':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EntryNotFoundErrorBody"
+                $ref: '#/components/schemas/EntryNotFoundErrorBody'
               examples:
                 Example1:
                   value:
@@ -801,7 +801,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -814,12 +814,12 @@ paths:
             Example1:
               value: rk_myexampleapikey
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Event"
+                $ref: '#/components/schemas/Event'
               examples:
                 Example1:
                   value:
@@ -829,33 +829,33 @@ paths:
                     embeddable_version_number: 1
                     contact_id: contact_myexamplecontact
                     entry_id: entry_myexampleentry
-                    timestamp: "2022-01-01T00:00:00Z"
+                    timestamp: '2022-01-01T00:00:00Z'
                     event_type: custom_event:triggered
                     custom_event_name: my_custom_event
                     custom_event_props: '{ "my_prop": "my_val" }'
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
-        "404":
-          description: ""
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
+        '404':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/EntryNotFoundErrorBody"
+                $ref: '#/components/schemas/EntryNotFoundErrorBody'
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/EntryEventRequest"
+              $ref: '#/components/schemas/EntryEventRequest'
             examples:
               Example1:
                 value:
                   embeddable_id: flow_myexampleflow
-                  timestamp: "2022-01-01T00:00:00.000Z"
+                  timestamp: '2022-01-01T00:00:00.000Z'
                   custom_event_name: my_custom_event
                   custom_event_props: '{ "my_prop": "my_val" }'
                   identifiers:
@@ -872,7 +872,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -880,17 +880,17 @@ paths:
           in: query
           required: false
           schema:
-            $ref: "#/components/schemas/ExperimentStatus"
+            $ref: '#/components/schemas/ExperimentStatus'
             nullable: true
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Experiment"
+                  $ref: '#/components/schemas/Experiment'
               examples:
                 Example1:
                   value:
@@ -904,8 +904,8 @@ paths:
                         - click_through_rate
                       no_impact_metrics:
                         - bounce_rate
-                      created_at: "2024-01-01T00:00:00Z"
-                      updated_at: "2024-01-01T00:00:00Z"
+                      created_at: '2024-01-01T00:00:00Z'
+                      updated_at: '2024-01-01T00:00:00Z'
                       observations: Users seem to prefer blue buttons
                       outcome: Blue variant shows 15% higher conversion
                       attachments: >-
@@ -929,11 +929,11 @@ paths:
                       impact_metrics:
                         - engagement_rate
                       no_impact_metrics: []
-                      created_at: "2024-01-02T00:00:00Z"
-                      updated_at: "2024-01-02T00:00:00Z"
+                      created_at: '2024-01-02T00:00:00Z'
+                      updated_at: '2024-01-02T00:00:00Z'
                       observations: null
                       outcome: null
-                      attachments: "[]"
+                      attachments: '[]'
                       variants: >-
                         {"control": {"headline": "Original"}, "variant_a":
                         {"headline": "New"}}
@@ -942,14 +942,14 @@ paths:
                       paused_showing_variant: null
                       winner_variant: null
                       status: draft
-        "401":
-          description: ""
+        '401':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/UnauthorizedErrorBody"
-        "404":
-          description: ""
+                $ref: '#/components/schemas/UnauthorizedErrorBody'
+        '404':
+          description: ''
   /projects/{projectId}/experiments/{experimentId}:
     get:
       description: Retrieve an experiment from the database based on the experiment ID
@@ -961,7 +961,7 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
@@ -971,19 +971,19 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ExperimentId"
+            $ref: '#/components/schemas/ExperimentId'
           examples:
             Example1:
               value: exp_abc123
             Example2:
               value: exp_does_not_exist
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Experiment"
+                $ref: '#/components/schemas/Experiment'
               examples:
                 Example1:
                   value:
@@ -997,8 +997,8 @@ paths:
                       - click_through_rate
                     no_impact_metrics:
                       - bounce_rate
-                    created_at: "2024-01-01T00:00:00Z"
-                    updated_at: "2024-01-01T00:00:00Z"
+                    created_at: '2024-01-01T00:00:00Z'
+                    updated_at: '2024-01-01T00:00:00Z'
                     observations: Users seem to prefer blue buttons
                     outcome: Blue variant shows 15% higher conversion
                     attachments: >-
@@ -1013,8 +1013,8 @@ paths:
                     paused_showing_variant: null
                     winner_variant: variant_a
                     status: running
-        "404":
-          description: ""
+        '404':
+          description: ''
   /projects/{projectId}:
     get:
       description: Retrieve a project from the database based on the ID
@@ -1026,26 +1026,26 @@ paths:
           in: path
           required: true
           schema:
-            $ref: "#/components/schemas/ProjectId"
+            $ref: '#/components/schemas/ProjectId'
           examples:
             Example1:
               value: pr_myexampleproject
             Example2:
               value: pr_doesnotexist
       responses:
-        "200":
-          description: ""
+        '200':
+          description: ''
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/Project"
+                $ref: '#/components/schemas/Project'
               examples:
                 Example1:
                   value:
                     id: pr_myexampleproject
                     title: My Example Project
-        "404":
-          description: ""
+        '404':
+          description: ''
 components:
   schemas:
     EmbeddableId:
@@ -1065,7 +1065,7 @@ components:
       type: object
       properties:
         embeddable_id:
-          $ref: "#/components/schemas/EmbeddableId"
+          $ref: '#/components/schemas/EmbeddableId'
         title:
           type: string
         group_id:
@@ -1082,21 +1082,21 @@ components:
       type: object
       properties:
         json_string_prod:
-          $ref: "#/components/schemas/JsonString"
+          $ref: '#/components/schemas/JsonString'
       required:
         - json_string_prod
       allOf:
-        - $ref: "#/components/schemas/Embeddable"
+        - $ref: '#/components/schemas/Embeddable'
     EmbeddableVersion:
       title: EmbeddableVersion
       type: object
       properties:
         embeddable_id:
-          $ref: "#/components/schemas/EmbeddableId"
+          $ref: '#/components/schemas/EmbeddableId'
         version_number:
-          $ref: "#/components/schemas/EmbeddableVersionNumber"
+          $ref: '#/components/schemas/EmbeddableVersionNumber'
         saved_at:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
       required:
         - embeddable_id
         - version_number
@@ -1106,11 +1106,11 @@ components:
       type: object
       properties:
         json_string:
-          $ref: "#/components/schemas/JsonString"
+          $ref: '#/components/schemas/JsonString'
       required:
         - json_string
       allOf:
-        - $ref: "#/components/schemas/EmbeddableVersion"
+        - $ref: '#/components/schemas/EmbeddableVersion'
     PageId:
       title: PageId
       type: string
@@ -1125,11 +1125,11 @@ components:
       type: object
       properties:
         error:
-          $ref: "#/components/schemas/ErrorBody"
+          $ref: '#/components/schemas/ErrorBody'
         projectId:
-          $ref: "#/components/schemas/ProjectId"
+          $ref: '#/components/schemas/ProjectId'
         embeddableId:
-          $ref: "#/components/schemas/EmbeddableId"
+          $ref: '#/components/schemas/EmbeddableId'
       required:
         - error
         - projectId
@@ -1139,13 +1139,13 @@ components:
       type: object
       properties:
         error:
-          $ref: "#/components/schemas/ErrorBody"
+          $ref: '#/components/schemas/ErrorBody'
         projectId:
-          $ref: "#/components/schemas/ProjectId"
+          $ref: '#/components/schemas/ProjectId'
         embeddableId:
-          $ref: "#/components/schemas/EmbeddableId"
+          $ref: '#/components/schemas/EmbeddableId'
         versionNumber:
-          $ref: "#/components/schemas/EmbeddableVersionNumber"
+          $ref: '#/components/schemas/EmbeddableVersionNumber'
       required:
         - error
         - projectId
@@ -1156,23 +1156,23 @@ components:
       type: object
       properties:
         entry_id:
-          $ref: "#/components/schemas/EntryId"
+          $ref: '#/components/schemas/EntryId'
         contact_id:
-          $ref: "#/components/schemas/ContactId"
+          $ref: '#/components/schemas/ContactId'
         project_id:
-          $ref: "#/components/schemas/ProjectId"
+          $ref: '#/components/schemas/ProjectId'
         group_id:
-          $ref: "#/components/schemas/GroupId"
+          $ref: '#/components/schemas/GroupId'
         embeddable_id:
-          $ref: "#/components/schemas/EmbeddableId"
+          $ref: '#/components/schemas/EmbeddableId'
         created_at:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         updated_at:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         page_views:
           type: array
           items:
-            $ref: "#/components/schemas/EntryPageView"
+            $ref: '#/components/schemas/EntryPageView'
       required:
         - entry_id
         - contact_id
@@ -1187,13 +1187,13 @@ components:
       type: object
       properties:
         timestamp:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         page_id:
-          $ref: "#/components/schemas/PageId"
+          $ref: '#/components/schemas/PageId'
         page_key:
-          $ref: "#/components/schemas/PageKey"
+          $ref: '#/components/schemas/PageKey'
         page_index:
-          $ref: "#/components/schemas/PageIndex"
+          $ref: '#/components/schemas/PageIndex'
         url:
           type: string
           nullable: true
@@ -1229,21 +1229,21 @@ components:
       type: object
       properties:
         entry_id:
-          $ref: "#/components/schemas/EntryId"
+          $ref: '#/components/schemas/EntryId'
         group_id:
-          $ref: "#/components/schemas/GroupId"
+          $ref: '#/components/schemas/GroupId'
         project_id:
-          $ref: "#/components/schemas/ProjectId"
+          $ref: '#/components/schemas/ProjectId'
         embeddable_id:
-          $ref: "#/components/schemas/EmbeddableId"
+          $ref: '#/components/schemas/EmbeddableId'
         contact_id:
-          $ref: "#/components/schemas/ContactId"
+          $ref: '#/components/schemas/ContactId'
         created_at:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         updated_at:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         entry_data:
-          $ref: "#/components/schemas/EntryData"
+          $ref: '#/components/schemas/EntryData'
       required:
         - entry_id
         - group_id
@@ -1258,45 +1258,45 @@ components:
       type: object
       properties:
         entry_id:
-          $ref: "#/components/schemas/EntryId"
+          $ref: '#/components/schemas/EntryId'
         contact_id:
-          $ref: "#/components/schemas/ContactId"
+          $ref: '#/components/schemas/ContactId'
         project_id:
-          $ref: "#/components/schemas/ProjectId"
+          $ref: '#/components/schemas/ProjectId'
         group_id:
-          $ref: "#/components/schemas/GroupId"
+          $ref: '#/components/schemas/GroupId'
         embeddable_id:
-          $ref: "#/components/schemas/EmbeddableId"
+          $ref: '#/components/schemas/EmbeddableId'
         embeddable_version_number:
-          $ref: "#/components/schemas/EmbeddableVersionNumber"
+          $ref: '#/components/schemas/EmbeddableVersionNumber'
           nullable: true
         timestamp:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         page_id:
-          $ref: "#/components/schemas/PageId"
+          $ref: '#/components/schemas/PageId'
           nullable: true
         page_key:
-          $ref: "#/components/schemas/PageKey"
+          $ref: '#/components/schemas/PageKey'
           nullable: true
         page_index:
-          $ref: "#/components/schemas/PageIndex"
+          $ref: '#/components/schemas/PageIndex'
           nullable: true
         max_page_id:
-          $ref: "#/components/schemas/PageId"
+          $ref: '#/components/schemas/PageId'
           nullable: true
         max_page_key:
-          $ref: "#/components/schemas/PageKey"
+          $ref: '#/components/schemas/PageKey'
           nullable: true
         max_page_index:
-          $ref: "#/components/schemas/PageIndex"
+          $ref: '#/components/schemas/PageIndex'
           nullable: true
         total_pages:
           type: integer
           nullable: true
         event_type:
-          $ref: "#/components/schemas/EventType"
+          $ref: '#/components/schemas/EventType'
         view_type:
-          $ref: "#/components/schemas/ViewType"
+          $ref: '#/components/schemas/ViewType'
           nullable: true
         custom_event_name:
           type: string
@@ -1317,9 +1317,9 @@ components:
       type: object
       properties:
         error:
-          $ref: "#/components/schemas/ErrorBody"
+          $ref: '#/components/schemas/ErrorBody'
         entryId:
-          $ref: "#/components/schemas/EntryId"
+          $ref: '#/components/schemas/EntryId'
           nullable: true
       required:
         - error
@@ -1328,15 +1328,15 @@ components:
       type: object
       properties:
         embeddable_id:
-          $ref: "#/components/schemas/EmbeddableId"
+          $ref: '#/components/schemas/EmbeddableId'
         timestamp:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         custom_event_name:
-          $ref: "#/components/schemas/CustomEventName"
+          $ref: '#/components/schemas/CustomEventName'
         custom_event_props:
-          $ref: "#/components/schemas/CustomEventProps"
+          $ref: '#/components/schemas/CustomEventProps'
         identifiers:
-          $ref: "#/components/schemas/Identifiers"
+          $ref: '#/components/schemas/Identifiers'
       required:
         - embeddable_id
         - timestamp
@@ -1357,7 +1357,7 @@ components:
       title: Identifiers
       type: array
       items:
-        $ref: "#/components/schemas/Identifier"
+        $ref: '#/components/schemas/Identifier'
       description: >-
         A list of key-value pairs that uniquely identify the end-user that this
         event should be attached to. Currently supports one key-value pair. The
@@ -1404,7 +1404,7 @@ components:
           type: string
           example: exp_abc123
         flowId:
-          $ref: "#/components/schemas/FlowId"
+          $ref: '#/components/schemas/FlowId'
         name:
           type: string
           nullable: true
@@ -1422,9 +1422,9 @@ components:
             type: string
           nullable: true
         created_at:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         updated_at:
-          $ref: "#/components/schemas/DateTime"
+          $ref: '#/components/schemas/DateTime'
         observations:
           type: string
           nullable: true
@@ -1449,7 +1449,7 @@ components:
           type: string
           nullable: true
         status:
-          $ref: "#/components/schemas/ExperimentStatus"
+          $ref: '#/components/schemas/ExperimentStatus'
           nullable: true
       required:
         - id
@@ -1496,7 +1496,7 @@ components:
       type: object
       properties:
         id:
-          $ref: "#/components/schemas/ProjectId"
+          $ref: '#/components/schemas/ProjectId'
         title:
           type: string
           example: My Example Project
@@ -1508,9 +1508,9 @@ components:
       type: object
       properties:
         error:
-          $ref: "#/components/schemas/ErrorBody"
+          $ref: '#/components/schemas/ErrorBody'
         projectId:
-          $ref: "#/components/schemas/ProjectId"
+          $ref: '#/components/schemas/ProjectId'
       required:
         - error
         - projectId
