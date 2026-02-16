@@ -15,8 +15,24 @@ Payments in Embeddables are handled via [Stripe](https://stripe.com), with a ded
 
 The Stripe Checkout component supports two checkout types:
 
-- **Payment**: The standard checkout experience where customers enter their payment details (credit card, bank account, etc.) directly in the embedded form. This is the default and most common type.
-- **Express Checkout**: A streamlined checkout experience that displays quick-pay buttons such as Apple Pay, Google Pay, and Link. Express Checkout lets returning customers complete purchases faster using saved payment methods in their wallets.
+<AccordionGroup>
+  <Accordion title="Payment">
+    The standard checkout experience where customers enter their payment details (credit card, bank account, etc.) directly in the embedded form. This is the default and most common type.
+
+    <Frame caption="The Payment element displays fields for entering card details and other payment methods.">
+      <img src="https://assets.embeddables.com/payment_element_7181561019604321.png" alt="Stripe Payment element showing card and payment method input fields" />
+    </Frame>
+
+  </Accordion>
+  <Accordion title="Express Checkout">
+    A streamlined checkout experience that displays quick-pay buttons such as Apple Pay, Google Pay, and Link. Express Checkout lets returning customers complete purchases faster using saved payment methods in their wallets.
+
+    <Frame caption="The Express Checkout element displays wallet-based payment buttons for the user's device.">
+      <img src="https://assets.embeddables.com/express_checkout_element_9460038674743292.png" alt="Stripe Express Checkout element showing Apple Pay, Google Pay, and Link buttons" />
+    </Frame>
+
+  </Accordion>
+</AccordionGroup>
 
 You select the checkout type when configuring the Stripe component in the Builder. You can enable both types at the same time — for example, offering Express Checkout buttons alongside the standard payment form. The checkout type(s) you choose determine which configuration options and triggers are available.
 
@@ -409,17 +425,21 @@ These features are not required in order to successfully accept payments, but th
       This setting only appears and applies when the Stripe component is configured as **Express Checkout**. It has no effect on the standard Payment checkout type.
     </Warning>
 
-    When **Prevent default click action** is enabled, clicking an Express Checkout button (e.g. Apple Pay or Google Pay) does **not** immediately initiate the payment flow. Instead, the click is intercepted so you can run custom logic before the payment proceeds.
+    When **Prevent default click action** is enabled, the Express Checkout buttons (e.g. Apple Pay or Google Pay) become purely visual — they display the correct button(s) for the user's device but do **not** trigger any payment functionality when clicked. The payment flow is completely disabled on this component.
 
-    This is useful when you need to perform an action before the payment starts — for example, validating user input, updating line items, or fetching data from an external source.
+    This turns the Express Checkout into a UI element you can use to capture the user's click intent without starting a transaction. The [**Payment button click**](#trigger-actions-on-express-checkout-button-click) trigger fires instead, allowing you to run custom logic in response to the click.
+
+    <Tip>
+      A typical workflow is to use the intercepted click to trigger a page change or popup that contains a **separate** Stripe Checkout component (one that does **not** have **Prevent default click action** enabled). This second component handles the actual payment. Without it, the user will not be able to complete a purchase.
+    </Tip>
 
     To enable this:
     1. In the Stripe component settings, locate the **Prevent default click action** toggle.
     2. Enable it to prevent the default click behavior on Express Checkout buttons.
 
-    <Note>
-      When this setting is enabled, you must use the [**Payment button click**](#trigger-actions-on-express-checkout-button-click) trigger to handle the intercepted click and continue the payment flow.
-    </Note>
+    <Warning>
+      This component will not process payments on its own. You must provide another Stripe Checkout component (without this setting enabled) for the user to complete the payment.
+    </Warning>
 
   </Accordion>
   <Accordion title="Trigger actions on Express Checkout button click">
@@ -427,17 +447,17 @@ These features are not required in order to successfully accept payments, but th
       This trigger only applies when the Stripe component is configured as **Express Checkout** and **Prevent default click action** is enabled. It does **not** fire for the standard Payment checkout type.
     </Warning>
 
-    The **Payment button click** trigger fires when a user clicks an Express Checkout button (e.g. Apple Pay, Google Pay) and the default click behavior has been prevented via the [**Prevent default click action**](#prevent-default-click-action-on-express-checkout-buttons) setting.
+    The **Payment button click** trigger fires when a user clicks an Express Checkout button (e.g. Apple Pay, Google Pay) whose default click behavior has been disabled via the [**Prevent default click action**](#prevent-default-click-action-on-express-checkout-buttons) setting. Since the button itself does not initiate any payment, this trigger is your entry point for deciding what happens next.
 
-    This trigger allows you to run custom logic — such as validating data, making API calls, or updating line items — before the payment flow continues.
+    A common pattern is to use this trigger to navigate the user to a different page or open a popup that contains a **separate** Stripe Checkout component — one that is fully functional and can process the payment.
 
     To use this trigger:
     1. Enable **Prevent default click action** in the Stripe component settings.
-    2. Create a new Action with the logic you want to run when the Express Checkout button is clicked.
+    2. Create a new Action with the logic you want to run when the Express Checkout button is clicked (e.g. navigate to a checkout page or open a popup).
     3. Add a Trigger to the Action that fires on **Payment button click**.
 
     <Note>
-      If **Prevent default click action** is not enabled, this trigger will not fire, and Express Checkout buttons will behave as usual.
+      If **Prevent default click action** is not enabled, this trigger will not fire, and Express Checkout buttons will behave as usual — clicking them will start the payment flow directly.
     </Note>
 
   </Accordion>
