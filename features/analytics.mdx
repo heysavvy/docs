@@ -52,6 +52,40 @@ You can capture custom events using custom code - it's best to do this in an [Ac
   </Step>
 </Steps>
 
+**Structured payload for custom event data**
+
+For custom events where you want to send a mix of numeric metrics and categorical dimensions, we recommend using a controlled schema so they can be analyzed consistently. Use two optional objects inside your props:
+
+- **payload_metrics**: A key–value object where all values are numbers (for example `order_value`, `revenue`, `subtotal`, `tax`, `score`, `duration_ms`).
+- **payload_dimensions**: A key–value object where all values are strings (for example `plan`, `bundle`, `purchase_type`, `currency`, `segment`, `experiment_variant`).
+
+This follows a metrics-vs-dimensions approach and gives you flexibility without locking into fixed columns. You can use your own keys as long as values match the types above.
+
+Example for a purchase completion event using this schema:
+
+```js
+function output(userData, helperFunctions) {
+  helperFunctions.trackCustomEvent('purchase_completed', {
+    payload_metrics: {
+      order_value: 99.99,
+      revenue: 89.99,
+      subtotal: 79.99,
+      tax: 10.0
+    },
+    payload_dimensions: {
+      plan: 'premium',
+      bundle: 'annual',
+      purchase_type: 'subscription',
+      currency: 'USD'
+    }
+  });
+}
+```
+
+<Tip>
+Keep `payload_metrics` values as numbers and `payload_dimensions` values as strings. You can add any keys you need within those constraints.
+</Tip>
+
 ### Custom server-side events
 
 Some events will occur somewhere other than in the Embeddable, for example a user completing a doctor's appointment.
