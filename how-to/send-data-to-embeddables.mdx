@@ -18,12 +18,18 @@ In those cases, you can [send data to the Embeddables API using a server-side re
   </Step>
 
   <Step title="Prepare your event data">
-    - Create a JSON object with the following required fields:
-      - `embeddable_id`: The ID of your Embeddable
-      - `timestamp`: The time the event occurred (in ISO 8601 format)
-      - `custom_event_name`: A name for your custom event (must be snake_case)
-      - `custom_event_props`: Any custom properties as a JSON string. For events where you want to send structured metrics and dimensions (for example purchase events), we recommend sending an object with `payload_metrics` (numbers) and `payload_dimensions` (strings) as described below.
-      - `identifiers`: A list of key-value pairs to identify the user (e.g., email)
+    - Create a JSON object with the following fields.
+
+    ### Required fields
+
+    - `embeddable_id`: The ID of your Embeddable
+    - `timestamp`: The time the event occurred (in ISO 8601 format)
+    - `custom_event_name`: A name for your custom event (must be snake_case)
+    - `identifiers`: A list of key-value pairs to identify the user (e.g., email)
+
+    ### Optional fields
+
+    - `custom_event_props`: Any custom properties as a JSON string. For events where you want to send structured metrics and dimensions (for example purchase events), we recommend sending an object with `payload_metrics` (numbers) and `payload_dimensions` (strings) as described below.
 
     <Tip>
       The `identifiers` field is an array of objects, each containing a `key` and `value`. Currently, we only support one identifier per request (i.e. one object in the array).
