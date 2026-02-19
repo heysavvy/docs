@@ -21,6 +21,7 @@
           {
             "group": "Features",
             "pages": [
+              "features/cli",
               "features/design",
               "features/user-data",
               "features/conditions",
