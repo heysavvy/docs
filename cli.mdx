@@ -635,7 +635,7 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
     No. You can switch to and pull existing branches with `embeddables branch`, and connect an Embeddable to an experiment with `embeddables experiments connect`, but creating new branches or experiments is done in the Builder.
   </Accordion>
   <Accordion title="Why does save say the server has a newer version?">
-    Someone (or the Builder) saved a newer version after you last pulled. You can pull the latest with `embeddables pull` and then re-apply your changes, or force-save when the prompt offers it (use with care to avoid overwriting others’ work).
+    Someone (in the Builder or via the CLI) saved a newer version after you last pulled. You can pull the latest with `embeddables pull` and then re-apply your changes, or force-save when the prompt offers it (use with care to avoid overwriting others’ work).
   </Accordion>
   <Accordion title="What are global components and where do they live?">
     Global components are shared across pages (e.g. a nav bar or footer). They live in `embeddables/<id>/global-components/` with one file per location, e.g. `before_page.location.tsx`, `after_components.location.tsx`. The `_location` value controls where they render relative to the page.
