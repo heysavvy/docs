@@ -2,10 +2,20 @@
 title: "Embeddables CLI"
 sidebarTitle: "CLI"
 icon: "terminal"
-description: "Build and manage embeddables locally with code — for developers and AI-assisted builders"
+description: "Build and manage Embeddables locally with code — for developers and AI-assisted builders"
 ---
 
-The Embeddables CLI lets you build, edit, and manage embeddables using **code** instead of (or alongside) the web Builder. It turns embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
+<Warning>
+  
+  **The Embeddables CLI is currently in Beta.**
+  
+  Use it with caution, update the
+  package frequently, and always check the JSON diff before saving, merging or
+  pushing to production.
+
+</Warning>
+
+The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
 
 <Info>
   **Who is this for?** Both **technical developers** (full control, scripts, CI)
@@ -52,10 +62,10 @@ embeddables login
 mkdir my-embeddable-project
 cd my-embeddable-project
 
-# 3. Initialize from inside that folder (creates config, types, embeddables/ with subfolders per embeddable)
+# 3. Initialize from inside that folder (creates config, types, embeddables/ with subfolders per Embeddable)
 embeddables init
 
-# 4. Pull an embeddable (interactive list if logged in)
+# 4. Pull an Embeddable (interactive list if logged in)
 embeddables pull
 
 # 5. Start the dev server with hot reload
@@ -66,9 +76,9 @@ After `embeddables pull`, you'll have TSX pages, styles, computed fields, and ac
 
 ## Project Structure
 
-Run **`embeddables init`** from inside a project folder you’ve created for your Embeddables project. That folder will hold **all** embeddables for that project—the CLI creates an `embeddables/` directory and, as you pull, one subfolder per embeddable (e.g. `embeddables/<embeddable-id>/`).
+Run **`embeddables init`** from inside a project folder you’ve created for your Embeddables project. That folder will hold **all** Embeddables for that project—the CLI creates an `embeddables/` directory and, as you pull, one subfolder per Embeddable (e.g. `embeddables/<embeddable-id>/`).
 
-`embeddables init` creates (or updates) project-level files. `embeddables pull` adds one folder per embeddable under `embeddables/`:
+`embeddables init` creates (or updates) project-level files. `embeddables pull` adds one folder per Embeddable under `embeddables/`:
 
 ```
 my-project/
@@ -111,12 +121,12 @@ my-project/
 
 | Command              | Description                                                             |
 | -------------------- | ----------------------------------------------------------------------- |
-| `embeddables pull`   | Fetch an embeddable from the cloud and reverse-compile to TSX.          |
+| `embeddables pull`   | Fetch an Embeddable from the cloud and reverse-compile to TSX.          |
 | `embeddables dev`    | Start dev server with hot reload; proxies to the Engine.                |
-| `embeddables save`   | Build and upload the embeddable to the cloud.                           |
+| `embeddables save`   | Build and upload the Embeddable to the cloud.                           |
 | `embeddables branch` | Switch to a different branch (interactive list), then pull that branch. |
 
-**Tip:** You can `cd embeddables/<EMBEDDABLE_ID>` and run embeddable-specific commands (`dev`, `pull`, `save`, `branch`) from there. The CLI will automatically use that embeddable instead of prompting you to choose.
+**Tip:** You can `cd embeddables/<EMBEDDABLE_ID>` and run Embeddable-specific commands (`dev`, `pull`, `save`, `branch`) from there. The CLI will automatically use that Embeddable instead of prompting you to choose.
 
 ### Build (advanced)
 
@@ -391,7 +401,7 @@ my-project/
             <code>-i, --id &lt;id&gt;</code>
           </td>
           <td>
-            Embeddable ID (prompt from local embeddables if not provided).
+            Embeddable ID (prompt from local Embeddables if not provided).
           </td>
         </tr>
       </tbody>
@@ -431,7 +441,7 @@ my-project/
   </Accordion>
 </AccordionGroup>
 
-**`pull --preserve`:** If you’ve held back on using the CLI because the first pull changes the JSON a lot, try **`embeddables pull --preserve`**. It keeps the same order of components in the config. The biggest cause of “changes” on pull is usually component reordering (React sorts them within containers), which doesn’t affect the rendered embeddable. You may still see smaller changes (e.g. `parent_key` fixes), but it’s easier to verify what actually changed when component order stays the same.
+**`pull --preserve`:** If you’ve held back on using the CLI because the first pull changes the JSON a lot, try **`embeddables pull --preserve`**. It keeps the same order of components in the config. The biggest cause of “changes” on pull is usually component reordering (React sorts them within containers), which doesn’t affect the rendered Embeddable. You may still see smaller changes (e.g. `parent_key` fixes), but it’s easier to verify what actually changed when component order stays the same.
 
 ---
 
@@ -441,7 +451,7 @@ The CLI is built for **AI-assisted editing**: the file layout is predictable, an
 
 ### Cursor
 
-When you run `embeddables init`, the CLI can add a **Cursor rule** so Cursor AI has full context when you edit embeddables:
+When you run `embeddables init`, the CLI can add a **Cursor rule** so Cursor AI has full context when you edit Embeddables:
 
 - **Where it goes**: `.cursor/rules/embeddables-cli.md`
 - **What it does**: The rule is marked to apply always (`alwaysApply: true`), so Cursor has the Embeddables CLI guide (file structure, component types, `id`/`key` rules, action values like `next-page`/`prev-page`, etc.) in context without you having to mention it every time.
@@ -463,7 +473,7 @@ Claude works well for multi-step tasks (e.g. “add a new page and wire up the b
 
 ### Tips and best practices for prompt writing
 
-Getting the best results from Cursor or Claude when editing embeddables:
+Getting the best results from Cursor or Claude when editing Embeddables:
 
 1. **Be specific about files and components**  
    Name the file you want changed (e.g. `embeddables/<id>/pages/welcome.page.tsx`) and, when relevant, the component key or id (e.g. “the CustomButton with key `submit_btn`”). That keeps edits scoped and avoids accidental changes elsewhere.
@@ -483,7 +493,7 @@ Getting the best results from Cursor or Claude when editing embeddables:
 
 **`embeddables dev`** compiles your TSX (and styles, config, computed fields, actions) and runs a **local proxy** that:
 
-- Serves the compiled embeddable to the Engine at the **Preview URL**.
+- Serves the compiled Embeddable to the Engine at the **Preview URL**.
 - Watches files under `embeddables/<id>/` and recompiles on change (hot reload).
 - By default uses the **production** Engine (`https://engine.embeddables.com`); use `--local` to point to a local engine (e.g. `http://localhost:8787`).
 
@@ -491,7 +501,7 @@ The terminal prints a URL like:
 
 `http://localhost:3000?id=<embeddable-id>&version=latest`
 
-Open it in a browser to see your embeddable. The dev server needs **internet** when using the default (remote) engine.
+Open it in a browser to see your Embeddable. The dev server needs **internet** when using the default (remote) engine.
 
 ### Workbench (debugging)
 
@@ -547,7 +557,7 @@ export default function MyPage() {
 
 ## For technical developers
 
-- **Comparing changes**: We don’t recommend using version control (e.g. Git) in your codebase for the embeddable files, because it can easily get out of sync with Embeddables’ own version and branch system. Instead, compare the current build with a saved version: open `embeddable.json` and the latest `embeddable-<branch>@<version>.json` in `.generated/` (e.g. `embeddable-main@47.json`). In VS Code or Cursor, **Shift+click** to select both files, then **right-click → Compare Selected** to see the diff.
+- **Comparing changes**: We don’t recommend using version control (e.g. Git) in your codebase for the Embeddable files, because it can easily get out of sync with Embeddables’ own version and branch system. Instead, compare the current build with a saved version: open `embeddable.json` and the latest `embeddable-<branch>@<version>.json` in `.generated/` (e.g. `embeddable-main@47.json`). In VS Code or Cursor, **Shift+click** to select both files, then **right-click → Compare Selected** to see the diff.
 - **Branches**: Use `embeddables branch` to switch branches; branch/version are stored in `config.json`. CLI-only branches can exist that aren’t editable in the Builder; the Builder remains the merge point for production.
 - **Save conflicts**: `embeddables save` uses the version in `config.json` (or `.generated/`) for optimistic concurrency. If the server has a newer version, you’ll be prompted; resolve by pulling the latest or force-saving when appropriate.
 - **Custom engine**: Use `embeddables dev --local` or `--engine <url>` for local or custom Engine origins.
@@ -569,10 +579,10 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
 
 ## Current limitations
 
-- **You can’t create embeddables** from the CLI; you can only pull and edit existing embeddables (create new ones in the Builder).
+- **You can’t create Embeddables** from the CLI; you can only pull and edit existing Embeddables (create new ones in the Builder).
 - **No asset upload** from the CLI yet; use the Builder for uploading images/assets.
 - **No creating new branches/experiments** from the CLI; you can connect to existing ones (`embeddables branch`, `embeddables experiments connect`).
-- **`embeddables dev` doesn’t yet work** for embeddables that use the CMS feature; use the Builder preview or a deployed embed for those.
+- **`embeddables dev` doesn’t yet work** for Embeddables that use the CMS feature; use the Builder preview or a deployed embed for those.
 - **Some edge cases** in multilingual property handling.
 - **Internet required** for the dev server when using the default (remote) Engine.
 
@@ -598,16 +608,16 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
     Login is stored globally on your machine (not per project). Use `embeddables logout` to clear it.
   </Accordion>
   <Accordion title="Can I use the CLI without ever using the Builder?">
-    You can build and save embeddables entirely from the CLI. The Builder is still the recommended place to create new branches/experiments, upload assets, and for non-technical teammates to review and merge. Many teams use both: CLI for fast iteration and AI-assisted edits, Builder for final review and publishing.
+    You can build and save Embeddables entirely from the CLI. The Builder is still the recommended place to create new branches/experiments, upload assets, and for non-technical teammates to review and merge. Many teams use both: CLI for fast iteration and AI-assisted edits, Builder for final review and publishing.
   </Accordion>
   <Accordion title="What is the difference between id and key on components?">
     Both must be unique in context. `id` is the stable internal identifier (e.g. `comp_12345`). `key` is used in React and for targeting (e.g. in conditions or user data). Keys must not start with a number; use a prefix like `option_` or `range_` if the label would otherwise slug to a number.
   </Accordion>
-  <Accordion title="Can I have multiple embeddables in one project?">
-    Yes. Run `embeddables pull` for each; they live in `embeddables/<embeddable-id>/`. When you run `embeddables dev`, `embeddables save`, or `embeddables branch` without `-i`, you’ll be prompted to choose which embeddable to use. To avoid the prompt, **go into that embeddable’s folder** (e.g. <code>cd embeddables/&lt;EMBEDDABLE_ID&gt;</code>) and run the command from there—the CLI will automatically use that embeddable.
+  <Accordion title="Can I have multiple Embeddables in one project?">
+    Yes. Run `embeddables pull` for each; they live in `embeddables/<embeddable-id>/`. When you run `embeddables dev`, `embeddables save`, or `embeddables branch` without `-i`, you’ll be prompted to choose which Embeddable to use. To avoid the prompt, **go into that Embeddable's folder** (e.g. <code>cd embeddables/&lt;EMBEDDABLE_ID&gt;</code>) and run the command from there—the CLI will automatically use that Embeddable.
   </Accordion>
   <Accordion title="First pull changes the JSON too much. How can I reduce noise?">
-    Use <strong><code>embeddables pull --preserve</code></strong>. It keeps the same order of components in the config. Most of the “changes” you see on a first pull are from React reordering components within containers—that doesn’t affect how the embeddable renders. With <code>--preserve</code>, you may still see smaller changes (e.g. <code>parent_key</code> fixes), but it’s easier to verify what actually changed.
+    Use <strong><code>embeddables pull --preserve</code></strong>. It keeps the same order of components in the config. Most of the “changes” you see on a first pull are from React reordering components within containers—that doesn’t affect how the Embeddable renders. With <code>--preserve</code>, you may still see smaller changes (e.g. <code>parent_key</code> fixes), but it’s easier to verify what actually changed.
   </Accordion>
   <Accordion title="How do I point the dev server at a local Engine?">
     Use `embeddables dev --local` to use `http://localhost:8787`. Or use `embeddables dev --engine https://your-engine.example.com` for a custom URL.
@@ -622,7 +632,7 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
     Run `embeddables upgrade`. You can check the current version with `embeddables -v`.
   </Accordion>
   <Accordion title="Can I create a new branch or experiment from the CLI?">
-    No. You can switch to and pull existing branches with `embeddables branch`, and connect an embeddable to an experiment with `embeddables experiments connect`, but creating new branches or experiments is done in the Builder.
+    No. You can switch to and pull existing branches with `embeddables branch`, and connect an Embeddable to an experiment with `embeddables experiments connect`, but creating new branches or experiments is done in the Builder.
   </Accordion>
   <Accordion title="Why does save say the server has a newer version?">
     Someone (or the Builder) saved a newer version after you last pulled. You can pull the latest with `embeddables pull` and then re-apply your changes, or force-save when the prompt offers it (use with care to avoid overwriting others’ work).
@@ -630,8 +640,8 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
   <Accordion title="What are global components and where do they live?">
     Global components are shared across pages (e.g. a nav bar or footer). They live in `embeddables/<id>/global-components/` with one file per location, e.g. `before_page.location.tsx`, `after_components.location.tsx`. The `_location` value controls where they render relative to the page.
   </Accordion>
-  <Accordion title="Should I use Git or version control for my embeddable project? How do I compare changes?">
-    We don’t currently recommend using version control (e.g. Git) in your codebase for the embeddable files, because it can easily get out of sync with Embeddables’ own version and branch system. Instead, use the version history that the CLI and platform already provide: compare the current compiled output with a saved version by opening **`embeddable.json`** and the latest **`embeddable-&lt;branch&gt;@&lt;version&gt;.json`** (e.g. `embeddable-main@47.json`) inside the **`.generated/`** folder. In VS Code or Cursor: **Shift+click** to select both files, then **right-click → Compare Selected** to see the diff.
+  <Accordion title="Should I use Git or version control for my Embeddable project? How do I compare changes?">
+    We don’t currently recommend using version control (e.g. Git) in your codebase for the Embeddable files, because it can easily get out of sync with Embeddables’ own version and branch system. Instead, use the version history that the CLI and platform already provide: compare the current compiled output with a saved version by opening **`embeddable.json`** and the latest **`embeddable-&lt;branch&gt;@&lt;version&gt;.json`** (e.g. `embeddable-main@47.json`) inside the **`.generated/`** folder. In VS Code or Cursor: **Shift+click** to select both files, then **right-click → Compare Selected** to see the diff.
   </Accordion>
 </AccordionGroup>
 
@@ -640,17 +650,17 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
 ## Troubleshooting
 
 <AccordionGroup>
-  <Accordion title="“No embeddables found” or “No embeddable selected” when running dev or save">
-    Run from the **project root** (where `embeddables.json` and the `embeddables/` folder are), or from inside `embeddables/<id>/` so the CLI infers the embeddable, or pass `-i <embeddable-id>`. If you haven’t pulled yet, run `embeddables pull` first so that `embeddables/<id>/` exists.
+  <Accordion title="“No Embeddables found” or “No Embeddable selected” when running dev or save">
+    Run from the **project root** (where `embeddables.json` and the `embeddables/` folder are), or from inside `embeddables/<id>/` so the CLI infers the Embeddable, or pass `-i <embeddable-id>`. If you haven’t pulled yet, run `embeddables pull` first so that `embeddables/<id>/` exists.
   </Accordion>
   <Accordion title="Port 3000 is already in use">
     The CLI will try the next available port and print the actual URL. To force a port: `embeddables dev --port 3001`.
   </Accordion>
-  <Accordion title="Preview URL loads but shows a blank or wrong embeddable">
-    Confirm the URL includes `?id=<embeddable-id>&version=latest`. If you have multiple embeddables, make sure the ID in the URL matches the one you’re editing. Restart `embeddables dev` and do a hard refresh (e.g. Cmd+Shift+R).
-  </Accordion>
+  <Accordion title="Preview URL loads but shows a blank or wrong Embeddable">
+    Confirm the URL includes `?id=<embeddable-id>&version=latest`. If you have multiple Embeddables, make sure the ID in the URL matches the one you’re editing and the one that is running in the dev server. Restart `embeddables dev` and do a hard refresh (e.g. Cmd+Shift+R).
+</Accordion>
   <Accordion title="Build fails: “duplicate id” or “duplicate key”">
-    Every component must have a unique `id` and `key` in the embeddable. Search your pages and global components for the repeated value and rename one. You can run `embeddables build -i <id> --fix` (or pull with `--fix`) to let the CLI fix some issues automatically; check the output for warnings.
+    Every component must have a unique `id` and `key` in the Embeddable. Search your pages and global components for the repeated value and rename one. You can run `embeddables build -i <id> --fix` (or pull with `--fix`) to let the CLI fix some issues automatically; check the output for warnings.
   </Accordion>
   <Accordion title="Build fails: “key must not start with a number”">
     Keys (and option button keys) must not start with a digit. Use a prefix, e.g. `option_1_to_2_weeks` or `range_1_to_2_weeks` instead of `1_to_2_weeks`.
@@ -659,7 +669,7 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
     Pull the latest: `embeddables pull -i <id>`. Merge or re-apply your local changes, then run `embeddables save` again. Only force-save if you intend to overwrite the server version.
   </Accordion>
   <Accordion title="After pull, I see duplicate or wrong global components">
-    Rarely, global component files can get out of sync. You can delete the `global-components/` folder for that embeddable and run `embeddables pull -i <id>` again to regenerate them. Back up any local edits first.
+    Rarely, global component files can get out of sync. You can delete the `global-components/` folder for that Embeddable and run `embeddables pull -i <id>` again to regenerate them. Back up any local edits first.
   </Accordion>
   <Accordion title="Styles look different in preview vs my site">
     The dev preview uses the same Engine as production, but your site might have different CSS (e.g. Tailwind preflight) that affects embedded content. Test on a page that matches your production environment, or use the Builder’s “Preview on your site” if available. Some Tailwind resets can leak into the embed; scope or override them in your embed wrapper if needed.
@@ -679,11 +689,14 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
   <Accordion title="Workbench doesn’t appear or doesn’t load">
     On localhost (`embeddables dev`), the Workbench is on by default—if you hid it with `?workbench=false`, remove that param or use `?workbench=true`. On non-localhost preview links, you must add `?workbench=true` to show it. Ensure the preview is from the dev proxy (localhost) or a URL that supports Workbench. If it still fails, try a different browser or clear cache.
   </Accordion>
+  <Accordion title="Workbench is in the way or blocking something — how do I hide it?">
+    On localhost previews from `embeddables dev`, the Workbench is on by default. To hide it, add `?workbench=false` to the preview URL in your browser (e.g. `http://localhost:3000?id=<embeddable-id>&version=latest&workbench=false`). Reload the page and the Workbench panel will be hidden so you can see or click the content underneath.
+  </Accordion>
   <Accordion title="I want to undo a save">
     The CLI doesn’t version for you. Use the Embeddables Builder to view version history and roll back to a previous version if your project has that feature. Going forward, save often in smaller steps so you can revert via the Builder if needed.
   </Accordion>
   <Accordion title="When I report an issue, what should I include?">
-    Include your **CLI version** (<code>embeddables -v</code>), the **embeddable** you’re on (ID and version), and the **commands or prompts** you used. Check the [latest version on npm](https://www.npmjs.com/package/@embeddables/cli)—if you’re not on the latest, run <code>embeddables upgrade</code> and try again; many issues are fixed in newer releases.
+    Include your **CLI version** (<code>embeddables -v</code>), the **Embeddable** you’re on (ID and version), and the **commands or prompts** you used. Check the [latest version on npm](https://www.npmjs.com/package/@embeddables/cli)—if you’re not on the latest, run <code>embeddables upgrade</code> and try again; many issues are fixed in newer releases.
   </Accordion>
 </AccordionGroup>
 
