@@ -5,7 +5,7 @@ description: "Updating the URL on page changes so that the browser back buttons 
 
 ## What's the issue?
 
-Because embeddables are, well, embedded in the webpage, they have a slightly strange
+Because Embeddables are, well, embedded in the webpage, they have a slightly strange
 relationship with the browser: namely, that pages _inside_ an Embeddable are distinct
 from webpages in the browser.
 
@@ -27,7 +27,7 @@ The solution to this is our **Sync Pages With The URL** feature.
     To find these options, make sure to press Escape to deselect and pages or components, and then open the Options sidebar on the right-hand side.
   </Step>
   <Step title="Test for edge-cases and enjoy.">
-    This feature can have some interesting edge-cases, especially in embeddables
+    This feature can have some interesting edge-cases, especially in Embeddables
     that already have custom logic to do with navigation (such as blocking users
     from going back after auth or payments). Tread carefully!
   </Step>
@@ -41,7 +41,7 @@ link to something within a webpage, such as a section or heading."> anchor link<
 that corresponds to the current page key of the Embeddable.
 
 So, if a user heads to `mywebsite.com/get-started` then that will immediately become
-`mywebsite.com/get-started#intro_page`, and when the user clicks next inside the embeddables their
+`mywebsite.com/get-started#intro_page`, and when the user clicks next inside the Embeddables their
 URL bar will then show `mywebsite.com/get-started#your_name_page`, etc etc.
 
 Why is this helpful? Well, it means that if the user presses the browser's Back button,
