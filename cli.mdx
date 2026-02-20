@@ -580,7 +580,7 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
 ## Current limitations
 
 - **You can’t create Embeddables** from the CLI; you can only pull and edit existing Embeddables (create new ones in the Builder).
-- **No asset upload** from the CLI yet; use the Builder for uploading images/assets.
+- **No asset management** from the CLI yet. You can't upload, browse, or manage images and other assets through the CLI. To use assets in your Embeddable, either upload them in the Builder and copy the resulting URLs into your code, or use placeholder image URLs while building locally and swap them out later.
 - **No creating new branches/experiments** from the CLI; you can connect to existing ones (`embeddables branch`, `embeddables experiments connect`).
 - **`embeddables dev` doesn’t yet work** for Embeddables that use the CMS feature; use the Builder preview or a deployed embed for those.
 - **Some edge cases** in multilingual property handling.
