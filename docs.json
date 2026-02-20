@@ -19,9 +19,12 @@
             "pages": ["welcome", "5-min-onboarding", "faqs"]
           },
           {
+            "group": "CLI",
+            "pages": ["cli"]
+          },
+          {
             "group": "Features",
             "pages": [
-              "features/cli",
               "features/design",
               "features/user-data",
               "features/conditions",
