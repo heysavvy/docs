@@ -52,6 +52,8 @@ embeddables upgrade
 
 This installs the latest stable version from npm.
 
+After upgrading, it's recommended to re-run `embeddables init` inside your project folder to refresh config files, Cursor rules, and Claude context to the latest versions bundled with the new CLI release.
+
 ## Quick Start
 
 ```bash
@@ -582,7 +584,7 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
 - **You can’t create Embeddables** from the CLI; you can only pull and edit existing Embeddables (create new ones in the Builder).
 - **No asset management** from the CLI yet. You can't upload, browse, or manage images and other assets through the CLI. To use assets in your Embeddable, either upload them in the Builder and copy the resulting URLs into your code, or use placeholder image URLs while building locally and swap them out later.
 - **No creating new branches/experiments** from the CLI; you can connect to existing ones (`embeddables branch`, `embeddables experiments connect`).
-- **`embeddables dev` doesn’t yet work** for Embeddables that use the CMS feature; use the Builder preview or a deployed embed for those.
+- **`embeddables dev` now works** for Embeddables that use the CMS feature (as of v0.7.6). Important caveat: CMS content won’t load in the local preview — the Embeddable will render as if there is no `content_source` in the JSON — but CMS content will be preserved when you save.
 - **Some edge cases** in multilingual property handling.
 - **Internet required** for the dev server when using the default (remote) Engine.
 
@@ -652,6 +654,9 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
 <AccordionGroup>
   <Accordion title="“No Embeddables found” or “No Embeddable selected” when running dev or save">
     Run from the **project root** (where `embeddables.json` and the `embeddables/` folder are), or from inside `embeddables/<id>/` so the CLI infers the Embeddable, or pass `-i <embeddable-id>`. If you haven’t pulled yet, run `embeddables pull` first so that `embeddables/<id>/` exists.
+  </Accordion>
+  <Accordion title="embeddables pull doesn't show any Embeddables / no flows found">
+    If you've just created a new project and `embeddables pull` returns no results or a metadata warning, try pulling by specific ID instead: `embeddables pull --id <embeddable-id>`. You can find the Embeddable ID in the Builder URL. Adding `--preserve` is also recommended on a first pull to minimize JSON noise: `embeddables pull --id <embeddable-id> --preserve`.
   </Accordion>
   <Accordion title="Port 3000 is already in use">
     The CLI will try the next available port and print the actual URL. To force a port: `embeddables dev --port 3001`.
