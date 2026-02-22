@@ -139,6 +139,12 @@ my-project/
 | ------------------- | ------------------------------------------------------------------------------------------------- |
 | `embeddables build` | Compile TSX → JSON only (no upload). Used automatically by `save` unless you pass `--skip-build`. |
 
+### Debugging
+
+| Command                | Description                                                                                    |
+| ---------------------- | ---------------------------------------------------------------------------------------------- |
+| `embeddables inspect`  | Fetch an embeddable from the cloud, reverse-compile to TSX, rebuild to JSON, and compare the two — to identify round-trip compile issues. |
+
 ---
 
 ### Command options (reference)
@@ -411,6 +417,69 @@ my-project/
         </tr>
       </tbody>
     </table>
+  </Accordion>
+  <Accordion title="embeddables inspect">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID to inspect (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--version &lt;version&gt;</code>
+          </td>
+          <td>
+            Version to inspect — a number or <code>"latest"</code> (default: <code>latest</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Branch ID to fetch the embeddable from.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-f, --fix</code>
+          </td>
+          <td>
+            Remove components with missing required props instead of erroring (default: on).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-e, --engine &lt;url&gt;</code>
+          </td>
+          <td>
+            Engine origin (default: <code>https://engine.embeddables.com</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--bypass-auth</code>
+          </td>
+          <td>
+            Skip login check. Use in CI or cloud AI environments where interactive auth is not possible (e.g. <code>embeddables inspect -i &lt;id&gt; --bypass-auth</code>).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    Output files are written to `embeddables/<id>/`:
+
+    - `.generated/embeddable-original.json` — raw JSON from the engine
+    - `.generated/embeddable-rebuilt.json` — JSON after the round-trip through React
+    - `pages/`, `styles/`, `computed-fields/`, `actions/` — the intermediate React/CSS/JS files
+
   </Accordion>
   <Accordion title="embeddables experiments connect">
     <table>

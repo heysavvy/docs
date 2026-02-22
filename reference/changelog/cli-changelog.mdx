@@ -15,12 +15,16 @@ Check your version: `embeddables -v`
 
 ### Features
 
-- **Codex (AGENTS.md) support** — `embeddables init` now generates an `AGENTS.md` file at the project root, following the OpenAI Codex convention. This gives Codex the same Embeddables CLI context that Cursor and Claude already receive.
+- **`embeddables inspect` command** — New debugging command that fetches an embeddable from the cloud, reverse-compiles it to React/TSX, rebuilds it back to JSON, and compares the two outputs side-by-side. Ideal for reproducing and diagnosing round-trip compile issues. Output files are written to `embeddables/<id>/` for easy inspection. Usage: `embeddables inspect -i <embeddableId>`.
 
-### Bug Fixes
+### Improvements
 
-- **Condition `id` now required** — The `id` field on conditions is now required (previously optional). Use the `cond_` prefix + 10 digits format (e.g. `cond_1234567890`), consistent with other ID conventions. Existing conditions without IDs will need one added.
-- **Case-insensitive sorting in CLI lists** — Lists of embeddables, projects, and experiments shown in interactive prompts now sort case-insensitively using `localeCompare`. Previously, uppercase names (e.g. "CLI") could sort before lowercase ones (e.g. "count").
+- **`inspect` requires authentication** — The `inspect` command now requires login (consistent with other cloud commands). For CI environments or cloud AI agents that cannot go through interactive login, the hidden `--bypass-auth` flag skips authentication: `embeddables inspect -i <id> --bypass-auth`.
+- **Consumer project AI rules updated** — The Embeddables CLI prompt injected into consumer projects (`.cursor/rules/`, `.claude/`, `AGENTS.md`) now includes clearer guidance on the `inspect` command and an improved CLI command reference table.
+
+### Chores
+
+- **Documentation update workflow** — Multiple improvements to the automated CI workflow that updates these docs on release: fixed permission modes, adjusted workflow triggers, and added a version input for more reliable runs.
 
 </Update>
 
