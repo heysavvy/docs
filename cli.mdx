@@ -16,7 +16,7 @@ description: "Build and manage Embeddables locally with code — for developers 
 </Warning>
 
 <Info>
-  **Current version: 0.7.16** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+  **Current version: 0.7.17** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
 </Info>
 
 The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
@@ -191,6 +191,14 @@ my-project/
             <code>-i, --id &lt;id&gt;</code>
           </td>
           <td>Embeddable ID to pull (skips interactive selection).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--version [number]</code>
+          </td>
+          <td>
+            Version to pull. Omit a value (<code>--version</code>) to open an interactive version selector. Pass a number (<code>--version 47</code>) to pull a specific version. Without this flag, <code>pull</code> defaults to the latest version.
+          </td>
         </tr>
         <tr>
           <td>
