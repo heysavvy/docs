@@ -1,0 +1,165 @@
+---
+title: "CLI Changelog"
+sidebarTitle: "CLI Changelog"
+description: "Version history for the Embeddables CLI (@embeddables/cli)"
+icon: "terminal"
+---
+
+Install or upgrade: `npm install -g @embeddables/cli`
+
+Check your version: `embeddables -v`
+
+---
+
+<Update label="v0.7.13 — 22 February 2026">
+
+### Bug Fixes
+
+- **Compiler: dataOutputs no longer dropped** — Fixed a bug where `dataOutputs` (including webhook actions) were removed from the compiled output when the `actions/` directory didn't exist or contained no JS files. The compiler now preserves webhook actions from the config even when there are no local JS action files.
+- **Compiler: improved JSX string escaping** — Strings containing backslashes, newlines, and double quotes are now escaped correctly when generating JSX attributes, preventing double-escaping and malformed output during round-trips.
+
+</Update>
+
+<Update label="v0.7.12 — 20 February 2026">
+
+### Improvements
+
+- **Archived Embeddables excluded from lists** — Archived Embeddables no longer appear in the interactive selection prompt when running `embeddables pull` or `embeddables dev`, keeping your lists clean and focused.
+
+</Update>
+
+<Update label="v0.7.10 — 20 February 2026">
+
+### Features
+
+- **Local Embeddables prioritized in selection** — When choosing an Embeddable to work with, locally-pulled Embeddables are now shown at the top of the list.
+- **`embeddables init` cleans up `.claudefiles`** — If an old `.claudefiles` directory exists from a previous version of the CLI, `init` will now remove it and replace it with the correctly named `.claude/` directory.
+
+</Update>
+
+<Update label="v0.7.9 — 20 February 2026">
+
+### Features
+
+- **`pull --version <number>`** — You can now pull a specific saved version of an Embeddable: `embeddables pull --version 47`. Useful for checking out an older version or recovering from a bad save.
+
+</Update>
+
+<Update label="v0.7.7 — 19 February 2026">
+
+### Features
+
+- **Login required for all commands** — The CLI now enforces authentication before running commands that require it (pull, dev, save, etc.). You'll see a clear prompt to log in (`embeddables login`) rather than a cryptic API error.
+
+</Update>
+
+<Update label="v0.7.6 — 19 February 2026">
+
+### Bug Fixes
+
+- **CMS dev mode: `content_sources` omitted** — Fixed a proxy issue where `content_sources` was incorrectly included in dev mode for CMS-based Embeddables, causing unexpected behaviour. It is now correctly omitted during local development.
+
+</Update>
+
+<Update label="v0.7.5 — 19 February 2026">
+
+### Bug Fixes
+
+- **Workbench: page selector fixed** — The page selector in the Workbench panel was not working; it is now functional again.
+
+</Update>
+
+<Update label="v0.7.4 — 19 February 2026">
+
+### Improvements
+
+- **Workbench keyboard shortcut updated** — The Workbench toggle shortcut is now `⌥K` (Option+K on Mac).
+
+</Update>
+
+<Update label="v0.7.3 — 19 February 2026">
+
+### Bug Fixes
+
+- **Reverse compiler: `CustomHTML` uses `class` not `className`** — When reverse-compiling an Embeddable to TSX, `CustomHTML` components now correctly generate `class` (HTML attribute) instead of `className` (React attribute) in their raw HTML content.
+
+</Update>
+
+<Update label="v0.7.0 — 19 February 2026">
+
+### Features
+
+- **Structured error logging via Sentry** — The CLI now reports errors to Sentry for improved diagnostics. Logs include context about which command was run, making it easier to debug failures.
+- **`.claude/` directory** — The Claude project context directory is now named `.claude/` (previously `.claudefiles/`). Running `embeddables init` will create the correct directory. If you have an old `.claudefiles/` directory, run `embeddables init` to migrate.
+
+### Bug Fixes
+
+- **Build errors handled gracefully** — The CLI now exits cleanly with a helpful message on certain build errors instead of crashing with an unhandled exception.
+
+</Update>
+
+<Update label="v0.6.11 — 18 February 2026">
+
+### Improvements
+
+- **Branch state persisted from config** — `embeddables pull` now reads and restores the active branch from `config.json`, so the CLI stays on the correct branch across sessions without needing `-b` each time.
+
+</Update>
+
+<Update label="v0.6.9 — 18 February 2026">
+
+### Features
+
+- **Workbench shown/hidden via query parameter** — The Workbench debugging panel can now be toggled with `?workbench=true` / `?workbench=false` in the preview URL, without restarting the dev server.
+- **Custom validation functions in compiled output** — Components with a `custom_validation_function` now compile that logic correctly into the output, based on `validation_formula` presence.
+- **Edit history tracking in save** — `embeddables save` now includes edit history metadata when uploading, improving version tracking in the Builder.
+
+### Bug Fixes
+
+- **`class` vs `className` in CustomHTML** — Fixed a reverse-compiler bug where `class` attributes inside `CustomHTML` were converted to `className`. Raw HTML attributes in custom HTML blocks are now left as-is.
+
+</Update>
+
+<Update label="v0.6.8 — 18 February 2026">
+
+### Features
+
+- **`pull --preserve`** — New flag to keep the existing component order in `config.json` when pulling. Most first-pull "changes" are React reordering components within containers—`--preserve` prevents that noise so you can focus on real differences. See the [CLI reference](/cli#pull-preserve) for details.
+- **Metadata-only actions preserved** — Actions that carry only metadata (no JS logic) are now correctly included in the compiled output.
+
+</Update>
+
+<Update label="v0.6.5 – v0.6.7 — 17–18 February 2026">
+
+### Features
+
+- **`embeddables upgrade` command** — New command to update the CLI to the latest stable version: `embeddables upgrade`. No need to remember the full `npm install -g @embeddables/cli` command.
+- **`embeddables -v` shows package version** — The version flag now reads directly from `package.json`, so it always reflects the installed package version.
+- **Custom validation functions compiled to TypeScript** — Components with custom validation logic are now reverse-compiled into typed TypeScript functions, improving editor support and type safety.
+
+### Bug Fixes
+
+- **Template literal escaping in button text** — Strings containing `${{ ... }}` (Embeddables template syntax) in button text are no longer accidentally treated as JavaScript template literal interpolations during reverse compilation.
+
+</Update>
+
+<Update label="v0.6.1 — 16 February 2026">
+
+### Features
+
+- **`--fix` flag for lint auto-correction** — Pass `--fix` to `embeddables build`, `embeddables dev`, or `embeddables pull` to automatically fix common issues: duplicate IDs, duplicate keys, and keys that start with a digit.
+
+### Bug Fixes
+
+- **Proxy error handling improved** — The dev proxy server now handles connection errors more gracefully, with clearer error messages when the Engine is unreachable.
+
+</Update>
+
+<Update label="v0.6.0 — 15 February 2026">
+
+### Features
+
+- **Branch management in pull and save** — `embeddables pull` and `embeddables save` now handle branch metadata automatically, reading and writing the active branch to `config.json`.
+- **`parent_key` deprecation handled** — The reverse compiler now detects and strips deprecated `parent_key` usage, replacing it with the correct `parent_id`-based approach.
+
+</Update>
