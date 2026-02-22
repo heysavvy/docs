@@ -16,7 +16,7 @@ description: "Build and manage Embeddables locally with code — for developers 
 </Warning>
 
 <Info>
-  **Current version: 0.7.13** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+  **Current version: 0.7.14** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
 </Info>
 
 The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
@@ -92,6 +92,7 @@ my-project/
 ├── .gitignore                # Updated to ignore .generated/ and .types/
 ├── .cursor/rules/            # Cursor AI rules (optional, from init)
 ├── .claude/                  # Claude project context (optional, from init)
+├── AGENTS.md                 # Codex context (optional, from init)
 └── embeddables/
     └── <embeddable-id>/
         ├── pages/                    # One .page.tsx file per page
@@ -118,7 +119,7 @@ my-project/
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `embeddables login`   | Log in to your Embeddables account (global).                                                                                                        |
 | `embeddables logout`  | Clear stored authentication.                                                                                                                        |
-| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `tsconfig.json`, `embeddables/`, optional Cursor/Claude prompts. |
+| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `tsconfig.json`, `embeddables/`, optional Cursor/Claude/Codex prompts. |
 | `embeddables upgrade` | Update the CLI to the latest stable version.                                                                                                        |
 
 ### Daily workflow
@@ -451,7 +452,7 @@ my-project/
 
 ## Using the CLI with AI
 
-The CLI is built for **AI-assisted editing**: the file layout is predictable, and `embeddables init` injects **Cursor rules** and **Claude project context** so the assistant understands Embeddable components, keys, and conventions. Use the subsections below to get the most out of Cursor, Claude, and your own prompts.
+The CLI is built for **AI-assisted editing**: the file layout is predictable, and `embeddables init` injects **Cursor rules**, **Claude project context**, and **Codex context (AGENTS.md)** so the assistant understands Embeddable components, keys, and conventions. Use the subsections below to get the most out of Cursor, Claude, Codex, and your own prompts.
 
 ### Cursor
 
@@ -474,6 +475,14 @@ When you run `embeddables init`, the CLI can also add **Claude (Claude Code / pr
 - **Re-injecting**: As with Cursor, run `embeddables init` again to recreate or refresh `.claude/` if you removed it or want the latest content.
 
 Claude works well for multi-step tasks (e.g. “add a new page and wire up the buttons”) or when you paste in the context file path at the start of a long conversation.
+
+### Codex
+
+When you run `embeddables init`, the CLI generates an **`AGENTS.md`** file at the project root:
+
+- **Where it goes**: `AGENTS.md` (project root)
+- **What it does**: Follows the OpenAI Codex convention. Contains the same Embeddables CLI context as the Cursor and Claude files (file structure, component types, conventions, etc.), so Codex has full awareness of the project when making edits.
+- **Re-injecting**: Run `embeddables init` again to regenerate or update `AGENTS.md` with the latest content from the CLI package.
 
 ### Tips and best practices for prompt writing
 
@@ -629,8 +638,8 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
   <Accordion title="What is the Workbench and how do I open it?">
     The Workbench is a debugging panel that lets you inspect user data, computed fields, actions, and navigate pages. On localhost previews from `embeddables dev`, it is shown by default; add `?workbench=false` to hide it. On non-localhost preview links, add `?workbench=true` to show it. It is served by the dev proxy and does not require a separate deploy.
   </Accordion>
-  <Accordion title="Does the CLI work with Cursor / Claude?">
-    Yes. The CLI is designed for AI-assisted editing. Running `embeddables init` can inject Cursor rules and Claude project context (from the CLI package) so the assistant understands the file layout, component types, and conventions. You can also use the built-in prompts from the CLI repo in your own rules.
+  <Accordion title="Does the CLI work with Cursor / Claude / Codex?">
+    Yes. The CLI is designed for AI-assisted editing. Running `embeddables init` injects Cursor rules (`.cursor/rules/`), Claude project context (`.claude/`), and a Codex-compatible `AGENTS.md` file so the assistant understands the file layout, component types, and conventions. You can also use the built-in prompts from the CLI repo in your own rules.
   </Accordion>
   <Accordion title="How do I get the latest CLI version?">
     Run `embeddables upgrade`. You can check the current version with `embeddables -v`.
