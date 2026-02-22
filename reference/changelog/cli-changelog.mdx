@@ -13,17 +13,9 @@ Check your version: `embeddables -v`
 
 <Update label="v0.7.16 — 22 February 2026">
 
-### Features
-
-- **`embeddables pull` defaults to latest** — Running `embeddables pull` with no flags now pulls the latest version immediately, without prompting. To choose a version interactively, pass `--version` with no value (`embeddables pull --version`). To pull a specific version, pass `--version <number>` (e.g. `embeddables pull --version 47`). Previously, omitting `--version` would open the interactive version selector.
-
 ### Bug Fixes
 
 - **Reverse compiler: global component cross-location `parent_id`** — Fixed a round-trip bug where a global component with `_location` pointing to one group (e.g. `before_components`) but `parent_id` pointing to a component in a different location group (e.g. `before_page`) was orphaned during reverse compilation. Components are now grouped by following their parent chain rather than their own `_location`, keeping the component tree intact in a single TSX file.
-
-### Improvements
-
-- **`embeddables inspect` now requires login** — The `inspect` command now requires authentication by default (scoped to your project's embeddables). A hidden `--bypass-auth` flag is available for AI tooling or CI environments that need to skip the login check.
 
 </Update>
 
