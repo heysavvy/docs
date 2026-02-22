@@ -20,7 +20,7 @@
           },
           {
             "group": "CLI",
-            "pages": ["cli"]
+            "pages": ["cli", "reference/changelog/cli-changelog"]
           },
           {
             "group": "Features",
