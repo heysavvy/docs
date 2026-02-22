@@ -104,7 +104,9 @@ my-project/
         ├── metadata.json            # Title and basic info
         └── .generated/              # Compiled JSON (used by dev/save; avoid editing)
             ├── embeddable.json      # Current compiled output
-            └── embeddable-<branch>@<version>.json   # Saved versions (for comparison)
+            ├── embeddable-<branch>@<version>.json   # Saved versions (for comparison)
+            ├── embeddable-original.json             # (inspect) Raw JSON fetched from engine
+            └── embeddable-rebuilt.json              # (inspect) JSON after round-trip through React
 ```
 
 - **Pages**: `pages/<pageKey>.page.tsx` — React components built from Embeddable primitives.
@@ -138,6 +140,12 @@ my-project/
 | Command             | Description                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------- |
 | `embeddables build` | Compile TSX → JSON only (no upload). Used automatically by `save` unless you pass `--skip-build`. |
+
+### Debugging
+
+| Command               | Description                                                                                        |
+| --------------------- | -------------------------------------------------------------------------------------------------- |
+| `embeddables inspect` | Fetch an Embeddable from the cloud, reverse-compile it to React, rebuild it to JSON, and compare the two — shows exactly which top-level keys differ. Useful for diagnosing round-trip compile issues. |
 
 ---
 
@@ -411,6 +419,72 @@ my-project/
         </tr>
       </tbody>
     </table>
+  </Accordion>
+  <Accordion title="embeddables inspect">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID to inspect (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--version &lt;version&gt;</code>
+          </td>
+          <td>
+            Version to fetch (number or <code>"latest"</code>; default:{" "}
+            <code>"latest"</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Embeddable branch ID to inspect.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-f, --fix</code>
+          </td>
+          <td>
+            Remove components missing required props instead of erroring
+            (enabled by default).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-e, --engine &lt;url&gt;</code>
+          </td>
+          <td>
+            Engine origin (default:{" "}
+            <code>https://engine.embeddables.com</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--bypass-auth</code>
+          </td>
+          <td>
+            Skip authentication check. Intended for CI environments and cloud
+            AI agents that cannot interactively log in.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    Output files are written to `embeddables/<id>/`:
+
+    - `.generated/embeddable-original.json` — raw JSON fetched from the engine
+    - `.generated/embeddable-rebuilt.json` — JSON after round-tripping through React
+    - `pages/`, `styles/`, `computed-fields/`, `actions/` — the intermediate React/CSS/JS files
   </Accordion>
   <Accordion title="embeddables experiments connect">
     <table>

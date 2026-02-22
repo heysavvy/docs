@@ -15,12 +15,17 @@ Check your version: `embeddables -v`
 
 ### Features
 
+- **`embeddables inspect` command** — New debugging command that fetches an Embeddable from the engine, reverse-compiles it to React/CSS/JS, rebuilds it back to JSON, and reports which top-level keys differ. Useful for diagnosing round-trip compile issues without a full local project setup. Run `embeddables inspect -i <embeddableId>`. Output files are written to `embeddables/<id>/` for further analysis.
 - **Codex (AGENTS.md) support** — `embeddables init` now generates an `AGENTS.md` file at the project root, following the OpenAI Codex convention. This gives Codex the same Embeddables CLI context that Cursor and Claude already receive.
 
 ### Bug Fixes
 
 - **Condition `id` now required** — The `id` field on conditions is now required (previously optional). Use the `cond_` prefix + 10 digits format (e.g. `cond_1234567890`), consistent with other ID conventions. Existing conditions without IDs will need one added.
 - **Case-insensitive sorting in CLI lists** — Lists of embeddables, projects, and experiments shown in interactive prompts now sort case-insensitively using `localeCompare`. Previously, uppercase names (e.g. "CLI") could sort before lowercase ones (e.g. "count").
+
+### Improvements
+
+- **`inspect` requires login** — `embeddables inspect` now requires authentication by default, consistent with other commands. A hidden `--bypass-auth` flag is available for CI environments and cloud AI agents that cannot interactively authenticate (e.g. `embeddables inspect -i <id> --bypass-auth`).
 
 </Update>
 
