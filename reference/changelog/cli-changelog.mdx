@@ -16,10 +16,10 @@ Check your version: `embeddables -v`
 ### Features
 
 - **Codex (AGENTS.md) support** — `embeddables init` now generates an `AGENTS.md` file at the project root, following the OpenAI Codex convention. This gives Codex the same Embeddables CLI context that Cursor and Claude already receive.
-- **Condition `id` now required** — The `id` field on conditions is now required (previously optional). Use the `cond_` prefix + 10 digits format (e.g. `cond_1234567890`), consistent with other ID conventions. Existing conditions without IDs will need one added.
 
 ### Bug Fixes
 
+- **Condition `id` now required** — The `id` field on conditions is now required (previously optional). Use the `cond_` prefix + 10 digits format (e.g. `cond_1234567890`), consistent with other ID conventions. Existing conditions without IDs will need one added.
 - **Case-insensitive sorting in CLI lists** — Lists of embeddables, projects, and experiments shown in interactive prompts now sort case-insensitively using `localeCompare`. Previously, uppercase names (e.g. "CLI") could sort before lowercase ones (e.g. "count").
 
 </Update>
