@@ -16,7 +16,7 @@ Check your version: `embeddables -v`
 ### Features
 
 - **`embeddables builder open`** — Opens the Embeddables Builder in your default browser for the selected Embeddable. Resolves the project from `embeddables.json` (or prompts to select one if not configured), then navigates directly to the edit URL. Pass `-i <id>` to skip the interactive prompt, or run from inside `embeddables/<id>/` to infer the Embeddable automatically.
-- **`embeddables inspect`** — New debugging command that fetches an Embeddable by ID from the engine, reverse-compiles it to React/CSS/JS files, rebuilds it back to JSON, and reports which top-level keys differ between the original and rebuilt output. Designed for diagnosing round-trip compiler bugs. Requires login by default; pass the hidden `--bypass-auth` flag to skip authentication (intended for CI or cloud AI tooling).
+- **`embeddables inspect`** — New debugging command that fetches an Embeddable by ID from the engine, reverse-compiles it to React/CSS/JS files, rebuilds it back to JSON, and reports which top-level keys differ between the original and rebuilt output. Designed for diagnosing round-trip compiler bugs.
 
 ### Chores
 
