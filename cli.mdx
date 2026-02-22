@@ -16,7 +16,7 @@ description: "Build and manage Embeddables locally with code — for developers 
 </Warning>
 
 <Info>
-  **Current version: 0.7.14** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+  **Current version: 0.7.15** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
 </Info>
 
 The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
@@ -124,20 +124,27 @@ my-project/
 
 ### Daily workflow
 
-| Command              | Description                                                             |
-| -------------------- | ----------------------------------------------------------------------- |
-| `embeddables pull`   | Fetch an Embeddable from the cloud and reverse-compile to TSX.          |
-| `embeddables dev`    | Start dev server with hot reload; proxies to the Engine.                |
-| `embeddables save`   | Build and upload the Embeddable to the cloud.                           |
-| `embeddables branch` | Switch to a different branch (interactive list), then pull that branch. |
+| Command                      | Description                                                             |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `embeddables pull`           | Fetch an Embeddable from the cloud and reverse-compile to TSX.          |
+| `embeddables dev`            | Start dev server with hot reload; proxies to the Engine.                |
+| `embeddables save`           | Build and upload the Embeddable to the cloud.                           |
+| `embeddables branch`         | Switch to a different branch (interactive list), then pull that branch. |
+| `embeddables builder open`   | Open the Embeddables Builder in your default browser for an Embeddable. |
 
-**Tip:** You can `cd embeddables/<EMBEDDABLE_ID>` and run Embeddable-specific commands (`dev`, `pull`, `save`, `branch`) from there. The CLI will automatically use that Embeddable instead of prompting you to choose.
+**Tip:** You can `cd embeddables/<EMBEDDABLE_ID>` and run Embeddable-specific commands (`dev`, `pull`, `save`, `branch`, `builder open`) from there. The CLI will automatically use that Embeddable instead of prompting you to choose.
 
 ### Build (advanced)
 
 | Command             | Description                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------- |
 | `embeddables build` | Compile TSX → JSON only (no upload). Used automatically by `save` unless you pass `--skip-build`. |
+
+### Debugging
+
+| Command                | Description                                                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `embeddables inspect`  | Fetch an Embeddable from the engine, reverse-compile to React files, rebuild to JSON, and compare the two outputs.  |
 
 ---
 
@@ -439,6 +446,74 @@ my-project/
           </td>
           <td>
             Experiment key (required if <code>--experiment-id</code> is set).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables builder open">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>
+            Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables inspect">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID to inspect (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--version &lt;version&gt;</code>
+          </td>
+          <td>
+            Version to inspect — a version number or <code>"latest"</code> (default: <code>latest</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Embeddable branch ID.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-f, --fix</code>
+          </td>
+          <td>
+            Fix by removing components missing required props (default: on).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-e, --engine &lt;url&gt;</code>
+          </td>
+          <td>
+            Engine origin (default: <code>https://engine.embeddables.com</code>).
           </td>
         </tr>
       </tbody>
