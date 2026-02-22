@@ -11,6 +11,19 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.7.15 — 22 February 2026">
+
+### Features
+
+- **`embeddables builder open`** — Opens the Embeddables Builder in your default browser for the selected Embeddable. Resolves the project from `embeddables.json` (or prompts to select one if not configured), then navigates directly to the edit URL. Pass `-i <id>` to skip the interactive prompt, or run from inside `embeddables/<id>/` to infer the Embeddable automatically.
+- **`embeddables inspect`** — New debugging command that fetches an Embeddable by ID from the engine, reverse-compiles it to React/CSS/JS files, rebuilds it back to JSON, and reports which top-level keys differ between the original and rebuilt output. Designed for diagnosing round-trip compiler bugs. Requires login by default; pass the hidden `--bypass-auth` flag to skip authentication (intended for CI or cloud AI tooling).
+
+### Chores
+
+- **CI workflow improvements** — Internal documentation update workflow enhanced with version input, updated permission modes, and improved branch/trigger configuration.
+
+</Update>
+
 <Update label="v0.7.14 — 22 February 2026">
 
 ### Features
