@@ -16,7 +16,7 @@ description: "Build and manage Embeddables locally with code — for developers 
 </Warning>
 
 <Info>
-  **Current version: 0.7.17** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+  **Current version: 0.7.18** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
 </Info>
 
 The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
@@ -87,7 +87,7 @@ Run **`embeddables init`** from inside a project folder you’ve created for you
 ```
 my-project/
 ├── embeddables.json          # Project ID and org (from init)
-├── tsconfig.json             # TypeScript/JSX config (created by init if missing)
+├── tsconfig.json             # TypeScript/JSX config (created by init, or patched to add type paths if it already exists)
 ├── .types/                   # Type stubs for editor autocomplete (no npm install needed)
 ├── .gitignore                # Updated to ignore .generated/ and .types/
 ├── .cursor/rules/            # Cursor AI rules (optional, from init)
@@ -119,7 +119,7 @@ my-project/
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `embeddables login`   | Log in to your Embeddables account (global).                                                                                                        |
 | `embeddables logout`  | Clear stored authentication.                                                                                                                        |
-| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `tsconfig.json`, `embeddables/`, optional Cursor/Claude/Codex prompts. |
+| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `embeddables/`, optional Cursor/Claude/Codex prompts; creates `tsconfig.json` if absent, or patches it to add the required type alias paths if it already exists. |
 | `embeddables upgrade` | Update the CLI to the latest stable version.                                                                                                        |
 
 ### Daily workflow
@@ -679,7 +679,7 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
 - **No asset management** from the CLI yet. You can't upload, browse, or manage images and other assets through the CLI. To use assets in your Embeddable, either upload them in the Builder and copy the resulting URLs into your code, or use placeholder image URLs while building locally and swap them out later.
 - **No creating new branches/experiments** from the CLI; you can connect to existing ones (`embeddables branch`, `embeddables experiments connect`).
 - **`embeddables dev` doesn’t yet work** for Embeddables that use the CMS feature; use the Builder preview or a deployed embed for those.
-- **Some edge cases** in multilingual property handling.
+- **Multi-language Embeddables** are supported in round-trip compilation; some edge cases with complex language configurations may still arise — report them if you encounter them.
 - **Internet required** for the dev server when using the default (remote) Engine.
 
 ---
@@ -771,7 +771,7 @@ Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https
     The dev preview uses the same Engine as production, but your site might have different CSS (e.g. Tailwind preflight) that affects embedded content. Test on a page that matches your production environment, or use the Builder’s “Preview on your site” if available. Some Tailwind resets can leak into the embed; scope or override them in your embed wrapper if needed.
   </Accordion>
   <Accordion title="“Cannot find module '@embeddables/cli/components'” in editor">
-    Run `embeddables init` (or re-run it) so that `.types/` is created. The project’s `tsconfig.json` should map `@embeddables/cli/components` and `@embeddables/cli/types` to `./.types/`. If you removed `.types/`, run `embeddables init` again to regenerate type stubs.
+    Run `embeddables init` (or re-run it) so that `.types/` is created. The CLI also ensures `tsconfig.json` has the required `baseUrl` and `paths` entries — if you already had a `tsconfig.json`, `init` will patch it rather than replacing it. If you removed `.types/`, run `embeddables init` again to regenerate type stubs and repair the path mappings.
   </Accordion>
   <Accordion title="Login or pull fails with a network error">
     Check your internet connection. The CLI talks to Embeddables APIs and (for dev) the production Engine. If you’re behind a strict firewall or proxy, you may need to allow access to Embeddables endpoints.

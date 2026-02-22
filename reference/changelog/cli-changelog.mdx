@@ -11,6 +11,25 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.7.18 — 22 February 2026">
+
+### Features
+
+- **Multi-language support for round-trip compilation** — The CLI now correctly handles Embeddables with multi-language content throughout the compile/reverse-compile pipeline. Components that carry language-specific data will no longer lose that data on a round-trip.
+
+### Bug Fixes
+
+- **`languages` prop added to component type stubs** — `BaseComponentProps` and `OptionSelectorButton` now include a `languages` prop in the generated `.types/` stubs, giving correct editor autocomplete for multi-language components.
+- **`languages` prop scoped to React types only** — The `languages` prop is included in the React component types (`.types/`) but correctly excluded from `types-builder.ts`, keeping internal types clean.
+- **`.d.ts` extension used in generated tsconfig paths** — Type stub paths in the generated `tsconfig.json` now use the correct `.d.ts` extension, preventing TypeScript from failing to resolve them.
+- **`tsconfig.json` patched when it already exists** — `embeddables init` now adds `baseUrl` and `paths` entries to an existing `tsconfig.json` instead of only writing them to a freshly created file. Projects that already had a `tsconfig.json` before running `init` will now get the correct type alias mappings without needing to delete and recreate the file.
+
+### Chores
+
+- **CI: GitHub token updated in publish workflow** — Internal publish workflow updated to use the correct GitHub token reference.
+
+</Update>
+
 <Update label="v0.7.17 — 22 February 2026">
 
 ### Improvements
