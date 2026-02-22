@@ -11,6 +11,14 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.7.16 — 22 February 2026">
+
+### Bug Fixes
+
+- **Reverse compiler: global component cross-location `parent_id`** — Fixed a round-trip bug where a global component with `_location` pointing to one group (e.g. `before_components`) but `parent_id` pointing to a component in a different location group (e.g. `before_page`) was orphaned during reverse compilation. Components are now grouped by following their parent chain rather than their own `_location`, keeping the component tree intact in a single TSX file.
+
+</Update>
+
 <Update label="v0.7.15 — 22 February 2026">
 
 ### Features
