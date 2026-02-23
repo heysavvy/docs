@@ -11,6 +11,15 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.8.3 — 23 February 2026">
+
+### Bug Fixes
+
+- **`embeddables pull` now works with project slugs** — Previously, passing a project slug (e.g. `cursor-telehealth`) as the Embeddable ID could fail with `"JSON object requested, multiple (or no) rows returned"`. The metadata lookup now uses `maybeSingle()` so zero results are handled gracefully, and the CLI retries the lookup with the actual flow ID returned by the engine when the user-provided ID yields no match.
+- **Automatic Embeddable detection no longer triggers falsely in directories named `embeddables/`** — `inferEmbeddableFromCwd()` previously matched any directory whose parent was named `embeddables`, causing false positives when users kept projects in a folder called `embeddables/` (e.g. `~/embeddables/cursor-telehealth/`). The function now checks for an `embeddables.json` config file before treating a directory as an Embeddable project root.
+
+</Update>
+
 <Update label="v0.8.2 — 23 February 2026">
 
 ### Bug Fixes
