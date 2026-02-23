@@ -11,6 +11,14 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.8.3 — 23 February 2026">
+
+### Bug Fixes
+
+- **Automatic Embeddable detection no longer triggers falsely in directories named `embeddables/`** — `inferEmbeddableFromCwd()` previously matched any directory whose parent was named `embeddables`, causing false positives when users kept projects in a folder called `embeddables/` (e.g. `~/embeddables/cursor-telehealth/`). The function now checks for an `embeddables.json` config file before treating a directory as an Embeddable project root.
+
+</Update>
+
 <Update label="v0.8.2 — 23 February 2026">
 
 ### Bug Fixes
