@@ -11,6 +11,23 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.8.1 — 23 February 2026">
+
+### Bug Fixes
+
+- **ESC key now reliably quits all interactive prompts** — Pressing Escape in any interactive prompt (login flow, lint-fix confirmation, selection lists, etc.) now consistently exits the CLI. Previously, some prompts (including `AutocompletePrompt`) would silently accept the highlighted value or skip the prompt instead of quitting. All prompt call sites now use a centralized wrapper that detects the ESC signal via an `onState` callback and calls `process.exit()`.
+
+### Improvements
+
+- **CLI output overhaul** — All commands now feature `ora` spinners during async operations, `boxen` boxes for milestone moments (save success, dev server ready, upgrade complete), and `log-symbols` for consistent status icons. Verbose file-by-file listings are replaced with compact summary counts. Error/warning severity is now used correctly: recoverable situations use `warn` rather than `error`.
+- **Branch name shown in save output** — `embeddables save` now displays the branch name alongside the branch ID in its confirmation output, making it easier to verify you're saving to the right branch.
+
+### Chores
+
+- **`prepublishOnly` script** — The package build now runs automatically before `npm publish`, ensuring the compiled `dist/` is always up to date when a release goes out. No user-facing change.
+
+</Update>
+
 <Update label="v0.7.19 — 23 February 2026">
 
 ### Bug Fixes
