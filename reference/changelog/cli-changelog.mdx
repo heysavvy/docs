@@ -15,7 +15,7 @@ Check your version: `embeddables -v`
 
 ### Bug Fixes
 
-- **Reverse compiler: `htmlToJSXChildren` no longer hangs on `<!DOCTYPE>` or XML processing instructions** — Fixed an infinite loop in the HTML→JSX conversion function triggered when component HTML content begins with a declaration tag such as `<!DOCTYPE html>` or a processing instruction like `<?xml version="1.0"?>`. These non-element tags are now skipped cleanly. A secondary guard was also added so the parser always advances past any `<` character it cannot match, preventing the loop from stalling regardless of the malformed input.
+— Fixed an infinite loop in the HTML→JSX conversion function triggered when component HTML content begins with a declaration tag such as `<!DOCTYPE html>` or a processing instruction like `<?xml version="1.0"?>`. These non-element tags are now skipped cleanly. A secondary guard was also added so the parser always advances past any `<` character it cannot match, preventing the loop from stalling regardless of the malformed input.
 
 </Update>
 
