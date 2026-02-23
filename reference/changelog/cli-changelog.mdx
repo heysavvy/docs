@@ -21,10 +21,6 @@ Check your version: `embeddables -v`
 
 - **ESC key now consistently quits all CLI prompts** — Previously, pressing ESC during interactive prompts (e.g. the email input in `embeddables login`, the OTP code entry, or the lint-fix confirmation in `embeddables build`) would silently skip the prompt and continue execution. ESC now reliably exits the process across all prompt types, including auto-complete prompts that previously resolved with the highlighted value instead of aborting.
 
-### Improvements
-
-- **`embeddables save` — improved branch display** — `getBranchFromConfig` now returns both `_branch_id` and `_branch_name`, providing clearer branch identification in save output. Proxy server startup logs are also simplified to show only essential information.
-
 ### Chores
 
 - **`prepublishOnly` build script** — `npm publish` now automatically runs the TypeScript build step before publishing, preventing accidental releases with stale `dist/` output.
