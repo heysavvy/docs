@@ -20,7 +20,15 @@
           },
           {
             "group": "CLI",
-            "pages": ["cli", "reference/changelog/cli-changelog"]
+            "pages": [
+              "cli/overview",
+              "cli/commands",
+              "cli/development",
+              "cli/ai",
+              "cli/faqs",
+              "cli/troubleshooting",
+              "reference/changelog/cli-changelog"
+            ]
           },
           {
             "group": "Features",
@@ -227,6 +235,10 @@
     {
       "source": "/changelog",
       "destination": "/reference/changelog/changelog"
+    },
+    {
+      "source": "/cli",
+      "destination": "/cli/overview"
     }
   ]
 }

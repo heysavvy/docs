@@ -1,0 +1,156 @@
+---
+title: "Embeddables CLI"
+sidebarTitle: "Overview"
+icon: "terminal"
+description: "Build and manage Embeddables locally with code — for developers and AI-assisted builders"
+---
+
+<Warning>
+
+  **The Embeddables CLI is currently in Beta.**
+
+  Use it with caution, update the
+  package frequently, and always check the JSON diff before saving, merging or
+  pushing to production.
+
+</Warning>
+
+<Info>
+  **Current version: 0.7.19** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+</Info>
+
+The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
+
+<Info>
+  **Who is this for?** Both **technical developers** (full control, scripts, CI)
+  and **non-technical builders** who "vibe-code" with AI: the CLI gives you a
+  clear file structure and prompts so AI can edit pages, styles, and logic
+  reliably.
+</Info>
+
+## Requirements
+
+- **Node.js** >= 18.0.0
+
+## Installation
+
+Install the CLI globally:
+
+```bash
+npm install -g @embeddables/cli
+```
+
+Check your version:
+
+```bash
+embeddables -v
+```
+
+## Upgrading
+
+When a new CLI version is released:
+
+```bash
+embeddables upgrade
+```
+
+This installs the latest stable version from npm.
+
+## Quick Start
+
+```bash
+# 1. Log in (applies globally)
+embeddables login
+
+# 2. Create a project folder for your Embeddables project and go into it
+mkdir my-embeddable-project
+cd my-embeddable-project
+
+# 3. Initialize from inside that folder (creates config, types, embeddables/ with subfolders per Embeddable)
+embeddables init
+
+# 4. Pull an Embeddable (interactive list if logged in)
+embeddables pull
+
+# 5. Start the dev server with hot reload
+embeddables dev
+```
+
+After `embeddables pull`, you'll have TSX pages, styles, computed fields, and actions on disk. After `embeddables dev`, open the **Preview URL** in your browser; edits to files will recompile and refresh automatically.
+
+## Project Structure
+
+Run **`embeddables init`** from inside a project folder you've created for your Embeddables project. That folder will hold **all** Embeddables for that project—the CLI creates an `embeddables/` directory and, as you pull, one subfolder per Embeddable (e.g. `embeddables/<embeddable-id>/`).
+
+`embeddables init` creates (or updates) project-level files. `embeddables pull` adds one folder per Embeddable under `embeddables/`:
+
+```
+my-project/
+├── embeddables.json          # Project ID and org (from init)
+├── tsconfig.json             # TypeScript/JSX config (created by init, or patched to add type paths if it already exists)
+├── .types/                   # Type stubs for editor autocomplete (no npm install needed)
+├── .gitignore                # Updated to ignore .generated/ and node_modules/
+├── .cursor/rules/            # Cursor AI rules (optional, from init)
+├── .claude/                  # Claude project context (optional, from init)
+├── AGENTS.md                 # Codex context (optional, from init)
+└── embeddables/
+    └── <embeddable-id>/
+        ├── pages/                    # One .page.tsx file per page
+        ├── global-components/       # Shared components (e.g. before_page.location.tsx)
+        ├── styles/                  # CSS (e.g. index.css)
+        ├── computed-fields/         # Custom computed field logic (.js)
+        ├── actions/                 # Data output / action handlers (.js)
+        ├── config.json              # Embeddable metadata, page list, version
+        ├── metadata.json            # Title and basic info
+        └── .generated/              # Compiled JSON (used by dev/save; avoid editing)
+            ├── embeddable.json      # Current compiled output
+            └── embeddable-<branch>@<version>.json   # Saved versions (for comparison)
+```
+
+- **Pages**: `pages/<pageKey>.page.tsx` — React components built from Embeddable primitives.
+- **Global components**: One file per location (e.g. `before_page.location.tsx`, `after_components.location.tsx`).
+- **config.json**: Holds page keys, version, branch info; the compiler merges this with the compiled pages/styles/actions/computed fields.
+
+## Commands
+
+The CLI provides commands for setup, daily workflow, building, and debugging. Here's a quick overview:
+
+| Command | Description |
+| --- | --- |
+| `embeddables login` | Log in to your Embeddables account. |
+| `embeddables init` | Initialize a project folder with config, types, and AI context. |
+| `embeddables pull` | Fetch an Embeddable from the cloud and reverse-compile to TSX. |
+| `embeddables dev` | Start the dev server with hot reload. |
+| `embeddables save` | Build and upload the Embeddable to the cloud. |
+| `embeddables branch` | Switch to a different branch, then pull that branch. |
+| `embeddables build` | Compile TSX to JSON without uploading. |
+| `embeddables inspect` | Round-trip compile and compare outputs for debugging. |
+
+<Card title="Full command reference" icon="rectangle-terminal" href="/cli/commands">
+  See all commands, flags, and options.
+</Card>
+
+## Using the CLI with AI
+
+The CLI is built for **AI-assisted editing**. Running `embeddables init` injects context files for **Cursor**, **Claude**, and **Codex** so AI assistants understand Embeddable components, keys, and conventions out of the box.
+
+<Card title="AI assistant setup" icon="wand-magic-sparkles" href="/cli/ai">
+  Learn how to set up Cursor, Claude, and Codex for the best editing experience.
+</Card>
+
+## Next steps
+
+<CardGroup cols={2}>
+  <Card title="Development workflow" icon="code" href="/cli/development">
+    Dev server, Workbench, TypeScript authoring, and best practices.
+  </Card>
+  <Card title="FAQs" icon="circle-question" href="/cli/faqs">
+    Common questions about the CLI, components, and workflows.
+  </Card>
+  <Card title="Troubleshooting" icon="wrench" href="/cli/troubleshooting">
+    Fix common errors and learn about current limitations.
+  </Card>
+  <Card title="CLI Changelog" icon="list" href="/reference/changelog/cli-changelog">
+    See what's new in each CLI release.
+  </Card>
+</CardGroup>

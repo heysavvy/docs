@@ -1,0 +1,430 @@
+---
+title: "Command Reference"
+sidebarTitle: "Commands"
+icon: "rectangle-terminal"
+description: "Complete reference for all Embeddables CLI commands and their options"
+---
+
+## Core Commands
+
+### Setup & auth
+
+| Command               | Description                                                                                                                                         |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `embeddables login`   | Log in to your Embeddables account (global).                                                                                                        |
+| `embeddables logout`  | Clear stored authentication.                                                                                                                        |
+| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `embeddables/`, optional Cursor/Claude/Codex prompts; creates `tsconfig.json` if absent, or patches it to add the required type alias paths if it already exists. |
+| `embeddables upgrade` | Update the CLI to the latest stable version.                                                                                                        |
+
+### Daily workflow
+
+| Command                      | Description                                                             |
+| ---------------------------- | ----------------------------------------------------------------------- |
+| `embeddables pull`           | Fetch an Embeddable from the cloud and reverse-compile to TSX.          |
+| `embeddables dev`            | Start dev server with hot reload; proxies to the Engine.                |
+| `embeddables save`           | Build and upload the Embeddable to the cloud.                           |
+| `embeddables branch`         | Switch to a different branch (interactive list), then pull that branch. |
+| `embeddables builder open`   | Open the Embeddables Builder in your default browser for an Embeddable. |
+
+<Tip>
+  You can `cd embeddables/<EMBEDDABLE_ID>` and run Embeddable-specific commands (`dev`, `pull`, `save`, `branch`, `builder open`) from there. The CLI will automatically use that Embeddable instead of prompting you to choose.
+</Tip>
+
+### Build (advanced)
+
+| Command             | Description                                                                                       |
+| ------------------- | ------------------------------------------------------------------------------------------------- |
+| `embeddables build` | Compile TSX → JSON only (no upload). Used automatically by `save` unless you pass `--skip-build`. |
+
+### Debugging
+
+| Command                | Description                                                                                                         |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `embeddables inspect`  | Fetch an Embeddable from the engine, reverse-compile to React files, rebuild to JSON, and compare the two outputs.  |
+
+---
+
+## Command Options
+
+<AccordionGroup>
+  <Accordion title="embeddables init">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>
+            Set project ID (if logged in, you can pick from a list instead).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-y, --yes</code>
+          </td>
+          <td>Skip prompts and use defaults.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables pull">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID to pull (skips interactive selection).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--version [number]</code>
+          </td>
+          <td>
+            Version to pull. Omit a value (<code>--version</code>) to open an interactive version selector. Pass a number (<code>--version 47</code>) to pull a specific version. Without this flag, <code>pull</code> defaults to the latest version.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-o, --out &lt;path&gt;</code>
+          </td>
+          <td>
+            Output path for compiled JSON (default:{" "}
+            <code>embeddables/&lt;id&gt;/.generated/embeddable.json</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Pull a specific branch.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-f, --fix</code>
+          </td>
+          <td>
+            Remove components with missing required props instead of erroring.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --preserve</code>
+          </td>
+          <td>Preserve component order in config (see note below).</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables dev">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (prompt if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --pages &lt;glob&gt;</code>
+          </td>
+          <td>
+            Custom pages glob (default:{" "}
+            <code>embeddables/&lt;id&gt;/pages/**/*.page.tsx</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-o, --out &lt;path&gt;</code>
+          </td>
+          <td>Output path for compiled JSON.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-L, --local</code>
+          </td>
+          <td>
+            Use local engine (<code>http://localhost:8787</code>) instead of
+            production.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-e, --engine &lt;url&gt;</code>
+          </td>
+          <td>
+            Engine origin (default: <code>https://engine.embeddables.com</code>;
+            overridden by <code>--local</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--port &lt;n&gt;</code>
+          </td>
+          <td>
+            Dev proxy port (default: <code>3000</code>). If in use, CLI tries
+            the next available port.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--overrideRoute &lt;path&gt;</code>
+          </td>
+          <td>
+            Route to override in proxy (default: <code>/init</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--pageKeyFrom &lt;mode&gt;</code>
+          </td>
+          <td>
+            How to derive page keys: <code>filename</code> or{" "}
+            <code>export</code> (default: <code>filename</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--fix</code>
+          </td>
+          <td>
+            Apply lint fixes (e.g. duplicate IDs, keys starting with a number).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables build">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --pages &lt;glob&gt;</code>
+          </td>
+          <td>Pages glob.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-o, --out &lt;path&gt;</code>
+          </td>
+          <td>Output path for JSON.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--pageKeyFrom &lt;mode&gt;</code>
+          </td>
+          <td>
+            <code>filename</code> or <code>export</code> (default:{" "}
+            <code>filename</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--fix</code>
+          </td>
+          <td>Apply lint fixes.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables save">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (prompt if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-l, --label &lt;label&gt;</code>
+          </td>
+          <td>Human-readable version label.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Branch ID to save to.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-s, --skip-build</code>
+          </td>
+          <td>
+            Use existing <code>.generated/embeddable.json</code> (no build
+            step).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--from-version &lt;number&gt;</code>
+          </td>
+          <td>Base version (auto-detected from local config if not set).</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables branch">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>
+            Embeddable ID (prompt from local Embeddables if not provided).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables experiments connect">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--experiment-id &lt;id&gt;</code>
+          </td>
+          <td>Experiment ID (prompt to choose if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--experiment-key &lt;key&gt;</code>
+          </td>
+          <td>
+            Experiment key (required if <code>--experiment-id</code> is set).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables builder open">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>
+            Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables inspect">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID to inspect (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--version &lt;version&gt;</code>
+          </td>
+          <td>
+            Version to inspect — a version number or <code>"latest"</code> (default: <code>latest</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Embeddable branch ID.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-f, --fix</code>
+          </td>
+          <td>
+            Fix by removing components missing required props (default: on).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-e, --engine &lt;url&gt;</code>
+          </td>
+          <td>
+            Engine origin (default: <code>https://engine.embeddables.com</code>).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  **`pull --preserve`:** If you've held back on using the CLI because the first pull changes the JSON a lot, try **`embeddables pull --preserve`**. It keeps the same order of components in the config. The biggest cause of "changes" on pull is usually component reordering (React sorts them within containers), which doesn't affect the rendered Embeddable. You may still see smaller changes (e.g. `parent_key` fixes), but it's easier to verify what actually changed when component order stays the same.
+</Tip>

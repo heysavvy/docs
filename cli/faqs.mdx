@@ -1,0 +1,51 @@
+---
+title: "FAQs"
+sidebarTitle: "FAQs"
+icon: "circle-question"
+description: "Frequently asked questions about the Embeddables CLI"
+---
+
+<AccordionGroup>
+  <Accordion title="Do I need to install the CLI in my project as well as globally?">
+    No. Install globally with `npm install -g @embeddables/cli`. Your project only needs the files created by `embeddables init` (including `.types/` for editor support). You do not add `@embeddables/cli` as a dependency in `package.json` for normal use.
+  </Accordion>
+  <Accordion title="Where is my login stored?">
+    Login is stored globally on your machine (not per project). Use `embeddables logout` to clear it.
+  </Accordion>
+  <Accordion title="Can I use the CLI without ever using the Builder?">
+    You can build and save Embeddables entirely from the CLI. The Builder is still the recommended place to create new branches/experiments, upload assets, and for non-technical teammates to review and merge. Many teams use both: CLI for fast iteration and AI-assisted edits, Builder for final review and publishing.
+  </Accordion>
+  <Accordion title="What is the difference between id and key on components?">
+    Both must be unique in context. `id` is the stable internal identifier (e.g. `comp_12345`). `key` is used in React and for targeting (e.g. in conditions or user data). Keys must not start with a number; use a prefix like `option_` or `range_` if the label would otherwise slug to a number.
+  </Accordion>
+  <Accordion title="Can I have multiple Embeddables in one project?">
+    Yes. Run `embeddables pull` for each; they live in `embeddables/<embeddable-id>/`. When you run `embeddables dev`, `embeddables save`, or `embeddables branch` without `-i`, you'll be prompted to choose which Embeddable to use. To avoid the prompt, **go into that Embeddable's folder** (e.g. <code>cd embeddables/&lt;EMBEDDABLE_ID&gt;</code>) and run the command from there—the CLI will automatically use that Embeddable.
+  </Accordion>
+  <Accordion title="First pull changes the JSON too much. How can I reduce noise?">
+    Use <strong><code>embeddables pull --preserve</code></strong>. It keeps the same order of components in the config. Most of the "changes" you see on a first pull are from React reordering components within containers—that doesn't affect how the Embeddable renders. With <code>--preserve</code>, you may still see smaller changes (e.g. <code>parent_key</code> fixes), but it's easier to verify what actually changed.
+  </Accordion>
+  <Accordion title="How do I point the dev server at a local Engine?">
+    Use `embeddables dev --local` to use `http://localhost:8787`. Or use `embeddables dev --engine https://your-engine.example.com` for a custom URL.
+  </Accordion>
+  <Accordion title="What is the Workbench and how do I open it?">
+    The Workbench is a debugging panel that lets you inspect user data, computed fields, actions, and navigate pages. On localhost previews from `embeddables dev`, it is shown by default; add `?workbench=false` to hide it. On non-localhost preview links, add `?workbench=true` to show it. It is served by the dev proxy and does not require a separate deploy.
+  </Accordion>
+  <Accordion title="Does the CLI work with Cursor / Claude / Codex?">
+    Yes. The CLI is designed for AI-assisted editing. Running `embeddables init` injects Cursor rules (`.cursor/rules/`), Claude project context (`.claude/`), and a Codex-compatible `AGENTS.md` file so the assistant understands the file layout, component types, and conventions. You can also use the built-in prompts from the CLI repo in your own rules.
+  </Accordion>
+  <Accordion title="How do I get the latest CLI version?">
+    Run `embeddables upgrade`. You can check the current version with `embeddables -v`.
+  </Accordion>
+  <Accordion title="Can I create a new branch or experiment from the CLI?">
+    No. You can switch to and pull existing branches with `embeddables branch`, and connect an Embeddable to an experiment with `embeddables experiments connect`, but creating new branches or experiments is done in the Builder.
+  </Accordion>
+  <Accordion title="Why does save say the server has a newer version?">
+    Someone (in the Builder or via the CLI) saved a newer version after you last pulled. You can pull the latest with `embeddables pull` and then re-apply your changes, or force-save when the prompt offers it (use with care to avoid overwriting others' work).
+  </Accordion>
+  <Accordion title="What are global components and where do they live?">
+    Global components are shared across pages (e.g. a nav bar or footer). They live in `embeddables/<id>/global-components/` with one file per location, e.g. `before_page.location.tsx`, `after_components.location.tsx`. The `_location` value controls where they render relative to the page.
+  </Accordion>
+  <Accordion title="Should I use Git or version control for my Embeddable project? How do I compare changes?">
+    We don't currently recommend using version control (e.g. Git) in your codebase for the Embeddable files, because it can easily get out of sync with Embeddables' own version and branch system. Instead, use the version history that the CLI and platform already provide: compare the current compiled output with a saved version by opening **`embeddable.json`** and the latest **`embeddable-&lt;branch&gt;@&lt;version&gt;.json`** (e.g. `embeddable-main@47.json`) inside the **`.generated/`** folder. In VS Code or Cursor: **Shift+click** to select both files, then **right-click → Compare Selected** to see the diff.
+  </Accordion>
+</AccordionGroup>
