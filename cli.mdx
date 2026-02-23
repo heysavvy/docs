@@ -16,7 +16,7 @@ description: "Build and manage Embeddables locally with code — for developers 
 </Warning>
 
 <Info>
-  **Current version: 0.7.18** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+  **Current version: 0.7.19** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
 </Info>
 
 The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
@@ -89,7 +89,7 @@ my-project/
 ├── embeddables.json          # Project ID and org (from init)
 ├── tsconfig.json             # TypeScript/JSX config (created by init, or patched to add type paths if it already exists)
 ├── .types/                   # Type stubs for editor autocomplete (no npm install needed)
-├── .gitignore                # Updated to ignore .generated/ and .types/
+├── .gitignore                # Updated to ignore .generated/ and node_modules/
 ├── .cursor/rules/            # Cursor AI rules (optional, from init)
 ├── .claude/                  # Claude project context (optional, from init)
 ├── AGENTS.md                 # Codex context (optional, from init)
