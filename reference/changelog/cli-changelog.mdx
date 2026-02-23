@@ -11,6 +11,16 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.7.19 — 23 February 2026">
+
+### Bug Fixes
+
+- **`embeddables dev` no longer loops when fixing duplicate option IDs** — Fixed an infinite rebuild loop in dev mode triggered when an `OptionSelector` had duplicate button IDs. The fix routine now uses targeted text replacements instead of full Babel code generation, so files are only written when content actually changes. Duplicate ID detection also now covers const-referenced button arrays (e.g. `buttons={someButtons}`), not just inline arrays.
+- **TypeScript: `props` property now included in generated component types** — The `Props<T>` type emitted into `.types/components.d.ts` by `embeddables init` was missing a `props` field, causing errors like `Property 'props' does not exist on type 'Props<FileUpload>'`. A `props?: Record<string, any>` property is now included.
+- **`embeddables init` no longer duplicates `.gitignore` entries** — Running `embeddables init` more than once used to append a new `# Embeddables` block each time. It now replaces the existing block in-place. The generated block also adds `node_modules/` and no longer unnecessarily includes `**/.types/`.
+
+</Update>
+
 <Update label="v0.7.18 — 22 February 2026">
 
 ### Features
