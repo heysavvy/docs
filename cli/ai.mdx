@@ -1,0 +1,54 @@
+---
+title: "Using the CLI with AI"
+sidebarTitle: "AI Assistants"
+icon: "wand-magic-sparkles"
+description: "Set up Cursor, Claude, and Codex for AI-assisted Embeddable editing"
+---
+
+The CLI is built for **AI-assisted editing**: the file layout is predictable, and `embeddables init` injects **Cursor rules**, **Claude project context**, and **Codex context (AGENTS.md)** so the assistant understands Embeddable components, keys, and conventions. Use the sections below to get the most out of each tool.
+
+## Cursor
+
+When you run `embeddables init`, the CLI can add a **Cursor rule** so Cursor AI has full context when you edit Embeddables:
+
+- **Where it goes**: `.cursor/rules/embeddables-cli.md`
+- **What it does**: The rule is marked to apply always (`alwaysApply: true`), so Cursor has the Embeddables CLI guide (file structure, component types, `id`/`key` rules, action values like `next-page`/`prev-page`, etc.) in context without you having to mention it every time.
+- **Referencing it in chat**: If you want to be explicit, you can @-mention the rule file in the composer, e.g. `@.cursor/rules/embeddables-cli.md`, so the model is sure to use it for the current task.
+- **Re-injecting**: If you delete `.cursor/rules/embeddables-cli.md` or want to get the latest version from the CLI package, run `embeddables init` again; it will overwrite or recreate the rule file.
+
+Use Cursor for quick edits to a single page, adding a component, or fixing a prop — the rule keeps the assistant from suggesting invalid `action` values or keys that start with a number.
+
+## Claude
+
+When you run `embeddables init`, the CLI can also add **Claude (Claude Code / project) context**:
+
+- **Where it goes**: `.claude/` with `CLAUDE.md` (short intro) and `embeddables-cli.md` (full CLI context, same content as the Cursor rule).
+- **What it does**: Claude uses these files as project context when you work in the repo. The full guide in `.claude/embeddables-cli.md` explains pages, global components, styles, computed fields, actions, and component primitives so Claude can edit TSX and config correctly.
+- **Referencing it in prompts**: In a Claude Code or project prompt, you can say: "Always read the Embeddables CLI context before starting (e.g. `.claude/embeddables-cli.md`)." For complex tasks (e.g. building multiple pages from designs), the CLI repo also includes example prompts in `.prompts/custom/` (e.g. build-funnel style) that you can adapt and paste into Claude.
+- **Re-injecting**: As with Cursor, run `embeddables init` again to recreate or refresh `.claude/` if you removed it or want the latest content.
+
+Claude works well for multi-step tasks (e.g. "add a new page and wire up the buttons") or when you paste in the context file path at the start of a long conversation.
+
+## Codex
+
+When you run `embeddables init`, the CLI generates an **`AGENTS.md`** file at the project root:
+
+- **Where it goes**: `AGENTS.md` (project root)
+- **What it does**: Follows the OpenAI Codex convention. Contains the same Embeddables CLI context as the Cursor and Claude files (file structure, component types, conventions, etc.), so Codex has full awareness of the project when making edits.
+- **Re-injecting**: Run `embeddables init` again to regenerate or update `AGENTS.md` with the latest content from the CLI package.
+
+## Tips and best practices for prompt writing
+
+Getting the best results from Cursor or Claude when editing Embeddables:
+
+1. **Be specific about files and components.**
+   Name the file you want changed (e.g. `embeddables/<id>/pages/welcome.page.tsx`) and, when relevant, the component key or id (e.g. "the CustomButton with key `submit_btn`"). That keeps edits scoped and avoids accidental changes elsewhere.
+
+2. **For big tasks (e.g. building from screenshots or docs), use a plan-first style.**
+   Ask for a short plan and list of decisions/uncertainties before editing. Example: "Create a plan and highlight any decisions or things you're unsure about, especially around which components to use. Then implement." The CLI's example prompt in `.prompts/custom/build-funnel.md` follows this pattern (plan, then build, then summary of decisions/assumptions/uncertainties).
+
+3. **Attach images when possible.**
+   If you have a screenshot of what you want the result to look like (for example, "build a page like this example layout"), include it with your prompt. Likewise, if something's wrong with the page as rendered, adding a screenshot of the issue can help Cursor or Claude diagnose and fix the problem much more quickly. Screenshots provide visual clarity that's sometimes hard to convey with just words or code snippets.
+
+4. **Model choice.**
+   For best results, use **Opus 4.6** when available (e.g. in Claude). It thinks a little longer but produces very accurate results for Embeddables edits.

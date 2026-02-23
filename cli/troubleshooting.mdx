@@ -1,0 +1,82 @@
+---
+title: "Troubleshooting"
+sidebarTitle: "Troubleshooting"
+icon: "wrench"
+description: "Fix common CLI errors and learn about current limitations"
+---
+
+## Current limitations
+
+- **You can't create Embeddables** from the CLI; you can only pull and edit existing Embeddables (create new ones in the Builder).
+- **No asset management** from the CLI yet. You can't upload, browse, or manage images and other assets through the CLI. To use assets in your Embeddable, either upload them in the Builder and copy the resulting URLs into your code, or use placeholder image URLs while building locally and swap them out later.
+- **No creating new branches/experiments** from the CLI; you can connect to existing ones (`embeddables branch`, `embeddables experiments connect`).
+- **`embeddables dev` doesn't yet work** for Embeddables that use the CMS feature; use the Builder preview or a deployed embed for those.
+- **Multi-language Embeddables** are supported in round-trip compilation; some edge cases with complex language configurations may still arise — report them if you encounter them.
+- **Internet required** for the dev server when using the default (remote) Engine.
+
+---
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="“No Embeddables found” or “No Embeddable selected” when running dev or save">
+    Run from the **project root** (where `embeddables.json` and the `embeddables/` folder are), or from inside `embeddables/<id>/` so the CLI infers the Embeddable, or pass `-i <embeddable-id>`. If you haven't pulled yet, run `embeddables pull` first so that `embeddables/<id>/` exists.
+  </Accordion>
+  <Accordion title="Port 3000 is already in use">
+    The CLI will try the next available port and print the actual URL. To force a port: `embeddables dev --port 3001`.
+  </Accordion>
+  <Accordion title="Preview URL loads but shows a blank or wrong Embeddable">
+    Confirm the URL includes `?id=<embeddable-id>&version=latest`. If you have multiple Embeddables, make sure the ID in the URL matches the one you're editing and the one that is running in the dev server. Restart `embeddables dev` and do a hard refresh (e.g. Cmd+Shift+R).
+  </Accordion>
+  <Accordion title="Build fails: “duplicate id” or “duplicate key”">
+    Every component must have a unique `id` and `key` in the Embeddable. Search your pages and global components for the repeated value and rename one. You can run `embeddables build -i <id> --fix` (or pull with `--fix`) to let the CLI fix some issues automatically; check the output for warnings.
+  </Accordion>
+  <Accordion title="Build fails: “key must not start with a number”">
+    Keys (and option button keys) must not start with a digit. Use a prefix, e.g. `option_1_to_2_weeks` or `range_1_to_2_weeks` instead of `1_to_2_weeks`.
+  </Accordion>
+  <Accordion title="Save fails with “version conflict” or “newer version on server”">
+    Pull the latest: `embeddables pull -i <id>`. Merge or re-apply your local changes, then run `embeddables save` again. Only force-save if you intend to overwrite the server version.
+  </Accordion>
+  <Accordion title="After pull, I see duplicate or wrong global components">
+    Rarely, global component files can get out of sync. You can delete the `global-components/` folder for that Embeddable and run `embeddables pull -i <id>` again to regenerate them. Back up any local edits first.
+  </Accordion>
+  <Accordion title="Styles look different in preview vs my site">
+    The dev preview uses the same Engine as production, but your site might have different CSS (e.g. Tailwind preflight) that affects embedded content. Test on a page that matches your production environment, or use the Builder's "Preview on your site" if available. Some Tailwind resets can leak into the embed; scope or override them in your embed wrapper if needed.
+  </Accordion>
+  <Accordion title="“Cannot find module ‘@embeddables/cli/components’” in editor">
+    Run `embeddables init` (or re-run it) so that `.types/` is created. The CLI also ensures `tsconfig.json` has the required `baseUrl` and `paths` entries — if you already had a `tsconfig.json`, `init` will patch it rather than replacing it. If you removed `.types/`, run `embeddables init` again to regenerate type stubs and repair the path mappings.
+  </Accordion>
+  <Accordion title="Login or pull fails with a network error">
+    Check your internet connection. The CLI talks to Embeddables APIs and (for dev) the production Engine. If you're behind a strict firewall or proxy, you may need to allow access to Embeddables endpoints.
+  </Accordion>
+  <Accordion title="Dev server says “using port X instead”">
+    The default port (3000) was in use, so the CLI picked the next free port. Use the URL printed in the terminal. To avoid this, run `embeddables dev --port <port>` with a port you know is free.
+  </Accordion>
+  <Accordion title="I get a compile error in a .page.tsx file (e.g. missing prop, wrong type)">
+    Open the file and fix the reported prop or type. The compiler uses the same types as in `.types/`. For CustomButton, ensure `action` is one of: `next-page`, `prev-page`, `no-action`, `open-url`, `open-info-box`, `close-popup`, `reset`, or `page-<pageKey>`. For OptionSelector buttons, ensure each button has a valid `key` (no leading digit).
+  </Accordion>
+  <Accordion title="Workbench doesn't appear or doesn't load">
+    On localhost (`embeddables dev`), the Workbench is on by default—if you hid it with `?workbench=false`, remove that param or use `?workbench=true`. On non-localhost preview links, you must add `?workbench=true` to show it. Ensure the preview is from the dev proxy (localhost) or a URL that supports Workbench. If it still fails, try a different browser or clear cache.
+  </Accordion>
+  <Accordion title="Workbench is in the way or blocking something — how do I hide it?">
+    On localhost previews from `embeddables dev`, the Workbench is on by default. To hide it, add `?workbench=false` to the preview URL in your browser (e.g. `http://localhost:3000?id=<embeddable-id>&version=latest&workbench=false`). Reload the page and the Workbench panel will be hidden so you can see or click the content underneath.
+  </Accordion>
+  <Accordion title="I want to undo a save">
+    The CLI doesn't version for you. Use the Embeddables Builder to view version history and roll back to a previous version if your project has that feature. Going forward, save often in smaller steps so you can revert via the Builder if needed.
+  </Accordion>
+  <Accordion title="When I report an issue, what should I include?">
+    Include your **CLI version** (<code>embeddables -v</code>), the **Embeddable** you're on (ID and version), and the **commands or prompts** you used. Check the [latest version on npm](https://www.npmjs.com/package/@embeddables/cli)—if you're not on the latest, run <code>embeddables upgrade</code> and try again; many issues are fixed in newer releases.
+  </Accordion>
+</AccordionGroup>
+
+---
+
+## Reporting issues
+
+When you report a problem or ask for help, it's very helpful to include:
+
+- **CLI version** — Run `embeddables -v` and share the number.
+- **Embeddable** you're working on (ID and version from `config.json` or the Builder).
+- **Commands or prompts** you ran (and any options).
+
+Also **compare your CLI version to the latest on npm** ([@embeddables/cli](https://www.npmjs.com/package/@embeddables/cli)). If you're not on the latest, try **`embeddables upgrade`** first—many issues are fixed in newer releases.

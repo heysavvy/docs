@@ -1,0 +1,90 @@
+---
+title: "Development Workflow"
+sidebarTitle: "Development"
+icon: "code"
+description: "Dev server, Workbench, TypeScript authoring, and workflows for technical developers"
+---
+
+## Development server
+
+**`embeddables dev`** compiles your TSX (and styles, config, computed fields, actions) and runs a **local proxy** that:
+
+- Serves the compiled Embeddable to the Engine at the **Preview URL**.
+- Watches files under `embeddables/<id>/` and recompiles on change (hot reload).
+- By default uses the **production** Engine (`https://engine.embeddables.com`); use `--local` to point to a local engine (e.g. `http://localhost:8787`).
+
+The terminal prints a URL like:
+
+`http://localhost:3000?id=<embeddable-id>&version=latest`
+
+Open it in a browser to see your Embeddable. The dev server needs **internet** when using the default (remote) engine.
+
+### Workbench (debugging)
+
+The **Workbench** is a debugging panel for easily changing pages, inspecting user data, computed fields, and actions.
+
+- On **localhost** previews (from `embeddables dev`), the Workbench is **on by default**.
+- To hide it, add `?workbench=false` to the URL.
+- On **non-localhost** preview links (e.g. shared or deployed URLs), add `?workbench=true` to show the Workbench.
+- It is injected by the dev proxy so you can debug without deploying.
+
+---
+
+## Authoring with TypeScript
+
+Page and global-component files are React (TSX). Import primitives from `@embeddables/cli/components` for autocomplete and correct props:
+
+```tsx
+import {
+  Container,
+  InputBox,
+  PlainText,
+  CustomButton,
+} from "@embeddables/cli/components";
+
+export default function MyPage() {
+  return (
+    <Container id="main" key="main" container_type="container">
+      <PlainText id="title" key="title" text="Welcome!" />
+      <InputBox
+        id="email"
+        key="email"
+        input_type="email"
+        label="Email"
+        placeholder="you@example.com"
+        isRequired
+      />
+      <CustomButton
+        id="submit"
+        key="submit"
+        text="Continue"
+        action="next-page"
+      />
+    </Container>
+  );
+}
+```
+
+- **IDs and keys**: Each component needs a unique `id` and `key`. Keys must not start with a digit (use a prefix like `option_` or `range_` if needed).
+- **Button actions**: Use `"next-page"` and `"prev-page"` (with `-page`), not `"next"` or `"prev"`.
+- Types and stubs live in `.types/` (created by `init`) so your editor can resolve `@embeddables/cli/components` and `@embeddables/cli/types` without installing the CLI as a project dependency.
+
+---
+
+## For technical developers
+
+- **Comparing changes**: We don't recommend using version control (e.g. Git) in your codebase for the Embeddable files, because it can easily get out of sync with Embeddables' own version and branch system. Instead, compare the current build with a saved version: open `embeddable.json` and the latest `embeddable-<branch>@<version>.json` in `.generated/` (e.g. `embeddable-main@47.json`). In VS Code or Cursor, **Shift+click** to select both files, then **right-click → Compare Selected** to see the diff.
+- **Branches**: Use `embeddables branch` to switch branches; branch/version are stored in `config.json`. CLI-only branches can exist that aren't editable in the Builder; the Builder remains the merge point for production.
+- **Save conflicts**: `embeddables save` uses the version in `config.json` (or `.generated/`) for optimistic concurrency. If the server has a newer version, you'll be prompted; resolve by pulling the latest or force-saving when appropriate.
+- **Custom engine**: Use `embeddables dev --local` or `--engine <url>` for local or custom Engine origins.
+- **Build only**: Run `embeddables build -i <id>` to compile to `.generated/embeddable.json` without saving; then optionally `embeddables save --skip-build`.
+
+---
+
+## Best practices
+
+1. **Save frequently** (e.g. every 10 minutes or after significant edits) to avoid large conflicts.
+2. **Use the Builder** to diff and review after saving from the CLI; helps catch translation or styling differences.
+3. **Test in both** local preview (`embeddables dev`) and (when applicable) live/staging to catch environment-specific issues.
+4. **Use Workbench** (on by default for localhost previews from `embeddables dev`; use `?workbench=true` on non-localhost links) to inspect user data, computed fields, and actions while debugging.
+5. **Use `--fix`** on pull or build if you need to recover from missing required props (removes invalid components with a warning).
