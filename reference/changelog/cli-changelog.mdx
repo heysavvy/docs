@@ -11,6 +11,18 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.9.3 — 24 February 2026">
+
+### Improvements
+
+- **Richer error output with code frames** — Compile errors in `build`, `dev`, `inspect`, and `save` now display a highlighted code frame showing the surrounding source lines, a caret pointing to the exact column, and the file path and line number. Errors are written to `stderr` for consistent terminal integration.
+
+### Chores
+
+- **Sentry distributed tracing for all commands** — All CLI commands are now instrumented with Sentry spans (child spans for key operations) and custom counter/distribution metrics. This internal observability work enables detailed performance profiling and faster diagnosis of production issues, with no user-visible changes.
+
+</Update>
+
 <Update label="v0.9.0 — 24 February 2026">
 
 ### Features
