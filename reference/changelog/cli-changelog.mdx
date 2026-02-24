@@ -11,6 +11,22 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.9.0 — 24 February 2026">
+
+### Features
+
+- **`embeddables inspect --preserve`** — The `inspect` command now accepts a `--preserve` flag to maintain component order during forward compilation. Previously `inspect` always preserved order; it now defaults to `false` (standard compilation order), and you can opt in with `--preserve` when you want to keep existing order for comparison purposes.
+
+### Improvements
+
+- **Embeddable context info box across all commands** — `build`, `dev`, `pull`, and `save` now display a consistent info box showing the Embeddable title, ID, branch, and version at the start of each command, replacing the previous plain `ID: …` line in `dev` and varying formats in other commands.
+- **CLI help output overhauled** — `embeddables --help` now uses Shopify CLI-style formatting with color, icons, and grouped sections for a cleaner, more readable experience.
+- **`embeddables init` output polished** — The initialization header, success messages, and next-steps box have been updated: the success box now shows project title and ID; the next-steps sequence is now Pull → Run locally → Save (the Login step was removed since login is required before `init`); a prominent yellow beta warning box is shown at the end; and the docs link is included in the next-steps box.
+- **Trailing gap after all commands** — All commands (`login`, `logout`, `build`, `pull`, `save`, `inspect`, `builder open`, `experiments connect`) now consistently print a trailing blank line for cleaner terminal output.
+- **Sentry exception enrichment** — Error reports now include descriptive labels, `CompileError` file/line/column metadata, and additional tags (`versionNumber`, `cliVersion`, entity name tags alongside IDs) for faster debugging of production issues.
+
+</Update>
+
 <Update label="v0.8.3 — 23 February 2026">
 
 ### Bug Fixes
