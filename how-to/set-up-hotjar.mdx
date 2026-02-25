@@ -3,7 +3,9 @@ title: "How To: Set up Hotjar with Embeddables"
 description: "Track user behavior across Embeddable pages using Hotjar heatmaps, recordings, and analytics"
 ---
 
-[Hotjar](https://www.hotjar.com/) is a popular tool for heatmaps, session recordings, and user behavior analytics. Because Embeddables handle page navigation internally (without full browser page loads), Hotjar needs a small configuration tweak to correctly detect page changes inside your Embeddable.
+[Hotjar](https://www.hotjar.com/) is a popular tool for heatmaps, session recordings, and user behavior analytics.
+
+Because Embeddables handle page navigation internally (without full browser page loads), **Hotjar needs a small configuration tweak to correctly detect page changes inside your Embeddable**.
 
 The solution relies on syncing Embeddable page changes to the URL as fragments (e.g. `#page_key`), and telling Hotjar to watch for those fragment changes.
 
