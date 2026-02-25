@@ -106,6 +106,13 @@
                 ]
               },
               {
+                "group": "Analytics",
+                "icon": "chart-line-up",
+                "pages": [
+                  "how-to/set-up-hotjar"
+                ]
+              },
+              {
                 "group": "Custom Code",
                 "icon": "square-code",
                 "pages": [
