@@ -169,6 +169,22 @@ Configure validation rules and error messages to ensure data quality.
 
     <Tip>
     When you select "Custom formula", a JavaScript editor opens where you can write custom validation logic that returns `true` for valid values and `false` for invalid ones.
+
+    Custom validation functions receive the input value as the first argument and optionally the full current User Data as the second argument:
+
+    ```javascript
+    // value only
+    function validate(value) {
+      return value.length >= 5;
+    }
+
+    // value + userData (access other fields in the flow)
+    function validate(value, userData) {
+      return userData.country === 'US'
+        ? /^\d{5}$/.test(value)
+        : true;
+    }
+    ```
     </Tip>
 
   </Accordion>
