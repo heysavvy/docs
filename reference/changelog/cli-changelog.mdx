@@ -11,6 +11,13 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.9.6 — 24 February 2026">
+
+### Bug Fixes
+
+- **Custom validation functions support `userData` parameter** — Input Box `custom_validation_function` now accepts an optional second parameter `userData` (`Record<string, any>`), giving your validation logic access to the full current user data. Example: `function validate(value, userData) { return userData.country === 'US' ? /^\d{5}$/.test(value) : true; }`.
+</Update>
+
 <Update label="v0.9.0 — 24 February 2026">
 
 ### Features
