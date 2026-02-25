@@ -22,7 +22,7 @@ description: "Frequently asked questions about the Embeddables CLI"
     Yes. Run `embeddables pull` for each; they live in `embeddables/<embeddable-id>/`. When you run `embeddables dev`, `embeddables save`, or `embeddables branch` without `-i`, you'll be prompted to choose which Embeddable to use. To avoid the prompt, **go into that Embeddable's folder** (e.g. <code>cd embeddables/&lt;EMBEDDABLE_ID&gt;</code>) and run the command from there—the CLI will automatically use that Embeddable.
   </Accordion>
   <Accordion title="First pull changes the JSON too much. How can I reduce noise?">
-    Use <strong><code>embeddables pull --preserve</code></strong>. It keeps the same order of components in the config. Most of the "changes" you see on a first pull are from React reordering components within containers—that doesn't affect how the Embeddable renders. With <code>--preserve</code>, you may still see smaller changes (e.g. <code>parent_key</code> fixes), but it's easier to verify what actually changed.
+    Use <strong><code>embeddables pull &#45;&#45;preserve</code></strong>. It keeps the same order of components in the config. Most of the "changes" you see on a first pull are from React reordering components within containers—that doesn't affect how the Embeddable renders. With <code>&#45;&#45;preserve</code>, you may still see smaller changes (e.g. <code>parent_key</code> fixes), but it's easier to verify what actually changed.
   </Accordion>
   <Accordion title="How do I point the dev server at a local Engine?">
     Use `embeddables dev --local` to use `http://localhost:8787`. Or use `embeddables dev --engine https://your-engine.example.com` for a custom URL.
