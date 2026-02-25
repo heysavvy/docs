@@ -80,6 +80,16 @@ How an end user sees a given language depends on your setup. The runtime uses th
 - Set a default or detect locale and call <code>setUserData</code> (or equivalent) with <code>embeddable_language: 'es'</code> (or another key you configured).
 - Pass the language via a [URL param](/features/url-params) if you expose that key in your allowed URL keys.
 
+### Letting users choose the language in the Embeddable
+
+A common approach is to add an **Option Selector** (dropdown) somewhere on the page—for example in one of the corners—so end users can switch language themselves:
+
+1. Add an **Option Selector** component and position it where you want (e.g. top-right or bottom-left).
+2. Set the Option Selector's **key** to <code>embeddable_language</code>. The selected value is then written to User Data and the runtime will show that language.
+3. Add one **option** per language you configured: set each option's **key** to the corresponding language key (e.g. <code>en</code>, <code>es</code>, <code>fr</code>). Use the option labels for the display names (e.g. English, Español, Français).
+
+Users can then pick their preferred language from the dropdown and the Embeddable content updates to that language.
+
 If no value is present for <code>embeddable_language</code>, or the provided value does not match any configured languages, the default language will be loaded.
 ## Related features
 
