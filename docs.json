@@ -41,6 +41,7 @@
               "features/actions",
               "features/stripe-payments",
               "features/cms",
+              "features/translations",
               "features/analytics",
               "features/saving-and-version-control",
               "features/url-params",
