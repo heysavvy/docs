@@ -91,7 +91,7 @@
                 ]
               },
               {
-                "group": "Passing Data",
+                "group": "Passing Data and Analytics",
                 "icon": "code-compare",
                 "pages": [
                   "how-to/send-data-to-tellescope",
@@ -102,7 +102,8 @@
                   "how-to/retrieve-user-data-on-different-device",
                   "how-to/partial-data-capture",
                   "how-to/send-data-to-embeddables",
-                  "how-to/securely-call-apis-via-proxy"
+                  "how-to/securely-call-apis-via-proxy",
+                  "how-to/set-up-hotjar"
                 ]
               },
               {

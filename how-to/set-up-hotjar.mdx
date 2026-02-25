@@ -1,0 +1,40 @@
+---
+title: "How To: Set up Hotjar with Embeddables"
+description: "Track user behavior across Embeddable pages using Hotjar heatmaps, recordings, and analytics"
+---
+
+[Hotjar](https://www.hotjar.com/) is a popular tool for heatmaps, session recordings, and user behavior analytics.
+
+Because Embeddables handle page navigation internally (without full browser page loads), **Hotjar needs a small configuration tweak to correctly detect page changes inside your Embeddable**.
+
+The solution relies on syncing Embeddable page changes to the URL as fragments (e.g. `#page_key`), and telling Hotjar to watch for those fragment changes.
+
+<Steps>
+  <Step title="Turn on Sync URL with Pages in Embeddables">
+    In the Embeddables editor, open the **Embeddable-Wide Options** sidebar (press Escape to deselect any pages or components, then open the Options panel on the right).
+
+    Enable the **Sync Pages With The URL** setting.
+
+    This updates the browser URL with a `#page_key` fragment whenever the user navigates to a new page inside the Embeddable (e.g. `yoursite.com/get-started#intro_page`).
+  </Step>
+  <Step title='Enable fragment tracking in Hotjar'>
+    In your Hotjar dashboard, go to your site's tracking settings and enable **"Track changes automatically, including fragments"**.
+
+    This tells Hotjar to treat changes to the `#hash` portion of the URL as page navigations, so each Embeddable page is tracked as a separate page view.
+  </Step>
+  <Step title="Verify the integration">
+    Open your Embeddable in a browser and navigate through a few pages. In Hotjar, confirm that each page change appears as a distinct page view with the corresponding `#page_key` in the URL.
+  </Step>
+</Steps>
+
+<Info>
+  Once this is set up, Hotjar heatmaps, recordings, and funnels will reflect individual Embeddable pages rather than treating the entire flow as a single page view.
+</Info>
+
+<Card
+  title="Learn more about Sync Pages With The URL"
+  icon="link"
+  href="/how-to/sync-pages-with-url"
+>
+  Read more about how URL syncing works, including back/forward button behavior and edge cases.
+</Card>
