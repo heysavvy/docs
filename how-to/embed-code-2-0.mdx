@@ -6,7 +6,7 @@ description: "How to install the new embed code and upgrade the Stripe component
 The Embeddables new Embed Code 2.0 is **now available in beta**.
 
 <Warning>
-  The old Embed Code will be **deprecated on Monday November 17th, 2025**.
+  The old Embed Code will be **deprecated on February 28th, 2026**.
 </Warning>
 
 ## The new Embed Code 2.0
@@ -18,49 +18,7 @@ The Embeddables new Embed Code 2.0 is **now available in beta**.
   embedding.
 </Tip>
 
-```javascript
-<script>
-window.initEmbeddables = () => {
-  // Get the engine domain from the URL parameters
-  const engineDomain =
-    new URL(window.location.href).searchParams.get('embeddables_engine_domain') ||
-    'engine.embeddables.com'
-  const urlRoot = engineDomain.startsWith('http') ? engineDomain : 'https://' + engineDomain
-
-  // Inject the bundle script dynamically
-  const script = document.createElement('script')
-  script.src = `${urlRoot}/bundle.js`
-  document.head.appendChild(script)
-
-  const initializeEmbeddables = function () {
-    const allUserData = JSON.parse(localStorage.getItem('SavvyFormUserData') || '{}')
-    const embeddablesToLoad = [...document.querySelectorAll('savvy, embeddable')].map((el) => {
-      const attrs = Object.fromEntries([...el.attributes].map((a) => [a.name, a.value]))
-      const flowId = attrs.id
-      if (flowId && allUserData[flowId]) {
-        attrs.userData = Object.fromEntries(Object.entries(allUserData[flowId]||{}).filter(([sk])=>sk==='current_page_id'||sk.startsWith('split_')))
-      }
-      return attrs
-    })
-    const originUrl = window.location.href
-    const url =
-      `${urlRoot}/init?load=` +
-      encodeURIComponent(JSON.stringify({ embeddablesToLoad, originUrl }))
-
-    fetch(url)
-      .then((res) => res.json())
-      .then((response) => eval('(' + response.init_js + ')(response.embeddables_data)'))
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeEmbeddables)
-  } else {
-    initializeEmbeddables()
-  }
-}
-window.initEmbeddables()
-</script>
-```
+To get the Embed Code, head to your Embeddable in the [Embeddable Web App](https://app.embeddables.com/), and click on the Embed button in the top-right corner.
 
 ### The BODY script
 
@@ -75,7 +33,7 @@ window.initEmbeddables()
 <Steps>
   
   <Step title="Grab the new embed code">
-    Copy the `<HEAD>` script from above.
+    In the [Embeddable Web App](https://app.embeddables.com/), open your Embeddable and click the Embed button in the top-right corner to get the HEAD script.
   </Step>
 
   <Step title="Replace the old embed code with the new one">
