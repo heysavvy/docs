@@ -46,6 +46,21 @@ description: "Frequently asked questions about the Embeddables CLI"
     Global components are shared across pages (e.g. a nav bar or footer). They live in `embeddables/<id>/global-components/` with one file per location, e.g. `before_page.location.tsx`, `after_components.location.tsx`. The `_location` value controls where they render relative to the page.
   </Accordion>
   <Accordion title="Should I use Git or version control for my Embeddable project? How do I compare changes?">
-    We don't currently recommend using version control (e.g. Git) in your codebase for the Embeddable files, because it can easily get out of sync with Embeddables' own version and branch system. Instead, use the version history that the CLI and platform already provide: compare the current compiled output with a saved version by opening **`embeddable.json`** and the latest **`embeddable-&lt;branch&gt;@&lt;version&gt;.json`** (e.g. `embeddable-main@47.json`) inside the **`.generated/`** folder. In VS Code or Cursor: **Shift+click** to select both files, then **right-click → Compare Selected** to see the diff.
+    We don't currently recommend using version control (e.g. Git) in your codebase for the Embeddable files, because it can easily get out of sync with Embeddables' own version and branch system.
+    
+    Instead, use the version history that the CLI and platform already provide: compare the current compiled output with a saved version by opening **`embeddable.json`** and the latest **`embeddable-<branch>@<version>.json`** (e.g. `embeddable-main@47.json`) inside the **`.generated/`** folder.
+    
+    In VS Code or Cursor: **Shift+click** or **Command/Ctrl+Click** to select both files, then **right-click → Compare Selected** to see the diff.
+
+    <Tip>
+      If you see a huge number of changes after pulling, try using the `--preserve` flag with the `pull` command to keep the same order of components in the config.
+    </Tip>
+
+    <Note>
+      The Embeddables team is exploring internally various ways of integrating with version control systems like Git and GitHub.
+
+      If you have any feedback or ideas on how you could envisage this working, please reach out, we'd love to bounce ideas off you!
+    </Note>
+
   </Accordion>
 </AccordionGroup>
