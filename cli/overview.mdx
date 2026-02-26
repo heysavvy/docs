@@ -16,7 +16,7 @@ description: "Build and manage Embeddables locally with code — for developers 
 </Warning>
 
 <Info>
-  **Current version: 0.9.6** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+  **Current version: 0.10.0** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
 </Info>
 
 The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
@@ -122,9 +122,11 @@ The CLI provides commands for setup, daily workflow, building, and debugging. He
 | `embeddables pull` | Fetch an Embeddable from the cloud and reverse-compile to TSX. |
 | `embeddables dev` | Start the dev server with hot reload. |
 | `embeddables save` | Build and upload the Embeddable to the cloud. |
+| `embeddables diff` | Compare two versions of an Embeddable (default: latest vs local). |
 | `embeddables branch` | Switch to a different branch, then pull that branch. |
 | `embeddables build` | Compile TSX to JSON without uploading. |
 | `embeddables inspect` | Round-trip compile and compare outputs for debugging. |
+| `embeddables feedback` | Send feedback about the CLI from your terminal. |
 
 <Card title="Full command reference" icon="rectangle-terminal" href="/cli/commands">
   See all commands, flags, and options.

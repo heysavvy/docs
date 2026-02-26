@@ -11,6 +11,25 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.10.0 — 26 February 2026">
+
+### Features
+
+- **`embeddables diff`** — New command that compares two versions of an Embeddable and reports what changed. By default it compares `latest` (the last saved cloud version) against `local` (your current working files), showing which pages and components were added, removed, or modified. Use `--depth props` to drill into individual prop-level changes. Filter results with `--page <key>` and `--component <key>` (comma-separated). Accepts any combination of version numbers, `latest`, `staging`, `prod`, or `local` for `--from` and `--to`.
+- **`embeddables feedback [message]`** — Send feedback directly from the CLI without leaving your terminal. Run with a message (`embeddables feedback "Great workflow!"`) or without arguments for an interactive prompt that asks for your message, sentiment (👍 positive / 👎 negative), and area (CLI, AI prompts, compiler, or other). No login required.
+- **`branch@version` version specifiers** — `embeddables diff` `--from` and `--to` options now accept `branch@version` syntax (e.g. `main@latest`, `feature-branch@47`) to fetch a specific version from a specific branch, independently of the current working branch.
+
+### Bug Fixes
+
+- **Diff: current branch auto-detected** — `embeddables diff` now reads the active branch from `config.json` automatically, so you no longer need to pass `--branch` explicitly when working on a non-default branch.
+- **Diff: key-order-independent comparison** — Property insertion order in JSON objects no longer causes false positives; objects are compared semantically so only real content differences are reported.
+
+### Chores
+
+- **CompileErrors reported as Sentry warnings** — Internal compile errors are now captured as Sentry warnings (with code frame context and file/line metadata) rather than being silently dropped or escalated as exceptions. Lint errors remain excluded from exception reporting.
+
+</Update>
+
 <Update label="v0.9.6 — 24 February 2026">
 
 ### Bug Fixes
