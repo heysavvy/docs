@@ -66,12 +66,20 @@ The following helper functions are available in both Computed Fields and Actions
     ```
   </Accordion>
 
-  <Accordion title="goToPage(pageKeyOrIdOrIndex: string | number)">
-    Navigates to a page with the specified key, ID, or index - you can choose which type of identifier to pass in.
-    
+  <Accordion title="goToPage(page: object)">
+    Navigates to a page. Pass an object with **one** of the following properties:
+
+    - **`key`** (string) — the page key
+    - **`id`** (string) — the page id
+    - **`index`** (number) — the page index (1-based)
+    - **`idOrKey`** (string) — accepts either a page id or a page key
+
     ```javascript
     // Example usage
-    await helperFunctions.goToPage('page_key_1234567890');  
+    helperFunctions.goToPage({ key: 'page_key_1234567890' });
+    helperFunctions.goToPage({ id: 'page-test-id' });
+    helperFunctions.goToPage({ index: 2 });
+    helperFunctions.goToPage({ idOrKey: 'page_key_1234567890' }); // works with id or key
     ```
 
   </Accordion>
