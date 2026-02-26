@@ -23,8 +23,10 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | `embeddables pull`           | Fetch an Embeddable from the cloud and reverse-compile to TSX.          |
 | `embeddables dev`            | Start dev server with hot reload; proxies to the Engine.                |
 | `embeddables save`           | Build and upload the Embeddable to the cloud.                           |
+| `embeddables diff`           | Compare two versions of an Embeddable (default: latest vs local).       |
 | `embeddables branch`         | Switch to a different branch (interactive list), then pull that branch. |
 | `embeddables builder open`   | Open the Embeddables Builder in your default browser for an Embeddable. |
+| `embeddables feedback`       | Send feedback about the CLI directly from your terminal.                |
 
 <Tip>
   You can `cd embeddables/<EMBEDDABLE_ID>` and run Embeddable-specific commands (`dev`, `pull`, `save`, `branch`, `builder open`) from there. The CLI will automatically use that Embeddable instead of prompting you to choose.
@@ -426,6 +428,118 @@ description: "Complete reference for all Embeddables CLI commands and their opti
           </td>
           <td>
             Engine origin (default: <code>https://engine.embeddables.com</code>).
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables diff">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--from &lt;version&gt;</code>
+          </td>
+          <td>
+            Version to compare from (default: <code>latest</code>). Accepts a version number, <code>latest</code>, <code>staging</code>, <code>prod</code>, <code>local</code>, or <code>branch@version</code>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--to &lt;version&gt;</code>
+          </td>
+          <td>
+            Version to compare to (default: <code>local</code>). Same format as <code>--from</code>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--depth &lt;level&gt;</code>
+          </td>
+          <td>
+            Detail level: <code>pages</code>, <code>components</code> (default), or <code>props</code>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--page &lt;keysOrIds&gt;</code>
+          </td>
+          <td>Filter output to specific page keys or IDs (comma-separated, no spaces).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--component &lt;keysOrIds&gt;</code>
+          </td>
+          <td>Filter output to specific component keys or IDs (comma-separated, no spaces).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Branch to use when fetching cloud versions (auto-detected from <code>config.json</code> if not set).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-e, --engine &lt;url&gt;</code>
+          </td>
+          <td>
+            Engine origin (default: <code>https://engine.embeddables.com</code>).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--no-color</code>
+          </td>
+          <td>Disable colored output.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables feedback">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>[message]</code>
+          </td>
+          <td>Optional feedback message as a positional argument. If omitted, you will be prompted interactively.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--positive</code>
+          </td>
+          <td>Mark the feedback as positive (👍).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--negative</code>
+          </td>
+          <td>Mark the feedback as negative (👎). Default when a message is passed non-interactively.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--category &lt;type&gt;</code>
+          </td>
+          <td>
+            Feedback area: <code>cli</code>, <code>ai</code>, <code>compiler</code>, or <code>other</code>.
           </td>
         </tr>
       </tbody>
