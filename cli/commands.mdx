@@ -32,6 +32,13 @@ description: "Complete reference for all Embeddables CLI commands and their opti
   You can `cd embeddables/<EMBEDDABLE_ID>` and run Embeddable-specific commands (`dev`, `pull`, `save`, `branch`, `builder open`) from there. The CLI will automatically use that Embeddable instead of prompting you to choose.
 </Tip>
 
+### Assets
+
+| Command                      | Description                                                              |
+| ---------------------------- | ------------------------------------------------------------------------ |
+| `embeddables assets upload`  | Upload a local asset folder to the Embeddables asset store.              |
+| `embeddables assets sync`    | Sync uploaded asset metadata from the cloud into a local `assets.json`. |
+
 ### Build (advanced)
 
 | Command             | Description                                                                                       |
@@ -503,6 +510,96 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>--no-color</code>
           </td>
           <td>Disable colored output.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables assets upload">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (inferred from cwd or interactive prompt if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--dir &lt;path&gt;</code>
+          </td>
+          <td>Local directory to upload from (default: <code>assets/</code>).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--group-id &lt;id&gt;</code>
+          </td>
+          <td>Target asset group ID. Resolved from project config if not provided.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--recursive</code>
+          </td>
+          <td>Traverse subdirectories (default: top-level only).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--include &lt;glob&gt;</code>
+          </td>
+          <td>Glob pattern to include only matching files.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--exclude &lt;glob&gt;</code>
+          </td>
+          <td>Glob pattern to exclude matching files.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--dry-run</code>
+          </td>
+          <td>Preview what would be uploaded without actually uploading.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--workers &lt;n&gt;</code>
+          </td>
+          <td>Number of concurrent upload workers (default: <code>5</code>).</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables assets sync">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (inferred from cwd or interactive prompt if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--group-id &lt;id&gt;</code>
+          </td>
+          <td>Asset group ID to sync. Resolved from project config if not provided.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-o, --out &lt;path&gt;</code>
+          </td>
+          <td>Output path for the asset manifest (default: <code>assets.json</code>).</td>
         </tr>
       </tbody>
     </table>
