@@ -11,6 +11,29 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.11.0 — 27 February 2026">
+
+### Features
+
+- **`embeddables assets upload`** — New command that uploads a local asset folder to the Embeddables asset store. Point it at a directory (`--dir <path>`, default: `assets/`) and it validates, then uploads all supported files (images, fonts, documents, etc.) with a concurrent worker pool. Key options: `--dry-run` (preview what would upload without uploading), `--recursive` (traverse subdirectories), `--include` / `--exclude` (glob filters), `--group-id` (target a specific asset group), and `--workers <n>` (concurrency, default 5). Prints a summary of discovered/uploaded/skipped/failed files and exits non-zero on any failure.
+- **`embeddables assets sync`** — New companion command that syncs project asset metadata from the cloud into a local `assets.json` file. `assets.json` becomes the source of truth for referencing uploaded asset URLs in your Embeddable (e.g. images, downloadable files). Run after uploading to keep your local manifest up to date.
+- **`default-styles.css` created by `init`** — `embeddables init` now writes a `default-styles.css` file to the project root when it doesn't already exist. This file provides baseline styles for standard HTML tags (buttons, inputs, links, etc.) so that Embeddables using unscoped tag selectors render consistently out of the box.
+
+### Bug Fixes
+
+- **`experiments connect` falsely marking experiments as already connected** — Fixed a bug where experiments targeting the same Embeddable were incorrectly filtered out and shown as already connected, even though they hadn't been added to the local `config.json`. The command now checks `connected_experiments` in `config.json` as the source of truth for local connections, rather than the server-side `flow_id`.
+- **TypeScript/React typing errors in pulled Embeddables** — `embeddables pull` now automatically generates `embeddables/tsconfig.json` (with correct `baseUrl` and path mappings to `.types/`) when it doesn't already exist. This eliminates `React refers to a UMD global` and `Cannot find module '@embeddables/cli/components'` errors that appeared in editors after pulling without first running `embeddables init`.
+
+### Improvements
+
+- **Workbench: language switcher in User Data panel** — For multi-language Embeddables, the Workbench now shows a language selector dropdown next to the User Data heading. Switching languages updates all field labels and OptionSelector button texts in the Field Editor to show the localised values, and calls `window.Savvy.setContentLanguage()` to update the live Embeddable rendering.
+
+### Chores
+
+- **Workbench build script moved to `src/workbench/build.ts`** — The internal `build-workbench` script is no longer in `src/commands/`; it has moved to `src/workbench/build.ts` to better reflect that it is not a public CLI command. Invoked via `npm run build-workbench` as before.
+
+</Update>
+
 <Update label="v0.10.0 — 26 February 2026">
 
 ### Features

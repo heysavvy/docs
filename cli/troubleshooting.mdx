@@ -8,7 +8,7 @@ description: "Fix common CLI errors and learn about current limitations"
 ## Current limitations
 
 - **You can't create Embeddables** from the CLI; you can only pull and edit existing Embeddables (create new ones in the Builder).
-- **No asset management** from the CLI yet. You can't upload, browse, or manage images and other assets through the CLI. To use assets in your Embeddable, either upload them in the Builder and copy the resulting URLs into your code, or use placeholder image URLs while building locally and swap them out later.
+- **Asset browsing and deletion** are not yet available from the CLI. Use the Builder to browse the full asset library or delete assets. To upload local assets and reference their URLs in code, use `embeddables assets upload` and then `embeddables assets sync` to pull the URLs into `assets.json`.
 - **No creating new branches/experiments** from the CLI; you can connect to existing ones (`embeddables branch`, `embeddables experiments connect`).
 - **`embeddables dev` doesn't yet work** for Embeddables that use the CMS feature; use the Builder preview or a deployed embed for those.
 - **Multi-language Embeddables** are supported in round-trip compilation; some edge cases with complex language configurations may still arise — report them if you encounter them.
