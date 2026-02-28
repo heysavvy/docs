@@ -115,3 +115,182 @@ Types of conversion events:
   - Properties: `event_name`
 
 Conversions that relate to a page or button in an Embeddable will be shown on the relevant pages in the Pages sidebar.
+
+## Analytics charts across the web app
+
+The Embeddables web app provides several analytics views, each with different charts and calculation methods. Understanding these differences helps you interpret your data correctly.
+
+### Overview page
+
+The Overview page displays project-wide metrics and trends.
+
+#### Metric cards
+
+**Total visitors today**: Counts unique contacts who triggered any event in your project today (from start of day to current time in your project's timezone). Compares to the same time window yesterday.
+
+**Conversion rate metrics**: For each conversion rate metric configured in your project:
+- Calculates the daily rate as: `conversion_metric_count / base_metric_count`
+- If no base metric is specified, uses total visitors to the embeddable as the denominator
+- Rates are capped at 100% (value of 1)
+- Shows today's value and the change from yesterday
+
+#### Metrics over time chart
+
+Shows daily trends for your conversion rate metrics over the past 7 days:
+- Each data point represents a full day in your project's timezone
+- Conversion rates are calculated daily: `conversion_metric_count / base_metric_count`
+- Missing dates are filled with zero values
+- Dates are formatted as "MMM-DD" (e.g., "Jan-15")
+
+#### Metric breakdown charts
+
+Displays how conversion rates vary across different dimensions (UTM parameters, device types, locations):
+- Only shows breakdown values that represent at least 1% of total traffic for that date
+- Calculates conversion rates for each breakdown value separately
+- Includes both the rate and the underlying counts (base users and conversion users)
+- Breakdowns are sorted by volume (highest traffic first)
+
+#### Segments
+
+If you've configured segments (filtered views of your data), the Overview page allows you to switch between them:
+- Each segment applies its filters to all queries
+- "All traffic" segment shows unfiltered data
+- Segment tabs display today's visitor count and percentage of total traffic
+
+### Users page
+
+The Users page lists individual contacts with their activity and attributes.
+
+#### Contact list
+
+**Query method**: Fetches contacts based on their most recent event timestamp (`receivedAt`) within the selected date range.
+
+**Unique identification**: Each contact is identified by a unique `contact_id` generated when they first interact with your embeddables.
+
+**Available filters**:
+- **Date range**: Filters by when the contact was last active
+- **Embeddable**: Limits to contacts who interacted with specific embeddables
+- **Location**: Filters by geographic region or country (city data available but hidden for HIPAA compliance)
+- **Device**: Filters by device type, browser, or operating system
+- **UTM parameters**: Filters by campaign source, medium, campaign name, term, content, or ID
+- **Page viewed**: Filters to contacts who reached a specific page
+- **Max page viewed**: Filters to contacts whose furthest page matches the specified page
+- **Response values**: Filters by specific answers to input fields or option selectors
+- **Conversion**: Filters to contacts who completed a specific conversion event
+
+**Contact data displayed**:
+- **Name**: Extracted from answer keys in priority order: `name`, `full_name`, `email`, `business_email`
+- **Last updated**: Timestamp of the contact's most recent event
+- **Location**: Shows region and country (or city if available and permitted)
+- **Source**: Identified from UTM parameters, with icons for recognized sources
+- **Device info**: Browser, OS, and device type parsed from user agent
+- **Progress**: Shows furthest page reached in each embeddable
+
+**Count calculation**: Counts distinct `contact_id` values matching the filters. Note: Queries with "max page viewed" filter don't include a count due to query complexity.
+
+### Goals page
+
+The Goals page tracks progress toward specific targets.
+
+#### Goal types
+
+**Measurement types**:
+- **Numeric**: Tracks a quantitative metric (conversions or conversion rates)
+  - **Cumulative**: Sums values from the goal's start date to today
+  - **Non-cumulative**: Shows daily values for the past 7 days
+- **Discrete**: Tracks completion of specific milestones (not tied to metrics)
+
+**Conversion types** (for numeric goals):
+- **Absolute conversion**: Tracks raw conversion counts
+- **Conversion rate**: Tracks the rate between base and conversion metrics
+
+#### Spark charts
+
+Shows daily progress toward the goal:
+- **For cumulative goals**: Displays running total from start date
+- **For non-cumulative goals**: Shows last 7 days of daily values
+- **Data source**: Queries the associated metric (conversion or conversion rate)
+- **Calculation**: Same as Overview page metrics, but with goal-specific date ranges
+
+### Experiments page
+
+The Experiments page shows A/B test results and variant performance.
+
+#### Experiment results table
+
+**Query method**: Groups contacts by their assigned variant (stored in responses) and calculates conversion metrics for each variant.
+
+**Metrics calculated**:
+- **Total visitors**: Unique contacts assigned to each variant
+- **Conversion count**: Contacts who completed the conversion event
+- **Conversion rate**: `conversion_count / total_visitors` for each variant
+- **Statistical significance**: Compares variants to determine if differences are meaningful
+
+**Filters applied**:
+- Date range
+- Embeddable ID
+- Experiment key (variant assignment)
+- Any additional filters you specify
+
+#### Funnel by variant
+
+Shows page-by-page progression for each experiment variant:
+- Counts unique contacts who viewed each page
+- Groups by variant assignment
+- Calculates drop-off rates between pages
+- Helps identify where variants perform differently in the user journey
+
+#### Traffic breakdown
+
+Displays how experiment traffic is distributed across UTM parameters:
+- Shows source, medium, campaign, term, content, and ID
+- Counts unique contacts for each breakdown value
+- Helps ensure variants receive similar traffic quality
+- Useful for detecting sampling bias
+
+### Observability page
+
+The Observability page provides a comprehensive view of all experiments and their performance across multiple metrics.
+
+#### Experiment results by conversion
+
+**Query method**: For each conversion metric, calculates results for all active experiments simultaneously.
+
+**Data structure**:
+- Rows represent experiments
+- Columns represent conversion metrics
+- Each cell shows the conversion rate for that experiment-metric combination
+
+**Breakdown by UTM**: Optionally includes UTM parameter breakdowns to show how each experiment performs across different traffic sources.
+
+**Use case**: Quickly compare how multiple experiments affect different conversion goals, helping you understand the broader impact of your tests.
+
+## Key differences in calculations
+
+### Contact counting
+
+- **Overview page**: Counts contacts by event timestamp within the day
+- **Users page**: Counts contacts by last activity timestamp in the date range
+- **Experiments**: Counts contacts by variant assignment and conversion completion
+- **Goals**: Counts based on the associated metric's definition
+
+### Date handling
+
+All queries respect your project's timezone setting:
+- Start of day (SOD) and end of day (EOD) are calculated in your timezone
+- Dates are compared after converting to the timezone to handle DST correctly
+- Historical data uses the timezone offset at the time of the event
+
+### Conversion rate calculations
+
+- **Overview & Goals**: `conversion_metric / base_metric` (or total visitors if no base)
+- **Experiments**: `conversions_in_variant / visitors_in_variant`
+- All rates are capped at 100% (value of 1.0)
+- Zero denominators result in a rate of 0
+
+### Filtering behavior
+
+- **Segment filters** (Overview): Applied to all queries in that view
+- **User filters**: Applied to the contact list query only
+- **Experiment filters**: Applied to variant assignment and conversion queries
+- Filters are combined with AND logic (all must match)
