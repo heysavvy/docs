@@ -11,6 +11,28 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.12.0 — 4 March 2026">
+
+### Features
+
+- **Antigravity IDE support in `embeddables init`** — `embeddables init` now creates `.agent/rules/embeddables-cli.md` for [Antigravity](https://antigravity.dev), joining Cursor (`.cursor/rules/`), Claude (`.claude/`), and Codex (`AGENTS.md`) as a supported AI editor. The file is generated with the correct Antigravity frontmatter (`globs`, `alwaysOn`) and the same full Embeddables CLI context injected into other editors.
+- **`_docs` property** — Embeddables now support a `_docs` property for documenting non-obvious aspects of your configuration. It can be set at the top level, on individual pages, computed fields, and data outputs. The value is preserved through pull and save round-trips unchanged, making it safe to add inline documentation to your `config.json` without it being stripped.
+
+### Bug Fixes
+
+- **Video mute/play state lost on `pull` (CLI-49)** — Fixed two root causes that caused `<video muted autoplay loop>` and related MediaEmbed properties to disappear after `embeddables pull`. First, several `MediaEmbed` component-specific props (`silentAutoplayPreview`, `hide_controls`, `central_play_button`, `roundedCorners`, `embed_code`, `placeholder_image_url`, `embed_code_raw`) were missing from `COMPONENT_SPECIFIC_PROPS` and are now correctly included. Second, the HTML-to-JSX parser in `CustomHTML` was silently dropping boolean HTML attributes (those without `=` signs) — `muted`, `autoplay`, `loop`, etc. now survive as proper JSX boolean attributes.
+
+### Improvements
+
+- **Richer AI prompt guidance for actions and events** — The Embeddables CLI context file (`.cursor/rules/embeddables-cli.md`, `.claude/embeddables-cli.md`, `AGENTS.md`, `.agent/rules/embeddables-cli.md`) now includes detailed guidance on: wiring action triggers, programmatically triggering actions, using `triggerContext` to pass data between actions and computed fields, and tracking custom events. TypeScript types are emphasised as the primary source of truth for valid prop values.
+
+### Chores
+
+- **JSDoc documentation for `cli.ts`** — Internal JSDoc comments added to `src/cli.ts` to improve developer experience when navigating the CLI entry point.
+- **`.cursorindexingignore` added** — SpecStory AI session files are now excluded from Cursor's indexing to keep the index lean.
+
+</Update>
+
 <Update label="v0.11.0 — 27 February 2026">
 
 ### Features

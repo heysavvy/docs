@@ -5,7 +5,7 @@ icon: "wand-magic-sparkles"
 description: "Set up Cursor, Claude, and Codex for AI-assisted Embeddable editing"
 ---
 
-The CLI is built for **AI-assisted editing**: the file layout is predictable, and `embeddables init` injects **Cursor rules**, **Claude project context**, and **Codex context (AGENTS.md)** so the assistant understands Embeddable components, keys, and conventions. Use the sections below to get the most out of each tool.
+The CLI is built for **AI-assisted editing**: the file layout is predictable, and `embeddables init` injects **Cursor rules**, **Claude project context**, **Codex context (AGENTS.md)**, and **Antigravity rules** so the assistant understands Embeddable components, keys, and conventions. Use the sections below to get the most out of each tool.
 
 ## Cursor
 
@@ -36,6 +36,14 @@ When you run `embeddables init`, the CLI generates an **`AGENTS.md`** file at th
 - **Where it goes**: `AGENTS.md` (project root)
 - **What it does**: Follows the OpenAI Codex convention. Contains the same Embeddables CLI context as the Cursor and Claude files (file structure, component types, conventions, etc.), so Codex has full awareness of the project when making edits.
 - **Re-injecting**: Run `embeddables init` again to regenerate or update `AGENTS.md` with the latest content from the CLI package.
+
+## Antigravity
+
+When you run `embeddables init`, the CLI generates an **Antigravity rules file** at `.agent/rules/embeddables-cli.md`:
+
+- **Where it goes**: `.agent/rules/embeddables-cli.md`
+- **What it does**: Follows the [Antigravity](https://antigravity.dev) convention. The file includes Antigravity-specific frontmatter (`globs`, `alwaysOn: true`) so the context is always active for relevant files. Contains the same full Embeddables CLI guide as the Cursor and Claude files (file structure, component types, `id`/`key` rules, action values, etc.).
+- **Re-injecting**: Run `embeddables init` again to regenerate or update `.agent/rules/embeddables-cli.md` with the latest content from the CLI package.
 
 ## Tips and best practices for prompt writing
 
