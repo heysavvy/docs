@@ -11,6 +11,19 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.14.2 — 9 March 2026">
+
+### Features
+
+- **`embeddables branches create`** — New command that creates a new branch from the current Embeddable state. Resolves the Embeddable from `--id`, the current working directory, or an interactive prompt; reads the origin version and branch from `config.json`. Use `-n, --name <name>` to set the branch name (required). Requires login.
+- **`embeddables branch --branch` option** — `embeddables branch` now accepts `-b, --branch <branch_id>` to switch directly to a known branch ID or name without going through the interactive selection list.
+
+### Chores
+
+- **`branches` recognised as a utility command** — The `branches` subcommand group is now listed in the utility commands set, so branch management commands are correctly grouped in `embeddables --help` output.
+
+</Update>
+
 <Update label="v0.12.0 — 4 March 2026">
 
 ### Features
