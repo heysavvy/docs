@@ -134,6 +134,12 @@ description: "Complete reference for all Embeddables CLI commands and their opti
           </td>
           <td>Preserve component order in config (see note below).</td>
         </tr>
+        <tr>
+          <td>
+            <code>--project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID for embeddable selection (skips project selection prompt).</td>
+        </tr>
       </tbody>
     </table>
   </Accordion>
@@ -309,6 +315,18 @@ description: "Complete reference for all Embeddables CLI commands and their opti
           </td>
           <td>Base version (auto-detected from local config if not set).</td>
         </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--force</code>
+          </td>
+          <td>Skip confirmation prompts (version conflicts and other users' drafts).</td>
+        </tr>
       </tbody>
     </table>
   </Accordion>
@@ -328,6 +346,12 @@ description: "Complete reference for all Embeddables CLI commands and their opti
           <td>
             Embeddable ID (prompt from local Embeddables if not provided).
           </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Branch ID or name to switch to (skips the interactive branch selection prompt).</td>
         </tr>
       </tbody>
     </table>
@@ -361,6 +385,12 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             Experiment key (required if <code>--experiment-id</code> is set).
           </td>
         </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
+        </tr>
       </tbody>
     </table>
   </Accordion>
@@ -380,6 +410,12 @@ description: "Complete reference for all Embeddables CLI commands and their opti
           <td>
             Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).
           </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
         </tr>
       </tbody>
     </table>
