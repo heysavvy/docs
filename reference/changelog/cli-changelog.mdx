@@ -11,6 +11,19 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.14.0 — 9 March 2026">
+
+### Features
+
+- **Non-interactive flags for all commands (CLI-57)** — Every interactive prompt in the CLI (excluding `login`) now has a corresponding flag, making all commands fully scriptable for use in CI pipelines, AI-driven workflows, and automation:
+  - **`embeddables branch`**: `--branch <id|name>` skips the branch selection prompt.
+  - **`embeddables save`**: `--project-id <id>` skips the project selection prompt; `--force` skips all confirmation prompts (version conflicts and other users' drafts).
+  - **`embeddables pull`**: `--project-id <id>` skips the project selection prompt.
+  - **`embeddables builder open`**: `--project-id <id>` skips the project selection prompt.
+  - **`embeddables experiments connect`**: `--project-id <id>` skips the project selection prompt.
+
+</Update>
+
 <Update label="v0.12.0 — 4 March 2026">
 
 ### Features
