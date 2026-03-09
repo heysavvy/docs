@@ -25,6 +25,7 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | `embeddables save`           | Build and upload the Embeddable to the cloud.                           |
 | `embeddables diff`           | Compare two versions of an Embeddable (default: latest vs local).       |
 | `embeddables branch`         | Switch to a different branch (interactive list), then pull that branch. |
+| `embeddables branches create` | Create a new branch from the current embeddable state.                 |
 | `embeddables builder open`   | Open the Embeddables Builder in your default browser for an Embeddable. |
 | `embeddables feedback`       | Send feedback about the CLI directly from your terminal.                |
 
@@ -328,6 +329,32 @@ description: "Complete reference for all Embeddables CLI commands and their opti
           <td>
             Embeddable ID (prompt from local Embeddables if not provided).
           </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables branches create">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>
+            Embeddable ID (inferred from cwd or interactive prompt if not provided).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-n, --name &lt;name&gt;</code>
+          </td>
+          <td>Branch name (required). The success output will include the new branch ID returned by the server.</td>
         </tr>
       </tbody>
     </table>
