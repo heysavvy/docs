@@ -11,6 +11,14 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.14.4 — 9 March 2026">
+
+### Improvements
+
+- **`addTaskBranch` now stores `project_id`** — When a branch is associated with a task, the CLI now correctly includes `project_id` in the `task_branches` database record alongside `task_id` and `branch_id`. A debug log line is also emitted during the insertion, improving visibility for branch operations in development.
+
+</Update>
+
 <Update label="v0.12.0 — 4 March 2026">
 
 ### Features
