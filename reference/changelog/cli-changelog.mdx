@@ -11,6 +11,22 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.13.0 — 9 March 2026">
+
+### Features
+
+- **`embeddables tasks` command group** — New commands for managing project tasks directly from the CLI. All subcommands require login and resolve the project from `embeddables.json` or prompt interactively.
+  - **`tasks list`** — Display a table of all tasks for the current project (`-p, --project-id <id>` to target a specific project).
+  - **`tasks get`** — Fetch and display full details for a single task (`-i, --id <id>`): status, priority, type, assignee, dates, body, and effort.
+  - **`tasks update-status`** — Change a task's status (`-i, --id <id>`, `-s, --status <status>`). Valid values: `to_do`, `scoping`, `in_progress`, `feedback_cycle`, `qa`, `blocked`, `completed`, `cancelled`.
+  - **`tasks assign`** — Change a task's assignee (`-i, --id <id>`, then either `--assignee-id <userId>` or `--assign-to-owner` to assign to the task's owner).
+  - **`tasks comment`** — Add a comment to a task (`-i, --id <id>`, `-m, --message <content>`).
+  - **`tasks add-branch`** — Link an Embeddables branch to a task (`-i, --id <id>`, `-b, --branch-id <id>`).
+- **`embeddables login --token <token>`** — New `-t, --token` option for non-interactive, token-based login. Pass a JWT directly instead of going through the OTP email flow — ideal for CI pipelines and cloud containers where interactive prompts are unavailable.
+- **`--bypass-auth` flag for `pull`, `dev`, and `build`** — Hidden flag that skips the login check, allowing these commands to run without a stored auth token. Intended for CI environments and automated tooling. (`save` continues to require login.)
+
+</Update>
+
 <Update label="v0.12.0 — 4 March 2026">
 
 ### Features
