@@ -32,11 +32,79 @@ The Embeddables CLI lets you build, edit, and manage Embeddables using **code** 
 
 - **Node.js** >= 18.0.0
 
-## Installation
+<AccordionGroup>
+  <Accordion title="Installing Node.js and NPM on macOS">
+    The Embeddables CLI requires Node.js (which includes NPM). If you don't have Node.js installed:
 
-<Tip>
-  **Don't have Node.js or NPM installed?** See the [Installation guide](/cli/troubleshooting#installation) for setup instructions for macOS and Windows.
-</Tip>
+    **Option 1: Using Homebrew (Recommended)**
+
+    If you have Homebrew installed:
+
+    ```bash
+    brew install node
+    ```
+
+    **Option 2: Download from Node.js website**
+
+    1. Visit [nodejs.org](https://nodejs.org/)
+    2. Download the LTS (Long Term Support) version for macOS
+    3. Run the installer and follow the prompts
+
+    **Troubleshooting on macOS:**
+
+    If you see errors about missing command line tools or Xcode, you may need to install Xcode Command Line Tools first:
+
+    ```bash
+    xcode-select --install
+    ```
+
+    Click "Install" in the dialog that appears, then try installing Node.js again.
+
+    **Verifying installation:**
+
+    After installation, open a new terminal window and verify:
+
+    ```bash
+    node --version
+    npm --version
+    ```
+
+    Both commands should print version numbers.
+  </Accordion>
+
+  <Accordion title="Installing Node.js and NPM on Windows">
+    The Embeddables CLI requires Node.js (which includes NPM). If you don't have Node.js installed:
+
+    **Option 1: Using Node.js installer (Recommended)**
+
+    1. Visit [nodejs.org](https://nodejs.org/)
+    2. Download the LTS (Long Term Support) version for Windows
+    3. Run the `.msi` installer
+    4. Follow the installation wizard (keep all default options)
+    5. Restart your terminal or Command Prompt
+
+    **Option 2: Using Chocolatey**
+
+    If you have Chocolatey installed:
+
+    ```bash
+    choco install nodejs
+    ```
+
+    **Verifying installation:**
+
+    After installation, open a new terminal window and verify:
+
+    ```bash
+    node --version
+    npm --version
+    ```
+
+    Both commands should print version numbers. If you see "command not found" errors, restart your terminal or computer.
+  </Accordion>
+</AccordionGroup>
+
+## Installation
 
 Install the CLI globally:
 
