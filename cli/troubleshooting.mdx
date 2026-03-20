@@ -19,7 +19,34 @@ description: "Fix common CLI errors and learn about current limitations"
 ## Common issues
 
 <AccordionGroup>
-  <Accordion title="“No Embeddables found” or “No Embeddable selected” when running dev or save">
+  <Accordion title="I don't have Node.js or NPM installed">
+    The Embeddables CLI requires Node.js version 18.0.0 or higher (which includes NPM). See the [Installation instructions in the Overview](/cli/overview#requirements) for step-by-step setup guides for macOS and Windows.
+  </Accordion>
+  <Accordion title="'npm' is not recognized as an internal or external command (Windows)">
+    This error means Node.js and NPM are not installed, or not in your system PATH. See the [Installation instructions in the Overview](/cli/overview#requirements) for how to install Node.js and NPM on Windows. After installing, restart your terminal or Command Prompt.
+  </Accordion>
+  <Accordion title="npm: command not found (macOS/Linux)">
+    This error means Node.js and NPM are not installed, or not in your PATH. See the [Installation instructions in the Overview](/cli/overview#requirements) for how to install Node.js and NPM on macOS. After installing, open a new terminal window and try again.
+  </Accordion>
+  <Accordion title="'embeddables' is not recognized or embeddables: command not found after installation">
+    After running `npm install -g @embeddables/cli`, if you get "command not found" when running `embeddables`:
+
+    1. Close and reopen your terminal (or Command Prompt on Windows)
+    2. Verify the global npm bin directory is in your PATH:
+       ```bash
+       npm config get prefix
+       ```
+       The bin folder inside that directory should be in your PATH.
+    3. On macOS/Linux, you may need to add npm's global bin to your PATH in `~/.zshrc` or `~/.bashrc`:
+       ```bash
+       export PATH="$(npm config get prefix)/bin:$PATH"
+       ```
+       Then restart your terminal or run `source ~/.zshrc` (or `~/.bashrc`).
+    4. On Windows, the npm global folder should be added automatically, but you may need to restart your computer.
+
+    If Node.js and NPM aren't installed yet, see the [Installation instructions in the Overview](/cli/overview#requirements).
+  </Accordion>
+  <Accordion title="'No Embeddables found' or 'No Embeddable selected' when running dev or save">
     Run from the **project root** (where `embeddables.json` and the `embeddables/` folder are), or from inside `embeddables/<id>/` so the CLI infers the Embeddable, or pass `-i <embeddable-id>`. If you haven't pulled yet, run `embeddables pull` first so that `embeddables/<id>/` exists.
   </Accordion>
   <Accordion title="Port 3000 is already in use">
