@@ -16,7 +16,7 @@ description: "Build and manage Embeddables locally with code — for developers 
 </Warning>
 
 <Info>
-  **Current version: 0.12.0** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+  **Current version: 0.14.1** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
 </Info>
 
 The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
@@ -202,6 +202,13 @@ The CLI provides commands for setup, daily workflow, building, and debugging. He
 | `embeddables branch` | Switch to a different branch, then pull that branch. |
 | `embeddables assets upload` | Upload a local asset folder to the Embeddables asset store. |
 | `embeddables assets sync` | Sync uploaded asset metadata into a local `assets.json` file. |
+| `embeddables tasks list` | List all tasks for the current project. |
+| `embeddables tasks get` | Get details of a specific task by ID. |
+| `embeddables tasks update-status` | Update a task's status. |
+| `embeddables tasks assign` | Change the assignee of a task. |
+| `embeddables tasks comment` | Add a comment to a task. |
+| `embeddables tasks add-branch` | Link an Embeddable branch to a task. |
+| `embeddables branches create` | Create a new Embeddable branch from the current local state. |
 | `embeddables build` | Compile TSX to JSON without uploading. |
 | `embeddables inspect` | Round-trip compile and compare outputs for debugging. |
 | `embeddables feedback` | Send feedback about the CLI from your terminal. |

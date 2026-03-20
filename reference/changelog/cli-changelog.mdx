@@ -11,6 +11,25 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.14.1 — 9 March 2026">
+
+### Features
+
+- **`embeddables tasks`** — New command group for managing project tasks directly from the terminal. All subcommands require login and resolve the project from `embeddables.json` or an interactive prompt:
+  - **`tasks list`** — Print a compact table of all tasks for the current project (`-p, --project-id <id>` to skip the prompt).
+  - **`tasks get -i <id>`** — Show full details of a single task by ID.
+  - **`tasks update-status -i <id> -s <status>`** — Change a task's status. Valid values: `to_do`, `scoping`, `in_progress`, `feedback_cycle`, `qa`, `blocked`, `completed`, `cancelled`.
+  - **`tasks assign -i <id>`** — Reassign a task. Pass `--assignee-id <user-id>` to assign to a specific user or `--assign-to-owner` to assign back to the task owner.
+  - **`tasks comment -i <id> -m <message>`** — Add a comment to a task.
+  - **`tasks add-branch -i <id> -b <branch-id>`** — Link an Embeddable branch to a task.
+- **`embeddables branches create`** — New subcommand that creates a new Embeddable branch from the current local state. Pass `-n, --name <name>` for the branch name; the origin version and branch are read automatically from `config.json`. Requires login.
+
+### Chores
+
+- **Expanded CLI help and README** — `embeddables --help` output and the package README now include full option documentation for `inspect`, `diff`, `feedback`, `builder open`, `experiments connect`, `assets upload`, `assets sync`, and all task management commands.
+
+</Update>
+
 <Update label="v0.12.0 — 4 March 2026">
 
 ### Features
