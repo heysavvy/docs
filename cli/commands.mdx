@@ -24,8 +24,8 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | `embeddables dev`            | Start dev server with hot reload; proxies to the Engine.                |
 | `embeddables save`           | Build and upload the Embeddable to the cloud.                           |
 | `embeddables diff`           | Compare two versions of an Embeddable (default: latest vs local).       |
-| `embeddables branch`         | Switch to a different branch (interactive list), then pull that branch. |
-| `embeddables branches create` | Create a new branch from the current embeddable state.                 |
+| `embeddables branch`         | Switch to a different branch (interactive list or `--branch`), then pull that branch. |
+| `embeddables branches create` | Create a new branch from the current Embeddable state.                 |
 | `embeddables builder open`   | Open the Embeddables Builder in your default browser for an Embeddable. |
 | `embeddables feedback`       | Send feedback about the CLI directly from your terminal.                |
 
@@ -33,12 +33,40 @@ description: "Complete reference for all Embeddables CLI commands and their opti
   You can `cd embeddables/<EMBEDDABLE_ID>` and run Embeddable-specific commands (`dev`, `pull`, `save`, `branch`, `builder open`) from there. The CLI will automatically use that Embeddable instead of prompting you to choose.
 </Tip>
 
+### Tasks
+
+| Command                              | Description                                       |
+| ------------------------------------ | ------------------------------------------------- |
+| `embeddables tasks list`             | List all tasks for the current project.           |
+| `embeddables tasks get`              | Fetch full details for a task by ID.              |
+| `embeddables tasks update-status`    | Change a task's status.                           |
+| `embeddables tasks assign`           | Change a task's assignee.                         |
+| `embeddables tasks comment`          | Add a comment to a task.                          |
+| `embeddables tasks add-branch`       | Link an Embeddables branch to a task.             |
+
 ### Assets
 
 | Command                      | Description                                                              |
 | ---------------------------- | ------------------------------------------------------------------------ |
 | `embeddables assets upload`  | Upload a local asset folder to the Embeddables asset store.              |
 | `embeddables assets sync`    | Sync uploaded asset metadata from the cloud into a local `assets.json`. |
+
+### Tasks
+
+| Command                              | Description                                               |
+| ------------------------------------ | --------------------------------------------------------- |
+| `embeddables tasks list`             | List all tasks for the current project.                   |
+| `embeddables tasks get`              | Get details of a specific task by ID.                     |
+| `embeddables tasks update-status`    | Update a task's status.                                   |
+| `embeddables tasks assign`           | Change the assignee of a task.                            |
+| `embeddables tasks comment`          | Add a comment to a task.                                  |
+| `embeddables tasks add-branch`       | Link an Embeddable branch to a task.                      |
+
+### Branches
+
+| Command                        | Description                                                           |
+| ------------------------------ | --------------------------------------------------------------------- |
+| `embeddables branches create`  | Create a new Embeddable branch from the current local state.          |
 
 ### Build (advanced)
 
@@ -57,6 +85,26 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 ## Command Options
 
 <AccordionGroup>
+  <Accordion title="embeddables login">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-t, --token &lt;token&gt;</code>
+          </td>
+          <td>
+            Use a token for non-interactive login. Pass a JWT directly instead of going through the OTP email flow — ideal for CI pipelines and cloud containers. The token's expiry is parsed from the JWT payload and stored alongside the session.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
   <Accordion title="embeddables init">
     <table>
       <thead>
@@ -68,7 +116,7 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-p, --project-id &lt;id&gt;</code>
+            `-p, --project-id <id>`
           </td>
           <td>
             Set project ID (if logged in, you can pick from a list instead).
@@ -76,7 +124,7 @@ description: "Complete reference for all Embeddables CLI commands and their opti
         </tr>
         <tr>
           <td>
-            <code>-y, --yes</code>
+            `-y, --yes`
           </td>
           <td>Skip prompts and use defaults.</td>
         </tr>
@@ -94,36 +142,36 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>Embeddable ID to pull (skips interactive selection).</td>
         </tr>
         <tr>
           <td>
-            <code>--version [number]</code>
+            `--version [number]`
           </td>
           <td>
-            Version to pull. Omit a value (<code>--version</code>) to open an interactive version selector. Pass a number (<code>--version 47</code>) to pull a specific version. Without this flag, <code>pull</code> defaults to the latest version.
+            Version to pull. Omit a value (`--version`) to open an interactive version selector. Pass a number (`--version 47`) to pull a specific version. Without this flag, `pull` defaults to the latest version.
           </td>
         </tr>
         <tr>
           <td>
-            <code>-o, --out &lt;path&gt;</code>
+            `-o, --out <path>`
           </td>
           <td>
             Output path for compiled JSON (default:{" "}
-            <code>embeddables/&lt;id&gt;/.generated/embeddable.json</code>).
+            `embeddables/<id>/.generated/embeddable.json`).
           </td>
         </tr>
         <tr>
           <td>
-            <code>-b, --branch &lt;branch_id&gt;</code>
+            `-b, --branch <branch_id>`
           </td>
           <td>Pull a specific branch.</td>
         </tr>
         <tr>
           <td>
-            <code>-f, --fix</code>
+            `-f, --fix`
           </td>
           <td>
             Remove components with missing required props instead of erroring.
@@ -131,9 +179,23 @@ description: "Complete reference for all Embeddables CLI commands and their opti
         </tr>
         <tr>
           <td>
-            <code>-p, --preserve</code>
+            `-p, --preserve`
           </td>
           <td>Preserve component order in config (see note below).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID for embeddable selection (skips project selection prompt).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--bypass-auth</code>
+          </td>
+          <td>
+            Skip the login check. Intended for CI environments and automated tooling where no auth token is stored.
+          </td>
         </tr>
       </tbody>
     </table>
@@ -149,75 +211,83 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>Embeddable ID (prompt if not provided).</td>
         </tr>
         <tr>
           <td>
-            <code>-p, --pages &lt;glob&gt;</code>
+            `-p, --pages <glob>`
           </td>
           <td>
             Custom pages glob (default:{" "}
-            <code>embeddables/&lt;id&gt;/pages/**/*.page.tsx</code>).
+            `embeddables/<id>/pages/**/*.page.tsx`).
           </td>
         </tr>
         <tr>
           <td>
-            <code>-o, --out &lt;path&gt;</code>
+            `-o, --out <path>`
           </td>
           <td>Output path for compiled JSON.</td>
         </tr>
         <tr>
           <td>
-            <code>-L, --local</code>
+            `-L, --local`
           </td>
           <td>
-            Use local engine (<code>http://localhost:8787</code>) instead of
+            Use local engine (`http://localhost:8787`) instead of
             production.
           </td>
         </tr>
         <tr>
           <td>
-            <code>-e, --engine &lt;url&gt;</code>
+            `-e, --engine <url>`
           </td>
           <td>
-            Engine origin (default: <code>https://engine.embeddables.com</code>;
-            overridden by <code>--local</code>).
+            Engine origin (default: `https://engine.embeddables.com`;
+            overridden by `--local`).
           </td>
         </tr>
         <tr>
           <td>
-            <code>--port &lt;n&gt;</code>
+            `--port <n>`
           </td>
           <td>
-            Dev proxy port (default: <code>3000</code>). If in use, CLI tries
+            Dev proxy port (default: `3000`). If in use, CLI tries
             the next available port.
           </td>
         </tr>
         <tr>
           <td>
-            <code>--overrideRoute &lt;path&gt;</code>
+            `--overrideRoute <path>`
           </td>
           <td>
-            Route to override in proxy (default: <code>/init</code>).
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <code>--pageKeyFrom &lt;mode&gt;</code>
-          </td>
-          <td>
-            How to derive page keys: <code>filename</code> or{" "}
-            <code>export</code> (default: <code>filename</code>).
+            Route to override in proxy (default: `/init`).
           </td>
         </tr>
         <tr>
           <td>
-            <code>--fix</code>
+            `--pageKeyFrom <mode>`
+          </td>
+          <td>
+            How to derive page keys: `filename` or{" "}
+            `export` (default: `filename`).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            `--fix`
           </td>
           <td>
             Apply lint fixes (e.g. duplicate IDs, keys starting with a number).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--bypass-auth</code>
+          </td>
+          <td>
+            Skip the login check. Intended for CI environments and automated tooling where no auth token is stored.
           </td>
         </tr>
       </tbody>
@@ -234,36 +304,44 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>Embeddable ID (required).</td>
         </tr>
         <tr>
           <td>
-            <code>-p, --pages &lt;glob&gt;</code>
+            `-p, --pages <glob>`
           </td>
           <td>Pages glob.</td>
         </tr>
         <tr>
           <td>
-            <code>-o, --out &lt;path&gt;</code>
+            `-o, --out <path>`
           </td>
           <td>Output path for JSON.</td>
         </tr>
         <tr>
           <td>
-            <code>--pageKeyFrom &lt;mode&gt;</code>
+            `--pageKeyFrom <mode>`
           </td>
           <td>
-            <code>filename</code> or <code>export</code> (default:{" "}
-            <code>filename</code>).
+            `filename` or `export` (default:{" "}
+            `filename`).
           </td>
         </tr>
         <tr>
           <td>
-            <code>--fix</code>
+            `--fix`
           </td>
           <td>Apply lint fixes.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--bypass-auth</code>
+          </td>
+          <td>
+            Skip the login check. Intended for CI environments and automated tooling where no auth token is stored.
+          </td>
         </tr>
       </tbody>
     </table>
@@ -279,36 +357,48 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>Embeddable ID (prompt if not provided).</td>
         </tr>
         <tr>
           <td>
-            <code>-l, --label &lt;label&gt;</code>
+            `-l, --label <label>`
           </td>
           <td>Human-readable version label.</td>
         </tr>
         <tr>
           <td>
-            <code>-b, --branch &lt;branch_id&gt;</code>
+            `-b, --branch <branch_id>`
           </td>
           <td>Branch ID to save to.</td>
         </tr>
         <tr>
           <td>
-            <code>-s, --skip-build</code>
+            `-s, --skip-build`
           </td>
           <td>
-            Use existing <code>.generated/embeddable.json</code> (no build
+            Use existing `.generated/embeddable.json` (no build
             step).
           </td>
         </tr>
         <tr>
           <td>
-            <code>--from-version &lt;number&gt;</code>
+            `--from-version <number>`
           </td>
           <td>Base version (auto-detected from local config if not set).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--force</code>
+          </td>
+          <td>Skip confirmation prompts (version conflicts and other users' drafts).</td>
         </tr>
       </tbody>
     </table>
@@ -324,11 +414,17 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>
             Embeddable ID (prompt from local Embeddables if not provided).
           </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch &lt;branch_id&gt;</code>
+          </td>
+          <td>Branch ID or name to switch to (skips the interactive branch selection prompt).</td>
         </tr>
       </tbody>
     </table>
@@ -370,23 +466,29 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>Embeddable ID.</td>
         </tr>
         <tr>
           <td>
-            <code>--experiment-id &lt;id&gt;</code>
+            `--experiment-id <id>`
           </td>
           <td>Experiment ID (prompt to choose if not provided).</td>
         </tr>
         <tr>
           <td>
-            <code>--experiment-key &lt;key&gt;</code>
+            `--experiment-key <key>`
           </td>
           <td>
-            Experiment key (required if <code>--experiment-id</code> is set).
+            Experiment key (required if `--experiment-id` is set).
           </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
         </tr>
       </tbody>
     </table>
@@ -402,11 +504,17 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>
-            Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).
+            Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside `embeddables/<id>/`).
           </td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
         </tr>
       </tbody>
     </table>
@@ -422,27 +530,27 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>Embeddable ID to inspect (required).</td>
         </tr>
         <tr>
           <td>
-            <code>--version &lt;version&gt;</code>
+            `--version <version>`
           </td>
           <td>
-            Version to inspect — a version number or <code>"latest"</code> (default: <code>latest</code>).
+            Version to inspect — a version number or `"latest"` (default: `latest`).
           </td>
         </tr>
         <tr>
           <td>
-            <code>-b, --branch &lt;branch_id&gt;</code>
+            `-b, --branch <branch_id>`
           </td>
           <td>Embeddable branch ID.</td>
         </tr>
         <tr>
           <td>
-            <code>-f, --fix</code>
+            `-f, --fix`
           </td>
           <td>
             Fix by removing components missing required props (default: on).
@@ -450,7 +558,7 @@ description: "Complete reference for all Embeddables CLI commands and their opti
         </tr>
         <tr>
           <td>
-            <code>-p, --preserve</code>
+            `-p, --preserve`
           </td>
           <td>
             Preserve component order during forward compilation (default: off). Use when you want to keep existing component order for comparison purposes.
@@ -458,10 +566,10 @@ description: "Complete reference for all Embeddables CLI commands and their opti
         </tr>
         <tr>
           <td>
-            <code>-e, --engine &lt;url&gt;</code>
+            `-e, --engine <url>`
           </td>
           <td>
-            Engine origin (default: <code>https://engine.embeddables.com</code>).
+            Engine origin (default: `https://engine.embeddables.com`).
           </td>
         </tr>
       </tbody>
@@ -478,63 +586,63 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
-          <td>Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).</td>
+          <td>Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside `embeddables/<id>/`).</td>
         </tr>
         <tr>
           <td>
-            <code>--from &lt;version&gt;</code>
+            `--from <version>`
           </td>
           <td>
-            Version to compare from (default: <code>latest</code>). Accepts a version number, <code>latest</code>, <code>staging</code>, <code>prod</code>, <code>local</code>, or <code>branch@version</code>.
-          </td>
-        </tr>
-        <tr>
-          <td>
-            <code>--to &lt;version&gt;</code>
-          </td>
-          <td>
-            Version to compare to (default: <code>local</code>). Same format as <code>--from</code>.
+            Version to compare from (default: `latest`). Accepts a version number, `latest`, `staging`, `prod`, `local`, or `branch@version`.
           </td>
         </tr>
         <tr>
           <td>
-            <code>--depth &lt;level&gt;</code>
+            `--to <version>`
           </td>
           <td>
-            Detail level: <code>pages</code>, <code>components</code> (default), or <code>props</code>.
+            Version to compare to (default: `local`). Same format as `--from`.
           </td>
         </tr>
         <tr>
           <td>
-            <code>--page &lt;keysOrIds&gt;</code>
+            `--depth <level>`
+          </td>
+          <td>
+            Detail level: `pages`, `components` (default), or `props`.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            `--page <keysOrIds>`
           </td>
           <td>Filter output to specific page keys or IDs (comma-separated, no spaces).</td>
         </tr>
         <tr>
           <td>
-            <code>--component &lt;keysOrIds&gt;</code>
+            `--component <keysOrIds>`
           </td>
           <td>Filter output to specific component keys or IDs (comma-separated, no spaces).</td>
         </tr>
         <tr>
           <td>
-            <code>-b, --branch &lt;branch_id&gt;</code>
+            `-b, --branch <branch_id>`
           </td>
-          <td>Branch to use when fetching cloud versions (auto-detected from <code>config.json</code> if not set).</td>
+          <td>Branch to use when fetching cloud versions (auto-detected from `config.json` if not set).</td>
         </tr>
         <tr>
           <td>
-            <code>-e, --engine &lt;url&gt;</code>
+            `-e, --engine <url>`
           </td>
           <td>
-            Engine origin (default: <code>https://engine.embeddables.com</code>).
+            Engine origin (default: `https://engine.embeddables.com`).
           </td>
         </tr>
         <tr>
           <td>
-            <code>--no-color</code>
+            `--no-color`
           </td>
           <td>Disable colored output.</td>
         </tr>
@@ -552,51 +660,51 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>Embeddable ID (inferred from cwd or interactive prompt if not provided).</td>
         </tr>
         <tr>
           <td>
-            <code>--dir &lt;path&gt;</code>
+            `--dir <path>`
           </td>
-          <td>Local directory to upload from (default: <code>assets/</code>).</td>
+          <td>Local directory to upload from (default: `assets/`).</td>
         </tr>
         <tr>
           <td>
-            <code>--group-id &lt;id&gt;</code>
+            `--group-id <id>`
           </td>
           <td>Target asset group ID. Resolved from project config if not provided.</td>
         </tr>
         <tr>
           <td>
-            <code>--recursive</code>
+            `--recursive`
           </td>
           <td>Traverse subdirectories (default: top-level only).</td>
         </tr>
         <tr>
           <td>
-            <code>--include &lt;glob&gt;</code>
+            `--include <glob>`
           </td>
           <td>Glob pattern to include only matching files.</td>
         </tr>
         <tr>
           <td>
-            <code>--exclude &lt;glob&gt;</code>
+            `--exclude <glob>`
           </td>
           <td>Glob pattern to exclude matching files.</td>
         </tr>
         <tr>
           <td>
-            <code>--dry-run</code>
+            `--dry-run`
           </td>
           <td>Preview what would be uploaded without actually uploading.</td>
         </tr>
         <tr>
           <td>
-            <code>--workers &lt;n&gt;</code>
+            `--workers <n>`
           </td>
-          <td>Number of concurrent upload workers (default: <code>5</code>).</td>
+          <td>Number of concurrent upload workers (default: `5`).</td>
         </tr>
       </tbody>
     </table>
@@ -612,21 +720,21 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>-i, --id &lt;id&gt;</code>
+            `-i, --id <id>`
           </td>
           <td>Embeddable ID (inferred from cwd or interactive prompt if not provided).</td>
         </tr>
         <tr>
           <td>
-            <code>--group-id &lt;id&gt;</code>
+            `--group-id <id>`
           </td>
           <td>Asset group ID to sync. Resolved from project config if not provided.</td>
         </tr>
         <tr>
           <td>
-            <code>-o, --out &lt;path&gt;</code>
+            `-o, --out <path>`
           </td>
-          <td>Output path for the asset manifest (default: <code>assets.json</code>).</td>
+          <td>Output path for the asset manifest (default: `assets.json`).</td>
         </tr>
       </tbody>
     </table>
@@ -642,29 +750,195 @@ description: "Complete reference for all Embeddables CLI commands and their opti
       <tbody>
         <tr>
           <td>
-            <code>[message]</code>
+            `[message]`
           </td>
           <td>Optional feedback message as a positional argument. If omitted, you will be prompted interactively.</td>
         </tr>
         <tr>
           <td>
-            <code>--positive</code>
+            `--positive`
           </td>
           <td>Mark the feedback as positive (👍).</td>
         </tr>
         <tr>
           <td>
-            <code>--negative</code>
+            `--negative`
           </td>
           <td>Mark the feedback as negative (👎). Default when a message is passed non-interactively.</td>
         </tr>
         <tr>
           <td>
-            <code>--category &lt;type&gt;</code>
+            `--category <type>`
           </td>
           <td>
-            Feedback area: <code>cli</code>, <code>ai</code>, <code>compiler</code>, or <code>other</code>.
+            Feedback area: `cli`, `ai`, `compiler`, or `other`.
           </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks list">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>
+            Project ID to list tasks for. Defaults to the project configured in <code>embeddables.json</code>; prompts interactively if not set.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks get">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required). Displays status, priority, type, assignee, dates, body, and effort.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks update-status">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-s, --status &lt;status&gt;</code>
+          </td>
+          <td>
+            New status (required). Valid values: <code>to_do</code>, <code>scoping</code>, <code>in_progress</code>, <code>feedback_cycle</code>, <code>qa</code>, <code>blocked</code>, <code>completed</code>, <code>cancelled</code>. Hyphens are accepted in place of underscores.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks assign">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--assignee-id &lt;id&gt;</code>
+          </td>
+          <td>User ID to assign the task to. Mutually exclusive with <code>--assign-to-owner</code>.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--assign-to-owner</code>
+          </td>
+          <td>Assign the task to its current owner. Mutually exclusive with <code>--assignee-id</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks comment">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-m, --message &lt;content&gt;</code>
+          </td>
+          <td>Comment content (required).</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks add-branch">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch-id &lt;id&gt;</code>
+          </td>
+          <td>Branch ID to link to the task (required).</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables branches create">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-n, --name &lt;name&gt;</code>
+          </td>
+          <td>Branch name (required). The origin version and branch are read automatically from <code>config.json</code>.</td>
         </tr>
       </tbody>
     </table>
