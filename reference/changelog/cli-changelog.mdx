@@ -38,6 +38,71 @@ Check your version: `embeddables -v`
 
 </Update>
 
+<Update label="v0.14.4 — 9 March 2026">
+
+### Improvements
+
+- **`addTaskBranch` now stores `project_id`** — When a branch is associated with a task, the CLI now correctly includes `project_id` in the `task_branches` database record alongside `task_id` and `branch_id`. A debug log line is also emitted during the insertion, improving visibility for branch operations in development.
+
+</Update>
+
+<Update label="v0.14.3 — 9 March 2026">
+
+### Improvements
+
+- **`branches create` success message shows branch ID** — After successfully creating a branch, the CLI now displays both the branch name and the branch ID (as returned by the server) in the success box, making it easier to reference the new branch in subsequent commands such as `embeddables pull -b <id>` or `embeddables save -b <id>`.
+
+### Chores
+
+- **CLI option formatting** — Internal option definitions in the CLI entry point have been reformatted for consistency and readability; no user-facing changes.
+
+</Update>
+
+<Update label="v0.14.2 — 9 March 2026">
+
+### Features
+
+- **`embeddables branches create`** — New command that creates a new branch from the current Embeddable state. Resolves the Embeddable from `--id`, the current working directory, or an interactive prompt; reads the origin version and branch from `config.json`. Use `-n, --name <name>` to set the branch name (required). Requires login.
+- **`embeddables branch --branch` option** — `embeddables branch` now accepts `-b, --branch <branch_id>` to switch directly to a known branch ID or name without going through the interactive selection list.
+
+### Chores
+
+- **`branches` recognised as a utility command** — The `branches` subcommand group is now listed in the utility commands set, so branch management commands are correctly grouped in `embeddables --help` output.
+
+</Update>
+
+<Update label="v0.14.1 — 9 March 2026">
+
+### Features
+
+- **`embeddables tasks`** — New command group for managing project tasks directly from the terminal. All subcommands require login and resolve the project from `embeddables.json` or an interactive prompt:
+  - **`tasks list`** — Print a compact table of all tasks for the current project (`-p, --project-id <id>` to skip the prompt).
+  - **`tasks get -i <id>`** — Show full details of a single task by ID.
+  - **`tasks update-status -i <id> -s <status>`** — Change a task's status. Valid values: `to_do`, `scoping`, `in_progress`, `feedback_cycle`, `qa`, `blocked`, `completed`, `cancelled`.
+  - **`tasks assign -i <id>`** — Reassign a task. Pass `--assignee-id <user-id>` to assign to a specific user or `--assign-to-owner` to assign back to the task owner.
+  - **`tasks comment -i <id> -m <message>`** — Add a comment to a task.
+  - **`tasks add-branch -i <id> -b <branch-id>`** — Link an Embeddable branch to a task.
+- **`embeddables branches create`** — New subcommand that creates a new Embeddable branch from the current local state. Pass `-n, --name <name>` for the branch name; the origin version and branch are read automatically from `config.json`. Requires login.
+
+### Chores
+
+- **Expanded CLI help and README** — `embeddables --help` output and the package README now include full option documentation for `inspect`, `diff`, `feedback`, `builder open`, `experiments connect`, `assets upload`, `assets sync`, and all task management commands.
+
+</Update>
+
+<Update label="v0.14.0 — 9 March 2026">
+
+### Features
+
+- **Non-interactive flags for all commands (CLI-57)** — Every interactive prompt in the CLI (excluding `login`) now has a corresponding flag, making all commands fully scriptable for use in CI pipelines, AI-driven workflows, and automation:
+  - **`embeddables branch`**: `--branch <id|name>` skips the branch selection prompt.
+  - **`embeddables save`**: `--project-id <id>` skips the project selection prompt; `--force` skips all confirmation prompts (version conflicts and other users' drafts).
+  - **`embeddables pull`**: `--project-id <id>` skips the project selection prompt.
+  - **`embeddables builder open`**: `--project-id <id>` skips the project selection prompt.
+  - **`embeddables experiments connect`**: `--project-id <id>` skips the project selection prompt.
+
+</Update>
+
 <Update label="v0.13.0 — 9 March 2026">
 
 ### Features
@@ -51,6 +116,9 @@ Check your version: `embeddables -v`
   - **`tasks add-branch`** — Link an Embeddables branch to a task (`-i, --id <id>`, `-b, --branch-id <id>`).
 - **`embeddables login --token <token>`** — New `-t, --token` option for non-interactive, token-based login. Pass a JWT directly instead of going through the OTP email flow — ideal for CI pipelines and cloud containers where interactive prompts are unavailable.
 - **`--bypass-auth` flag for `pull`, `dev`, and `build`** — Hidden flag that skips the login check, allowing these commands to run without a stored auth token. Intended for CI environments and automated tooling. (`save` continues to require login.)
+
+</Update>
+
 <Update label="v0.12.1 — 5 March 2026">
 
 ### Improvements
