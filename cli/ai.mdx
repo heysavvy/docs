@@ -7,14 +7,20 @@ description: "Set up Cursor, Claude, and Codex for AI-assisted Embeddable editin
 
 The CLI is built for **AI-assisted editing**: the file layout is predictable, and `embeddables init` injects **Cursor rules**, **Claude project context**, **Codex context (AGENTS.md)**, and **Antigravity rules** so the assistant understands Embeddable components, keys, and conventions. Use the sections below to get the most out of each tool.
 
+## How the context files work
+
+`embeddables init` creates a shared **`AI-README.md`** at the project root containing the full Embeddables CLI development guide (file structure, component types, `id`/`key` rules, action values, etc.). Each AI editor's rule file is a **short pointer** to that shared file rather than duplicating the full content. This keeps the rule files small and easy for AI tools to load, while `AI-README.md` remains the single source of truth.
+
+To keep all files up to date after a CLI upgrade, run `embeddables upgrade` — it automatically refreshes `AI-README.md` and all rule files to match the installed version.
+
 ## Cursor
 
 When you run `embeddables init`, the CLI can add a **Cursor rule** so Cursor AI has full context when you edit Embeddables:
 
 - **Where it goes**: `.cursor/rules/embeddables-cli.md`
-- **What it does**: The rule is marked to apply always (`alwaysApply: true`), so Cursor has the Embeddables CLI guide (file structure, component types, `id`/`key` rules, action values like `next-page`/`prev-page`, etc.) in context without you having to mention it every time.
-- **Referencing it in chat**: If you want to be explicit, you can @-mention the rule file in the composer, e.g. `@.cursor/rules/embeddables-cli.md`, so the model is sure to use it for the current task.
-- **Re-injecting**: If you delete `.cursor/rules/embeddables-cli.md` or want to get the latest version from the CLI package, run `embeddables init` again; it will overwrite or recreate the rule file.
+- **What it does**: A short pointer file marked `alwaysApply: true` that references `AI-README.md`. Cursor loads the shared guide automatically for every conversation, so you don't need to mention it each time.
+- **Referencing it in chat**: If you want to be explicit, you can @-mention the file in the composer, e.g. `@AI-README.md`, so the model is sure to use it for the current task.
+- **Re-injecting**: If you delete `.cursor/rules/embeddables-cli.md` or want the latest version, run `embeddables init` or `embeddables upgrade`; both will overwrite or recreate the rule file.
 
 Use Cursor for quick edits to a single page, adding a component, or fixing a prop — the rule keeps the assistant from suggesting invalid `action` values or keys that start with a number.
 
@@ -22,10 +28,10 @@ Use Cursor for quick edits to a single page, adding a component, or fixing a pro
 
 When you run `embeddables init`, the CLI can also add **Claude (Claude Code / project) context**:
 
-- **Where it goes**: `.claude/` with `CLAUDE.md` (short intro) and `embeddables-cli.md` (full CLI context, same content as the Cursor rule).
-- **What it does**: Claude uses these files as project context when you work in the repo. The full guide in `.claude/embeddables-cli.md` explains pages, global components, styles, computed fields, actions, and component primitives so Claude can edit TSX and config correctly.
-- **Referencing it in prompts**: In a Claude Code or project prompt, you can say: "Always read the Embeddables CLI context before starting (e.g. `.claude/embeddables-cli.md`)." For complex tasks (e.g. building multiple pages from designs), the CLI repo also includes example prompts in `.prompts/custom/` (e.g. build-funnel style) that you can adapt and paste into Claude.
-- **Re-injecting**: As with Cursor, run `embeddables init` again to recreate or refresh `.claude/` if you removed it or want the latest content.
+- **Where it goes**: `.claude/` with `CLAUDE.md` (short intro pointer) and `embeddables-cli.md` (pointer to `AI-README.md`).
+- **What it does**: Claude uses these files as project context when you work in the repo. The pointer in `.claude/embeddables-cli.md` directs Claude to `AI-README.md`, which covers pages, global components, styles, computed fields, actions, and component primitives.
+- **Referencing it in prompts**: In a Claude Code or project prompt, you can say: "Always read the Embeddables CLI context before starting (e.g. `AI-README.md`)." For complex tasks (e.g. building multiple pages from designs), the CLI repo also includes example prompts in `.prompts/custom/` (e.g. build-funnel style) that you can adapt and paste into Claude.
+- **Re-injecting**: Run `embeddables init` or `embeddables upgrade` to recreate or refresh `.claude/` with the latest content.
 
 Claude works well for multi-step tasks (e.g. "add a new page and wire up the buttons") or when you paste in the context file path at the start of a long conversation.
 
@@ -34,16 +40,16 @@ Claude works well for multi-step tasks (e.g. "add a new page and wire up the but
 When you run `embeddables init`, the CLI generates an **`AGENTS.md`** file at the project root:
 
 - **Where it goes**: `AGENTS.md` (project root)
-- **What it does**: Follows the OpenAI Codex convention. Contains the same Embeddables CLI context as the Cursor and Claude files (file structure, component types, conventions, etc.), so Codex has full awareness of the project when making edits.
-- **Re-injecting**: Run `embeddables init` again to regenerate or update `AGENTS.md` with the latest content from the CLI package.
+- **What it does**: Follows the OpenAI Codex convention. A short pointer to `AI-README.md`, giving Codex full awareness of the project's file structure, component types, and conventions.
+- **Re-injecting**: Run `embeddables init` or `embeddables upgrade` to regenerate or update `AGENTS.md` with the latest content.
 
 ## Antigravity
 
 When you run `embeddables init`, the CLI generates an **Antigravity rules file** at `.agent/rules/embeddables-cli.md`:
 
 - **Where it goes**: `.agent/rules/embeddables-cli.md`
-- **What it does**: Follows the [Antigravity](https://antigravity.dev) convention. The file includes Antigravity-specific frontmatter (`globs`, `alwaysOn: true`) so the context is always active for relevant files. Contains the same full Embeddables CLI guide as the Cursor and Claude files (file structure, component types, `id`/`key` rules, action values, etc.).
-- **Re-injecting**: Run `embeddables init` again to regenerate or update `.agent/rules/embeddables-cli.md` with the latest content from the CLI package.
+- **What it does**: Follows the [Antigravity](https://antigravity.dev) convention. Includes Antigravity-specific frontmatter (`globs`, `alwaysOn: true`) and points to `AI-README.md` so the context is always active for relevant files.
+- **Re-injecting**: Run `embeddables init` or `embeddables upgrade` to regenerate or update `.agent/rules/embeddables-cli.md` with the latest content.
 
 ## Tips and best practices for prompt writing
 
