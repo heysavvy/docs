@@ -50,6 +50,23 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | `embeddables assets upload`  | Upload a local asset folder to the Embeddables asset store.              |
 | `embeddables assets sync`    | Sync uploaded asset metadata from the cloud into a local `assets.json`. |
 
+### Tasks
+
+| Command                              | Description                                               |
+| ------------------------------------ | --------------------------------------------------------- |
+| `embeddables tasks list`             | List all tasks for the current project.                   |
+| `embeddables tasks get`              | Get details of a specific task by ID.                     |
+| `embeddables tasks update-status`    | Update a task's status.                                   |
+| `embeddables tasks assign`           | Change the assignee of a task.                            |
+| `embeddables tasks comment`          | Add a comment to a task.                                  |
+| `embeddables tasks add-branch`       | Link an Embeddable branch to a task.                      |
+
+### Branches
+
+| Command                        | Description                                                           |
+| ------------------------------ | --------------------------------------------------------------------- |
+| `embeddables branches create`  | Create a new Embeddable branch from the current local state.          |
+
 ### Build (advanced)
 
 | Command             | Description                                                                                       |
@@ -871,6 +888,30 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>-b, --branch-id &lt;id&gt;</code>
           </td>
           <td>Branch ID to link to the task (required).</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables branches create">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-n, --name &lt;name&gt;</code>
+          </td>
+          <td>Branch name (required). The origin version and branch are read automatically from <code>config.json</code>.</td>
         </tr>
       </tbody>
     </table>
