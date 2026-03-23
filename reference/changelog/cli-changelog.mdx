@@ -24,6 +24,17 @@ Check your version: `embeddables -v`
   - **`tasks add-branch`** — Link an Embeddables branch to a task (`-i, --id <id>`, `-b, --branch-id <id>`).
 - **`embeddables login --token <token>`** — New `-t, --token` option for non-interactive, token-based login. Pass a JWT directly instead of going through the OTP email flow — ideal for CI pipelines and cloud containers where interactive prompts are unavailable.
 - **`--bypass-auth` flag for `pull`, `dev`, and `build`** — Hidden flag that skips the login check, allowing these commands to run without a stored auth token. Intended for CI environments and automated tooling. (`save` continues to require login.)
+<Update label="v0.12.1 — 5 March 2026">
+
+### Improvements
+
+- **Workbench: in-app modal dialogs in User Data panel** — The User Data panel in the Workbench now uses proper in-app modal dialogs instead of native browser `window.prompt()` calls. Both the "Save Persona" and "Go To Page" actions open a focused modal with a text input, inline error display, and keyboard shortcuts (Enter to confirm, Escape to dismiss). This also fixes the Workbench on Cursor Cloud, where native browser dialogs are not supported.
+
+### Chores
+
+- **AI development guidelines added to internal dev context** — `AI-README.md` now includes an "AI Development Guidelines" section covering code comment conventions, testing requirements, and an end-of-workflow inconsistency check. `CLAUDE.md` and `AGENTS.md` tables-of-contents were updated to reference the new section.
+- **Cursor Cloud instructions in developer docs** — `AI-README.md` and `AGENTS.md` now include specific setup and usage instructions for working within Cursor Cloud, including notes on CLI-only commands and test video recording guidelines.
+- **Developer guide centralized in `AI-README.md`** — `AGENTS.md`, `CLAUDE.md`, and `.cursor/rules/embeddables-dev.md` now point to `AI-README.md` as the single source of truth for the internal development guide.
 
 </Update>
 
