@@ -24,6 +24,68 @@ Check your version: `embeddables -v`
 
 </Update>
 
+<Update label="v0.14.1 — 9 March 2026">
+
+### Features
+
+- **`embeddables tasks`** — New command group for managing project tasks directly from the terminal. All subcommands require login and resolve the project from `embeddables.json` or an interactive prompt:
+  - **`tasks list`** — Print a compact table of all tasks for the current project (`-p, --project-id <id>` to skip the prompt).
+  - **`tasks get -i <id>`** — Show full details of a single task by ID.
+  - **`tasks update-status -i <id> -s <status>`** — Change a task's status. Valid values: `to_do`, `scoping`, `in_progress`, `feedback_cycle`, `qa`, `blocked`, `completed`, `cancelled`.
+  - **`tasks assign -i <id>`** — Reassign a task. Pass `--assignee-id <user-id>` to assign to a specific user or `--assign-to-owner` to assign back to the task owner.
+  - **`tasks comment -i <id> -m <message>`** — Add a comment to a task.
+  - **`tasks add-branch -i <id> -b <branch-id>`** — Link an Embeddable branch to a task.
+- **`embeddables branches create`** — New subcommand that creates a new Embeddable branch from the current local state. Pass `-n, --name <name>` for the branch name; the origin version and branch are read automatically from `config.json`. Requires login.
+
+### Chores
+
+- **Expanded CLI help and README** — `embeddables --help` output and the package README now include full option documentation for `inspect`, `diff`, `feedback`, `builder open`, `experiments connect`, `assets upload`, `assets sync`, and all task management commands.
+
+</Update>
+
+<Update label="v0.14.0 — 9 March 2026">
+
+### Features
+
+- **Non-interactive flags for all commands (CLI-57)** — Every interactive prompt in the CLI (excluding `login`) now has a corresponding flag, making all commands fully scriptable for use in CI pipelines, AI-driven workflows, and automation:
+  - **`embeddables branch`**: `--branch <id|name>` skips the branch selection prompt.
+  - **`embeddables save`**: `--project-id <id>` skips the project selection prompt; `--force` skips all confirmation prompts (version conflicts and other users' drafts).
+  - **`embeddables pull`**: `--project-id <id>` skips the project selection prompt.
+  - **`embeddables builder open`**: `--project-id <id>` skips the project selection prompt.
+  - **`embeddables experiments connect`**: `--project-id <id>` skips the project selection prompt.
+
+</Update>
+
+<Update label="v0.13.0 — 9 March 2026">
+
+### Features
+
+- **`embeddables tasks` command group** — New commands for managing project tasks directly from the CLI. All subcommands require login and resolve the project from `embeddables.json` or prompt interactively.
+  - **`tasks list`** — Display a table of all tasks for the current project (`-p, --project-id <id>` to target a specific project).
+  - **`tasks get`** — Fetch and display full details for a single task (`-i, --id <id>`): status, priority, type, assignee, dates, body, and effort.
+  - **`tasks update-status`** — Change a task's status (`-i, --id <id>`, `-s, --status <status>`). Valid values: `to_do`, `scoping`, `in_progress`, `feedback_cycle`, `qa`, `blocked`, `completed`, `cancelled`.
+  - **`tasks assign`** — Change a task's assignee (`-i, --id <id>`, then either `--assignee-id <userId>` or `--assign-to-owner` to assign to the task's owner).
+  - **`tasks comment`** — Add a comment to a task (`-i, --id <id>`, `-m, --message <content>`).
+  - **`tasks add-branch`** — Link an Embeddables branch to a task (`-i, --id <id>`, `-b, --branch-id <id>`).
+- **`embeddables login --token <token>`** — New `-t, --token` option for non-interactive, token-based login. Pass a JWT directly instead of going through the OTP email flow — ideal for CI pipelines and cloud containers where interactive prompts are unavailable.
+- **`--bypass-auth` flag for `pull`, `dev`, and `build`** — Hidden flag that skips the login check, allowing these commands to run without a stored auth token. Intended for CI environments and automated tooling. (`save` continues to require login.)
+
+</Update>
+
+<Update label="v0.12.1 — 5 March 2026">
+
+### Improvements
+
+- **Workbench: in-app modal dialogs in User Data panel** — The User Data panel in the Workbench now uses proper in-app modal dialogs instead of native browser `window.prompt()` calls. Both the "Save Persona" and "Go To Page" actions open a focused modal with a text input, inline error display, and keyboard shortcuts (Enter to confirm, Escape to dismiss). This also fixes the Workbench on Cursor Cloud, where native browser dialogs are not supported.
+
+### Chores
+
+- **AI development guidelines added to internal dev context** — `AI-README.md` now includes an "AI Development Guidelines" section covering code comment conventions, testing requirements, and an end-of-workflow inconsistency check. `CLAUDE.md` and `AGENTS.md` tables-of-contents were updated to reference the new section.
+- **Cursor Cloud instructions in developer docs** — `AI-README.md` and `AGENTS.md` now include specific setup and usage instructions for working within Cursor Cloud, including notes on CLI-only commands and test video recording guidelines.
+- **Developer guide centralized in `AI-README.md`** — `AGENTS.md`, `CLAUDE.md`, and `.cursor/rules/embeddables-dev.md` now point to `AI-README.md` as the single source of truth for the internal development guide.
+
+</Update>
+
 <Update label="v0.12.0 — 4 March 2026">
 
 ### Features
