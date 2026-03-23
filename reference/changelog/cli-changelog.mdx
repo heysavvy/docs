@@ -11,6 +11,19 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.14.0 — 9 March 2026">
+
+### Features
+
+- **Non-interactive flags for all commands (CLI-57)** — Every interactive prompt in the CLI (excluding `login`) now has a corresponding flag, making all commands fully scriptable for use in CI pipelines, AI-driven workflows, and automation:
+  - **`embeddables branch`**: `--branch <id|name>` skips the branch selection prompt.
+  - **`embeddables save`**: `--project-id <id>` skips the project selection prompt; `--force` skips all confirmation prompts (version conflicts and other users' drafts).
+  - **`embeddables pull`**: `--project-id <id>` skips the project selection prompt.
+  - **`embeddables builder open`**: `--project-id <id>` skips the project selection prompt.
+  - **`embeddables experiments connect`**: `--project-id <id>` skips the project selection prompt.
+
+</Update>
+
 <Update label="v0.13.0 — 9 March 2026">
 
 ### Features
@@ -24,6 +37,9 @@ Check your version: `embeddables -v`
   - **`tasks add-branch`** — Link an Embeddables branch to a task (`-i, --id <id>`, `-b, --branch-id <id>`).
 - **`embeddables login --token <token>`** — New `-t, --token` option for non-interactive, token-based login. Pass a JWT directly instead of going through the OTP email flow — ideal for CI pipelines and cloud containers where interactive prompts are unavailable.
 - **`--bypass-auth` flag for `pull`, `dev`, and `build`** — Hidden flag that skips the login check, allowing these commands to run without a stored auth token. Intended for CI environments and automated tooling. (`save` continues to require login.)
+
+</Update>
+
 <Update label="v0.12.1 — 5 March 2026">
 
 ### Improvements
