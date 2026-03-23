@@ -16,7 +16,7 @@ description: "Build and manage Embeddables locally with code — for developers 
 </Warning>
 
 <Info>
-  **Current version: 0.14.0** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
+  **Current version: 0.13.0** — See the [CLI Changelog](/reference/changelog/cli-changelog) for what's new.
 </Info>
 
 The Embeddables CLI lets you build, edit, and manage Embeddables using **code** instead of (or alongside) the web Builder. It turns Embeddables into **TypeScript/TSX** you can edit in any editor, with **hot reload** and strong support for **AI assistants** (Cursor, Claude, etc.).
@@ -31,6 +31,78 @@ The Embeddables CLI lets you build, edit, and manage Embeddables using **code** 
 ## Requirements
 
 - **Node.js** >= 18.0.0
+
+<AccordionGroup>
+  <Accordion title="Installing Node.js and NPM on macOS">
+    The Embeddables CLI requires Node.js (which includes NPM). If you don't have Node.js installed:
+
+    **Option 1: Using Homebrew (Recommended)**
+
+    If you have Homebrew installed:
+
+    ```bash
+    brew install node
+    ```
+
+    **Option 2: Download from Node.js website**
+
+    1. Visit [nodejs.org](https://nodejs.org/)
+    2. Download the LTS (Long Term Support) version for macOS
+    3. Run the installer and follow the prompts
+
+    **Troubleshooting on macOS:**
+
+    If you see errors about missing command line tools or Xcode, you may need to install Xcode Command Line Tools first:
+
+    ```bash
+    xcode-select --install
+    ```
+
+    Click "Install" in the dialog that appears, then try installing Node.js again.
+
+    **Verifying installation:**
+
+    After installation, open a new terminal window and verify:
+
+    ```bash
+    node --version
+    npm --version
+    ```
+
+    Both commands should print version numbers.
+  </Accordion>
+
+  <Accordion title="Installing Node.js and NPM on Windows">
+    The Embeddables CLI requires Node.js (which includes NPM). If you don't have Node.js installed:
+
+    **Option 1: Using Node.js installer (Recommended)**
+
+    1. Visit [nodejs.org](https://nodejs.org/)
+    2. Download the LTS (Long Term Support) version for Windows
+    3. Run the `.msi` installer
+    4. Follow the installation wizard (keep all default options)
+    5. Restart your terminal or Command Prompt
+
+    **Option 2: Using Chocolatey**
+
+    If you have Chocolatey installed:
+
+    ```bash
+    choco install nodejs
+    ```
+
+    **Verifying installation:**
+
+    After installation, open a new terminal window and verify:
+
+    ```bash
+    node --version
+    npm --version
+    ```
+
+    Both commands should print version numbers. If you see "command not found" errors, restart your terminal or computer.
+  </Accordion>
+</AccordionGroup>
 
 ## Installation
 
@@ -130,6 +202,12 @@ The CLI provides commands for setup, daily workflow, building, and debugging. He
 | `embeddables branch` | Switch to a different branch, then pull that branch. |
 | `embeddables assets upload` | Upload a local asset folder to the Embeddables asset store. |
 | `embeddables assets sync` | Sync uploaded asset metadata into a local `assets.json` file. |
+| `embeddables tasks list` | List all tasks for the current project. |
+| `embeddables tasks get` | Fetch full details for a task by ID. |
+| `embeddables tasks update-status` | Change a task's status. |
+| `embeddables tasks assign` | Change a task's assignee. |
+| `embeddables tasks comment` | Add a comment to a task. |
+| `embeddables tasks add-branch` | Link an Embeddables branch to a task. |
 | `embeddables build` | Compile TSX to JSON without uploading. |
 | `embeddables inspect` | Round-trip compile and compare outputs for debugging. |
 | `embeddables feedback` | Send feedback about the CLI from your terminal. |

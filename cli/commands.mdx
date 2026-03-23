@@ -32,6 +32,17 @@ description: "Complete reference for all Embeddables CLI commands and their opti
   You can `cd embeddables/<EMBEDDABLE_ID>` and run Embeddable-specific commands (`dev`, `pull`, `save`, `branch`, `builder open`) from there. The CLI will automatically use that Embeddable instead of prompting you to choose.
 </Tip>
 
+### Tasks
+
+| Command                              | Description                                       |
+| ------------------------------------ | ------------------------------------------------- |
+| `embeddables tasks list`             | List all tasks for the current project.           |
+| `embeddables tasks get`              | Fetch full details for a task by ID.              |
+| `embeddables tasks update-status`    | Change a task's status.                           |
+| `embeddables tasks assign`           | Change a task's assignee.                         |
+| `embeddables tasks comment`          | Add a comment to a task.                          |
+| `embeddables tasks add-branch`       | Link an Embeddables branch to a task.             |
+
 ### Assets
 
 | Command                      | Description                                                              |
@@ -56,6 +67,26 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 ## Command Options
 
 <AccordionGroup>
+  <Accordion title="embeddables login">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-t, --token &lt;token&gt;</code>
+          </td>
+          <td>
+            Use a token for non-interactive login. Pass a JWT directly instead of going through the OTP email flow — ideal for CI pipelines and cloud containers. The token's expiry is parsed from the JWT payload and stored alongside the session.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
   <Accordion title="embeddables init">
     <table>
       <thead>
@@ -139,6 +170,11 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>--project-id &lt;id&gt;</code>
           </td>
           <td>Project ID for embeddable selection (skips project selection prompt).</td>
+            <code>--bypass-auth</code>
+          </td>
+          <td>
+            Skip the login check. Intended for CI environments and automated tooling where no auth token is stored.
+          </td>
         </tr>
       </tbody>
     </table>
@@ -225,6 +261,14 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             Apply lint fixes (e.g. duplicate IDs, keys starting with a number).
           </td>
         </tr>
+        <tr>
+          <td>
+            <code>--bypass-auth</code>
+          </td>
+          <td>
+            Skip the login check. Intended for CI environments and automated tooling where no auth token is stored.
+          </td>
+        </tr>
       </tbody>
     </table>
   </Accordion>
@@ -269,6 +313,14 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>--fix</code>
           </td>
           <td>Apply lint fixes.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--bypass-auth</code>
+          </td>
+          <td>
+            Skip the login check. Intended for CI environments and automated tooling where no auth token is stored.
+          </td>
         </tr>
       </tbody>
     </table>
@@ -674,6 +726,148 @@ description: "Complete reference for all Embeddables CLI commands and their opti
           <td>
             Feedback area: <code>cli</code>, <code>ai</code>, <code>compiler</code>, or <code>other</code>.
           </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks list">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>
+            Project ID to list tasks for. Defaults to the project configured in <code>embeddables.json</code>; prompts interactively if not set.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks get">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required). Displays status, priority, type, assignee, dates, body, and effort.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks update-status">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-s, --status &lt;status&gt;</code>
+          </td>
+          <td>
+            New status (required). Valid values: <code>to_do</code>, <code>scoping</code>, <code>in_progress</code>, <code>feedback_cycle</code>, <code>qa</code>, <code>blocked</code>, <code>completed</code>, <code>cancelled</code>. Hyphens are accepted in place of underscores.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks assign">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--assignee-id &lt;id&gt;</code>
+          </td>
+          <td>User ID to assign the task to. Mutually exclusive with <code>--assign-to-owner</code>.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--assign-to-owner</code>
+          </td>
+          <td>Assign the task to its current owner. Mutually exclusive with <code>--assignee-id</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks comment">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-m, --message &lt;content&gt;</code>
+          </td>
+          <td>Comment content (required).</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables tasks add-branch">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Task ID (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-b, --branch-id &lt;id&gt;</code>
+          </td>
+          <td>Branch ID to link to the task (required).</td>
         </tr>
       </tbody>
     </table>
