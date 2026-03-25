@@ -11,6 +11,33 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.15.0 — 23 March 2026">
+
+### Features
+
+- **Shared `AI-README.md` + short pointer rule files** (CLI-105) — `embeddables init` now creates a shared `AI-README.md` at the project root containing the full Embeddables CLI development guide. The AI editor rule files for Cursor (`.cursor/rules/embeddables-cli.md`), Claude (`.claude/embeddables-cli.md`), Codex (`AGENTS.md`), and Antigravity (`.agent/rules/embeddables-cli.md`) are now concise pointer files that reference `AI-README.md`, rather than each duplicating the full content. This keeps rule files small and ensures they stay in sync.
+- **`embeddables upgrade` refreshes AI context files and type stubs** — Running `embeddables upgrade` now also regenerates AI rule files and `.types/` type stubs in the project to match the newly installed CLI version, so they stay up to date automatically without needing to re-run `embeddables init`.
+- **`preserve_json_in_cli` for `CustomHTML`** — `CustomHTML` components now accept a `preserve_json_in_cli` boolean prop. When set, the HTML content is preserved as-is during CLI round-trips, bypassing HTML reformatting. Useful for raw embeds that should not be touched by the compiler.
+
+### Bug Fixes
+
+- **Workbench: `OptionSelector` dropdown autofill** (CLI-88) — Dropdowns in the Workbench field editor now autofill correctly. Fixed by removing an empty-buttons guard and switching to `setUserData` for consistent state propagation.
+- **`embeddables branch`: soft-deleted branches hidden** (CLI-64) — Soft-deleted branches are now filtered out of the interactive branch selection prompt, keeping the list clean.
+- **`CustomHTML`: whitespace trimming and hyphenated SVG attributes** (CLI-73) — Whitespace in `CustomHTML` text content is now trimmed correctly; hyphenated SVG attributes (e.g. `stroke-width`, `fill-rule`, `stroke-linecap`) are preserved through round-trips.
+- **`embeddables pull`: reduced style-only diffs** (CLI-92) — Fixed an issue where pulling could introduce unwanted whitespace changes in `CustomHTML` serialization, causing spurious diffs.
+- **Edit history: array value diffs** (CLI-86) — Array-type values in edit history now diff correctly when saving, preventing spurious change records.
+- **Page-level trigger output types** (CLI-77) — Page-level outputs now correctly identify trigger output types, improving type safety.
+
+### Improvements
+
+- **Computed field and action function signatures** (CLI-76) — `result()` and `output()` now accept the full three-argument form (`userData`, `helperFunctions`, `triggerContext`). Trailing unused parameters can be omitted, keeping simple computed fields concise.
+
+### Chores
+
+- **AI prompt guidance for disabled CTAs** — Internal AI context updated with the `needs_validation_passed` + `validation_show_state` pattern for implementing disabled CTA button states.
+
+</Update>
+
 <Update label="v0.14.4 — 9 March 2026">
 
 ### Improvements
