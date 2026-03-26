@@ -4,6 +4,24 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="26 March 2026">
+### 🔥 Features and Updates
+
+- 🖼️ **Page Thumbnail Previews** – Hover over any page key in funnel charts, the user activity timeline, or the goal creation modal to see a live preview thumbnail of that page.
+- 🧪 **Create Experiment API** – New Bearer-authenticated endpoint (`POST /api/embeddables/create-experiment`) to create experiments programmatically, with automatic variant weighting distribution.
+- 🚀 **Version Publish API** – New Bearer-authenticated endpoints (`POST /api/embeddables/set-version-status` and `POST /api/embeddables/publish`) to promote versions to staging or production programmatically, matching the Builder's promotion rules.
+
+### ⚡️ Improvements
+
+- Version promotion via API is now idempotent — promoting a version that is already at the target status no longer returns an error.
+- Promoting a version to production now requires it to be on staging first, consistent with the Builder behavior.
+
+### 🐞 Bug Fixes
+
+- Switching Stripe Checkout payment methods rapidly no longer causes duplicate entries.
+- The metric dropdown in the goal creation modal now includes a search bar, making all metrics discoverable (previously capped at 50 visible options).
+</Update>
+
 <Update label="01 July 2025">
 ### 🔥 Features and Updates
 
