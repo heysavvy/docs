@@ -4,6 +4,23 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="26 March 2026">
+### 🔥 Features and Updates
+
+- 🌐 **AI Translation Support** – The Builder AI chat can now translate your Embeddable. Ask it to "translate this page to Spanish" and it will register the language, translate all supported text fields, and switch the preview so you can review the result instantly.
+- 🎯 **Multi-Key Conversions** – Page View and Button Click conversions now support selecting multiple keys at once. Track several pages or buttons together under a single conversion event.
+
+### ⚡️ Improvements
+
+- **Scroll to Top Enabled by Default** – The "Scroll to top on page navigation" setting is now on by default for new pages, so users always start at the top of each page without any extra configuration.
+- **Published Status Skeleton** – The published/draft status badge in the Builder now shows a loading skeleton while the production version data is being fetched, preventing a blank status flash on load.
+- **Stripe: Afterpay Auto-Removed in Subscription Mode** – When switching a Stripe component's checkout mode to **Subscription**, Afterpay/Clearpay is automatically removed from the selected payment methods (Stripe does not support Afterpay in subscription mode).
+
+### 🐞 Bug Fixes
+
+- Merging branches where pages had been reordered now works correctly — page order is preserved across both branches after a merge.
+</Update>
+
 <Update label="01 July 2025">
 ### 🔥 Features and Updates
 
