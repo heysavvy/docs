@@ -9,7 +9,7 @@ description: "Fix common CLI errors and learn about current limitations"
 
 - **You can't create Embeddables** from the CLI; you can only pull and edit existing Embeddables (create new ones in the Builder).
 - **Asset browsing and deletion** are not yet available from the CLI. Use the Builder to browse the full asset library or delete assets. To upload local assets and reference their URLs in code, use `embeddables assets upload` and then `embeddables assets sync` to pull the URLs into `assets.json`.
-- **No creating new branches/experiments** from the CLI; you can connect to existing ones (`embeddables branch`, `embeddables experiments connect`).
+- **No creating new experiments** from the CLI; use the Builder to create experiments, then connect with `embeddables experiments connect`. You can create and switch branches with `embeddables branches create` and `embeddables branch`.
 - **`embeddables dev` doesn't yet work** for Embeddables that use the CMS feature; use the Builder preview or a deployed embed for those.
 - **Multi-language Embeddables** are supported in round-trip compilation; some edge cases with complex language configurations may still arise — report them if you encounter them.
 - **Internet required** for the dev server when using the default (remote) Engine.
