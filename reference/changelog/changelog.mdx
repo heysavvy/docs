@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="31 March 2026">
+### 🐞 Bug Fixes
+
+- **Decimal Experiment Weightings** – Variant weightings in experiments now accept decimal values (e.g. 33.33%), removing the previous integer-only restriction. Weightings are still validated to sum to 100 (within a small float tolerance), and any unspecified variant weights are distributed evenly across the remaining share.
+- **Branch-Scoped Version Storage** – Version JSON files saved in the Builder are now stored under a branch-specific path (`{embeddableId}/{branchId}/version-{n}`) when a branch is active, preventing cross-branch version collisions in storage.
+</Update>
+
 <Update label="01 July 2025">
 ### 🔥 Features and Updates
 
