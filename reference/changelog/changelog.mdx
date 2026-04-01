@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="01 April 2026">
+### 🐞 Bug Fixes
+
+- **Server-Side Rendering Compatibility** – The client-side JS bundle no longer overwrites server-rendered HTML when using the backend SSR integration. Interactive setup now proceeds correctly on top of pre-rendered content.
+- **Stripe Checkout Promo Codes** – Applying a promo code to one Stripe Checkout component no longer triggers session re-creation in other Stripe Checkout components on the same page, fixing errors on pages with multiple checkouts.
+</Update>
+
 <Update label="01 July 2025">
 ### 🔥 Features and Updates
 
