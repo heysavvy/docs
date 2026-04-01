@@ -1,0 +1,12 @@
+---
+title: "Workers Changelog"
+description: "What we've shipped in the Embeddables Workers backend, when we shipped it"
+icon: "list"
+---
+
+<Update label="1 April 2026">
+### 🐞 Bug Fixes
+
+- **SSR compatibility with client-side JS v3** – The rendering engine no longer overwrites server-rendered HTML when the host element already has children. Backend integrations using SSR (via `data.html` + `data.client_side_js`) now work correctly when the bundle initialises after the server-rendered markup is already in the DOM.
+- **Stripe Checkout promo codes with multiple checkout instances** – Applying a promo code to one Stripe Checkout on a page no longer triggers re-initialisation of other checkout instances. Previously, any `userData` change (such as the checkout total updating after a promo code was applied) could cause sibling checkout sessions to be orphaned, making subsequent `applyPromotionCode` calls fail with `payment_pages_promotion_code_invalid`.
+</Update>
