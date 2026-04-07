@@ -280,6 +280,27 @@ These features are not required in order to successfully accept payments, but th
     See the [How To: Use Stripe Coupons and Promo Codes](/how-to/use-stripe-coupons-and-promo-codes) guide for more information.
 
   </Accordion>
+  <Accordion title="Share a single Stripe session across multiple Stripe Checkout components">
+    If you have more than one Stripe Checkout 2.0 component on the same page (for example, a Payment element and an Express Checkout element side-by-side), you can make them share a single underlying Stripe Checkout session by enabling **Use shared Stripe session** on each component.
+
+    **Why use this?**
+    - Ensures coupons and promo codes applied to the session are immediately reflected on every component's "Pay" button.
+    - Avoids creating multiple independent checkout sessions for the same purchase, which could lead to duplicate charges.
+
+    **How to enable it:**
+    1. In the Builder, select each Stripe Checkout 2.0 component that should share the session.
+    2. In the component's Options sidebar, enable the **Use shared Stripe session** toggle.
+    3. Repeat for every Stripe Checkout 2.0 component on that page that should participate.
+
+    <Note>
+      All components in the shared session must use the same **Checkout mode** (e.g. all Payment, or all Subscription) and the same **currency**. Mismatched values will produce an error.
+    </Note>
+
+    <Warning>
+      Shared sessions are scoped to a single page. Components on different pages each create their own independent session.
+    </Warning>
+
+  </Accordion>
   <Accordion title="Place a hold on the customer's card">
     See the [How To: Place a Hold on a Payment](/how-to/place-a-hold-on-payment) guide for more information on this feature.
 
