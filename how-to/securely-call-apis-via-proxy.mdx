@@ -65,12 +65,16 @@ The new proxy comes with the following features:
         <strong>Environment</strong>: Select the environment
       </li>
       <li>
-        <strong>Allowed Origins (Regex)</strong>: Regex for allowlisted origins
-        (e.g., your frontend domains)
+        <strong>Allowed Origins</strong>: The user-facing URLs that requests will
+        come from (e.g., your frontend domains). Use <strong>Domain</strong> mode
+        to enter a root domain (e.g. <code>example.com</code>) — all subdomains
+        and paths are matched automatically. Switch to <strong>Regex</strong> mode
+        if you need a custom pattern (e.g. <code>^https://example\.com$</code>).
       </li>
       <li>
-        <strong>Allowed Destinations (Regex)</strong>: Regex for allowlisted API
-        destinations
+        <strong>Allowed Destinations</strong>: The API or server URLs that
+        requests will be forwarded to. Same Domain/Regex toggle applies — enter
+        just the domain or a full regex pattern depending on your needs.
       </li>
       <li>
         <strong>Credential IDs</strong>: Select the credentials that can be used

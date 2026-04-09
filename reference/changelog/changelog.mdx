@@ -4,6 +4,27 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="09 April 2026">
+### 🔥 Features and Updates
+
+- 💰 **Currency Unit for Goals** – Numeric Goals with Sum or Average aggregation now have a **Unit** selector. Choose **USD $** to display values as currency (e.g. $1,234.56) instead of a plain number.
+- 🔍 **AND Response Filters in Overview** – The response filter in the Embeddable Overview now supports stacking multiple key/value pairs combined with AND logic. Click **+ Add filter** to narrow down the responses you're analyzing to users who match all selected criteria.
+- 🔗 **Domain Mode for Credentials & Endpoints** – Allowed Origins and Allowed Destinations in Endpoint settings now offer a simple **Domain** tab so you can enter a root domain (e.g. `example.com`) instead of writing a regex. All subdomains and paths on that domain are matched automatically. Switch to **Regex** mode for advanced matching patterns.
+- 📦 **Deprecated Integrations Toggle** – Google Sheets and other deprecated integrations are now tucked behind a collapsible "Show deprecated integrations" section on the Integrations settings page, keeping the main list focused on actively supported integrations.
+
+### ⚡️ Improvements
+
+- Analytics date pickers now highlight the time input and show a **Reset** button when the time has been changed from the default, making it easy to spot and clear any custom time that is active.
+- Goal metric values now display with two decimal places for greater precision (e.g. **1,234.56** rather than **1,235**).
+- Conversion rate percentages in the Embeddable Overview now display two decimal places (e.g. **12.34%** instead of **12%**).
+
+### 🐞 Bug Fixes
+
+- Funnel chart embeddable thumbnails no longer flicker or reload on every mouse move when hovering.
+- Editing a conversion-rate Goal no longer resets the selected metric and other form fields when the edit modal opens.
+- The Save button for experiment variants is now correctly disabled until the group data has finished loading, preventing premature or failed saves.
+</Update>
+
 <Update label="01 July 2025">
 ### 🔥 Features and Updates
 
