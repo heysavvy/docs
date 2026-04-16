@@ -39,6 +39,7 @@ You can capture custom events using custom code - it's best to do this in an [Ac
   <Step title="Use the `trackCustomEvent()` function">
     - Inside the `output()` function, use the `trackCustomEvent()` function inside the `helperFunctions` argument.
     - The first argument is the name of the event, and the second is a JSON object of properties.
+    - `trackCustomEvent()` returns a `Promise<void>` — you can `await` it if you need the event to be delivered before navigating or taking a follow-up action.
     - For example:
       ```js
       function output(userData, helperFunctions) {

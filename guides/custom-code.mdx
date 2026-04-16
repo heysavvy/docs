@@ -209,12 +209,20 @@ The following helper functions are available in both Computed Fields and Actions
   <Accordion title="trackCustomEvent(customEventName: string, customEventProps: any)">
     Tracks a custom analytics event with the given name and properties.
 
+    Returns a `Promise<void>` that resolves once the event has been sent. You can `await` it if you need to wait for the event to be delivered before continuing (for example, before navigating away).
+
     ```javascript
-    // Example usage
+    // Example usage — fire and forget
     helperFunctions.trackCustomEvent('button_clicked', {
       buttonId: 'submit',
       timestamp: Date.now()
     });
+
+    // Example usage — await before navigating
+    await helperFunctions.trackCustomEvent('purchase_completed', {
+      orderId: userData.order_id
+    });
+    await helperFunctions.goToNextPage();
     ```
   </Accordion>
 </AccordionGroup>
