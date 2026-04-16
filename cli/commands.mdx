@@ -51,17 +51,6 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | `embeddables assets upload`  | Upload a local asset folder to the Embeddables asset store.              |
 | `embeddables assets sync`    | Sync uploaded asset metadata from the cloud into a local `assets.json`. |
 
-### Tasks
-
-| Command                              | Description                                               |
-| ------------------------------------ | --------------------------------------------------------- |
-| `embeddables tasks list`             | List all tasks for the current project.                   |
-| `embeddables tasks get`              | Get details of a specific task by ID.                     |
-| `embeddables tasks update-status`    | Update a task's status.                                   |
-| `embeddables tasks assign`           | Change the assignee of a task.                            |
-| `embeddables tasks comment`          | Add a comment to a task.                                  |
-| `embeddables tasks add-branch`       | Link an Embeddable branch to a task.                      |
-
 ### Branches
 
 | Command                        | Description                                                           |
@@ -73,6 +62,12 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | Command             | Description                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------- |
 | `embeddables build` | Compile TSX → JSON only (no upload). Used automatically by `save` unless you pass `--skip-build`. |
+
+### Publishing (advanced)
+
+| Command                              | Description                                                                                         |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `embeddables dangerously-publish`    | Promote an existing saved version to staging or production without a full rebuild. Use with care.   |
 
 ### Debugging
 
@@ -939,6 +934,78 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>-n, --name &lt;name&gt;</code>
           </td>
           <td>Branch name (required). The origin version and branch are read automatically from <code>config.json</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables dangerously-publish">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (prompt if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--staging</code>
+          </td>
+          <td>Publish to the staging environment. Mutually exclusive with <code>--prod</code>.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--prod</code>
+          </td>
+          <td>Publish to production only (the version must already be on staging server-side). Mutually exclusive with <code>--staging</code>.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--via-staging</code>
+          </td>
+          <td>With <code>--prod</code>: push to staging first, then to production. Use when the version is not yet on staging.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--save</code>
+          </td>
+          <td>Build and upload a new saved version before publishing it.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--publish-version &lt;number&gt;</code>
+          </td>
+          <td>Promote this specific version number instead of reading the version from <code>config.json</code>.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-l, --label &lt;label&gt;</code>
+          </td>
+          <td>Human-readable label for the new version (only applies with <code>--save</code>).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--skip-build</code>
+          </td>
+          <td>Skip the build step (only applies with <code>--save</code>).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--force</code>
+          </td>
+          <td>Skip confirmation prompts (version conflicts when using <code>--save</code>, other users' drafts).</td>
         </tr>
       </tbody>
     </table>
