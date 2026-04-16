@@ -86,6 +86,28 @@ function output(userData, helperFunctions) {
 Keep `payload_metrics` values as numbers and `payload_dimensions` values as strings. You can add any keys you need within those constraints.
 </Tip>
 
+### Tracking custom events from outside the Embeddable
+
+If you need to fire a custom event from your **host-page JavaScript** (outside the Embeddable itself), you can use the `window.Savvy.trackCustomEvent()` function that is exposed on the page after the Embeddable loads:
+
+```javascript
+// Call from your website/webapp code — outside the Embeddable
+await window.Savvy.trackCustomEvent(
+  'your_embeddable_id',   // The ID of the Embeddable
+  'got_recommendation',   // The custom event name
+  {                       // Optional properties
+    recommendation_id: 'rec_123',
+    recommendation_name: 'Premium plan'
+  }
+);
+```
+
+This is useful when an event occurs on your page rather than inside the Embeddable (for example, a user interacting with surrounding page content that you want to attribute to the Embeddable session).
+
+<Note>
+  `window.Savvy.trackCustomEvent()` returns a `Promise`. Await it if you need to confirm the event was sent before proceeding.
+</Note>
+
 ### Custom server-side events
 
 Some events will occur somewhere other than in the Embeddable, for example a user completing a doctor's appointment.
