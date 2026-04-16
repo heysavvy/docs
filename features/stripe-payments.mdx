@@ -281,7 +281,7 @@ These features are not required in order to successfully accept payments, but th
 
   </Accordion>
   <Accordion title="Share a single Stripe session across multiple Stripe Checkout components">
-    If you have more than one Stripe Checkout 2.0 component on the same page (for example, a Payment element and an Express Checkout element side-by-side), you can make them share a single underlying Stripe Checkout session by enabling **Use shared Stripe session** on each component.
+    If you have more than one Stripe Checkout 2.0 component on the same page (for example, a Payment element and an Express Checkout element side-by-side), you can make them share a single underlying Stripe Checkout session by setting `use_shared_stripe_session: true` on each component.
 
     **Why use this?**
     - Ensures coupons and promo codes applied to the session are immediately reflected on every component's "Pay" button.
@@ -289,7 +289,7 @@ These features are not required in order to successfully accept payments, but th
 
     **How to enable it:**
     1. In the Builder, select each Stripe Checkout 2.0 component that should share the session.
-    2. Edit the component's JSON to add the `use_shared_stripe_session` property
+    2. Open the component's JSON editor and add `"use_shared_stripe_session": true` to the component's options.
     3. Repeat for every Stripe Checkout 2.0 component on that page that should participate.
 
     <Note>
