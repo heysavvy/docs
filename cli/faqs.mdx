@@ -13,7 +13,7 @@ description: "Frequently asked questions about the Embeddables CLI"
     Login is stored globally on your machine (not per project). Use `embeddables logout` to clear it.
   </Accordion>
   <Accordion title="Can I use the CLI without ever using the Builder?">
-    You can build and save Embeddables entirely from the CLI. The Builder is still the recommended place to create new branches/experiments, upload assets, and for non-technical teammates to review and merge. Many teams use both: CLI for fast iteration and AI-assisted edits, Builder for final review and publishing.
+    You can build and save Embeddables entirely from the CLI. The Builder is still the recommended place to create experiments, upload assets, and for non-technical teammates to review and merge. Many teams use both: CLI for fast iteration and AI-assisted edits, Builder for final review and publishing.
   </Accordion>
   <Accordion title="What is the difference between id and key on components?">
     Both must be unique in context. `id` is the stable internal identifier (e.g. `comp_12345`). `key` is used in React and for targeting (e.g. in conditions or user data). Keys must not start with a number; use a prefix like `option_` or `range_` if the label would otherwise slug to a number.
@@ -37,7 +37,7 @@ description: "Frequently asked questions about the Embeddables CLI"
     Run `embeddables upgrade`. You can check the current version with `embeddables -v`.
   </Accordion>
   <Accordion title="Can I create a new branch or experiment from the CLI?">
-    No. You can switch to and pull existing branches with `embeddables branch`, and connect an Embeddable to an experiment with `embeddables experiments connect`, but creating new branches or experiments is done in the Builder.
+    You can create new branches with `embeddables branches create` and switch between them with `embeddables branch`. Creating experiments is still done in the Builder; use `embeddables experiments connect` to link an existing experiment to your Embeddable.
   </Accordion>
   <Accordion title="Why does save say the server has a newer version?">
     Someone (in the Builder or via the CLI) saved a newer version after you last pulled. You can pull the latest with `embeddables pull` and then re-apply your changes, or force-save when the prompt offers it (use with care to avoid overwriting others' work).
