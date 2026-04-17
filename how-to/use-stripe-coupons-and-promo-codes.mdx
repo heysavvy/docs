@@ -173,6 +173,22 @@ Tips:
   </Accordion>
 </AccordionGroup>
 
+## Using coupons with multiple Stripe Checkout components on the same page
+
+If you have more than one Stripe Checkout component on the same page, set `use_shared_stripe_session: true` on each component. Without it, each component creates its own independent Stripe Checkout session — meaning a coupon applied to one component will not be reflected on the others, and the "Pay" button totals will get out of sync.
+
+When all components on the page share a session, applying a promo code via `window.StripeCheckout.applyPromotionCode(...)` updates the session once and every component's "Pay" button automatically reflects the discounted total.
+
+<Warning>
+  All participating Stripe Checkout components must use the same **Checkout mode** (e.g. all Payment, or all Subscription) and the same **currency**. Mismatched values will produce an error.
+</Warning>
+
+<Note>
+  Session sharing is scoped to a single page. Components on different pages each create their own independent session, so `use_shared_stripe_session` has no effect across page navigations.
+</Note>
+
+See the [Sharing a Stripe session across multiple components](/features/stripe-payments#share-a-single-stripe-session-across-multiple-stripe-checkout-components) section in the Stripe Payments docs for setup instructions.
+
 ## Best Practices
 
 1. **Test Both Modes**: Always test your promo codes in both test and live modes to ensure they work as expected.
