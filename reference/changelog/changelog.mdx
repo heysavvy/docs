@@ -4,6 +4,17 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="16 April 2026">
+### 🔥 Features and Updates
+
+- 🌐 **Stripe Checkout Translation Support** – Pay button text and success message in Stripe Checkout 2 components now respond to language changes when translation variants are configured, keeping your payment UI fully localised.
+- 📡 **`trackCustomEvent` on `window.Embeddables`** – `trackCustomEvent` is now exposed on `window.Embeddables`.
+
+### ⚡️ Improvements
+
+- **`trackCustomEvent` returns a Promise** – `window.Embeddables.trackCustomEvent()` now returns a `Promise<void>`, so you can `await` the call before redirecting or performing follow-up actions.
+</Update>
+
 <Update label="14 April 2026">
 ### 🔥 Features and Updates
 
