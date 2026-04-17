@@ -15,6 +15,23 @@ icon: "list"
 - An error toast is now shown when attempting to download submissions with no answer keys, rather than silently failing.
 </Update>
 
+<Update label="07 April 2026">
+### 🔥 Features and Updates
+
+- 💳 **Shared Stripe Checkout Session** – Multiple Stripe Checkout components on the same page can now share a single Stripe Checkout session. Enable `use_shared_stripe_session` on each component and they will all use the same underlying session, ensuring coupons and discounts apply uniformly across all line items and that all "Pay" buttons update in sync when a promo code is applied.
+</Update>
+
+<Update label="26 March 2026">
+### 🔥 Features and Updates
+
+- 🖼️ **Page Thumbnail Previews** – Hover over any page key in funnel charts, the user activity timeline, or the goal creation modal to see a live preview thumbnail of that page.
+
+### 🐞 Bug Fixes
+
+- Switching Stripe Checkout payment methods rapidly no longer causes duplicate entries.
+- The metric dropdown in the goal creation modal now includes a search bar, making all metrics discoverable (previously capped at 50 visible options).
+</Update>
+
 <Update label="01 July 2025">
 ### 🔥 Features and Updates
 
