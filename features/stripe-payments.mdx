@@ -234,6 +234,7 @@ These features are not required in order to successfully accept payments, but th
           - Customer email
           - Customer phone
           - Shipping address fields
+          - Pay button text
           - Success message
         </Note>
       </Tab>
@@ -338,8 +339,13 @@ These features are not required in order to successfully accept payments, but th
     </Tip>
 
   </Accordion>
-  <Accordion title="Add a custom success message">
-    This lets you customize the message that users see after they complete the payment.
+  <Accordion title="Customise the Pay button text and Success message">
+    You can customise both the label on the Pay button and the message shown to users after a successful payment.
+
+    - **Pay button text** – Sets the label on the payment submit button (e.g. "Pay now", "Subscribe", "Complete purchase"). Supports templating, e.g. `{{cta_label}}`.
+    - **Success message** – Sets the confirmation message shown to the user after payment is completed. If the payment fails (e.g. card declined), the error message from Stripe is shown instead. Supports templating, e.g. `{{success_message}}`.
+
+    Both fields support **translations** — switch the content language in the Builder top bar to enter translated values for each language you have configured.
 
     If the payment fails, for example if the credit card is declined, the error message returned from Stripe will be displayed to the user.
 
