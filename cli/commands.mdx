@@ -13,7 +13,7 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `embeddables login`   | Log in to your Embeddables account (global).                                                                                                        |
 | `embeddables logout`  | Clear stored authentication.                                                                                                                        |
-| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `embeddables/`, optional Cursor/Claude/Codex/Antigravity prompts; creates `tsconfig.json` if absent, or patches it to add the required type alias paths if it already exists. |
+| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `embeddables/`, optional Cursor/Claude/Codex/Gemini/Antigravity prompts; creates `tsconfig.json` if absent, or patches it to add the required type alias paths if it already exists. |
 | `embeddables upgrade` | Update the CLI to the latest stable version.                                                                                                        |
 
 ### Daily workflow
@@ -51,28 +51,30 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | `embeddables assets upload`  | Upload a local asset folder to the Embeddables asset store.              |
 | `embeddables assets sync`    | Sync uploaded asset metadata from the cloud into a local `assets.json`. |
 
-### Tasks
-
-| Command                              | Description                                               |
-| ------------------------------------ | --------------------------------------------------------- |
-| `embeddables tasks list`             | List all tasks for the current project.                   |
-| `embeddables tasks get`              | Get details of a specific task by ID.                     |
-| `embeddables tasks update-status`    | Update a task's status.                                   |
-| `embeddables tasks assign`           | Change the assignee of a task.                            |
-| `embeddables tasks comment`          | Add a comment to a task.                                  |
-| `embeddables tasks add-branch`       | Link an Embeddable branch to a task.                      |
-
 ### Branches
 
 | Command                        | Description                                                           |
 | ------------------------------ | --------------------------------------------------------------------- |
 | `embeddables branches create`  | Create a new Embeddable branch from the current local state.          |
 
+### Experiments
+
+| Command                            | Description                                               |
+| ---------------------------------- | --------------------------------------------------------- |
+| `embeddables experiments create`   | Create a new experiment.                                  |
+| `embeddables experiments connect`  | Connect an existing experiment.                           |
+
 ### Build (advanced)
 
 | Command             | Description                                                                                       |
 | ------------------- | ------------------------------------------------------------------------------------------------- |
 | `embeddables build` | Compile TSX → JSON only (no upload). Used automatically by `save` unless you pass `--skip-build`. |
+
+### Publishing (advanced)
+
+| Command                              | Description                                                                                         |
+| ------------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `embeddables dangerously-publish`    | Promote an existing saved version to staging or production without a full rebuild. Use with care.   |
 
 ### Debugging
 
@@ -451,6 +453,64 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>-n, --name &lt;name&gt;</code>
           </td>
           <td>Branch name (required). The success output will include the new branch ID returned by the server.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables experiments create">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (inferred from cwd or interactive prompt if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-n, --name &lt;name&gt;</code>
+          </td>
+          <td>Experiment name (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-k, --experiment-key &lt;key&gt;</code>
+          </td>
+          <td>Experiment key (required). Used to reference the experiment in code.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--variants &lt;list&gt;</code>
+          </td>
+          <td>
+            Comma-separated <code>key:weight</code> pairs (e.g. <code>control:50,treatment:50</code>). Defaults to <code>control:50,treatment:50</code>. Weights must sum to 100; if they don't, the CLI will prompt to auto-adjust (or pass <code>--auto-adjust</code> to skip the prompt).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--status &lt;status&gt;</code>
+          </td>
+          <td>
+            Initial experiment status. Valid values: <code>draft</code>, <code>active</code>, <code>paused</code>, <code>completed</code>. Defaults to <code>draft</code>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--auto-adjust</code>
+          </td>
+          <td>Automatically scale variant weights to 100% without an interactive confirmation prompt. Useful for non-TTY/CI environments.</td>
         </tr>
       </tbody>
     </table>
@@ -939,6 +999,78 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>-n, --name &lt;name&gt;</code>
           </td>
           <td>Branch name (required). The origin version and branch are read automatically from <code>config.json</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables dangerously-publish">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (prompt if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--staging</code>
+          </td>
+          <td>Publish to the staging environment. Mutually exclusive with <code>--prod</code>.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--prod</code>
+          </td>
+          <td>Publish to production only (the version must already be on staging server-side). Mutually exclusive with <code>--staging</code>.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--via-staging</code>
+          </td>
+          <td>With <code>--prod</code>: push to staging first, then to production. Use when the version is not yet on staging.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--save</code>
+          </td>
+          <td>Build and upload a new saved version before publishing it.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--publish-version &lt;number&gt;</code>
+          </td>
+          <td>Promote this specific version number instead of reading the version from <code>config.json</code>.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-l, --label &lt;label&gt;</code>
+          </td>
+          <td>Human-readable label for the new version (only applies with <code>--save</code>).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--skip-build</code>
+          </td>
+          <td>Skip the build step (only applies with <code>--save</code>).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--force</code>
+          </td>
+          <td>Skip confirmation prompts (version conflicts when using <code>--save</code>, other users' drafts).</td>
         </tr>
       </tbody>
     </table>

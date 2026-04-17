@@ -5,7 +5,7 @@ icon: "wand-magic-sparkles"
 description: "Set up Cursor, Claude, and Codex for AI-assisted Embeddable editing"
 ---
 
-The CLI is built for **AI-assisted editing**: the file layout is predictable, and `embeddables init` injects **Cursor rules**, **Claude project context**, **Codex context (AGENTS.md)**, and **Antigravity rules** so the assistant understands Embeddable components, keys, and conventions. Use the sections below to get the most out of each tool.
+The CLI is built for **AI-assisted editing**: the file layout is predictable, and `embeddables init` injects **Cursor rules**, **Claude project context**, **Codex context (AGENTS.md)**, **Gemini CLI context (GEMINI.md)**, and **Antigravity rules** so the assistant understands Embeddable components, keys, and conventions. Use the sections below to get the most out of each tool.
 
 ## How the context files work
 
@@ -28,8 +28,8 @@ Use Cursor for quick edits to a single page, adding a component, or fixing a pro
 
 When you run `embeddables init`, the CLI can also add **Claude (Claude Code / project) context**:
 
-- **Where it goes**: `.claude/` with `CLAUDE.md` (short intro pointer) and `embeddables-cli.md` (pointer to `AI-README.md`).
-- **What it does**: Claude uses these files as project context when you work in the repo. The pointer in `.claude/embeddables-cli.md` directs Claude to `AI-README.md`, which covers pages, global components, styles, computed fields, actions, and component primitives.
+- **Where it goes**: `.claude/CLAUDE.md` (a short pointer to `AI-README.md`).
+- **What it does**: Claude uses this file as project context when you work in the repo. The pointer in `.claude/CLAUDE.md` directs Claude to `AI-README.md`, which covers pages, global components, styles, computed fields, actions, and component primitives.
 - **Referencing it in prompts**: In a Claude Code or project prompt, you can say: "Always read the Embeddables CLI context before starting (e.g. `AI-README.md`)." For complex tasks (e.g. building multiple pages from designs), the CLI repo also includes example prompts in `.prompts/custom/` (e.g. build-funnel style) that you can adapt and paste into Claude.
 - **Re-injecting**: Run `embeddables init` or `embeddables upgrade` to recreate or refresh `.claude/` with the latest content.
 
@@ -42,6 +42,14 @@ When you run `embeddables init`, the CLI generates an **`AGENTS.md`** file at th
 - **Where it goes**: `AGENTS.md` (project root)
 - **What it does**: Follows the OpenAI Codex convention. A short pointer to `AI-README.md`, giving Codex full awareness of the project's file structure, component types, and conventions.
 - **Re-injecting**: Run `embeddables init` or `embeddables upgrade` to regenerate or update `AGENTS.md` with the latest content.
+
+## Gemini CLI
+
+When you run `embeddables init`, the CLI generates a **`GEMINI.md`** file at the project root:
+
+- **Where it goes**: `GEMINI.md` (project root).
+- **What it does**: Follows the Gemini CLI convention. A short pointer to `AI-README.md`, giving Gemini full awareness of the project's file structure, component types, and conventions.
+- **Re-injecting**: Run `embeddables init` or `embeddables upgrade` to regenerate or update `GEMINI.md` with the latest content.
 
 ## Antigravity
 

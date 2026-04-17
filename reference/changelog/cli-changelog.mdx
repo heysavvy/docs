@@ -11,6 +11,50 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.0 — 3 April 2026">
+
+### Features
+
+- **`embeddables experiments create`** — New command that creates an experiment for one or more Embeddables. Accepts `-i, --id <id>` (Embeddable ID), `-n, --name <name>` (experiment name), `-k, --experiment-key <key>`, `-p, --project-id <id>`, `--variants <list>` (comma-separated `key:weight` pairs; defaults to `control:50,treatment:50`), `--status <status>` (defaults to `draft`), and `--auto-adjust` (automatically scale variant weights to 100% without an interactive prompt when weights don't sum to 100).
+- **`GEMINI.md` emitted on `init` / `upgrade`** — `embeddables init` and `embeddables upgrade` now also write a `GEMINI.md` file at the project root, following the same short-pointer convention as `AGENTS.md`. Gemini CLI will automatically load the shared `AI-README.md` development guide.
+- **`languages` property support** — The top-level `languages` array is now recognised in Flow types. A new `EmbeddableLanguage` type (`{ key: string; name: string }`) is exported from `.types/`, and `infobox_use_dialog_element` is also added to the Flow type to align with the Builder.
+
+### Bug Fixes
+
+- **Stripe/PayPal payment trigger output props** — `on_payment_complete_outputs`, `on_payment_failed_outputs`, and `on_payment_attempted_outputs` on `StripeCheckout`, `StripeCheckout2`, and `PaypalCheckout` components now render as first-class named JSX props in the reverse compiler instead of falling into the `props={}` catch-all.
+- **`InputBox.max_length` type** — The `max_length` prop on `InputBox` is now typed as `number` (matching the Builder), not `string`.
+- **`embeddables init` spinner** — The "Fetching projects…" spinner is now cleared before the interactive project selection prompt is shown, preventing the spinner text from persisting below the list during the entire selection interaction.
+- **`embeddables pull` fails on missing Embeddable** — `pull` now exits with a clear error when the remote Embeddable is missing (empty-flow fallback response or 404), rather than silently writing a broken local repo.
+
+### Improvements
+
+- **`embeddables diff` shows item names** — Changes to `computedFields` and `actions` (dataOutputs) in diff output now list each affected item by name/key/id (`- removed`, `+ added`, `~ modified`) instead of a generic `[N items] → [M items]` summary.
+
+### Chores
+
+- **AI prompt rules updated** — Internal `.prompts` context updated: `track_clicks` added to `CustomButton` guidance; `languages` property clarification added; payment component trigger-type table now correctly includes legacy `StripeCheckout` alongside `StripeCheckout2` and `PaypalCheckout`.
+
+</Update>
+
+<Update label="v0.15.1-beta.0 — 27 March 2026">
+
+### Features
+
+- **Workbench: Feedback Panel** — A new Feedback panel in the Workbench lets you submit annotated feedback on an Embeddable directly from the preview. Supports image paste (including on Windows), session upload management, tagging, and a shared session welcome modal. Feedback is stored with the project ID from `embeddables.json`, injected automatically in dev mode.
+- **`embeddables dangerously-publish`** — New command that promotes an existing saved version to staging or production without a full rebuild. Requires exactly one of `--staging` or `--prod`. Use `--via-staging` with `--prod` if the version is not yet on staging. Pass `--save` to upload a new saved version first, or `--publish-version <number>` to target a specific version instead of reading from `config.json`.
+- **`embeddables inspect`: fixable failures shown as warnings with fix-and-retry prompt** — When `inspect` encounters component-level issues that can be auto-fixed (e.g. missing required props), it now displays a warning and prompts you to retry with `--fix` rather than exiting immediately. The prompt defaults to yes, preserving the previous auto-fix feel. Matches the existing behaviour in `embeddables pull`.
+- **`OptionSelector` placeholder prop** — `OptionSelector` now accepts a first-class `placeholder` prop with full multi-language translation support.
+- **Workbench: Reset User Data toast** — The Workbench now shows a toast confirmation when user data is reset.
+
+### Bug Fixes
+
+- **Workbench: image paste on Windows** — Pasted images are now accepted when the clipboard item's MIME type is empty, which occurs in some Windows browsers and clipboard sources.
+- **`embeddables save`: 500 error response body surfaced** — When the server returns a 500 during `save`, the response body is now parsed and included in the displayed error message.
+- **`embeddables init` / `upgrade`: single Claude rule file** — `embeddables init` and `upgrade` now write `.claude/CLAUDE.md` only; the legacy `.claude/embeddables-cli.md` file is removed on upgrade. Aligns with Claude Code conventions and avoids duplicate context.
+- **Workbench: toast notification fixes** — Toast is now positioned above the Workbench bar (outside the panel), aligned to the right, with improved contrast (solid success/error colors), correct state reset when the Embeddable ID changes, and proper timer cleanup on unmount.
+
+</Update>
+
 <Update label="v0.15.0 — 23 March 2026">
 
 ### Features
