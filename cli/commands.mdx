@@ -445,14 +445,14 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>-i, --id &lt;id&gt;</code>
           </td>
           <td>
-            Embeddable ID (inferred from cwd or interactive prompt if not provided).
+            Embeddable ID. Inferred from the current working directory or automatically when run inside <code>embeddables/&lt;id&gt;/</code>; otherwise prompts to choose from local Embeddables if not provided.
           </td>
         </tr>
         <tr>
           <td>
             <code>-n, --name &lt;name&gt;</code>
           </td>
-          <td>Branch name (required). The success output will include the new branch ID returned by the server.</td>
+          <td>Branch name (required). The origin version and branch are read automatically from <code>config.json</code>. The success output includes the new branch ID returned by the server.</td>
         </tr>
       </tbody>
     </table>
@@ -975,30 +975,6 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>-b, --branch-id &lt;id&gt;</code>
           </td>
           <td>Branch ID to link to the task (required).</td>
-        </tr>
-      </tbody>
-    </table>
-  </Accordion>
-  <Accordion title="embeddables branches create">
-    <table>
-      <thead>
-        <tr>
-          <th>Option</th>
-          <th>Description</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>
-            <code>-i, --id &lt;id&gt;</code>
-          </td>
-          <td>Embeddable ID (prompt from local Embeddables if not provided; inferred automatically if run from inside <code>embeddables/&lt;id&gt;/</code>).</td>
-        </tr>
-        <tr>
-          <td>
-            <code>-n, --name &lt;name&gt;</code>
-          </td>
-          <td>Branch name (required). The origin version and branch are read automatically from <code>config.json</code>.</td>
         </tr>
       </tbody>
     </table>
