@@ -11,6 +11,31 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.0 — 3 April 2026">
+
+### Features
+
+- **`embeddables experiments create`** — New command that creates an experiment for one or more Embeddables. Accepts `-i, --id <id>` (Embeddable ID), `-n, --name <name>` (experiment name), `-k, --experiment-key <key>`, `-p, --project-id <id>`, `--variants <list>` (comma-separated `key:weight` pairs; defaults to `control:50,treatment:50`), `--status <status>` (defaults to `draft`), and `--auto-adjust` (automatically scale variant weights to 100% without an interactive prompt when weights don't sum to 100).
+- **`GEMINI.md` emitted on `init` / `upgrade`** — `embeddables init` and `embeddables upgrade` now also write a `GEMINI.md` file at the project root, following the same short-pointer convention as `AGENTS.md`. Gemini CLI will automatically load the shared `AI-README.md` development guide.
+- **`languages` property support** — The top-level `languages` array is now recognised in Flow types. A new `EmbeddableLanguage` type (`{ key: string; name: string }`) is exported from `.types/`, and `infobox_use_dialog_element` is also added to the Flow type to align with the Builder.
+
+### Bug Fixes
+
+- **Stripe/PayPal payment trigger output props** — `on_payment_complete_outputs`, `on_payment_failed_outputs`, and `on_payment_attempted_outputs` on `StripeCheckout`, `StripeCheckout2`, and `PaypalCheckout` components now render as first-class named JSX props in the reverse compiler instead of falling into the `props={}` catch-all.
+- **`InputBox.max_length` type** — The `max_length` prop on `InputBox` is now typed as `number` (matching the Builder), not `string`.
+- **`embeddables init` spinner** — The "Fetching projects…" spinner is now cleared before the interactive project selection prompt is shown, preventing the spinner text from persisting below the list during the entire selection interaction.
+- **`embeddables pull` fails on missing Embeddable** — `pull` now exits with a clear error when the remote Embeddable is missing (empty-flow fallback response or 404), rather than silently writing a broken local repo.
+
+### Improvements
+
+- **`embeddables diff` shows item names** — Changes to `computedFields` and `actions` (dataOutputs) in diff output now list each affected item by name/key/id (`- removed`, `+ added`, `~ modified`) instead of a generic `[N items] → [M items]` summary.
+
+### Chores
+
+- **AI prompt rules updated** — Internal `.prompts` context updated: `track_clicks` added to `CustomButton` guidance; `languages` property clarification added; payment component trigger-type table now correctly includes legacy `StripeCheckout` alongside `StripeCheckout2` and `PaypalCheckout`.
+
+</Update>
+
 <Update label="v0.15.1-beta.0 — 27 March 2026">
 
 ### Features

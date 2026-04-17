@@ -13,7 +13,7 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `embeddables login`   | Log in to your Embeddables account (global).                                                                                                        |
 | `embeddables logout`  | Clear stored authentication.                                                                                                                        |
-| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `embeddables/`, optional Cursor/Claude/Codex/Antigravity prompts; creates `tsconfig.json` if absent, or patches it to add the required type alias paths if it already exists. |
+| `embeddables init`    | Initialize from inside your project folder: creates `embeddables.json`, `.types/`, `embeddables/`, optional Cursor/Claude/Codex/Gemini/Antigravity prompts; creates `tsconfig.json` if absent, or patches it to add the required type alias paths if it already exists. |
 | `embeddables upgrade` | Update the CLI to the latest stable version.                                                                                                        |
 
 ### Daily workflow
@@ -56,6 +56,13 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | Command                        | Description                                                           |
 | ------------------------------ | --------------------------------------------------------------------- |
 | `embeddables branches create`  | Create a new Embeddable branch from the current local state.          |
+
+### Experiments
+
+| Command                            | Description                                               |
+| ---------------------------------- | --------------------------------------------------------- |
+| `embeddables experiments create`   | Create a new experiment.                                  |
+| `embeddables experiments connect`  | Connect an existing experiment.                           |
 
 ### Build (advanced)
 
@@ -446,6 +453,64 @@ description: "Complete reference for all Embeddables CLI commands and their opti
             <code>-n, --name &lt;name&gt;</code>
           </td>
           <td>Branch name (required). The success output will include the new branch ID returned by the server.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables experiments create">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Embeddable ID (inferred from cwd or interactive prompt if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-n, --name &lt;name&gt;</code>
+          </td>
+          <td>Experiment name (required).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-k, --experiment-key &lt;key&gt;</code>
+          </td>
+          <td>Experiment key (required). Used to reference the experiment in code.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID (skips project selection prompt).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>--variants &lt;list&gt;</code>
+          </td>
+          <td>
+            Comma-separated <code>key:weight</code> pairs (e.g. <code>control:50,treatment:50</code>). Defaults to <code>control:50,treatment:50</code>. Weights must sum to 100; if they don't, the CLI will prompt to auto-adjust (or pass <code>--auto-adjust</code> to skip the prompt).
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--status &lt;status&gt;</code>
+          </td>
+          <td>
+            Initial experiment status. Valid values: <code>draft</code>, <code>active</code>, <code>paused</code>, <code>completed</code>. Defaults to <code>draft</code>.
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <code>--auto-adjust</code>
+          </td>
+          <td>Automatically scale variant weights to 100% without an interactive confirmation prompt. Useful for non-TTY/CI environments.</td>
         </tr>
       </tbody>
     </table>
