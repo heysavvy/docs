@@ -4,6 +4,17 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="23 April 2026">
+### 🔥 Features and Updates
+
+- 🎬 **`triggerAction` on `window.Embeddables`** – `triggerAction` is now available on `window.Embeddables` in addition to `window.Savvy`, so you can fire any named action in your Embeddable directly from the host page using either alias.
+- 💳 **Disable Pay Button Until Page Is Valid** – A new `disable_button_until_page_valid` property on the Stripe Checkout 2 component reactively disables the Pay button whenever required page fields are incomplete, giving users an immediate visual cue rather than waiting until they click Pay.
+
+### 🐞 Bug Fixes
+
+- The Stripe Checkout 2 pay button's `disabled` HTML attribute is now set to `"disabled"` instead of `"true"`, aligning with the HTML spec and ensuring consistent behaviour across all browsers and CSS selectors.
+</Update>
+
 <Update label="16 April 2026">
 ### 🔥 Features and Updates
 
