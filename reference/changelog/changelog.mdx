@@ -13,6 +13,7 @@ icon: "list"
 ### 🐞 Bug Fixes
 
 - The Stripe Checkout 2 pay button's `disabled` HTML attribute is now set to `"disabled"` instead of `"true"`, aligning with the HTML spec and ensuring consistent behaviour across all browsers and CSS selectors.
+- **Session Replay console errors suppressed** – A broken Clickhouse proxy call in the session replay pipeline was producing spurious `console.error` messages in customer sites. The call has been disabled until the endpoint is fixed or removed, eliminating the noise without affecting any session replay functionality.
 </Update>
 
 <Update label="16 April 2026">
