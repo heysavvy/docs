@@ -4,6 +4,18 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="23 April 2026">
+### 🔥 Features and Updates
+
+- 🚫 **Stripe Checkout: Disable Button Until Page Is Valid** – A new **Disable button until page is valid** toggle in the Stripe Checkout 2 options keeps the checkout button disabled until all required fields on the page pass validation. The checkout button in the Designer also gains a `disabled` state so you can style it distinctly when locked.
+- 🧭 **`goToNextPage`, `goToPrevPage`, and `triggerAction` on `window.Embeddables`** – Three methods are now available on the `window.Embeddables` object for use from your host page: navigate forward (`goToNextPage`) or backward (`goToPrevPage`) through the flow, or fire a named action by its ID (`triggerAction`).
+
+### ⚡️ Improvements
+
+- **Faster Builder Page List** – Page thumbnails in the Builder now lazy-load their images, significantly speeding up the virtualized page list for embeddables with many pages.
+- **Faster Submissions Downloads** – Large submission exports now use a chunk size of 10,000 records (reduced from 25,000), resulting in faster and more reliable CSV downloads for projects with high submission volumes.
+</Update>
+
 <Update label="16 April 2026">
 ### 🔥 Features and Updates
 
