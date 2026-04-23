@@ -11,6 +11,24 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.1 — 23 April 2026">
+
+### Features
+
+- **`disable_button_until_page_valid` for `StripeCheckout2`** — `StripeCheckout2` now accepts a `disable_button_until_page_valid` boolean prop. When set to `true`, the payment button stays disabled until all page-level validation passes, preventing premature payment attempts before required fields are complete.
+
+### Bug Fixes
+
+- **Workbench: removed nonexistent `setContentLanguage` call** — The Workbench language switcher was calling `window.Savvy.setContentLanguage()`, which does not exist in the engine. The no-op call has been removed; language switching continues to work correctly via `setUserData` with the language key.
+
+### Chores
+
+- **AI prompt rules: `window.Embeddables.trackCustomEvent`** — Consumer AI context updated to reference `window.Embeddables.trackCustomEvent()` for host-page custom event tracking, replacing the legacy `window.Savvy.trackCustomEvent()` reference.
+- **AI prompt rules: legacy `experiments` array prohibited** — Consumer AI context now explicitly prohibits writing the top-level `experiments` array on a Flow. `connected_experiments` is the only field AI agents may write for experiment connections, preventing experiments from disappearing from the Experiments UI.
+- **Supabase local development stack** — Added Supabase configuration, schema migrations, seed data, generated database types, and a typed Supabase client for internal development. No user-facing changes.
+
+</Update>
+
 <Update label="v0.16.0 — 3 April 2026">
 
 ### Features
