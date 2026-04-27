@@ -368,6 +368,20 @@ These features are not required in order to successfully accept payments, but th
     If the payment fails, for example if the credit card is declined, the error message returned from Stripe will be displayed to the user.
 
   </Accordion>
+  <Accordion title="Disable the checkout button until the page is valid">
+    When **Disable button until page is valid** is enabled, the Stripe checkout button stays disabled until every required field on the page passes validation. As soon as all fields are valid the button becomes clickable.
+
+    This gives users a clear visual signal that they still have required fields to fill in before they can proceed to payment.
+
+    To enable this:
+    1. In the Builder, select the Stripe Checkout component.
+    2. In the right sidebar under **Options**, toggle **Disable button until page is valid** on.
+
+    <Tip>
+      You can style the button's disabled appearance independently in the Designer — select the Stripe checkout button element and switch to the **disabled** state to customise its look when locked.
+    </Tip>
+
+  </Accordion>
   <Accordion title="Choose a layout for the Stripe component">
     This lets you choose a layout for the Stripe component, which affects how different payment method options are displayed to the user.
     The following options are available:
