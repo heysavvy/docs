@@ -302,6 +302,24 @@ These features are not required in order to successfully accept payments, but th
     </Warning>
 
   </Accordion>
+  <Accordion title="Disable the Pay button until the page is valid">
+    When `disable_button_until_page_valid` is set to `true` on a Stripe Checkout 2 component, the Pay button is disabled reactively whenever any required field on the current page is incomplete or invalid. The button re-enables as soon as all required fields are satisfied.
+
+    This is different from `enforce_validation`, which only blocks the payment attempt at the moment the user clicks Pay. With `disable_button_until_page_valid` the button itself is visually disabled throughout, giving users an immediate cue that they still need to fill something in.
+
+    **How to enable it:**
+    1. In the Builder, select the Stripe Checkout 2 component.
+    2. Open the component's JSON editor and add `"disable_button_until_page_valid": true`.
+
+    <Tip>
+      You can style the disabled state however you like using CSS targeting `[disabled]` on the Pay button element. No default disabled style is applied — full control is yours.
+    </Tip>
+
+    <Note>
+      This setting works in conjunction with the existing `enforce_validation` option. If you only want to block the payment attempt (without visually disabling the button beforehand), use `enforce_validation: true` without setting `disable_button_until_page_valid`.
+    </Note>
+
+  </Accordion>
   <Accordion title="Place a hold on the customer's card">
     See the [How To: Place a Hold on a Payment](/how-to/place-a-hold-on-payment) guide for more information on this feature.
 
