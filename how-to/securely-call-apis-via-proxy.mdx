@@ -116,8 +116,42 @@ fetch(
 
 - Replace the following placeholders with your actual values:
   - `My-Secret-Header` --> the header name that you want to use to pass the credential value.
-  - `{{cred_aaaaaaaaaaaaaa}}` --> the credential ID that you created previously. You might alternatively want to use a credential in the URL or body instead of a header. Either way, the proxy will inject the actual credential value for you.
+  - `{{cred_aaaaaaaaaaaaaa}}` --> the credential ID that you created previously. You can use credential placeholders in the URL, headers, or request body (see below). Either way, the proxy will inject the actual credential value for you.
   - `prod` --> the environment you want to call the endpoint in.
-  - `pr_bbbbbbbbbbbbbb` --> the project ID for your project (grab it from the URL in the Embeddables Web App - it's the ID after `/project/`).
+  - `pr_bbbbbbbbbbbbbb` --> the project ID for your project (grab it from the URL in the Embeddables Web App - it’s the ID after `/project/`).
   - `https://api.example.com/api/v1/endpoint` --> the actual endpoint you want to call.
-- Make sure the endpoint and credential are both allowlisted with the project and environment that you're using.
+- Make sure the endpoint and credential are both allowlisted with the project and environment that you’re using.
+
+## Using Credentials in the Request Body
+
+By default the proxy streams the request body through to the destination unchanged (efficient, no buffering). To substitute `{{ credential_id }}` placeholders in the body as well, add the `X-Use-Body-Templating: true` header to your request:
+
+```js
+const options = {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-Environment": "prod",
+    "X-Project-ID": "pr_bbbbbbbbbbbbbb",
+    "X-Use-Body-Templating": "true", // opt in to body templating
+  },
+  body: JSON.stringify({
+    client_secret: "{{cred_aaaaaaaaaaaaaa}}", // placeholder in the body
+    other_field: "some value",
+  }),
+};
+
+fetch(
+  `https://proxy-worker.heysavvy.workers.dev/?url=${encodeURIComponent(
+    "https://api.example.com/api/v1/endpoint"
+  )}`,
+  options
+);
+```
+
+**Important notes:**
+
+- Body templating applies to POST, PUT, PATCH, and DELETE requests — it is ignored on GET and HEAD.
+- The `X-Use-Body-Templating` header is stripped before the request is forwarded to the destination.
+- The body is read as UTF-8 text and the same credential allowlist as URL/header substitution is enforced. Requests referencing a credential not allowlisted for the endpoint will be blocked with a 404.
+- Do **not** enable body templating for binary payloads — use streaming pass-through (the default) for those.

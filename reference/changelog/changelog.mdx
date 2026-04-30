@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="30 April 2026">
+### 🔥 Features and Updates
+
+- 🔐 **Credential Templating in Proxy Request Bodies** – The Secure Proxy now supports substituting `{{ credential_id }}` placeholders in request bodies. Send `X-Use-Body-Templating: true` on any POST, PUT, PATCH, or DELETE request and the proxy will replace credential placeholders in the body before forwarding, using the same allowlisted credentials as URL and header substitution. The header is stripped from the outbound request. Omit the header (or leave it unset) to keep the default streaming pass-through, which avoids buffering and is recommended for large or binary payloads.
+  </Update>
+
 <Update label="23 April 2026">
 ### 🔥 Features and Updates
 
