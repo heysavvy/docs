@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="04 May 2026">
+### 🐞 Bug Fixes
+
+- **QA Scheduler Cron Timing** – The QA scheduler now uses the Cloudflare-provided `scheduledTime` for cron matching instead of reading the current time after async work, preventing scheduled QA tests from being skipped when the handler runs slightly after the scheduled minute.
+- **QA Multiselect OptionSelector** – QA tests driving OptionSelector components now correctly handle multiselect personas: when a persona's `userdata` key is an array of values, each value is clicked in turn so all intended options are selected.
+  </Update>
+
 <Update label="23 April 2026">
 ### 🔥 Features and Updates
 
