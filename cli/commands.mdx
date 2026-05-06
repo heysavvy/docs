@@ -44,6 +44,15 @@ description: "Complete reference for all Embeddables CLI commands and their opti
 | `embeddables tasks comment`          | Add a comment to a task.                          |
 | `embeddables tasks add-branch`       | Link an Embeddables branch to a task.             |
 
+### Document templates
+
+| Command                              | Description                                                                                  |
+| ------------------------------------ | -------------------------------------------------------------------------------------------- |
+| `embeddables doc-templates list`     | Print a table of the project's document templates (briefings/reports).                       |
+| `embeddables doc-templates pull`     | Pull a document template and write `template.mdx` and `description.txt` to `doc_templates/<id>/`. |
+| `embeddables doc-templates create`   | Interactively create a new document template (prompts for title, status, optional `cron_utc`). |
+| `embeddables doc-templates save`     | Save local `doc_templates/<id>/template.mdx` and `description.txt` back to the server.       |
+
 ### Assets
 
 | Command                      | Description                                                              |
@@ -1050,6 +1059,98 @@ description: "Complete reference for all Embeddables CLI commands and their opti
         </tr>
       </tbody>
     </table>
+  </Accordion>
+  <Accordion title="embeddables doc-templates list">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID. Defaults to the project configured in <code>embeddables.json</code>; prompts interactively if not set.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables doc-templates pull">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Template ID (prompts to choose from the project's templates if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID. Defaults to the project configured in <code>embeddables.json</code>; prompts interactively if not set.</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-o, --out &lt;dir&gt;</code>
+          </td>
+          <td>Output directory (default: <code>doc_templates/</code>). The template is written to <code>&lt;out&gt;/&lt;id&gt;/</code>.</td>
+        </tr>
+      </tbody>
+    </table>
+  </Accordion>
+  <Accordion title="embeddables doc-templates create">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID. Defaults to the project configured in <code>embeddables.json</code>; prompts interactively if not set.</td>
+        </tr>
+      </tbody>
+    </table>
+    The command interactively prompts for **Title** (required), **Status** (`draft` by default), and an optional **Cron UTC** schedule, then writes starter `template.mdx` and `description.txt` files to <code>doc_templates/&lt;id&gt;/</code>.
+  </Accordion>
+  <Accordion title="embeddables doc-templates save">
+    <table>
+      <thead>
+        <tr>
+          <th>Option</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <code>-i, --id &lt;id&gt;</code>
+          </td>
+          <td>Template ID (prompts to choose from the project's templates if not provided).</td>
+        </tr>
+        <tr>
+          <td>
+            <code>-p, --project-id &lt;id&gt;</code>
+          </td>
+          <td>Project ID. Defaults to the project configured in <code>embeddables.json</code>; prompts interactively if not set.</td>
+        </tr>
+      </tbody>
+    </table>
+    Reads <code>doc_templates/&lt;id&gt;/template.mdx</code> and <code>doc_templates/&lt;id&gt;/description.txt</code> and uploads both. Run <code>embeddables doc-templates pull</code> first if the local files don't exist.
   </Accordion>
 </AccordionGroup>
 
