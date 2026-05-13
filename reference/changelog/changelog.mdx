@@ -4,6 +4,24 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="13 May 2026">
+### 🔥 Features and Updates
+
+- 📄 **Briefings (Beta)** – A new **Docs** area has launched in the web app, with **Templates** and **Briefings** tabs in the sidebar. Create reusable templates from MDX content, optionally schedule them daily or weekly, and Embeddables will automatically generate briefing documents from those templates. Briefings can be previewed live, refreshed in real time as templates change, and exported as PDF. The "+ Create new" menu also includes a **New Doc Template** option. Available for projects with the `include_briefings` setting enabled.
+- 🧩 **MDX Component Library for Briefings** – Briefing templates can be composed using a rich set of supported components — `Table` (with typed column config, header/cell tooltips, percentage formatting, and PDF-safe rendering), `BarGraph`, `DonutGraph`, `LineBarGraph`, `BadgePercentage`, `Tabs`, `Tooltip`, `Callout`, `LinkButton`, `Overline`, and `RepeatableBlock` — so briefings can mix charts, tables, callouts, and styled text. Markdown links render as Next.js `Link` components (and are omitted from PDFs).
+- 👀 **Template Mock Preview** – A new **Mock Preview** button on the template detail page renders the template against sample data so authors can iterate on layout and components without waiting for the next scheduled run.
+
+### ⚡️ Improvements
+
+- **Graceful MDX Fallback** – Unknown MDX components in briefing templates now degrade gracefully with an in-page warning callout (and still render the inner text) instead of crashing the renderer. Invalid HTML-style `style="..."` attributes are also stripped automatically with a warning so the author can fix them.
+- **Smoother Docs Navigation** – The Briefings, Context, and Templates list routes now show dedicated loading states, eliminating the brief freeze when switching tabs. Briefing, template, and context detail pages also have proper page-level scrolling on long content.
+
+### 🐞 Bug Fixes
+
+- **Experiment Results Contact Matching** – The experiment results query now includes `contact_id` in its joins and groups by both `entry_id` and `contact_id`, fixing inconsistent or duplicated rows that could appear when the same contact had multiple entries.
+- **Briefing PDF Layout** – Long briefing titles no longer overflow the page width in the exported PDF, and content layout has been tightened up for better readability.
+  </Update>
+
 <Update label="23 April 2026">
 ### 🔥 Features and Updates
 
