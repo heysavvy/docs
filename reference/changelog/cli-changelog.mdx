@@ -11,6 +11,24 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.3 — 18 May 2026">
+
+### Features
+
+- **`embeddables doc-templates update-status`** — New command that changes a doc template's status (`draft`, `active`, `archived`) and optionally updates or clears its run schedule. Accepts `-p, --project-id <id>`, `-i, --id <id>`, and `-s, --status <status>`; prompts interactively for any value not provided. When changing to `active`, the schedule wizard (daily/weekly + hour) runs to set the cron; switching to `draft` lets you clear the schedule.
+- **`embeddables doc-templates create`: interactive run schedule** — `create` now drives schedule setup through a friendly wizard (daily/weekly, hour 1–24) with timezone-aware hour entry derived from the project's region (falls back to UTC labels when the region is unknown). Status options on `create` are restricted to `draft` and `active`; `archived` must be set via `doc-templates update-status`.
+
+### Improvements
+
+- **`embeddables doc-templates create` / `save` now use the doc-templates web API** — Both commands now `POST` to the web app's document templates endpoints rather than writing to Supabase directly, aligning CLI doc-template operations with the same write path used by the web UI.
+
+### Chores
+
+- **AI prompt rules: `uppercase_heading` in doc templates** — Internal doc-templates AI prompt context now documents the `uppercase_heading` prop so AI-assisted template authoring picks it up.
+- **PR template: Decisions section** — The repo's pull request template now leads with a `Decisions` section capturing approach, tradeoffs, and alternatives so reviewers see key decisions at the top of the PR. Contributor-facing only.
+
+</Update>
+
 <Update label="v0.16.1 — 23 April 2026">
 
 ### Features
