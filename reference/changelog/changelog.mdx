@@ -4,6 +4,17 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="19 May 2026">
+### ⚡️ Improvements
+
+- **Page Traffic Analytics Endpoint** – A new internal `/api/analytics/page-traffic` endpoint returns unique-contact traffic per page for an embeddable, with optional response-based breakdowns, `responses:*` filters, and page-key whitelisting. Powers downstream sub-agents and automation jobs that need page-level traffic without the funnel route's drop-off post-processing.
+
+### 🐞 Bug Fixes
+
+- Copy/pasting nested global components in the Builder no longer flattens their hierarchy — child components inside copied containers now keep their parent/child structure instead of becoming siblings.
+- Merge replay during concurrent Builder edits now anchors new and moved components only to same-bucket peers (same parent, same `_location` slot, or same root group), preventing accidental hierarchy or slot corruption when other people are editing the same embeddable.
+  </Update>
+
 <Update label="23 April 2026">
 ### 🔥 Features and Updates
 
