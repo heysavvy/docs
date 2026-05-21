@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="21 May 2026">
+### ⚡️ Improvements
+
+- 🌍 **Project Region API for Internal Services** – A new `POST /api/projects/region` endpoint lets trusted server-side services (such as Trigger.dev jobs and sub-agents) look up a project's configured timezone region and its offset in minutes without needing a user session. Authenticated via the `x-api-key` header against the shared internal API key, it returns `{ region, offsetInMinutes }` — falling back to `America/Los_Angeles` when no region is set — so background jobs can perform date/time work in the project's timezone.
+  </Update>
+
 <Update label="23 April 2026">
 ### 🔥 Features and Updates
 
