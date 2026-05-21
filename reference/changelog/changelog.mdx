@@ -4,6 +4,28 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="21 May 2026">
+### 🔥 Features and Updates
+
+- 📄 **Briefings Redesign** – Templates and briefings are now combined into a single **Briefings** view. The list groups by template, showing a "Last Generated" timestamp and snapshot count per row, with a new **+ Create new briefing** button in the page header.
+- 🕒 **Snapshot History Drawer** – Each briefing detail page has a new **Snapshots** button that opens a slide-in drawer with the full snapshot timeline for that template, grouped by month, with a "Latest" badge and one-click navigation between snapshots.
+- 🔁 **Regenerate Button** – Trigger a fresh run of a briefing template directly from the briefing detail header without leaving the page.
+- 📅 **Schedule Popover** – A new **Schedule** button on the briefing detail header opens a popover for editing the auto-regenerate cadence (days of the week + times of day) in the project's timezone.
+- ⚠️ **Older Snapshot Banner** – When viewing a snapshot that is not the most recent for its template, a banner now appears with a **Go to latest** link so you can jump to the current version.
+- ⚙️ **Template Management Dropdown** – A three-dots menu on the briefing detail header consolidates **Edit template**, **View template**, **Mock preview**, and **Delete** actions in one place.
+
+### ⚡️ Improvements
+
+- **Whole-Row Clicks in Briefings List** – Entire rows in the briefings table are now clickable (not just the title), making it easier to open a briefing. Cmd/Ctrl+click still opens in a new tab.
+- **Faster Briefing Navigation** – Sibling briefings for a template and the template record itself are now fetched in parallel when opening a briefing, and a route-level skeleton shows the correct loading state during client navigations.
+- **Templates Route Redirects** – `/docs/templates` now redirects to the unified `/docs/briefings` view.
+
+### 🐞 Bug Fixes
+
+- JSX comments (<span className="font-mono">{"{/* … */}"}</span>) inside array prop values in MDX templates no longer crash the template renderer with `a.map is not a function`. The renderer auto-cleans them and shows a warning callout pointing to the offending `data={[…]}` prop.
+- `style="…"` attributes inside template-literal HTML strings (e.g. valid HTML markup in `<Table>` cells) are no longer incorrectly stripped by the JSX style-attribute sanitizer.
+</Update>
+
 <Update label="23 April 2026">
 ### 🔥 Features and Updates
 
