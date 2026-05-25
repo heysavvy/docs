@@ -4,6 +4,31 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="19 May 2026">
+### ⚡️ Improvements
+
+- 🔐 **Internal Credential Lookup RPC** – The Custom Credentials worker now exposes a `getInternalCredential` RPC so other Embeddables Workers can fetch internal credentials by project, key type, and environment. Live credentials are matched and the most recently created one is returned; when no live credential matches the call returns `null`, letting callers cleanly distinguish "not configured" from hard errors.
+</Update>
+
+<Update label="18 May 2026">
+### ⚡️ Improvements
+
+- ♿ **Accessibility: Focus Moves to Top on Page Change** – When a flow advances to a new page and scrolls to the top, focus is now programmatically moved to the form at the top of the page so screen readers and keyboard users land in the right place. Focus only moves when the embed itself scrolls (not when the document scrolls), and the programmatic focus ring is suppressed so sighted users don't see an unexpected outline on every page change.
+</Update>
+
+<Update label="04 May 2026">
+### 🐞 Bug Fixes
+
+- **QA Scheduler Cron Timing** – The QA scheduler now uses the Cloudflare-provided `scheduledTime` for cron matching instead of reading the current time after async work, preventing scheduled QA tests from being skipped when the handler runs slightly after the scheduled minute.
+- **QA Multiselect OptionSelector** – QA tests driving OptionSelector components now correctly handle multiselect personas: when a persona's `userdata` key is an array of values, each value is clicked in turn so all intended options are selected.
+  </Update>
+
+<Update label="30 April 2026">
+### 🔥 Features and Updates
+
+- 🔐 **Credential Templating in Proxy Request Bodies** – The Secure Proxy now supports substituting `{{ credential_id }}` placeholders in request bodies. Send `X-Use-Body-Templating: true` on any POST, PUT, PATCH, or DELETE request and the proxy will replace credential placeholders in the body before forwarding, using the same allowlisted credentials as URL and header substitution. The header is stripped from the outbound request. Omit the header (or leave it unset) to keep the default streaming pass-through, which avoids buffering and is recommended for large or binary payloads.
+  </Update>
+
 <Update label="23 April 2026">
 ### 🔥 Features and Updates
 
