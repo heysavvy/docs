@@ -11,6 +11,14 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.6 — 19 May 2026">
+
+### Bug Fixes
+
+- **Global component insert positions in JSON diff → edit history** — Fixed `src/helpers/json.ts` so that insert anchors for components added in a diff are scoped by their `_location` (global slot vs. page-level bucket). Sibling ordering now uses only true ordering peers (same parent or same `_location`), the `isGlobalComponents` flag is passed for root globals, and `insertedComponentId` is excluded from anchor resolution so a component can never anchor against itself. Move-command logic was also tightened to preserve component hierarchy across global slots.
+
+</Update>
+
 <Update label="v0.16.3 — 18 May 2026">
 
 ### Chores
