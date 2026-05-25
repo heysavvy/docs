@@ -11,6 +11,18 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.4 — 18 May 2026">
+
+### Improvements
+
+- **`doc-templates` commands point to production** — `embeddables doc-templates create`, `save`, and `update-status` now call the production web app at `WEB_APP_BASE_URL` instead of the temporary staging-briefings Vercel preview. The deprecated `DOC_TEMPLATES_WEB_APP_BASE_URL` override has been removed.
+
+### Chores
+
+- **Briefings AI prompt: `uppercase-heading` CSS class** — The doc-templates AI prompt context (`.prompts/doc-templates-AI-README.md`) now references the `uppercase-heading` class (hyphen) instead of the legacy `uppercase_heading` (underscore) for column-style section labels in Briefings templates.
+
+</Update>
+
 <Update label="v0.16.3 — 18 May 2026">
 
 ### Chores
