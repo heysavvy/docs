@@ -11,6 +11,17 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.5 — 19 May 2026">
+
+### Chores
+
+- **AI prompt rules: Briefings design system tokens** — Consumer AI context for Briefings doc templates expanded with new CSS utility classes: `uppercase-heading-bold`, `mono-base`, `subheading`, `subheading-2`, `headline-stat`, `card` (plus `card--lg` and `card--breakdown` variants), and `status-dot` / `status-dot-pulse` indicators. Lets AI agents author Briefings templates with the full design-system vocabulary instead of falling back to inline styles.
+- **AI prompt rules: `Table` `size` prop** — Doc-template AI context now documents the new `size?: 'regular' | 'small'` prop on `<Table>`. Use `"small"` for dense layouts or tables nested inside cards; defaults to `"regular"`.
+- **AI prompt rules: SVG donut seam warning** — Doc-template AI context now warns against building donut charts from stacked `<circle stroke-dasharray>` elements (they produce seam artifacts at slice boundaries). AI agents are directed to use `<DonutGraph>` or, if custom SVG is required, draw each slice as a filled `<path>` annulus wedge.
+- **AI prompt rules: `uppercase-heading` class name** — Doc-template AI context renamed the `uppercase_heading` CSS class to `uppercase-heading` (hyphenated) to match the actual Briefings stylesheet, preventing AI-generated templates from emitting an unrecognised class name.
+
+</Update>
+
 <Update label="v0.16.3 — 18 May 2026">
 
 ### Chores
