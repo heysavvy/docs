@@ -8,23 +8,51 @@ This guide explains how to implement user session recovery when users access you
 ## Overview
 
 To securely allow users to resume their session on a different device, you'll need to:
-1. Generate a **Hashed Token**, which is generated from the user's Entry ID, an expiration timestamp, and a Secret Key.
-2. Send users a secure URL that contains this Hashed Token, as well as the user's Entry ID and the expiration timestamp.
-3. When a user opens the URL, use the Hashed Token and other parameters to securely call the Embeddables API from the client, which will return the User Data.
-4. Use this retrieved User Data to restore the user's session.
 
+1. Create a **Token Signing Secret** for your project in the Embeddables dashboard.
+2. Use that secret to generate a **Hashed Token** from the user's Entry ID and an expiration timestamp.
+3. Send users a secure URL containing the Hashed Token, Entry ID, and expiration timestamp.
+4. When a user opens the URL, use the Hashed Token and other parameters to call the Embeddables API from the client, which will return the User Data.
+5. Use the retrieved User Data to restore the user's session.
 
-## Generating the Hashed Tokens and secure URLs
+## Setting up your Token Signing Secret
 
-To generate a Hashed Token and secure URL, you'll need a **Secret Key** - **contact Embeddables Support to get this Secret Key**.
+<Steps>
+<Step title="Open Settings">
+  In the Embeddables web app, go to **Settings → Credentials & Endpoints**.
+</Step>
 
-Here's how to generate the Hashed Token and secure URL:
+<Step title="Create a new credential">
+  Click **+ New Internal Credential**.
+
+  - Set **Key type** to **Token Signing Secret**.
+  - Choose the production **Environment**.
+  - Add a descriptive **Label** (e.g. `Token Signing Secret`).
+</Step>
+
+<Step title="Store the secret securely">
+  Copy the generated value and store it as a backend environment variable (e.g. `EMBEDDABLES_LOAD_ENTRY_SECRET_KEY`).
+
+  <Warning>
+    The secret is only shown once at creation time. If you lose it, you'll need to create a new one — the old key will stop working immediately. Store it somewhere safe before leaving the page.
+  </Warning>
+
+  <Warning>
+    Never expose this secret in client-side code or commit it to version control.
+  </Warning>
+</Step>
+</Steps>
+
+## Generating the Hashed Token and secure URL
+
+Use the secret from the previous step to generate a signed token on your backend:
 
 ```javascript
 // Required parameters
 const secretKey = process.env.EMBEDDABLES_LOAD_ENTRY_SECRET_KEY
-const entryId = "entry_aaabbbcccdddeeefff"  // The ID of the user's entry
-const expiresAt = "2025-01-01T00:00:00.000Z"  // ISO format timestamp
+const projectId = "proj_aaabbbccc"             // Your Project ID
+const entryId = "entry_aaabbbcccdddeeefff"     // The ID of the user's entry
+const expiresAt = "2025-01-01T00:00:00.000Z"   // ISO format timestamp
 
 // Generate the hash
 const stringToHash = `${secretKey}---${entryId}---${expiresAt}`
@@ -34,16 +62,21 @@ const token = sha256(stringToHash, 'utf8', 'hex')
 const url = `https://yourwebsite.com/flow?token=${token}&entry_id=${entryId}&expires_at=${expiresAt}`
 ```
 
-## Client-Side Implementation
+<Tip>
+  Each URL should have a reasonable expiration window, such as 7 or 30 days.
+</Tip>
 
-Once the user clicks the generated URL, create a Action, triggered on Embeddable Load, with the following code to fetch and restore their session:
+## Client-side implementation
+
+Create an Action in your Embeddable, triggered on **Embeddable Load**, with the following code to fetch and restore the user's session:
 
 ```javascript
 // @TODO: Replace these with your own values
-const EMBEDDABLE_ID = '<EMBEDDABLE_ID>' // Your Embeddable ID
-const TOKEN_URL_PARAM_KEY = 'token' // The URL parameter key for the Hashed Token
-const ENTRY_ID_URL_PARAM_KEY = 'entry_id' // The URL parameter key for the user's Entry ID
-const EXPIRY_URL_PARAM_KEY = 'expires_at' // The URL parameter key for the expiration timestamp
+const EMBEDDABLE_ID = '<EMBEDDABLE_ID>'  // Your Embeddable ID
+const PROJECT_ID = '<PROJECT_ID>'        // Your Project ID
+const TOKEN_URL_PARAM_KEY = 'token'
+const ENTRY_ID_URL_PARAM_KEY = 'entry_id'
+const EXPIRY_URL_PARAM_KEY = 'expires_at'
 
 // All Actions must contain a function called output()
 function output(userData, helperFunctions, triggerContext) {
@@ -54,19 +87,20 @@ function output(userData, helperFunctions, triggerContext) {
   const expiresAt = urlParams.get(EXPIRY_URL_PARAM_KEY)
 
   // If we don't have all of token + entry ID + expiry date,
-  // then stop here (this is a new user or the provided data is incomplete)
+  // stop here (this is a new user or the provided data is incomplete)
   if (!token || !entryId || !expiresAt) return
 
   // Fetch the User Data from the Embeddables API
   console.log('Retrieving User Data', { token })
   fetch(
-    "https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/load_entry_data",
+    "https://load-entry-data-worker.heysavvy.workers.dev",
     {
       body: JSON.stringify({
         flow_id: EMBEDDABLE_ID,
+        project_id: PROJECT_ID,
         entry_id: entryId,
         token,
-        expires: expiresAt,
+        expires_at: expiresAt,
       }),
       headers: {
         "Content-Type": "application/json",
@@ -84,25 +118,68 @@ function output(userData, helperFunctions, triggerContext) {
       window.Savvy.goToPage(EMBEDDABLE_ID, data.entry.current_page_key)
     }
   }).catch((err) => {
-    console.error('Error Retrieving User Data:', { error })
+    console.error('Error Retrieving User Data:', { err })
   })
 }
 ```
 
 ## Important Notes
 
-1. The secret key should always be stored as an encrypted backend environment variable and never exposed in client-side code.
-2. Each URL should have a reasonable expiration time, e.g. 7 days or 30 days.
+1. Your Token Signing Secret should always be stored as an encrypted backend environment variable and never exposed in client-side code.
+2. Each URL should have a reasonable expiration window, e.g. 7 days or 30 days.
 3. The Hashed Token is unique per user and expiration date.
 
 ## Troubleshooting
 
 If you're experiencing issues:
-1. Verify that the secret key is correctly set in your environment variables
-2. Ensure the expiration timestamp is in the correct ISO format
-3. Check that all URL parameters (token, entry_id, expires_at) are properly encoded
-4. Confirm that the necessary permissions are enabled for your application
 
+1. Verify that the secret key is correctly set in your environment variables.
+2. Ensure the expiration timestamp is in ISO 8601 format (e.g. `2025-01-01T00:00:00.000Z`).
+3. Check that all URL parameters (`token`, `entry_id`, `expires_at`) are properly URL-encoded.
+4. Confirm the `project_id` in the POST body matches the project your Token Signing Secret belongs to.
+5. Make sure you're using a **Token Signing Secret** created under **Settings → Credentials & Endpoints** — legacy per-flow keys are no longer provisioned and the legacy endpoint does not accept these credentials.
 
+---
 
+<AccordionGroup>
+<Accordion title="Legacy endpoint (deprecated)">
 
+<Warning>
+  **New Token Signing Secrets are no longer provisioned via the legacy system as of May 26, 2026.** Existing legacy keys continue to work on the legacy endpoint, but migration to the new endpoint is strongly recommended.
+</Warning>
+
+If you set up this feature before May 26, 2026, your integration may be using the legacy Supabase endpoint. It remains functional for existing keys but will not accept credentials created through the Embeddables dashboard.
+
+**Legacy endpoint:** `https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/load_entry_data`
+
+**Differences from the current endpoint:**
+
+| | Legacy | Current |
+|---|---|---|
+| Endpoint | Supabase edge function | Cloudflare Worker |
+| `expires_at` field name | `expires` | `expires_at` |
+| `project_id` in body | Not required | Required |
+| Key provisioning | Contact Embeddables support | Self-service via Settings |
+
+**Legacy client code (for reference only):**
+
+```javascript
+fetch(
+  "https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/load_entry_data",
+  {
+    body: JSON.stringify({
+      flow_id: EMBEDDABLE_ID,
+      entry_id: entryId,
+      token,
+      expires: expiresAt,  // Note: "expires", not "expires_at"
+    }),
+    headers: { "Content-Type": "application/json" },
+    method: "POST",
+  }
+)
+```
+
+To migrate, follow the [Setting up your Token Signing Secret](#setting-up-your-token-signing-secret) section above and update your client code to use the new endpoint and POST body.
+
+</Accordion>
+</AccordionGroup>
