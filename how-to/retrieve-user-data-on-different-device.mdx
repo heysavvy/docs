@@ -148,7 +148,7 @@ If you're experiencing issues:
   **New Token Signing Secrets are no longer provisioned via the legacy system as of May 26, 2026.** Existing legacy keys continue to work on the legacy endpoint, but migration to the new endpoint is strongly recommended.
 </Warning>
 
-If you set up this feature before May 26, 2026, your integration may be using the legacy Supabase endpoint. It remains functional for existing keys but will not accept credentials created through the Embeddables dashboard.
+If you set up this feature before May 26, 2026, your integration may be using the legacy endpoint. It remains functional for existing keys but will not accept credentials created through the Embeddables dashboard.
 
 **Legacy endpoint:** `https://ierxexdtyashuotcsjyo.supabase.co/functions/v1/load_entry_data`
 
@@ -156,7 +156,7 @@ If you set up this feature before May 26, 2026, your integration may be using th
 
 | | Legacy | Current |
 |---|---|---|
-| Endpoint | Supabase edge function | Cloudflare Worker |
+| Endpoint | Legacy endpoint (above) | `https://load-entry-data-worker.heysavvy.workers.dev` |
 | `expires_at` field name | `expires` | `expires_at` |
 | `project_id` in body | Not required | Required |
 | Key provisioning | Contact Embeddables support | Self-service via Settings |
