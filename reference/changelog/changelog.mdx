@@ -29,6 +29,16 @@ icon: "list"
 - 🔐 **Credential Templating in Proxy Request Bodies** – The Secure Proxy now supports substituting `{{ credential_id }}` placeholders in request bodies. Send `X-Use-Body-Templating: true` on any POST, PUT, PATCH, or DELETE request and the proxy will replace credential placeholders in the body before forwarding, using the same allowlisted credentials as URL and header substitution. The header is stripped from the outbound request. Omit the header (or leave it unset) to keep the default streaming pass-through, which avoids buffering and is recommended for large or binary payloads.
 </Update>
 
+<Update label="04 May 2026">
+### 🔥 Features and Updates
+
+- 📊 **Payload Metric Key for Experiments** – Experiments can now track a custom payload metric in addition to conversions. In the Edit Experiment modal, a new **Event metric key** dropdown appears once you have selected impact metrics whose conversions have payload metric keys configured. Select one key to enable per-variant metric aggregation in experiment results.
+
+### 🐞 Bug Fixes
+
+- **Team Invite Modal Auto-Close on Pending Invite** – Re-inviting a user who already has a pending invitation now automatically dismisses the invite modal after the error toast appears, instead of leaving the dialog open in an ambiguous state.
+</Update>
+
 <Update label="23 April 2026">
 ### 🔥 Features and Updates
 
