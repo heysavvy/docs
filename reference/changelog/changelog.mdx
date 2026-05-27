@@ -37,6 +37,10 @@ icon: "list"
 ### ⚡️ Improvements
 
 - ♿ **Accessibility: Focus Moves to Top on Page Change** – When a flow advances to a new page and scrolls to the top, focus is now programmatically moved to the form at the top of the page so screen readers and keyboard users land in the right place. Focus only moves when the embed itself scrolls (not when the document scrolls), and the programmatic focus ring is suppressed so sighted users don't see an unexpected outline on every page change.
+
+### 🐞 Bug Fixes
+
+- The QA tests table no longer shows a stale failed run as the **Latest Result** after a successful re-run — embedded QA runs are now ordered and limited at the database level so the most recent run is always picked.
 </Update>
 
 <Update label="13 May 2026">
