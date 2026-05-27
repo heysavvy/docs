@@ -21,6 +21,7 @@ icon: "list"
 - **New `size` Prop on `<Table>`** – The MDX `<Table>` component now accepts an optional `size` prop (`"regular"` or `"small"`). Choose `"small"` for tighter cell padding and a more compact header in dense data tables; `"regular"` remains the default.
 - **Reusable Briefings Design Tokens** – New utility classes (`uppercase-heading`, `uppercase-heading-bold`, `mono-base`, `card`, `card--lg`, `card--breakdown`, `status-dot`, `status-dot-pulse`) are available inside the `briefings-design` MDX context for consistent styling across Briefings documents.
 - **Dynamic MDX Class Safelist** – Tailwind now safelists common spacing, gap, font, and box utilities used in dynamic Briefings MDX content, preventing classes from being tree-shaken when they only appear in CMS-authored documents.
+- **Page Traffic Analytics Endpoint** – A new internal `/api/analytics/page-traffic` endpoint returns unique-contact traffic per page for an embeddable, with optional response-based breakdowns, `responses:*` filters, and page-key whitelisting. Powers downstream sub-agents and automation jobs that need page-level traffic without the funnel route's drop-off post-processing.
 </Update>
 
 <Update label="18 May 2026">
