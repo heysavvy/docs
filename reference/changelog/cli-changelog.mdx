@@ -11,6 +11,20 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.7 — 27 May 2026">
+
+### Features
+
+- **Workbench: page thumbnail strip** — A new toggleable thumbnail row below the Workbench shows a preview of every page in the Embeddable, with the current page highlighted and auto-centered. Click a thumbnail to jump via `Savvy.goToPage`; drag the divider to resize the strip. Thumbnails use the Engine's static HTML when available and derive their viewport from the Flow's breakpoints, and pages hidden or gated by unmet conditions or experiments are dimmed in both the page navigator dropdown and the thumbnail row. Strip visibility and height persist in `WorkbenchPrefs` (localStorage), the list is virtualized with `@tanstack/react-virtual`, and the strip is hidden by default.
+- **Workbench: action-debug toast toggle** — A new bolt button in the Workbench toggles action-debug toasts on/off and syncs the `savvy_debug` URL param (preserving `history.state` and removing the param on toggle-off so a reload reflects the new state). Includes `aria-label`/`aria-pressed` for accessibility.
+
+### Chores
+
+- **AI prompt rules: Actions and multilingual guidance** — Consumer AI context now documents the full `output()` second-arg helper API (`setUserData`, `goToPage`, `goToNextPage`, `trackCustomEvent`) with destructuring examples, clarifies that computed fields typically only use `trackCustomEvent`, and adds Flow-level `languages` config plus end-user runtime language behavior (browser-locale scope in published runtime, exact vs regional key matching, opt-in `outputs_onloadflow` defaults). The global language picker is reframed as a stakeholder-driven, design-agnostic pattern (any UI that sets `embeddable_language`; `OptionSelector` shown as one common example).
+- **doc-templates AI README: Markdown and JSX typography** — Internal doc-templates AI context clarifies Markdown vs JSX usage in typography: documents automatic class application for standard HTML headings/paragraphs and the explicit JSX requirements for custom styling, with an improved table layout.
+
+</Update>
+
 <Update label="v0.16.6 — 19 May 2026">
 
 ### Bug Fixes
