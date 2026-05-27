@@ -11,6 +11,34 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.6 — 19 May 2026">
+
+### Bug Fixes
+
+- **Global component insert positions in JSON diff → edit history** — Fixed `src/helpers/json.ts` so that insert anchors for components added in a diff are scoped by their `_location` (global slot vs. page-level bucket). Sibling ordering now uses only true ordering peers (same parent or same `_location`), the `isGlobalComponents` flag is passed for root globals, and `insertedComponentId` is excluded from anchor resolution so a component can never anchor against itself. Move-command logic was also tightened to preserve component hierarchy across global slots.
+
+</Update>
+
+<Update label="v0.16.3 — 18 May 2026">
+
+### Chores
+
+- **PR template: Decisions section** — The repo's pull request template now leads with a `Decisions` section capturing approach, tradeoffs, and alternatives so reviewers see key decisions at the top of the PR. Contributor-facing only.
+
+</Update>
+
+<Update label="v0.16.2 — 6 May 2026">
+
+### Improvements
+
+- **Per-operation edit history on save and publish** — `embeddables save` and `embeddables dangerously-publish` now emit per-change `editHistoryDescriptions` matching the Builder's format (e.g. `Set component login_btn [id: comp_123] property text to "Continue"`, `Add component cta_button in page welcome`, `Move page checkout`, `Remove tag draft from Page welcome`). Previously each save/publish recorded a single generic `Saved version from CLI` entry. Descriptions are capped at 100 entries with an overflow marker, mirroring the Builder. The `trigger.editor` field on save/publish now records the actual user ID instead of the literal string `"CLI"`.
+
+### Chores
+
+- **AI-README: PR title workflow for Linear issues** — Internal contributor guide updated with the PR title format used for Linear-tracked work.
+
+</Update>
+
 <Update label="v0.16.1 — 23 April 2026">
 
 ### Features
