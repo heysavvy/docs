@@ -11,6 +11,21 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.8 — 2 June 2026">
+
+### Bug Fixes
+
+- **Sortable `html` table columns in doc templates** — Fixed the sorting bug that broke the Briefings renderer when `sortingFn` was used. The `<Table>` component now supports sortable `html` columns via a `sortable: true` column flag and `{ html, sortValue }` cells (a new `HtmlCellValue` type), and the temporary "do not use `sortingFn`" restriction has been removed from the doc-templates AI README, with examples for sorting HTML content.
+
+### Chores
+
+- **doc-templates AI README: `enableCopyCSV` table prop** — Documented the `<Table>` `enableCopyCSV` prop, which renders an "Export → Copy as CSV" control that copies the table data (including headers, with HTML cell content stripped to plain text) to the clipboard. The prop now defaults to `true`, so template authors should only pass `enableCopyCSV={false}` to hide the export button on decorative or purely visual tables.
+- **doc-templates AI README: Tailwind styling guidance** — Added guidance on using Tailwind utility classes in Briefings templates: the preferred `className` approach, the exceptions where inline `style` is appropriate, the set of always-available utilities, and the safelist of classes that are safe to use in dynamic MDX.
+- **doc-templates prompt: forbid extra file creation** — Added an explicit rule that AI agents must not create any files beyond `template.mdx` and `description.txt` inside a template folder, and tightened the template-editing guidance to reinforce it.
+- **CI: documentation publish token** — The `update-docs-on-publish` GitHub Actions workflow now uses a dedicated documentation token for publishing.
+
+</Update>
+
 <Update label="v0.16.7 — 27 May 2026">
 
 ### Features
