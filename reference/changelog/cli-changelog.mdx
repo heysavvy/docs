@@ -11,6 +11,18 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.9 — 3 June 2026">
+
+### Bug Fixes
+
+- **`embeddables dev`: connected experiments now resolve in local preview** — The dev proxy now forwards `projectId` to the Engine's `/init` request (in the `forcedJson` body), so connected experiments are resolved and `split_*` variant keys are assigned when previewing locally with `embeddables dev`. Previously `projectId` was omitted, so experiment variants and their split keys did not apply in the CLI preview.
+
+### Chores
+
+- **PR template: simplified** — The repo's pull request template was streamlined: the Description and Changes sections were merged into a single Summary, the Workbench preview and Examples/Files subsections were removed, the Tests and "How to test" guidance was simplified, and the checklist was updated for unit/E2E tests and UI screen recordings. Contributor-facing only.
+
+</Update>
+
 <Update label="v0.16.7 — 27 May 2026">
 
 ### Features
