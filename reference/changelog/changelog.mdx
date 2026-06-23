@@ -7,6 +7,16 @@ icon: "list"
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
+- 💳 **Opt Out of Reusing Existing Stripe Customers** – Stripe Checkout components now support a `disable_reuse_existing_stripe_customer_by_email` option. When set to `true`, Embeddables skips looking up an existing Stripe customer by email before creating the Checkout Session, so returning users no longer have a previously-created customer attached to setup-mode sessions — even when **Create a Customer in Stripe** is set to **If Required**. Default behavior is unchanged: the newest matching customer is still reused when an email is available.
+
+### 🐞 Bug Fixes
+
+- 📜 **Scroll to Top on iOS Safari** – Fixed the scroll-to-top on page change being cancelled on iOS Safari. The engine now defers the scroll until after the page's HTML has been swapped (listening for the `embeddables:page_change_html_updated` event, with a 400ms fallback) and clears any stacked scroll listeners, so navigating between pages reliably scrolls to the top.
+</Update>
+
+<Update label="23 June 2026">
+### 🔥 Features and Updates
+
 - 💳 **Stripe Checkout Mounted & Unmounted Triggers** – Stripe Checkout components now expose **mounted** and **unmounted** lifecycle events in the Builder's Logic tab, alongside the existing payment events. Add a trigger to a Stripe Checkout component to run an Action when the component is mounted (loaded onto the page) or unmounted (removed from the page). The new triggers appear with readable labels in the trigger cards and layer tooltips.
 
 ### 🐞 Bug Fixes

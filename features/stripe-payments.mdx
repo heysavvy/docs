@@ -356,6 +356,16 @@ These features are not required in order to successfully accept payments, but th
       If you choose to create customers, you can collect the Customer ID using the [Collect Stripe IDs](#collect-stripe-ids-to-send-to-your-backend) feature.
     </Tip>
 
+    **Reusing existing customers by email**
+
+    By default, when an email is available Embeddables looks up Stripe for an existing customer with that email and attaches the newest matching customer to the Checkout Session. This means returning users can have a previously-created customer reused even when **Create a Customer in Stripe** is set to **If Required**.
+
+    To turn this off, set `disable_reuse_existing_stripe_customer_by_email` to `true` on the Stripe Checkout component (via its JSON editor). When enabled, Embeddables skips the email lookup entirely and never attaches an existing customer, so each session starts without a pre-existing customer attached.
+
+    <Note>
+      This only changes whether an *existing* customer is reused. Whether a *new* customer is created is still controlled by the **Create a Customer in Stripe** option above.
+    </Note>
+
   </Accordion>
   <Accordion title="Customise the Pay button text and Success message">
     You can customise both the label on the Pay button and the message shown to users after a successful payment.
