@@ -465,18 +465,24 @@ These features are not required in order to successfully accept payments, but th
     </Warning>
 
   </Accordion>
-  <Accordion title="Trigger actions on payment events">
-    You can trigger [Actions](/features/actions) on the following payment events:
+  <Accordion title="Trigger actions on payment and lifecycle events">
+    You can trigger [Actions](/features/actions) on the following Stripe Checkout events:
 
     | Event                    | Triggered when                                                    | Checkout type      |
     |------------------------- | ----------------------------------------------------------------- | ------------------ |
     | **Payment attempted**    | The user clicks the Pay button (regardless of success or failure) | All                |
     | **Payment successful**   | The payment is completed                                          | All                |
     | **Payment failed**       | The payment is declined                                           | All                |
+    | **Mounted**              | The Stripe Checkout component is mounted (loaded onto the page)   | All                |
+    | **Unmounted**            | The Stripe Checkout component is unmounted (removed from the page)| All                |
 
     To do this:
     1. Create a new Action and type the JavaScript code you want to run.
-    2. Add a Trigger to the Action that fires on one of the above payment events.
+    2. Add a Trigger to the Action that fires on one of the above events.
+
+    <Tip>
+      The **Mounted** and **Unmounted** lifecycle triggers are useful for running setup or cleanup logic — for example, initialising analytics when the checkout appears, or tearing it down when the user navigates away.
+    </Tip>
 
   </Accordion>
   <Accordion title="Prevent default click action on Express Checkout buttons">
@@ -538,7 +544,7 @@ These features are not required in order to successfully accept payments, but th
     2. Add that key to the Registered Keys in the Embeddable-wide settings.
 
     #### To send them to your backend:
-    1. Set up an Action that's triggered when the payment is completed, as specified above in [Trigger actions on payment events](#trigger-actions-on-payment-events).
+    1. Set up an Action that's triggered when the payment is completed, as specified above in [Trigger actions on payment and lifecycle events](#trigger-actions-on-payment-and-lifecycle-events).
     2. Use the relevant keys in `userData`, provided in the Action function's first argument.
 
     **Example Action code:**

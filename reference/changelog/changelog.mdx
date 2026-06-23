@@ -4,6 +4,16 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="23 June 2026">
+### 🔥 Features and Updates
+
+- 💳 **Stripe Checkout Mounted & Unmounted Triggers** – Stripe Checkout components now expose **mounted** and **unmounted** lifecycle events in the Builder's Logic tab, alongside the existing payment events. Add a trigger to a Stripe Checkout component to run an Action when the component is mounted (loaded onto the page) or unmounted (removed from the page). The new triggers appear with readable labels in the trigger cards and layer tooltips.
+
+### 🐞 Bug Fixes
+
+- **Experiment Date/Time Filter Crash** – Clearing a time segment with Backspace or Delete in the date/time range filter on the experiment page no longer crashes the page. The time-change handlers now ignore the transient `null` value React Aria reports while a segment is mid-edit, instead of attempting to read `.hour` / `.minute` from it.
+</Update>
+
 <Update label="21 May 2026">
 ### ⚡️ Improvements
 
