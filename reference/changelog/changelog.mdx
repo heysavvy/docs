@@ -4,6 +4,22 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="29 June 2026">
+### 🔥 Features and Updates
+
+- 🔌 **MCP Server for Cursor** – Embeddables now ships a built-in **Model Context Protocol (MCP)** server, so MCP clients like Cursor can connect to your projects and call Embeddables tools directly. Connecting from Cursor runs an **OAuth 2.0 (PKCE)** login that reuses the existing email OTP sign-in, then deep-links you back to Cursor via a dedicated **Authentication complete** page once you're signed in.
+- ✅ **`list_tasks` MCP Tool** – The first MCP tool lets connected assistants list a project's tasks, with optional filtering by **status** (single value or list), **priority**, **assignee**, and **type**. Calls are project-scoped: tasks are only returned for projects you're a member of, and the assistant is instructed to ask you for any required input it's missing rather than guessing.
+- 📄 **Document Template Examples** – Document templates can now store scenario **examples** (filled-in MDX with mock data) separately from the template skeleton, laying the groundwork for richer example-driven briefings.
+
+### ⚡️ Improvements
+
+- 🎨 **Consistent Briefings Styling on Template Views** – Document template detail pages and mock previews now render their MDX through the same scoped `.briefings-design` design system as generated briefings, so template content looks identical to the final briefing instead of using plain renderer styling.
+
+### 🐞 Bug Fixes
+
+- **Stuck Loader After Login** – The email OTP validation button no longer gets stuck in its loading state after sign-in completes; the pending state is now always cleared. This also fixes the loader hanging during the Cursor/MCP OAuth redirect.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
