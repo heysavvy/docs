@@ -11,6 +11,23 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.11 — 30 June 2026">
+
+### Features
+
+- **`embeddables doc-templates preview`** — New command that renders a document template — either the raw `template.mdx` skeleton or one of its scenario examples — in your browser and live-reloads as you edit. The preview embeds the web app's `/doc-preview` route in an iframe and streams the serialized MDX source to it via `postMessage` (the authenticated fetch stays server-side in the CLI process). A floating, Workbench-styled switcher lets you search and jump between the skeleton and each example; editing any file under `doc_templates/` live-reloads the iframe, while adding or removing examples (or templates) rebuilds the switcher. Options: `-i, --id <id>`, `-p, --project-id <id>`, `-e, --example <name>` (open a specific example first), `--template` (preview the skeleton instead of an example), `--mock` (fill `[[placeholders]]` with AI-generated mock data before rendering), `--port <n>` (default `4477`), and `--no-watch` (render once without watching). Re-fetches are debounced and single-flighted to avoid rate-limiting, and the local preview server binds to loopback only.
+- **Scenario examples in `doc-templates pull` and `doc-templates save`** — `embeddables doc-templates pull` now also fetches a template's scenario examples and writes each one to `doc_templates/<id>/examples/<name>.mdx` with YAML frontmatter (`name`, `description`) plus the MDX body. The `examples/` folder is synced wholesale on re-pull — stale local files are removed and the folder is deleted when the template has no examples — and is left untouched if the fetch fails, so a transient error never wipes local work. `embeddables doc-templates save` reads `examples/*.mdx` back and full-syncs them by name: upserting those present, soft-deleting those omitted, and clearing all when the folder is empty (a missing folder leaves cloud examples untouched). Duplicate example names that slugify to the same filename are disambiguated with a numeric suffix and surfaced as warnings. A new `--force` flag on `doc-templates save` skips the confirmation prompt shown when the sync would delete cloud examples, matching `embeddables save`.
+
+### Improvements
+
+- **doc-templates preview iframe security handshake** — The preview now generates a per-run preview channel, appends it to the `/doc-preview` iframe URL, and includes it in the `postMessage` payloads so the web app's security handshake accepts the streamed render.
+
+### Chores
+
+- **AI prompt rules: mock data for doc template examples** — Internal doc-templates AI context now guides the consumer AI to fill scenario examples with non-deterministic, project-aligned mock data derived from the template skeleton, the report description, and each example's own scenario description, and to re-align existing examples when `template.mdx` changes.
+
+</Update>
+
 <Update label="v0.16.7 — 27 May 2026">
 
 ### Features
