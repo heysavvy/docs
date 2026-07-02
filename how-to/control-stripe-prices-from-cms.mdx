@@ -1,5 +1,6 @@
 ---
-title: "How To: Control Stripe Prices from the Embeddables CMS"
+title: "Control Stripe Prices from the Embeddables CMS"
+sidebarTitle: "Control Stripe Prices from the Embeddables CMS"
 description: "Using the Embeddables CMS to define multiple Stripe prices, and pull them into your Embeddable"
 ---
 
@@ -110,7 +111,7 @@ Using the Embeddables CMS for this has the following benefits:
   </Step>
 
   <Step title="Finally, update the Stripe Checkout to use the output of the Computed Field">
-    - Go to your checkout page and select your Stripe Checkout component (if you haven't already set this up, you can read how to do that [here](/features/stripe-payments)).
+    - Go to your checkout page and select your Stripe Checkout component (if you haven't already set this up, you can read how to do that [here](/features/payments/stripe/overview)).
     - In the Line Items section of the Stripe component, enable "Use template line items".
     - In the "Line items template" field, enter the key of the Computed Field you created: `{{stripe_line_items}}`.
     
@@ -121,7 +122,7 @@ Using the Embeddables CMS for this has the following benefits:
 <Card
   title="Learn more about Stripe Payments in Embeddables"
   icon="database"
-  href="/features/stripe-payments"
+  href="/features/payments/stripe/overview"
 >
   Read more about how payments works in Embeddables, including how to set up a Stripe Checkout and accept payments.
 </Card>

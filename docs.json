@@ -79,8 +79,26 @@
             "expanded": false,
             "pages": [
               "features/split-testing",
-              "features/stripe-payments",
-              "features/payments/paypal",
+              {
+                "group": "Payments",
+                "icon": "credit-card",
+                "expanded": false,
+                "pages": [
+                  {
+                    "group": "Stripe",
+                    "icon": "credit-card",
+                    "expanded": false,
+                    "pages": [
+                      "features/payments/stripe/overview",
+                      "how-to/control-stripe-prices-from-cms",
+                      "how-to/place-a-hold-on-payment",
+                      "how-to/use-stripe-coupons-and-promo-codes",
+                      "how-to/assign-default-payment-methods"
+                    ]
+                  },
+                  "features/payments/paypal"
+                ]
+              },
               "features/cms",
               "features/translations",
               "features/testing-and-debugging/debugger",
@@ -189,22 +207,10 @@
             ]
           },
           {
-            "group": "Payments",
-            "icon": "credit-card",
-            "expanded": false,
-            "pages": [
-              "how-to/control-stripe-prices-from-cms",
-              "how-to/place-a-hold-on-payment",
-              "how-to/use-stripe-coupons-and-promo-codes",
-              "how-to/assign-default-payment-methods"
-            ]
-          },
-          {
             "group": "Passing Data and Analytics",
             "icon": "code-compare",
             "expanded": false,
             "pages": [
-              "how-to/set-up-webhooks",
               "how-to/retrieve-user-data-on-different-device",
               "how-to/partial-data-capture",
               "how-to/send-data-to-embeddables",
@@ -288,6 +294,10 @@
     {
       "source": "/changelog",
       "destination": "/reference/changelog/changelog"
+    },
+    {
+      "source": "/features/stripe-payments",
+      "destination": "/features/payments/stripe/overview"
     },
     {
       "source": "/5-min-onboarding",
