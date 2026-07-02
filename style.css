@@ -1,3 +1,58 @@
+.embeddables-anchor-row {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin: 0 0.75rem 1rem;
+}
+
+.embeddables-anchor-row .nav-anchor {
+  flex: 1;
+  min-width: 0;
+  margin-left: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.embeddables-anchor-chevron {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 0;
+  background: transparent;
+  color: rgb(156 163 175);
+  cursor: pointer;
+  padding: 0;
+}
+
+.embeddables-anchor-chevron:hover {
+  color: rgb(75 85 99);
+}
+
+.dark .embeddables-anchor-chevron {
+  color: rgb(107 114 128);
+}
+
+.dark .embeddables-anchor-chevron:hover {
+  color: rgb(156 163 175);
+}
+
+.embeddables-anchor-chevron-icon {
+  width: 0.5rem;
+  height: 1rem;
+  transition: transform 75ms ease;
+  transform: rotate(0deg);
+}
+
+.embeddables-anchor-chevron--expanded .embeddables-anchor-chevron-icon {
+  transform: rotate(90deg);
+}
+
+#navigation-items.embeddables-subsections-collapsed > :not(ul.list-none) {
+  display: none !important;
+}
+
 .tella-video {
   position: relative;
   padding-bottom: 56.25%;

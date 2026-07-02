@@ -11,6 +11,10 @@
   "interaction": {
     "drilldown": false
   },
+  "custom": {
+    "css": ["style.css"],
+    "scripts": ["sidebar-collapse.js"]
+  },
   "navigation": {
     "anchors": [
       {
