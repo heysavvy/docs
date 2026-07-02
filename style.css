@@ -71,6 +71,10 @@
   opacity: 1;
 }
 
+#sidebar-content li[data-title="CLI"]:not(.embeddables-cli-expanded) > ul {
+  display: none !important;
+}
+
 .tella-video {
   position: relative;
   padding-bottom: 56.25%;

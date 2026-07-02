@@ -5,8 +5,11 @@
 const EXPANDED_STORAGE_KEY = "embeddables-sidebar-expanded";
 const ANCHOR_SELECTOR = "#navigation-items > ul.list-none > li";
 const FLAT_ANCHORS = new Set(["Welcome", "Glossary", "Changelog"]);
+const CLI_GROUP_SELECTOR = 'li[data-title="CLI"]';
 
 let isUpdating = false;
+let cliGroupManuallyExpanded = false;
+let isApplyingCliGroupState = false;
 
 function normalizeLabel(text) {
   return text.replace(/\s+/g, " ").trim();
@@ -58,6 +61,97 @@ function isAnchorExpanded(title) {
 function getActiveAnchorTitle() {
   const activeLink = document.querySelector("a.nav-anchor[aria-current='location']");
   return activeLink ? normalizeLabel(activeLink.textContent) : null;
+}
+
+function getCurrentPath() {
+  return (
+    document.documentElement.getAttribute("data-current-path") ||
+    window.location.pathname.replace(/\/$/, "") ||
+    "/"
+  );
+}
+
+function getCliGroupElements() {
+  const group = document.querySelector(CLI_GROUP_SELECTOR);
+  if (!group) {
+    return null;
+  }
+
+  const button = group.querySelector(":scope > button");
+  const controlsId = button?.getAttribute("aria-controls");
+  const submenu =
+    (controlsId && document.getElementById(controlsId)) ||
+    group.querySelector(":scope > ul");
+
+  if (!button || !submenu) {
+    return null;
+  }
+
+  return { group, button, submenu };
+}
+
+function maybeResetCliGroupState() {
+  const path = getCurrentPath();
+  const isCliSectionPage =
+    path.startsWith("/cli") || path === "/reference/changelog/cli-changelog";
+
+  if (!isCliSectionPage) {
+    cliGroupManuallyExpanded = false;
+  }
+}
+
+function applyCliGroupState() {
+  if (isApplyingCliGroupState) {
+    return;
+  }
+
+  const elements = getCliGroupElements();
+  if (!elements) {
+    return;
+  }
+
+  const { group, button, submenu } = elements;
+  const expanded = cliGroupManuallyExpanded;
+
+  isApplyingCliGroupState = true;
+
+  try {
+    button.setAttribute("aria-expanded", expanded ? "true" : "false");
+    group.classList.toggle("embeddables-cli-expanded", expanded);
+
+    const chevron = button.querySelector('svg[width="8"]');
+    chevron?.classList.toggle("rotate-90", expanded);
+
+    submenu.hidden = !expanded;
+  } finally {
+    isApplyingCliGroupState = false;
+  }
+}
+
+function bindCliGroupToggle() {
+  const elements = getCliGroupElements();
+  if (!elements) {
+    return;
+  }
+
+  const { button } = elements;
+
+  if (button.dataset.embeddablesCliBound === "true") {
+    return;
+  }
+
+  button.dataset.embeddablesCliBound = "true";
+
+  button.addEventListener(
+    "click",
+    (event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      cliGroupManuallyExpanded = !cliGroupManuallyExpanded;
+      applyCliGroupState();
+    },
+    true,
+  );
 }
 
 function createChevronButton() {
@@ -230,6 +324,9 @@ function updateSidebarCollapse() {
     bindAnchorInteractions();
     updateSubsectionVisibility(navItems);
     updateChevronStates();
+    maybeResetCliGroupState();
+    bindCliGroupToggle();
+    applyCliGroupState();
   } finally {
     isUpdating = false;
   }
