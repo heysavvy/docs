@@ -48,13 +48,13 @@
                 "group": "Builder",
                 "icon": "cube",
                 "expanded": false,
-                "pages": ["builder/overview", "5-min-onboarding"]
+                "pages": ["builder/overview"]
               },
               {
                 "group": "Webapp",
                 "icon": "globe",
                 "expanded": false,
-                "pages": ["webapp/overview", "guides/user-roles-permissions"]
+                "pages": ["webapp/overview"]
               }
             ]
           },
@@ -68,6 +68,7 @@
               "features/computed-fields",
               "features/actions",
               "features/saving-and-version-control",
+              "guides/user-roles-permissions",
               "guides/hipaa-compliance",
               "guides/storing-data-cookies",
               "features/url-params"
@@ -285,6 +286,10 @@
     {
       "source": "/changelog",
       "destination": "/reference/changelog/changelog"
+    },
+    {
+      "source": "/5-min-onboarding",
+      "destination": "/builder/overview"
     },
     {
       "source": "/cli",

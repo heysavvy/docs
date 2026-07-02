@@ -2,21 +2,26 @@
 title: "Embeddables Builder"
 sidebarTitle: "Overview"
 icon: "cube"
-description: "Build and edit Embeddables visually in the Builder"
+description: "Build and edit Embeddables visually in the Builder, with a 5-minute onboarding tour"
 ---
+
+import { TellaVideo } from "/snippets/tella-video.mdx";
 
 The **Builder** is where you design pages, add logic, style components, and preview your Embeddable before publishing.
 
-## Get started in the Builder
+This tour covers:
 
-<Card
-  title="5-min Onboarding Tour of the Builder"
-  icon="circle-play"
-  href="/5-min-onboarding"
-  img="https://assets.embeddables.com/onboarding-tour-video-thumbnail_8543078129035822.png"
->
-  Get a complete tour of all the major features in the Embeddables Builder, what they do, and how to use them.
-</Card>
+- Overview of the Builder
+- Sidebars and Top Bar
+- Adding content, and navigating components and pages
+- Styling your Embeddable
+- Adding logic: show/hide conditions + split tests
+- Custom code, analytics, and sending data to other services
+- Saving, versions, drafts, pushing to staging + going live
+
+## The Onboarding Tour
+
+<TellaVideo url="https://www.tella.tv/video/cm8ypi49v000q09ldasr78vvz/embed?b=0&title=0&a=1&loop=0&t=0&muted=0&wt=1" />
 
 ## Key Builder topics
 
@@ -26,5 +31,39 @@ The **Builder** is where you design pages, add logic, style components, and prev
   </Card>
   <Card title="Saving and Version Control" icon="floppy-disk" href="/features/saving-and-version-control">
     Save drafts, manage versions, and publish changes.
+  </Card>
+</CardGroup>
+
+## Dive deeper into those features
+
+Now that you've watched the Onboarding Tour, these pages dive deeper into each of the features you just learned about:
+
+<CardGroup cols={3}>
+  <Card title="User Data" icon="database" href="/features/user-data">
+    How data is stored
+  </Card>
+  <Card title="Conditions" icon="split" href="/features/conditions">
+    Show/hide content
+  </Card>
+  <Card title="Split Testing" icon="flask" href="/features/split-testing">
+    Test different versions
+  </Card>
+  <Card title="Computed Fields" icon="brackets-curly" href="/features/computed-fields">
+    Compute new values from users' data
+  </Card>
+  <Card title="Actions" icon="code" href="/features/actions">
+    Transform and send data to other services
+  </Card>
+  <Card title="Analytics" icon="chart-line-up" href="/features/analytics">
+    Track your users and measure insights
+  </Card>
+  <Card title="Version Control" icon="floppy-disk" href="/features/saving-and-version-control">
+    Drafts, saves & versions
+  </Card>
+  <Card title="URL Params" icon="vial" href="/features/url-params">
+    Pass data from the URL
+  </Card>
+  <Card title="Going live" icon="rocket-launch" href="/features/publish-to-your-site">
+    Publish to your website
   </Card>
 </CardGroup>

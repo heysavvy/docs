@@ -71,23 +71,27 @@ function createChevronButton() {
 }
 
 function wrapAnchorItem(item, link) {
-  if (item.querySelector(".embeddables-anchor-row")) {
-    return item.querySelector(".embeddables-anchor-chevron");
+  let row = item.querySelector(".embeddables-anchor-row");
+
+  if (!row) {
+    item.classList.add("embeddables-anchor-item");
+    row = document.createElement("div");
+    row.className = "embeddables-anchor-row";
+    link.classList.remove("mb-5", "sm:mb-4");
+    link.parentElement?.insertBefore(row, link);
+    row.appendChild(link);
   }
 
-  item.classList.add("embeddables-anchor-item");
+  const existingChevron = row.querySelector(".embeddables-anchor-chevron");
+  const showChevron = shouldShowChevron(link);
 
-  const row = document.createElement("div");
-  row.className = "embeddables-anchor-row";
-
-  link.classList.remove("mb-5", "sm:mb-4");
-  link.parentElement?.insertBefore(row, link);
-  row.appendChild(link);
-
-  item.querySelector(".embeddables-anchor-chevron")?.remove();
-
-  if (!shouldShowChevron(link)) {
+  if (!showChevron) {
+    existingChevron?.remove();
     return null;
+  }
+
+  if (existingChevron) {
+    return existingChevron;
   }
 
   const chevron = createChevronButton();
