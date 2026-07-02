@@ -4,7 +4,7 @@
 
 const EXPANDED_STORAGE_KEY = "embeddables-sidebar-expanded";
 const ANCHOR_SELECTOR = "#navigation-items > ul.list-none > li";
-const FLAT_ANCHORS = new Set(["Glossary", "Changelog"]);
+const FLAT_ANCHORS = new Set(["Welcome", "Glossary", "Changelog"]);
 
 let isUpdating = false;
 

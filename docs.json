@@ -18,6 +18,11 @@
   "navigation": {
     "anchors": [
       {
+        "anchor": "Welcome",
+        "icon": "hand-wave",
+        "pages": ["welcome"]
+      },
+      {
         "anchor": "Documentation",
         "icon": "book-open",
         "pages": [
@@ -144,7 +149,6 @@
         "anchor": "Guides & Best Practices",
         "icon": "book-open-reader",
         "pages": [
-          "welcome",
           "faqs",
           "guides/using-templates",
           "guides/naming-keys",
