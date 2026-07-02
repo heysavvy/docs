@@ -41,7 +41,7 @@
 .embeddables-anchor-chevron-icon {
   width: 0.5rem;
   height: 1rem;
-  transition: transform 75ms ease;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   transform: rotate(0deg);
 }
 
@@ -49,8 +49,26 @@
   transform: rotate(90deg);
 }
 
-#navigation-items.embeddables-subsections-collapsed > :not(ul.list-none) {
-  display: none !important;
+.embeddables-subsections-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.embeddables-subsections-panel--expanded {
+  grid-template-rows: 1fr;
+}
+
+.embeddables-subsections-panel__inner {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.embeddables-subsections-panel--expanded .embeddables-subsections-panel__inner {
+  opacity: 1;
 }
 
 .tella-video {

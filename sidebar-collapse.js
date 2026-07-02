@@ -95,13 +95,40 @@ function wrapAnchorItem(item, link) {
   return chevron;
 }
 
+function ensureSubsectionsPanel(navItems) {
+  let panel = navItems.querySelector(":scope > .embeddables-subsections-panel");
+  let inner = panel?.querySelector(":scope > .embeddables-subsections-panel__inner");
+
+  if (!panel || !inner) {
+    panel = document.createElement("div");
+    panel.className = "embeddables-subsections-panel";
+    inner = document.createElement("div");
+    inner.className = "embeddables-subsections-panel__inner";
+    panel.appendChild(inner);
+    navItems.appendChild(panel);
+  }
+
+  const looseSubsections = [...navItems.children].filter(
+    (element) =>
+      !element.matches("ul.list-none") &&
+      !element.matches(".embeddables-subsections-panel"),
+  );
+
+  for (const element of looseSubsections) {
+    inner.appendChild(element);
+  }
+
+  return panel;
+}
+
 function updateSubsectionVisibility(navItems) {
+  const panel = ensureSubsectionsPanel(navItems);
   const activeTitle = getActiveAnchorTitle();
   const shouldExpand = Boolean(
     activeTitle &&
       (FLAT_ANCHORS.has(activeTitle) || isAnchorExpanded(activeTitle)),
   );
-  navItems.classList.toggle("embeddables-subsections-collapsed", !shouldExpand);
+  panel.classList.toggle("embeddables-subsections-panel--expanded", shouldExpand);
 }
 
 function updateChevronStates() {
