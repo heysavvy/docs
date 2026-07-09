@@ -4,6 +4,22 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="09 July 2026">
+### 🔥 Features and Updates
+
+- 📊 **Analytics Hub** – A new **Analytics** tab in the project sidebar gives you a dedicated space to explore embeddable performance. The Analytics **Home** lists your embeddables and any saved views, and a **New view** button opens the report builder. In a **Report** you pick an embeddable and date range in the context bar, then use the controls panel to configure **Measure**, **Rows**, **Columns**, **Filters**, and an **Exclude test users** toggle. Reports render **funnel**, **breakdown** (e.g. UTM), and **conversions** tables wired to live data, and you can **save views** to return to them later. The Analytics Hub rolls out per project — an admin enables it in the project's settings.
+- 🤖 **New MCP Tools for Tasks, Goals, Members & Onboarding** – The Embeddables MCP server gains five new project-scoped tools so AI assistants can work with more of your workspace: **`create_task`** and **`update_task`** (create and edit tasks, with assignee-must-be-a-project-member validation and ISO date checks), **`get_goals`** (list a project's goals with rich filters and human-readable metric names), **`get_project_members`** (resolve member names to user IDs), and **`get_onboarding`** (fetch full onboarding detail for an embeddable, including status history).
+
+### ⚡️ Improvements
+
+- 🚀 **Partitioned Analytics Reads (per-project rollout)** – A new `use_events_partitioned` project setting lets partitioned ClickHouse table reads be turned on — and rolled back — independently per customer, so analytics performance improvements can be delivered safely one project at a time.
+
+### 🐞 Bug Fixes
+
+- **HIPAA Checklist Shows the Real Embeddable Name** – The "Label data fields" step of the HIPAA compliance checklist now shows the embeddable's actual title instead of a hardcoded name, so it matches the step's title and subtitle.
+- **HIPAA Checklist Bullet Indentation** – List bullets in the HIPAA checklist now render inside the checklist card instead of spilling onto its border.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
