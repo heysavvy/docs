@@ -39,7 +39,6 @@
                   "cli/commands",
                   "cli/development",
                   "cli/ai",
-                  "cli/faqs",
                   "cli/troubleshooting",
                   "reference/changelog/cli-changelog"
                 ]
@@ -306,6 +305,10 @@
     {
       "source": "/cli",
       "destination": "/cli/overview"
+    },
+    {
+      "source": "/cli/faqs",
+      "destination": "/faqs#cli"
     }
   ]
 }
