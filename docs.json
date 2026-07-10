@@ -70,7 +70,13 @@
               "guides/user-roles-permissions",
               "guides/hipaa-compliance",
               "guides/storing-data-cookies",
-              "features/url-params"
+              "features/url-params",
+              {
+                "group": "Components",
+                "icon": "cube",
+                "expanded": false,
+                "pages": ["guides/components/input-box"]
+              }
             ]
           },
           {
@@ -179,13 +185,7 @@
           "guides/naming-keys",
           "guides/custom-code",
           "guides/how-best-to-send-data",
-          "guides/passing-data-in-out",
-          {
-            "group": "Components",
-            "icon": "cube",
-            "expanded": false,
-            "pages": ["guides/components/input-box"]
-          }
+          "guides/passing-data-in-out"
         ]
       },
       {
