@@ -107,7 +107,22 @@
               "features/cms",
               "features/translations",
               "features/testing-and-debugging/debugger",
-              "features/publish-to-your-site",
+              {
+                "group": "Publish to your site",
+                "icon": "rocket-launch",
+                "expanded": false,
+                "pages": [
+                  "how-to/embed-in-your-site",
+                  "how-to/embed-in-your-webflow-site",
+                  "how-to/embed-in-your-wordpress-site",
+                  "how-to/embed-in-your-framer-site",
+                  "how-to/embed-in-react",
+                  "how-to/embed-in-react-native",
+                  "how-to/reverse-proxy-setup",
+                  "how-to/embed-backend-integration",
+                  "how-to/embed-code-2-0"
+                ]
+              },
               "how-to/set-up-webhooks",
               {
                 "group": "Integration and Analytics",
@@ -223,22 +238,6 @@
             "pages": [
               "how-to/add-external-scripts",
               "how-to/run-custom-code-on-load"
-            ]
-          },
-          {
-            "group": "Publishing",
-            "icon": "globe-pointer",
-            "expanded": false,
-            "pages": [
-              "how-to/embed-in-your-site",
-              "how-to/embed-in-your-webflow-site",
-              "how-to/embed-in-your-wordpress-site",
-              "how-to/embed-in-your-framer-site",
-              "how-to/embed-in-react",
-              "how-to/embed-in-react-native",
-              "how-to/reverse-proxy-setup",
-              "how-to/embed-backend-integration",
-              "how-to/embed-code-2-0"
             ]
           }
         ]
