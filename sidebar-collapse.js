@@ -55,7 +55,23 @@ function setAnchorExpanded(title, expanded) {
 }
 
 function isAnchorExpanded(title) {
-  return loadExpandedMap()[title] === true;
+  const map = loadExpandedMap();
+  // Default open for the active section so landing on a docs page shows
+  // its subsections under the section title (accordion), not collapsed.
+  if (!Object.prototype.hasOwnProperty.call(map, title)) {
+    return true;
+  }
+  return map[title] === true;
+}
+
+function shouldShowSubsections(activeTitle) {
+  if (!activeTitle) {
+    return false;
+  }
+  if (FLAT_ANCHORS.has(activeTitle)) {
+    return true;
+  }
+  return isAnchorExpanded(activeTitle);
 }
 
 function getActiveAnchorTitle() {
@@ -119,7 +135,8 @@ function applyCliGroupState() {
     button.setAttribute("aria-expanded", expanded ? "true" : "false");
     group.classList.toggle("embeddables-cli-expanded", expanded);
 
-    const chevron = button.querySelector('svg[width="8"]');
+    const chevron =
+      button.querySelector("svg[width='8']") || button.querySelector("svg");
     chevron?.classList.toggle("rotate-90", expanded);
 
     submenu.hidden = !expanded;
@@ -160,15 +177,39 @@ function createChevronButton() {
   button.className = "embeddables-anchor-chevron";
   button.setAttribute("aria-label", "Toggle section");
   button.innerHTML =
-    '<svg width="8" height="24" viewBox="0 -9 3 24" aria-hidden="true" focusable="false" class="embeddables-anchor-chevron-icon"><path d="M0 0L3 3L0 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg>';
+    '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false" class="embeddables-anchor-chevron-icon"><path d="M4 2.5L9.5 7L4 11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
   return button;
+}
+
+function getAnchorItemByTitle(title) {
+  if (!title) {
+    return null;
+  }
+
+  for (const item of document.querySelectorAll(ANCHOR_SELECTOR)) {
+    const link = getAnchorLink(item);
+    if (link && normalizeLabel(link.textContent) === title) {
+      return item;
+    }
+  }
+
+  return null;
+}
+
+function getAccordionHostItem() {
+  const activeTitle = getActiveAnchorTitle();
+  if (!activeTitle || !shouldShowSubsections(activeTitle)) {
+    return null;
+  }
+  return getAnchorItemByTitle(activeTitle);
 }
 
 function wrapAnchorItem(item, link) {
   let row = item.querySelector(".embeddables-anchor-row");
 
+  item.classList.add("embeddables-anchor-item");
+
   if (!row) {
-    item.classList.add("embeddables-anchor-item");
     row = document.createElement("div");
     row.className = "embeddables-anchor-row";
     link.classList.remove("mb-5", "sm:mb-4");
@@ -193,8 +234,10 @@ function wrapAnchorItem(item, link) {
   return chevron;
 }
 
-function ensureSubsectionsPanel(navItems) {
-  let panel = navItems.querySelector(":scope > .embeddables-subsections-panel");
+function ensureSubsectionsPanel(navItems, hostItem) {
+  let panel =
+    navItems.querySelector(".embeddables-subsections-panel") ||
+    document.querySelector("#sidebar-content .embeddables-subsections-panel");
   let inner = panel?.querySelector(":scope > .embeddables-subsections-panel__inner");
 
   if (!panel || !inner) {
@@ -203,7 +246,6 @@ function ensureSubsectionsPanel(navItems) {
     inner = document.createElement("div");
     inner.className = "embeddables-subsections-panel__inner";
     panel.appendChild(inner);
-    navItems.appendChild(panel);
   }
 
   const looseSubsections = [...navItems.children].filter(
@@ -216,22 +258,28 @@ function ensureSubsectionsPanel(navItems) {
     inner.appendChild(element);
   }
 
+  // Mintlify renders anchor subsections after all top-level anchors.
+  // Re-home them under the expanded section so they read as an accordion.
+  if (hostItem) {
+    hostItem.appendChild(panel);
+  } else if (panel.parentElement !== navItems) {
+    navItems.appendChild(panel);
+  }
+
   return panel;
 }
 
 function updateSubsectionVisibility(navItems) {
-  const panel = ensureSubsectionsPanel(navItems);
   const activeTitle = getActiveAnchorTitle();
-  const shouldExpand = Boolean(
-    activeTitle &&
-      (FLAT_ANCHORS.has(activeTitle) || isAnchorExpanded(activeTitle)),
-  );
+  const shouldExpand = shouldShowSubsections(activeTitle);
+  const hostItem = shouldExpand ? getAccordionHostItem() : null;
+  const panel = ensureSubsectionsPanel(navItems, hostItem);
   panel.classList.toggle("embeddables-subsections-panel--expanded", shouldExpand);
 }
 
 function updateChevronStates() {
   const activeTitle = getActiveAnchorTitle();
-  const expanded = activeTitle ? isAnchorExpanded(activeTitle) : false;
+  const expanded = shouldShowSubsections(activeTitle);
 
   for (const item of document.querySelectorAll(ANCHOR_SELECTOR)) {
     const link = getAnchorLink(item);
@@ -334,6 +382,7 @@ function updateSidebarCollapse() {
 
 function initSidebarCollapse() {
   let attempts = 0;
+  let debounceTimer = null;
 
   const tryUpdate = () => {
     updateSidebarCollapse();
@@ -344,10 +393,24 @@ function initSidebarCollapse() {
     }
   };
 
+  const scheduleUpdate = () => {
+    if (debounceTimer) {
+      clearTimeout(debounceTimer);
+    }
+    debounceTimer = setTimeout(() => {
+      updateSidebarCollapse();
+    }, 30);
+  };
+
   tryUpdate();
 
+  // Re-apply after React hydration — Mintlify often rebuilds the sidebar DOM.
+  for (const ms of [100, 400, 1000, 2000]) {
+    setTimeout(updateSidebarCollapse, ms);
+  }
+
   const pathObserver = new MutationObserver(() => {
-    updateSidebarCollapse();
+    scheduleUpdate();
   });
 
   pathObserver.observe(document.documentElement, {
@@ -363,7 +426,7 @@ function initSidebarCollapse() {
     }
 
     const sidebarObserver = new MutationObserver(() => {
-      updateSidebarCollapse();
+      scheduleUpdate();
     });
 
     sidebarObserver.observe(sidebar, {
