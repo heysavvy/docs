@@ -1,15 +1,23 @@
 /**
- * Adds expand/collapse chevrons to top-level sidebar anchors and toggles subsection visibility.
+ * Adds expand/collapse chevrons to top-level sidebar anchors and toggles
+ * subsection visibility with soft height animations.
  */
 
 const EXPANDED_STORAGE_KEY = "embeddables-sidebar-expanded";
 const ANCHOR_SELECTOR = "#navigation-items > ul.list-none > li";
-const FLAT_ANCHORS = new Set(["Welcome", "Glossary", "Changelog"]);
+const FLAT_ANCHORS = new Set([
+  "Welcome",
+  "Glossary",
+  "Changelog",
+  "Contact Support",
+]);
 const CLI_GROUP_SELECTOR = 'li[data-title="CLI"]';
+const ACCORDION_MS = 520;
+const ACCORDION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 let isUpdating = false;
 let cliGroupManuallyExpanded = false;
-let isApplyingCliGroupState = false;
+let panelExpandState = null;
 
 function normalizeLabel(text) {
   return text.replace(/\s+/g, " ").trim();
@@ -65,17 +73,20 @@ function isAnchorExpanded(title) {
 }
 
 function shouldShowSubsections(activeTitle) {
-  if (!activeTitle) {
+  if (!activeTitle || FLAT_ANCHORS.has(activeTitle)) {
     return false;
-  }
-  if (FLAT_ANCHORS.has(activeTitle)) {
-    return true;
   }
   return isAnchorExpanded(activeTitle);
 }
 
+function isExpandableAnchor(title) {
+  return Boolean(title) && !FLAT_ANCHORS.has(title);
+}
+
 function getActiveAnchorTitle() {
-  const activeLink = document.querySelector("a.nav-anchor[aria-current='location']");
+  const activeLink = document.querySelector(
+    "a.nav-anchor[aria-current='location']",
+  );
   return activeLink ? normalizeLabel(activeLink.textContent) : null;
 }
 
@@ -87,23 +98,111 @@ function getCurrentPath() {
   );
 }
 
-function getCliGroupElements() {
-  const group = document.querySelector(CLI_GROUP_SELECTOR);
-  if (!group) {
-    return null;
+/**
+ * Soft open/close by animating explicit height + opacity.
+ * Avoids abrupt `hidden` / `display` toggles and unreliable grid-template animation.
+ */
+function animateHeight(element, open, { immediate = false } = {}) {
+  if (!element) {
+    return;
   }
 
-  const button = group.querySelector(":scope > button");
+  const currentlyOpen = element.dataset.accordionOpen === "true";
+  const isAnimating = element.dataset.accordionAnimating === "true";
+
+  if (currentlyOpen === open && !isAnimating && !immediate) {
+    return;
+  }
+
+  const token = String((Number(element.dataset.accordionToken) || 0) + 1);
+  element.dataset.accordionToken = token;
+  element.hidden = false;
+  element.dataset.accordionOpen = open ? "true" : "false";
+  element.style.overflow = "hidden";
+
+  if (immediate) {
+    element.style.transition = "none";
+    element.style.height = open ? "auto" : "0px";
+    element.style.opacity = open ? "1" : "0";
+    element.dataset.accordionAnimating = "false";
+    if (open) {
+      element.style.overflow = "";
+    }
+    return;
+  }
+
+  element.dataset.accordionAnimating = "true";
+
+  const finish = (event) => {
+    if (element.dataset.accordionToken !== token) {
+      return;
+    }
+    if (event && event.propertyName && event.propertyName !== "height") {
+      return;
+    }
+    element.removeEventListener("transitionend", finish);
+    element.dataset.accordionAnimating = "false";
+    if (open) {
+      element.style.height = "auto";
+      element.style.overflow = "";
+      element.style.transition = "";
+    }
+  };
+
+  if (open) {
+    element.style.transition = "none";
+    element.style.height = "0px";
+    element.style.opacity = "0";
+    void element.offsetHeight;
+
+    const target = element.scrollHeight;
+    element.style.transition = [
+      `height ${ACCORDION_MS}ms ${ACCORDION_EASING}`,
+      `opacity ${ACCORDION_MS}ms ease`,
+    ].join(", ");
+
+    requestAnimationFrame(() => {
+      if (element.dataset.accordionToken !== token) {
+        return;
+      }
+      element.style.height = `${target}px`;
+      element.style.opacity = "1";
+    });
+  } else {
+    const current =
+      element.style.height === "auto" || !element.style.height
+        ? element.scrollHeight
+        : element.getBoundingClientRect().height;
+
+    element.style.transition = "none";
+    element.style.height = `${Math.max(current, 0)}px`;
+    element.style.opacity = "1";
+    void element.offsetHeight;
+
+    element.style.transition = [
+      `height ${ACCORDION_MS}ms ${ACCORDION_EASING}`,
+      `opacity ${Math.round(ACCORDION_MS * 0.7)}ms ease`,
+    ].join(", ");
+
+    requestAnimationFrame(() => {
+      if (element.dataset.accordionToken !== token) {
+        return;
+      }
+      element.style.height = "0px";
+      element.style.opacity = "0";
+    });
+  }
+
+  element.addEventListener("transitionend", finish);
+  window.setTimeout(finish, ACCORDION_MS + 80);
+}
+
+function getGroupSubmenu(group, button) {
   const controlsId = button?.getAttribute("aria-controls");
-  const submenu =
+  return (
     (controlsId && document.getElementById(controlsId)) ||
-    group.querySelector(":scope > ul");
-
-  if (!button || !submenu) {
-    return null;
-  }
-
-  return { group, button, submenu };
+    group.querySelector(":scope > ul")
+  );
 }
 
 function maybeResetCliGroupState() {
@@ -116,59 +215,72 @@ function maybeResetCliGroupState() {
   }
 }
 
-function applyCliGroupState() {
-  if (isApplyingCliGroupState) {
-    return;
-  }
+function setGroupExpanded(group, button, submenu, expanded, { immediate = false } = {}) {
+  button.setAttribute("aria-expanded", expanded ? "true" : "false");
+  group.classList.toggle("embeddables-group-expanded", expanded);
 
-  const elements = getCliGroupElements();
-  if (!elements) {
-    return;
-  }
-
-  const { group, button, submenu } = elements;
-  const expanded = cliGroupManuallyExpanded;
-
-  isApplyingCliGroupState = true;
-
-  try {
-    button.setAttribute("aria-expanded", expanded ? "true" : "false");
+  if (group.matches(CLI_GROUP_SELECTOR)) {
     group.classList.toggle("embeddables-cli-expanded", expanded);
-
-    const chevron =
-      button.querySelector("svg[width='8']") || button.querySelector("svg");
-    chevron?.classList.toggle("rotate-90", expanded);
-
-    submenu.hidden = !expanded;
-  } finally {
-    isApplyingCliGroupState = false;
   }
+
+  const chevron =
+    button.querySelector("svg[width='8']") || button.querySelector("svg");
+  chevron?.classList.toggle("rotate-90", expanded);
+
+  animateHeight(submenu, expanded, { immediate });
 }
 
-function bindCliGroupToggle() {
-  const elements = getCliGroupElements();
-  if (!elements) {
-    return;
+function bindSidebarGroupToggles() {
+  const groups = document.querySelectorAll("#sidebar-content li[data-title]");
+
+  for (const group of groups) {
+    const button = group.querySelector(":scope > button");
+    const submenu = getGroupSubmenu(group, button);
+
+    if (!button || !submenu) {
+      continue;
+    }
+
+    const isCli = group.matches(CLI_GROUP_SELECTOR);
+    const preferredExpanded = isCli
+      ? cliGroupManuallyExpanded
+      : button.getAttribute("aria-expanded") === "true" ||
+        group.classList.contains("embeddables-group-expanded");
+
+    // Initialize height state once per submenu element lifetime.
+    if (submenu.dataset.accordionReady !== "true") {
+      submenu.dataset.accordionReady = "true";
+      setGroupExpanded(group, button, submenu, preferredExpanded, {
+        immediate: true,
+      });
+    } else if (isCli) {
+      // Mintlify often re-expands CLI; keep our preferred state without a jump.
+      setGroupExpanded(group, button, submenu, preferredExpanded, {
+        immediate: submenu.dataset.accordionAnimating !== "true",
+      });
+    }
+
+    if (button.dataset.embeddablesGroupBound === "true") {
+      continue;
+    }
+
+    button.dataset.embeddablesGroupBound = "true";
+
+    button.addEventListener(
+      "click",
+      (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const next = button.getAttribute("aria-expanded") !== "true";
+        if (isCli) {
+          cliGroupManuallyExpanded = next;
+        }
+        setGroupExpanded(group, button, submenu, next);
+      },
+      true,
+    );
   }
-
-  const { button } = elements;
-
-  if (button.dataset.embeddablesCliBound === "true") {
-    return;
-  }
-
-  button.dataset.embeddablesCliBound = "true";
-
-  button.addEventListener(
-    "click",
-    (event) => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-      cliGroupManuallyExpanded = !cliGroupManuallyExpanded;
-      applyCliGroupState();
-    },
-    true,
-  );
 }
 
 function createChevronButton() {
@@ -177,7 +289,7 @@ function createChevronButton() {
   button.className = "embeddables-anchor-chevron";
   button.setAttribute("aria-label", "Toggle section");
   button.innerHTML =
-    '<svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true" focusable="false" class="embeddables-anchor-chevron-icon"><path d="M4 2.5L9.5 7L4 11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+    '<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true" focusable="false" class="embeddables-anchor-chevron-icon"><path d="M4 2.5L9.5 7L4 11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
   return button;
 }
 
@@ -197,8 +309,9 @@ function getAnchorItemByTitle(title) {
 }
 
 function getAccordionHostItem() {
+  // Only nest subsections under sections that have a chevron.
   const activeTitle = getActiveAnchorTitle();
-  if (!activeTitle || !shouldShowSubsections(activeTitle)) {
+  if (!isExpandableAnchor(activeTitle)) {
     return null;
   }
   return getAnchorItemByTitle(activeTitle);
@@ -238,7 +351,9 @@ function ensureSubsectionsPanel(navItems, hostItem) {
   let panel =
     navItems.querySelector(".embeddables-subsections-panel") ||
     document.querySelector("#sidebar-content .embeddables-subsections-panel");
-  let inner = panel?.querySelector(":scope > .embeddables-subsections-panel__inner");
+  let inner = panel?.querySelector(
+    ":scope > .embeddables-subsections-panel__inner",
+  );
 
   if (!panel || !inner) {
     panel = document.createElement("div");
@@ -272,9 +387,26 @@ function ensureSubsectionsPanel(navItems, hostItem) {
 function updateSubsectionVisibility(navItems) {
   const activeTitle = getActiveAnchorTitle();
   const shouldExpand = shouldShowSubsections(activeTitle);
-  const hostItem = shouldExpand ? getAccordionHostItem() : null;
+  // While collapsing from an expandable section, keep the panel under that
+  // section so the height animation plays in place. Flat sections never host it.
+  const hostItem = shouldExpand
+    ? getAccordionHostItem()
+    : isExpandableAnchor(activeTitle)
+      ? getAnchorItemByTitle(activeTitle)
+      : null;
   const panel = ensureSubsectionsPanel(navItems, hostItem);
-  panel.classList.toggle("embeddables-subsections-panel--expanded", shouldExpand);
+
+  panel.classList.toggle(
+    "embeddables-subsections-panel--expanded",
+    shouldExpand,
+  );
+
+  const immediate =
+    panelExpandState === null || panel.dataset.accordionReady !== "true";
+  panel.dataset.accordionReady = "true";
+  panelExpandState = shouldExpand;
+
+  animateHeight(panel, shouldExpand, { immediate });
 }
 
 function updateChevronStates() {
@@ -294,7 +426,10 @@ function updateChevronStates() {
     const isExpanded = isActive && expanded;
 
     chevron.setAttribute("aria-expanded", isExpanded ? "true" : "false");
-    chevron.classList.toggle("embeddables-anchor-chevron--expanded", isExpanded);
+    chevron.classList.toggle(
+      "embeddables-anchor-chevron--expanded",
+      isExpanded,
+    );
   }
 }
 
@@ -373,8 +508,7 @@ function updateSidebarCollapse() {
     updateSubsectionVisibility(navItems);
     updateChevronStates();
     maybeResetCliGroupState();
-    bindCliGroupToggle();
-    applyCliGroupState();
+    bindSidebarGroupToggles();
   } finally {
     isUpdating = false;
   }
@@ -399,7 +533,7 @@ function initSidebarCollapse() {
     }
     debounceTimer = setTimeout(() => {
       updateSidebarCollapse();
-    }, 30);
+    }, 50);
   };
 
   tryUpdate();
@@ -410,6 +544,7 @@ function initSidebarCollapse() {
   }
 
   const pathObserver = new MutationObserver(() => {
+    panelExpandState = null;
     scheduleUpdate();
   });
 
@@ -426,6 +561,13 @@ function initSidebarCollapse() {
     }
 
     const sidebarObserver = new MutationObserver(() => {
+      // Don't interrupt an in-flight soft close/open.
+      const animating = sidebar.querySelector(
+        '[data-accordion-animating="true"]',
+      );
+      if (animating) {
+        return;
+      }
       scheduleUpdate();
     });
 

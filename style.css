@@ -21,10 +21,10 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 2.25rem;
-  height: 2.25rem;
+  width: 1.75rem;
+  height: 1.75rem;
   border: 0;
-  border-radius: 0.5rem;
+  border-radius: 0.375rem;
   background: transparent;
   color: rgb(55 65 81);
   cursor: pointer;
@@ -46,9 +46,9 @@
 }
 
 .embeddables-anchor-chevron-icon {
-  width: 1rem;
-  height: 1rem;
-  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0.75rem;
+  height: 0.75rem;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
   transform: rotate(0deg);
 }
 
@@ -58,43 +58,44 @@
 
 /* Nest subsections directly under the expanded section title */
 .embeddables-anchor-item > .embeddables-subsections-panel {
-  margin: 0.15rem 0.35rem 0.85rem 1rem;
-  padding-left: 0.65rem;
-  border-left: 2px solid rgb(209 213 219);
+  margin: 0 0.35rem 0 1rem;
+  padding-left: 0;
+  border-left: 2px solid transparent;
+  transition:
+    margin 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    padding 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.4s ease;
 }
 
-.dark .embeddables-anchor-item > .embeddables-subsections-panel {
+.embeddables-anchor-item > .embeddables-subsections-panel--expanded {
+  margin: 0.15rem 0.35rem 0.85rem 1rem;
+  padding-left: 0.65rem;
+  border-left-color: rgb(209 213 219);
+}
+
+.dark .embeddables-anchor-item > .embeddables-subsections-panel--expanded {
   border-left-color: rgb(75 85 99);
 }
 
+/* Height/opacity are driven by JS for a soft accordion feel */
 .embeddables-subsections-panel {
-  display: grid;
-  grid-template-rows: 0fr;
+  height: 0;
+  opacity: 0;
   overflow: hidden;
-  transition: grid-template-rows 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.embeddables-subsections-panel--expanded {
-  grid-template-rows: 1fr;
+  will-change: height, opacity;
 }
 
 .embeddables-subsections-panel__inner {
   min-height: 0;
-  overflow: hidden;
-  opacity: 0;
-  transition: opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.embeddables-subsections-panel--expanded .embeddables-subsections-panel__inner {
-  opacity: 1;
-}
-
-/* Enlarge Mintlify's native group expand/collapse chevrons */
+/* Soften Mintlify group chevron rotation to match accordion timing */
 #sidebar-content li > button svg[width="8"] {
-  width: 14px !important;
-  height: 14px !important;
+  width: 11px !important;
+  height: 11px !important;
   color: rgb(55 65 81);
   transform-origin: center;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1) !important;
 }
 
 .dark #sidebar-content li > button svg[width="8"] {
@@ -105,8 +106,9 @@
   transform: rotate(90deg) !important;
 }
 
-#sidebar-content li[data-title="CLI"]:not(.embeddables-cli-expanded) > ul {
-  display: none !important;
+/* Keep group submenus in normal flow so height can animate */
+#sidebar-content li[data-title] > ul {
+  overflow: hidden;
 }
 
 .tella-video {
