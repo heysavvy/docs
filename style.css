@@ -6,6 +6,7 @@
 
 .embeddables-anchor-item > a.nav-anchor {
   margin-left: 0 !important;
+  margin-bottom: 0.35rem !important;
 }
 
 .embeddables-anchor-chevron {
@@ -77,13 +78,36 @@
 }
 
 .embeddables-anchor-item > .embeddables-subsections-panel--expanded {
-  margin: 0.15rem 0.15rem 0.75rem 0.75rem;
+  margin: 0.25rem 0.15rem 0.5rem 0.75rem;
   padding-left: 0.65rem;
   border-left-color: rgb(209 213 219);
 }
 
 .dark .embeddables-anchor-item > .embeddables-subsections-panel--expanded {
   border-left-color: rgb(75 85 99);
+}
+
+/* Pull subtitles up under the section title (Mintlify adds large top margins). */
+.embeddables-subsections-panel__inner > :first-child {
+  margin-top: 0.35rem !important;
+  padding-top: 0 !important;
+}
+
+.embeddables-subsections-panel__inner .mt-6 {
+  margin-top: 0.75rem !important;
+}
+
+.embeddables-subsections-panel__inner .lg\:mt-8 {
+  margin-top: 0.75rem !important;
+}
+
+.embeddables-subsections-panel__inner > :first-child.mt-6,
+.embeddables-subsections-panel__inner > :first-child.lg\:mt-8 {
+  margin-top: 0.35rem !important;
+}
+
+.embeddables-subsections-panel__inner .sidebar-group-header {
+  margin-bottom: 0.5rem !important;
 }
 
 .embeddables-subsections-panel {
