@@ -1,6 +1,9 @@
 /**
- * Adds expand/collapse chevrons to top-level sidebar anchors and toggles
- * subsection visibility with soft height animations.
+ * Sidebar accordion for Mintlify anchors.
+ *
+ * Mintlify re-renders the sidebar on navigation and briefly paints an
+ * un-enhanced tree. We re-apply enhancements synchronously in a
+ * MutationObserver callback (before paint) to avoid flicker.
  */
 
 const EXPANDED_STORAGE_KEY = "embeddables-sidebar-expanded";
@@ -12,12 +15,14 @@ const FLAT_ANCHORS = new Set([
   "Contact Support",
 ]);
 const CLI_GROUP_SELECTOR = 'li[data-title="CLI"]';
-const ACCORDION_MS = 520;
+const ACCORDION_MS = 450;
 const ACCORDION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 let isUpdating = false;
+let suppressObserver = false;
 let cliGroupManuallyExpanded = false;
-let panelExpandState = null;
+/** Soft-animate only when the user clicks a section chevron. */
+let animatePanelToggle = false;
 
 function normalizeLabel(text) {
   return text.replace(/\s+/g, " ").trim();
@@ -28,7 +33,7 @@ function getNavigationItems() {
 }
 
 function getAnchorLink(item) {
-  return item.querySelector("a.nav-anchor");
+  return item.querySelector(":scope > a.nav-anchor, :scope > .embeddables-anchor-row a.nav-anchor, a.nav-anchor");
 }
 
 function isExternalAnchor(link) {
@@ -40,7 +45,6 @@ function shouldShowChevron(link) {
   if (isExternalAnchor(link)) {
     return false;
   }
-
   return !FLAT_ANCHORS.has(normalizeLabel(link.textContent));
 }
 
@@ -64,8 +68,6 @@ function setAnchorExpanded(title, expanded) {
 
 function isAnchorExpanded(title) {
   const map = loadExpandedMap();
-  // Default open for the active section so landing on a docs page shows
-  // its subsections under the section title (accordion), not collapsed.
   if (!Object.prototype.hasOwnProperty.call(map, title)) {
     return true;
   }
@@ -98,10 +100,26 @@ function getCurrentPath() {
   );
 }
 
-/**
- * Soft open/close by animating explicit height + opacity.
- * Avoids abrupt `hidden` / `display` toggles and unreliable grid-template animation.
- */
+function withObserverSuppressed(fn) {
+  suppressObserver = true;
+  try {
+    return fn();
+  } finally {
+    suppressObserver = false;
+  }
+}
+
+function queueEnhancementVerify() {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      const navItems = getNavigationItems();
+      if (navItems && navNeedsEnhancement(navItems)) {
+        updateSidebarCollapse();
+      }
+    });
+  });
+}
+
 function animateHeight(element, open, { immediate = false } = {}) {
   if (!element) {
     return;
@@ -110,7 +128,10 @@ function animateHeight(element, open, { immediate = false } = {}) {
   const currentlyOpen = element.dataset.accordionOpen === "true";
   const isAnimating = element.dataset.accordionAnimating === "true";
 
-  if (currentlyOpen === open && !isAnimating && !immediate) {
+  if (currentlyOpen === open && !isAnimating) {
+    return;
+  }
+  if (currentlyOpen === open && isAnimating && !immediate) {
     return;
   }
 
@@ -154,13 +175,11 @@ function animateHeight(element, open, { immediate = false } = {}) {
     element.style.height = "0px";
     element.style.opacity = "0";
     void element.offsetHeight;
-
     const target = element.scrollHeight;
     element.style.transition = [
       `height ${ACCORDION_MS}ms ${ACCORDION_EASING}`,
       `opacity ${ACCORDION_MS}ms ease`,
     ].join(", ");
-
     requestAnimationFrame(() => {
       if (element.dataset.accordionToken !== token) {
         return;
@@ -173,17 +192,14 @@ function animateHeight(element, open, { immediate = false } = {}) {
       element.style.height === "auto" || !element.style.height
         ? element.scrollHeight
         : element.getBoundingClientRect().height;
-
     element.style.transition = "none";
     element.style.height = `${Math.max(current, 0)}px`;
     element.style.opacity = "1";
     void element.offsetHeight;
-
     element.style.transition = [
       `height ${ACCORDION_MS}ms ${ACCORDION_EASING}`,
       `opacity ${Math.round(ACCORDION_MS * 0.7)}ms ease`,
     ].join(", ");
-
     requestAnimationFrame(() => {
       if (element.dataset.accordionToken !== token) {
         return;
@@ -215,7 +231,13 @@ function maybeResetCliGroupState() {
   }
 }
 
-function setGroupExpanded(group, button, submenu, expanded, { immediate = false } = {}) {
+function setGroupExpanded(
+  group,
+  button,
+  submenu,
+  expanded,
+  { immediate = false } = {},
+) {
   button.setAttribute("aria-expanded", expanded ? "true" : "false");
   group.classList.toggle("embeddables-group-expanded", expanded);
 
@@ -246,17 +268,20 @@ function bindSidebarGroupToggles() {
       ? cliGroupManuallyExpanded
       : button.getAttribute("aria-expanded") === "true" ||
         group.classList.contains("embeddables-group-expanded");
+    const openAttr = preferredExpanded ? "true" : "false";
 
-    // Initialize height state once per submenu element lifetime.
     if (submenu.dataset.accordionReady !== "true") {
       submenu.dataset.accordionReady = "true";
       setGroupExpanded(group, button, submenu, preferredExpanded, {
         immediate: true,
       });
-    } else if (isCli) {
-      // Mintlify often re-expands CLI; keep our preferred state without a jump.
+    } else if (
+      isCli &&
+      submenu.dataset.accordionOpen !== openAttr &&
+      submenu.dataset.accordionAnimating !== "true"
+    ) {
       setGroupExpanded(group, button, submenu, preferredExpanded, {
-        immediate: submenu.dataset.accordionAnimating !== "true",
+        immediate: true,
       });
     }
 
@@ -308,43 +333,55 @@ function getAnchorItemByTitle(title) {
   return null;
 }
 
-function getAccordionHostItem() {
-  // Only nest subsections under sections that have a chevron.
-  const activeTitle = getActiveAnchorTitle();
-  if (!isExpandableAnchor(activeTitle)) {
-    return null;
-  }
-  return getAnchorItemByTitle(activeTitle);
-}
-
-function wrapAnchorItem(item, link) {
-  let row = item.querySelector(".embeddables-anchor-row");
-
+/**
+ * Enhance an anchor `li` without wrapping the link in a new flex row.
+ * Wrapping caused visible layout jumps every time React re-rendered.
+ */
+function enhanceAnchorItem(item, link) {
   item.classList.add("embeddables-anchor-item");
 
-  if (!row) {
-    row = document.createElement("div");
-    row.className = "embeddables-anchor-row";
-    link.classList.remove("mb-5", "sm:mb-4");
-    link.parentElement?.insertBefore(row, link);
-    row.appendChild(link);
+  // Migrate leftover row wrappers from older script versions.
+  const legacyRow = item.querySelector(":scope > .embeddables-anchor-row");
+  if (legacyRow) {
+    while (legacyRow.firstChild) {
+      item.insertBefore(legacyRow.firstChild, legacyRow);
+    }
+    legacyRow.remove();
   }
 
-  const existingChevron = row.querySelector(".embeddables-anchor-chevron");
   const showChevron = shouldShowChevron(link);
+  let chevron = item.querySelector(":scope > .embeddables-anchor-chevron");
 
   if (!showChevron) {
-    existingChevron?.remove();
+    chevron?.remove();
     return null;
   }
 
-  if (existingChevron) {
-    return existingChevron;
+  if (!chevron) {
+    chevron = createChevronButton();
+    // Keep chevron after the anchor link, before any accordion panel.
+    const panel = item.querySelector(":scope > .embeddables-subsections-panel");
+    if (panel) {
+      item.insertBefore(chevron, panel);
+    } else {
+      item.appendChild(chevron);
+    }
   }
 
-  const chevron = createChevronButton();
-  row.appendChild(chevron);
   return chevron;
+}
+
+function isLooseSubsection(element) {
+  if (element.matches("ul.list-none")) {
+    return false;
+  }
+  if (element.classList?.contains("embeddables-subsections-panel")) {
+    return false;
+  }
+  if (element.tagName === "SCRIPT" || element.tagName === "STYLE") {
+    return false;
+  }
+  return true;
 }
 
 function ensureSubsectionsPanel(navItems, hostItem) {
@@ -363,20 +400,18 @@ function ensureSubsectionsPanel(navItems, hostItem) {
     panel.appendChild(inner);
   }
 
-  const looseSubsections = [...navItems.children].filter(
-    (element) =>
-      !element.matches("ul.list-none") &&
-      !element.matches(".embeddables-subsections-panel"),
-  );
+  const looseSubsections = [...navItems.children].filter(isLooseSubsection);
 
   for (const element of looseSubsections) {
-    inner.appendChild(element);
+    if (element.parentElement !== inner) {
+      inner.appendChild(element);
+    }
   }
 
-  // Mintlify renders anchor subsections after all top-level anchors.
-  // Re-home them under the expanded section so they read as an accordion.
   if (hostItem) {
-    hostItem.appendChild(panel);
+    if (panel.parentElement !== hostItem) {
+      hostItem.appendChild(panel);
+    }
   } else if (panel.parentElement !== navItems) {
     navItems.appendChild(panel);
   }
@@ -384,29 +419,46 @@ function ensureSubsectionsPanel(navItems, hostItem) {
   return panel;
 }
 
-function updateSubsectionVisibility(navItems) {
-  const activeTitle = getActiveAnchorTitle();
-  const shouldExpand = shouldShowSubsections(activeTitle);
-  // While collapsing from an expandable section, keep the panel under that
-  // section so the height animation plays in place. Flat sections never host it.
-  const hostItem = shouldExpand
-    ? getAccordionHostItem()
-    : isExpandableAnchor(activeTitle)
-      ? getAnchorItemByTitle(activeTitle)
-      : null;
-  const panel = ensureSubsectionsPanel(navItems, hostItem);
+function setPanelExpanded(panel, shouldExpand, { animate }) {
+  const isExpanded = panel.classList.contains(
+    "embeddables-subsections-panel--expanded",
+  );
 
+  if (isExpanded === shouldExpand) {
+    return;
+  }
+
+  if (!animate) {
+    panel.classList.add("embeddables-subsections-panel--instant");
+    panel.classList.toggle(
+      "embeddables-subsections-panel--expanded",
+      shouldExpand,
+    );
+    void panel.offsetHeight;
+    panel.classList.remove("embeddables-subsections-panel--instant");
+    return;
+  }
+
+  panel.classList.remove("embeddables-subsections-panel--instant");
+  void panel.offsetHeight;
   panel.classList.toggle(
     "embeddables-subsections-panel--expanded",
     shouldExpand,
   );
+}
 
-  const immediate =
-    panelExpandState === null || panel.dataset.accordionReady !== "true";
-  panel.dataset.accordionReady = "true";
-  panelExpandState = shouldExpand;
+function updateSubsectionVisibility(navItems) {
+  const activeTitle = getActiveAnchorTitle();
+  const shouldExpand = shouldShowSubsections(activeTitle);
+  const hostItem = isExpandableAnchor(activeTitle)
+    ? getAnchorItemByTitle(activeTitle)
+    : null;
 
-  animateHeight(panel, shouldExpand, { immediate });
+  const panel = ensureSubsectionsPanel(navItems, hostItem);
+  const shouldAnimate = animatePanelToggle;
+  animatePanelToggle = false;
+
+  setPanelExpanded(panel, shouldExpand, { animate: shouldAnimate });
 }
 
 function updateChevronStates() {
@@ -415,15 +467,14 @@ function updateChevronStates() {
 
   for (const item of document.querySelectorAll(ANCHOR_SELECTOR)) {
     const link = getAnchorLink(item);
-    const chevron = item.querySelector(".embeddables-anchor-chevron");
+    const chevron = item.querySelector(":scope > .embeddables-anchor-chevron");
 
     if (!link || !chevron) {
       continue;
     }
 
     const title = normalizeLabel(link.textContent);
-    const isActive = title === activeTitle;
-    const isExpanded = isActive && expanded;
+    const isExpanded = title === activeTitle && expanded;
 
     chevron.setAttribute("aria-expanded", isExpanded ? "true" : "false");
     chevron.classList.toggle(
@@ -436,7 +487,7 @@ function updateChevronStates() {
 function bindAnchorInteractions() {
   for (const item of document.querySelectorAll(ANCHOR_SELECTOR)) {
     const link = getAnchorLink(item);
-    const chevron = item.querySelector(".embeddables-anchor-chevron");
+    const chevron = item.querySelector(":scope > .embeddables-anchor-chevron");
 
     if (!link || link.dataset.embeddablesBound === "true") {
       continue;
@@ -446,11 +497,9 @@ function bindAnchorInteractions() {
 
     link.addEventListener("click", () => {
       const title = normalizeLabel(link.textContent);
-
       if (isExternalAnchor(link) || FLAT_ANCHORS.has(title)) {
         return;
       }
-
       setAnchorExpanded(title, true);
     });
 
@@ -468,6 +517,7 @@ function bindAnchorInteractions() {
       const activeTitle = getActiveAnchorTitle();
 
       if (title === activeTitle) {
+        animatePanelToggle = true;
         setAnchorExpanded(title, !isAnchorExpanded(title));
         updateSidebarCollapse();
         return;
@@ -485,9 +535,31 @@ function enhanceAnchorItems() {
     if (!link) {
       continue;
     }
-
-    wrapAnchorItem(item, link);
+    enhanceAnchorItem(item, link);
   }
+}
+
+function navNeedsEnhancement(navItems) {
+  const anchors = navItems.querySelectorAll(ANCHOR_SELECTOR);
+  if (!anchors.length) {
+    return false;
+  }
+
+  if (navItems.dataset.embeddablesReady !== "true") {
+    return true;
+  }
+
+  // React wiped our chevron/panel enhancements.
+  if (!navItems.querySelector(".embeddables-anchor-item")) {
+    return true;
+  }
+
+  // Fresh Mintlify groups appeared outside the accordion panel.
+  if ([...navItems.children].some(isLooseSubsection)) {
+    return true;
+  }
+
+  return false;
 }
 
 function updateSidebarCollapse() {
@@ -502,50 +574,59 @@ function updateSidebarCollapse() {
 
   isUpdating = true;
 
-  try {
-    enhanceAnchorItems();
-    bindAnchorInteractions();
-    updateSubsectionVisibility(navItems);
-    updateChevronStates();
-    maybeResetCliGroupState();
-    bindSidebarGroupToggles();
-  } finally {
-    isUpdating = false;
-  }
+  withObserverSuppressed(() => {
+    try {
+      enhanceAnchorItems();
+      bindAnchorInteractions();
+      updateSubsectionVisibility(navItems);
+      updateChevronStates();
+      maybeResetCliGroupState();
+      bindSidebarGroupToggles();
+      navItems.dataset.embeddablesReady = "true";
+    } finally {
+      isUpdating = false;
+    }
+  });
+
+  // React often mutates again right after our pass — verify on next frames.
+  queueEnhancementVerify();
+}
+
+function pollForSidebarSettle(maxChecks = 24, intervalMs = 40) {
+  let checks = 0;
+
+  const tick = () => {
+    const navItems = getNavigationItems();
+    if (navItems && navNeedsEnhancement(navItems)) {
+      updateSidebarCollapse();
+    }
+
+    checks += 1;
+    if (checks < maxChecks) {
+      window.setTimeout(tick, intervalMs);
+    }
+  };
+
+  tick();
 }
 
 function initSidebarCollapse() {
   let attempts = 0;
-  let debounceTimer = null;
 
   const tryUpdate = () => {
     updateSidebarCollapse();
     attempts += 1;
-
     if (!getNavigationItems() && attempts < 20) {
       requestAnimationFrame(tryUpdate);
     }
   };
 
-  const scheduleUpdate = () => {
-    if (debounceTimer) {
-      clearTimeout(debounceTimer);
-    }
-    debounceTimer = setTimeout(() => {
-      updateSidebarCollapse();
-    }, 50);
-  };
-
   tryUpdate();
 
-  // Re-apply after React hydration — Mintlify often rebuilds the sidebar DOM.
-  for (const ms of [100, 400, 1000, 2000]) {
-    setTimeout(updateSidebarCollapse, ms);
-  }
-
   const pathObserver = new MutationObserver(() => {
-    panelExpandState = null;
-    scheduleUpdate();
+    animatePanelToggle = false;
+    // Mintlify replaces sidebar nodes across a few frames after path changes.
+    pollForSidebarSettle();
   });
 
   pathObserver.observe(document.documentElement, {
@@ -561,14 +642,18 @@ function initSidebarCollapse() {
     }
 
     const sidebarObserver = new MutationObserver(() => {
-      // Don't interrupt an in-flight soft close/open.
-      const animating = sidebar.querySelector(
-        '[data-accordion-animating="true"]',
-      );
-      if (animating) {
+      if (suppressObserver || isUpdating) {
         return;
       }
-      scheduleUpdate();
+
+      const navItems = getNavigationItems();
+      if (!navItems) {
+        return;
+      }
+
+      if (navNeedsEnhancement(navItems)) {
+        updateSidebarCollapse();
+      }
     });
 
     sidebarObserver.observe(sidebar, {
