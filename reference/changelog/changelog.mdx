@@ -4,6 +4,30 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="14 July 2026">
+### 🔥 Features and Updates
+
+- 📊 **Traffic & Audience Breakdowns (Crosstabs)** – The Analytics Hub now supports two-dimensional breakdowns: set both a **Rows** and a **Columns** dimension (for example Medium × Traffic Source) to build a crosstab report powered by new ClickHouse pivot queries. The Rows and Columns pickers now disable only the conflicting dimension instead of blocking a whole group, and unsupported combinations are hidden from the dropdowns entirely.
+- 👁️ **Show / Hide Rows & Columns in Analytics Tables** – Funnel, conversions, and breakdown tables share a redesigned show/hide experience: a toolbar above each table toggles editing, individual rows and columns can be hidden and restored, hidden columns are managed from a dropdown with a count badge, and tables scroll horizontally with a frozen first column so metric columns stay aligned. Hidden selections persist with the saved view.
+- 🧪 **Exclude Test Users** – A new **Exclude test users** switch and field-key multiselect in the Analytics Hub lets you filter out test contacts from reports by matching selected answer keys. Matching is substring-based on `test`, so values such as `contest@` may also be excluded.
+- 🤖 **Assign AI-Created Tasks to Any Project Member** – The `create_task` and `update_task` MCP tools now accept an `assignee` by name or email and resolve it to any member of the project, not just the calling user. A companion lookup tool surfaces project members (excluding the AI assistant) so assignments can be resolved automatically.
+
+### ⚡️ Improvements
+
+- **Collapsible Report Settings Panel** – The Analytics Hub report controls now live in a collapsible right sidebar with a **Settings** header and toggle. The collapsed state is remembered per project, and the panel stays mounted while collapsed so report validation keeps running.
+- **Collapsible Hidden-Rows Divider** – Hidden rows and steps now stay in place behind a compact "N rows/steps hidden" divider instead of sinking to the bottom or distorting the table. Expand it to restore items individually or use **Show all**.
+- **Clearer Table Editing Controls** – The table editing toggle is now labelled **Show/hide rows and columns**, and columns are hidden with an eye-off icon instead of a close (X) icon.
+- **Consistent Table Typography** – The total-traffic row in the conversions table now uses the same font size as the other rows, with emphasis conveyed through weight and row tint instead.
+- Removed a redundant note under the funnel percentage-base control that duplicated the helper text already shown above it.
+
+### 🐞 Bug Fixes
+
+- **Analytics Date Picker Across Timezones** – The Analytics Hub date picker no longer shows future dates or a default range that lands on the wrong day when the browser and project timezones differ; presets and the maximum selectable date are now region-aware and align with the project's "today".
+- **Date Range Sticking to the Wrong Timezone** – Auto preset ranges are now re-derived once the project region resolves after load, without overwriting an explicit date range the user has already picked.
+- **Hidden Rows & Columns Persistence** – Saved hidden rows and columns no longer reappear after a reload. A transient empty embeddable selection during navigation no longer wipes just-hydrated hidden rows, and stale hidden keys are cleared correctly when the embeddable, sub-key, or column dimension changes.
+- **Breakdown Column Truncation in Production** – Long breakdown column headers now truncate with an ellipsis (and reveal the full value on hover) in production builds, where competing CSS width rules previously prevented the cap from applying.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
