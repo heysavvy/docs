@@ -182,16 +182,6 @@
         ]
       },
       {
-        "anchor": "Glossary",
-        "icon": "book",
-        "pages": ["reference/glossary/glossary"]
-      },
-      {
-        "anchor": "Changelog",
-        "icon": "list",
-        "pages": ["reference/changelog/changelog"]
-      },
-      {
         "anchor": "Guides & Best Practices",
         "icon": "book-open-reader",
         "pages": [
@@ -240,6 +230,14 @@
               "how-to/run-custom-code-on-load"
             ]
           }
+        ]
+      },
+      {
+        "anchor": "Resources",
+        "icon": "folder-open",
+        "pages": [
+          "reference/glossary/glossary",
+          "reference/changelog/changelog"
         ]
       },
       {

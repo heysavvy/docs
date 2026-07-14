@@ -8,12 +8,7 @@
 
 const EXPANDED_STORAGE_KEY = "embeddables-sidebar-expanded";
 const ANCHOR_SELECTOR = "#navigation-items > ul.list-none > li";
-const FLAT_ANCHORS = new Set([
-  "Welcome",
-  "Glossary",
-  "Changelog",
-  "Contact Support",
-]);
+const FLAT_ANCHORS = new Set(["Welcome", "Contact Support"]);
 const CLI_GROUP_SELECTOR = 'li[data-title="CLI"]';
 const ACCORDION_MS = 450;
 const ACCORDION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
