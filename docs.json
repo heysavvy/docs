@@ -8,116 +8,109 @@
     "dark": "#6254f3"
   },
   "favicon": "/favicon.png",
+  "interaction": {
+    "drilldown": false
+  },
+  "custom": {
+    "css": ["style.css"],
+    "scripts": ["sidebar-collapse.js"]
+  },
   "navigation": {
     "anchors": [
       {
+        "anchor": "Welcome",
+        "icon": "hand-wave",
+        "pages": ["welcome"]
+      },
+      {
         "anchor": "Documentation",
         "icon": "book-open",
-        "groups": [
+        "pages": [
           {
-            "group": "Get Started",
-            "pages": ["welcome", "5-min-onboarding", "faqs"]
-          },
-          {
-            "group": "CLI",
+            "group": "Environments",
+            "expanded": false,
             "pages": [
-              "cli/overview",
-              "cli/commands",
-              "cli/development",
-              "cli/ai",
-              "cli/faqs",
-              "cli/troubleshooting",
-              "reference/changelog/cli-changelog"
+              {
+                "group": "CLI",
+                "icon": "terminal",
+                "expanded": false,
+                "pages": [
+                  "cli/overview",
+                  "cli/commands",
+                  "cli/development",
+                  "cli/ai",
+                  "cli/troubleshooting",
+                  "reference/changelog/cli-changelog"
+                ]
+              },
+              {
+                "group": "Builder",
+                "icon": "cube",
+                "expanded": false,
+                "pages": ["builder/overview"]
+              },
+              {
+                "group": "Webapp",
+                "icon": "globe",
+                "expanded": false,
+                "pages": ["webapp/overview"]
+              }
             ]
           },
           {
             "group": "Features",
+            "expanded": false,
             "pages": [
               "features/design",
               "features/user-data",
               "features/conditions",
-              "features/split-testing",
               "features/computed-fields",
               "features/actions",
-              "features/stripe-payments",
-              "features/cms",
-              "features/translations",
-              "features/analytics",
               "features/saving-and-version-control",
-              "features/url-params",
-              "features/publish-to-your-site"
-            ]
-          },
-          {
-            "group": "Guides & Best Practices",
-            "pages": [
-              "guides/using-templates",
-              "guides/naming-keys",
+              "guides/user-roles-permissions",
               "guides/hipaa-compliance",
               "guides/storing-data-cookies",
-              "guides/custom-code",
-              "guides/how-best-to-send-data",
-              "guides/passing-data-in-out",
-              "guides/user-roles-permissions",
+              "features/url-params",
               {
                 "group": "Components",
                 "icon": "cube",
+                "expanded": false,
                 "pages": ["guides/components/input-box"]
               }
             ]
           },
           {
-            "group": "How To's",
+            "group": "Implementations",
+            "expanded": false,
             "pages": [
-              {
-                "group": "Logic",
-                "icon": "code-fork",
-                "pages": [
-                  "how-to/display-answers-back-to-user",
-                  "how-to/sync-pages-with-url",
-                  "how-to/dynamically-switch-brands",
-                  "how-to/set-up-none-of-the-above",
-                  "how-to/programmatic-sem-pages-from-cms",
-                  "how-to/control-faqs-from-cms"
-                ]
-              },
+              "features/split-testing",
               {
                 "group": "Payments",
                 "icon": "credit-card",
+                "expanded": false,
                 "pages": [
-                  "how-to/control-stripe-prices-from-cms",
-                  "how-to/place-a-hold-on-payment",
-                  "how-to/use-stripe-coupons-and-promo-codes",
-                  "how-to/assign-default-payment-methods"
+                  {
+                    "group": "Stripe",
+                    "icon": "credit-card",
+                    "expanded": false,
+                    "pages": [
+                      "features/payments/stripe/overview",
+                      "how-to/control-stripe-prices-from-cms",
+                      "how-to/place-a-hold-on-payment",
+                      "how-to/use-stripe-coupons-and-promo-codes",
+                      "how-to/assign-default-payment-methods"
+                    ]
+                  },
+                  "features/payments/paypal"
                 ]
               },
+              "features/cms",
+              "features/translations",
+              "features/testing-and-debugging/debugger",
               {
-                "group": "Passing Data and Analytics",
-                "icon": "code-compare",
-                "pages": [
-                  "how-to/send-data-to-tellescope",
-                  "how-to/send-data-to-telegra-md",
-                  "how-to/send-data-to-klaviyo",
-                  "how-to/send-data-to-customer-io",
-                  "how-to/set-up-webhooks",
-                  "how-to/retrieve-user-data-on-different-device",
-                  "how-to/partial-data-capture",
-                  "how-to/send-data-to-embeddables",
-                  "how-to/securely-call-apis-via-proxy",
-                  "how-to/set-up-hotjar"
-                ]
-              },
-              {
-                "group": "Custom Code",
-                "icon": "square-code",
-                "pages": [
-                  "how-to/add-external-scripts",
-                  "how-to/run-custom-code-on-load"
-                ]
-              },
-              {
-                "group": "Publishing",
-                "icon": "globe-pointer",
+                "group": "Publish to your site",
+                "icon": "rocket-launch",
+                "expanded": false,
                 "pages": [
                   "how-to/embed-in-your-site",
                   "how-to/embed-in-your-webflow-site",
@@ -129,25 +122,33 @@
                   "how-to/embed-backend-integration",
                   "how-to/embed-code-2-0"
                 ]
+              },
+              "how-to/set-up-webhooks",
+              {
+                "group": "Integration and Analytics",
+                "icon": "puzzle-piece",
+                "expanded": false,
+                "pages": [
+                  "how-to/send-data-to-tellescope",
+                  "how-to/send-data-to-telegra-md",
+                  "how-to/send-data-to-klaviyo",
+                  "how-to/send-data-to-customer-io",
+                  "how-to/set-up-hotjar",
+                  "features/analytics"
+                ]
               }
             ]
-          },
-          {
-            "group": "About These Docs",
-            "pages": ["about/who-are-these-docs-for", "about/how-we-write-docs"]
           }
         ]
       },
       {
         "anchor": "API",
         "icon": "code",
-        "groups": [
-          {
-            "group": "API Documentation",
-            "pages": ["api-reference/introduction"]
-          },
+        "pages": [
+          "api-reference/introduction",
           {
             "group": "Embeddables",
+            "expanded": false,
             "pages": [
               "api-reference/embeddables/get-embeddables",
               "api-reference/embeddables/get-embeddable",
@@ -157,6 +158,7 @@
           },
           {
             "group": "Experiments",
+            "expanded": false,
             "pages": [
               "api-reference/experiments/get-experiments",
               "api-reference/experiments/get-experiment"
@@ -164,6 +166,7 @@
           },
           {
             "group": "Entries",
+            "expanded": false,
             "pages": [
               "api-reference/entries/get-entries",
               "api-reference/entries/get-entries-page-views",
@@ -173,29 +176,79 @@
           },
           {
             "group": "Events",
+            "expanded": false,
             "pages": ["api-reference/events/create-event"]
           }
         ]
       },
       {
-        "anchor": "Glossary",
-        "icon": "book",
-        "groups": [
+        "anchor": "Guides & Best Practices",
+        "icon": "book-open-reader",
+        "pages": [
+          "faqs",
+          "guides/using-templates",
+          "guides/naming-keys",
+          "guides/custom-code",
+          "guides/how-best-to-send-data",
+          "guides/passing-data-in-out"
+        ]
+      },
+      {
+        "anchor": "How To's",
+        "icon": "circle-question",
+        "pages": [
           {
-            "group": "Reference",
-            "pages": ["reference/glossary/glossary"]
+            "group": "Logic",
+            "icon": "code-fork",
+            "expanded": false,
+            "pages": [
+              "how-to/display-answers-back-to-user",
+              "how-to/sync-pages-with-url",
+              "how-to/dynamically-switch-brands",
+              "how-to/set-up-none-of-the-above",
+              "how-to/programmatic-sem-pages-from-cms",
+              "how-to/control-faqs-from-cms"
+            ]
+          },
+          {
+            "group": "Passing Data and Analytics",
+            "icon": "code-compare",
+            "expanded": false,
+            "pages": [
+              "how-to/retrieve-user-data-on-different-device",
+              "how-to/partial-data-capture",
+              "how-to/send-data-to-embeddables",
+              "how-to/securely-call-apis-via-proxy"
+            ]
+          },
+          {
+            "group": "Custom Code",
+            "icon": "square-code",
+            "expanded": false,
+            "pages": [
+              "how-to/add-external-scripts",
+              "how-to/run-custom-code-on-load"
+            ]
           }
         ]
       },
       {
-        "anchor": "Changelog",
-        "icon": "list",
-        "groups": [
-          {
-            "group": "Reference",
-            "pages": ["reference/changelog/changelog"]
-          }
+        "anchor": "Resources",
+        "icon": "folder-open",
+        "pages": [
+          "reference/glossary/glossary",
+          "reference/changelog/changelog"
         ]
+      },
+      {
+        "anchor": "About These Docs",
+        "icon": "circle-info",
+        "pages": ["about/who-are-these-docs-for", "about/how-we-write-docs"]
+      },
+      {
+        "anchor": "Contact Support",
+        "icon": "headset",
+        "href": "mailto:team@embeddables.com"
       }
     ]
   },
@@ -239,8 +292,20 @@
       "destination": "/reference/changelog/changelog"
     },
     {
+      "source": "/features/stripe-payments",
+      "destination": "/features/payments/stripe/overview"
+    },
+    {
+      "source": "/5-min-onboarding",
+      "destination": "/builder/overview"
+    },
+    {
       "source": "/cli",
       "destination": "/cli/overview"
+    },
+    {
+      "source": "/cli/faqs",
+      "destination": "/faqs#cli"
     }
   ]
 }
