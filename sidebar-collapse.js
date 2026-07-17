@@ -10,14 +10,23 @@ const EXPANDED_STORAGE_KEY = "embeddables-sidebar-expanded";
 const ANCHOR_SELECTOR = "#navigation-items > ul.list-none > li";
 const FLAT_ANCHORS = new Set(["Welcome", "Contact Support"]);
 const CLI_GROUP_SELECTOR = 'li[data-title="CLI"]';
-const ACCORDION_MS = 450;
-const ACCORDION_EASING = "cubic-bezier(0.22, 1, 0.36, 1)";
+const ACCORDION_CLOSE_MS = 450;
+const ACCORDION_OPEN_MS = 650;
+const ACCORDION_CLOSE_EASING = "cubic-bezier(0.33, 1, 0.68, 1)";
+const ACCORDION_OPEN_EASING = "cubic-bezier(0.33, 0, 0.2, 1)";
 
 let isUpdating = false;
 let suppressObserver = false;
 let cliGroupManuallyExpanded = false;
-/** Soft-animate only when the user clicks a section chevron. */
+/** Soft-animate when the user toggles the active section chevron. */
 let animatePanelToggle = false;
+/**
+ * Section title that should animate open once after navigation settles.
+ * Survives path changes (unlike animatePanelToggle, which pathObserver clears).
+ */
+let pendingAnimateExpandTitle = null;
+/** Ignore instant expand updates while a first-open animation is running. */
+let expandAnimationUntil = 0;
 
 function normalizeLabel(text) {
   return text.replace(/\s+/g, " ").trim();
@@ -165,6 +174,9 @@ function animateHeight(element, open, { immediate = false } = {}) {
     }
   };
 
+  const durationMs = open ? ACCORDION_OPEN_MS : ACCORDION_CLOSE_MS;
+  const easing = open ? ACCORDION_OPEN_EASING : ACCORDION_CLOSE_EASING;
+
   if (open) {
     element.style.transition = "none";
     element.style.height = "0px";
@@ -172,15 +184,17 @@ function animateHeight(element, open, { immediate = false } = {}) {
     void element.offsetHeight;
     const target = element.scrollHeight;
     element.style.transition = [
-      `height ${ACCORDION_MS}ms ${ACCORDION_EASING}`,
-      `opacity ${ACCORDION_MS}ms ease`,
+      `height ${durationMs}ms ${easing}`,
+      `opacity ${Math.round(durationMs * 0.85)}ms ${easing}`,
     ].join(", ");
     requestAnimationFrame(() => {
-      if (element.dataset.accordionToken !== token) {
-        return;
-      }
-      element.style.height = `${target}px`;
-      element.style.opacity = "1";
+      requestAnimationFrame(() => {
+        if (element.dataset.accordionToken !== token) {
+          return;
+        }
+        element.style.height = `${target}px`;
+        element.style.opacity = "1";
+      });
     });
   } else {
     const current =
@@ -192,20 +206,22 @@ function animateHeight(element, open, { immediate = false } = {}) {
     element.style.opacity = "1";
     void element.offsetHeight;
     element.style.transition = [
-      `height ${ACCORDION_MS}ms ${ACCORDION_EASING}`,
-      `opacity ${Math.round(ACCORDION_MS * 0.7)}ms ease`,
+      `height ${durationMs}ms ${easing}`,
+      `opacity ${Math.round(durationMs * 0.75)}ms ${easing}`,
     ].join(", ");
     requestAnimationFrame(() => {
-      if (element.dataset.accordionToken !== token) {
-        return;
-      }
-      element.style.height = "0px";
-      element.style.opacity = "0";
+      requestAnimationFrame(() => {
+        if (element.dataset.accordionToken !== token) {
+          return;
+        }
+        element.style.height = "0px";
+        element.style.opacity = "0";
+      });
     });
   }
 
   element.addEventListener("transitionend", finish);
-  window.setTimeout(finish, ACCORDION_MS + 80);
+  window.setTimeout(finish, durationMs + 120);
 }
 
 function getGroupSubmenu(group, button) {
@@ -429,12 +445,18 @@ function ensureSubsectionsPanel(navItems, hostItem) {
   return panel;
 }
 
-function setPanelExpanded(panel, shouldExpand, { animate }) {
+function setPanelExpanded(panel, shouldExpand, { animate, forceRestart = false }) {
   const isExpanded = panel.classList.contains(
     "embeddables-subsections-panel--expanded",
   );
+  const animationInFlight = Date.now() < expandAnimationUntil;
 
-  if (isExpanded === shouldExpand) {
+  if (isExpanded === shouldExpand && !forceRestart) {
+    return;
+  }
+
+  // Don't let React re-renders snap the panel open while first-open animates.
+  if (!animate && shouldExpand && animationInFlight) {
     return;
   }
 
@@ -449,12 +471,26 @@ function setPanelExpanded(panel, shouldExpand, { animate }) {
     return;
   }
 
+  if (shouldExpand) {
+    // First open / section switch: panel may already be expanded or freshly
+    // mounted. Paint collapsed first, then expand so the transition can run.
+    expandAnimationUntil = Date.now() + ACCORDION_OPEN_MS + 80;
+    panel.classList.add("embeddables-subsections-panel--instant");
+    panel.classList.remove("embeddables-subsections-panel--expanded");
+    void panel.offsetHeight;
+    panel.classList.remove("embeddables-subsections-panel--instant");
+    void panel.offsetHeight;
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.classList.add("embeddables-subsections-panel--expanded");
+      });
+    });
+    return;
+  }
+
   panel.classList.remove("embeddables-subsections-panel--instant");
   void panel.offsetHeight;
-  panel.classList.toggle(
-    "embeddables-subsections-panel--expanded",
-    shouldExpand,
-  );
+  panel.classList.remove("embeddables-subsections-panel--expanded");
 }
 
 function updateSubsectionVisibility(navItems) {
@@ -465,10 +501,32 @@ function updateSubsectionVisibility(navItems) {
     : null;
 
   const panel = ensureSubsectionsPanel(navItems, hostItem);
-  const shouldAnimate = animatePanelToggle;
+  const pendingMatches =
+    Boolean(pendingAnimateExpandTitle) &&
+    activeTitle === pendingAnimateExpandTitle;
+  const shouldAnimate = animatePanelToggle || pendingMatches;
+  const expandedFor = panel.dataset.expandedForTitle || "";
+  const switchingSection =
+    shouldExpand && shouldAnimate && expandedFor !== activeTitle;
+
   animatePanelToggle = false;
 
-  setPanelExpanded(panel, shouldExpand, { animate: shouldAnimate });
+  setPanelExpanded(panel, shouldExpand, {
+    animate: shouldAnimate,
+    forceRestart: switchingSection,
+  });
+
+  if (shouldExpand && activeTitle) {
+    panel.dataset.expandedForTitle = activeTitle;
+  } else if (!shouldExpand) {
+    delete panel.dataset.expandedForTitle;
+  }
+
+  // Keep pending until the active section matches, so early settle passes
+  // (before aria-current updates) don't drop the animation intent.
+  if (pendingMatches) {
+    pendingAnimateExpandTitle = null;
+  }
 }
 
 function updateChevronStates() {
@@ -510,6 +568,7 @@ function bindAnchorInteractions() {
       if (isExternalAnchor(link) || FLAT_ANCHORS.has(title)) {
         return;
       }
+      pendingAnimateExpandTitle = title;
       setAnchorExpanded(title, true);
     });
 
@@ -533,6 +592,9 @@ function bindAnchorInteractions() {
         return;
       }
 
+      // Opening another section navigates — keep animation intent across the
+      // path change (pathObserver clears animatePanelToggle).
+      pendingAnimateExpandTitle = title;
       setAnchorExpanded(title, true);
       link.click();
     });
@@ -654,6 +716,8 @@ function initSidebarCollapse() {
   tryUpdate();
 
   const pathObserver = new MutationObserver(() => {
+    // Keep pendingAnimateExpandTitle so the first open after navigation can
+    // still animate. Only clear the same-page toggle flag.
     animatePanelToggle = false;
     // Mintlify replaces sidebar nodes across a few frames after path changes.
     pollForSidebarSettle();
