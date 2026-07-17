@@ -247,6 +247,17 @@ function setGroupExpanded(
   animateHeight(submenu, expanded, { immediate });
 }
 
+function isCliGroupOutOfSync(group, button, submenu, preferredExpanded) {
+  const openAttr = preferredExpanded ? "true" : "false";
+  const hasExpandedClass = group.classList.contains("embeddables-cli-expanded");
+
+  return (
+    submenu.dataset.accordionOpen !== openAttr ||
+    button.getAttribute("aria-expanded") !== openAttr ||
+    hasExpandedClass !== preferredExpanded
+  );
+}
+
 function bindSidebarGroupToggles() {
   const groups = document.querySelectorAll("#sidebar-content li[data-title]");
 
@@ -263,7 +274,6 @@ function bindSidebarGroupToggles() {
       ? cliGroupManuallyExpanded
       : button.getAttribute("aria-expanded") === "true" ||
         group.classList.contains("embeddables-group-expanded");
-    const openAttr = preferredExpanded ? "true" : "false";
 
     if (submenu.dataset.accordionReady !== "true") {
       submenu.dataset.accordionReady = "true";
@@ -272,9 +282,11 @@ function bindSidebarGroupToggles() {
       });
     } else if (
       isCli &&
-      submenu.dataset.accordionOpen !== openAttr &&
-      submenu.dataset.accordionAnimating !== "true"
+      submenu.dataset.accordionAnimating !== "true" &&
+      isCliGroupOutOfSync(group, button, submenu, preferredExpanded)
     ) {
+      // Mintlify re-expands CLI on /cli/* pages; re-assert closed unless
+      // the user explicitly opened it.
       setGroupExpanded(group, button, submenu, preferredExpanded, {
         immediate: true,
       });
@@ -292,10 +304,13 @@ function bindSidebarGroupToggles() {
         event.preventDefault();
         event.stopImmediatePropagation();
 
-        const next = button.getAttribute("aria-expanded") !== "true";
         if (isCli) {
-          cliGroupManuallyExpanded = next;
+          cliGroupManuallyExpanded = !cliGroupManuallyExpanded;
+          setGroupExpanded(group, button, submenu, cliGroupManuallyExpanded);
+          return;
         }
+
+        const next = button.getAttribute("aria-expanded") !== "true";
         setGroupExpanded(group, button, submenu, next);
       },
       true,
@@ -534,6 +549,21 @@ function enhanceAnchorItems() {
   }
 }
 
+function cliNeedsResync() {
+  const group = document.querySelector(CLI_GROUP_SELECTOR);
+  if (!group) {
+    return false;
+  }
+
+  const button = group.querySelector(":scope > button");
+  const submenu = getGroupSubmenu(group, button);
+  if (!button || !submenu) {
+    return false;
+  }
+
+  return isCliGroupOutOfSync(group, button, submenu, cliGroupManuallyExpanded);
+}
+
 function navNeedsEnhancement(navItems) {
   const anchors = navItems.querySelectorAll(ANCHOR_SELECTOR);
   if (!anchors.length) {
@@ -551,6 +581,11 @@ function navNeedsEnhancement(navItems) {
 
   // Fresh Mintlify groups appeared outside the accordion panel.
   if ([...navItems.children].some(isLooseSubsection)) {
+    return true;
+  }
+
+  // Mintlify auto-expands CLI on active /cli/* pages.
+  if (cliNeedsResync()) {
     return true;
   }
 

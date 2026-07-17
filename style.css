@@ -159,6 +159,30 @@
   overflow: hidden;
 }
 
+/*
+  Keep CLI collapsed by default. Mintlify auto-expands the active nested group
+  (Documentation's first page is under CLI), so we hide it unless the user has
+  expanded it via the sidebar script (.embeddables-cli-expanded).
+*/
+#sidebar-content li[data-title="CLI"]:not(.embeddables-cli-expanded) > ul {
+  height: 0 !important;
+  opacity: 0 !important;
+  overflow: hidden !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  border: 0 !important;
+  pointer-events: none;
+}
+
+#sidebar-content
+  li[data-title="CLI"]:not(.embeddables-cli-expanded)
+  > button
+  svg {
+  transform: rotate(0deg) !important;
+}
+
 .tella-video {
   position: relative;
   padding-bottom: 56.25%;
