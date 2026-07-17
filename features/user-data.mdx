@@ -5,121 +5,77 @@ icon: "database"
 description: "Storing and using data about your users"
 ---
 
-In Embeddables, **User Data** refers to the current data stored on a given user.
+**User Data** is the current data stored for a given user. It is a JSON object of properties, such as:
 
-User Data exists as a JSON object of properties. These properties could be:
-- Answers the user gave to questions (the key would be the input component's key)
-- A value calculated by a [Computed Field](/features/computed-fields) (the key would be the computed field's key)
-- A value set by an [Experiment](/features/split-testing) (the key would be the experiment's key)
-- Other types of properties (see full list below)
-
-## Where is User Data stored?
-
-User Data is stored in three places, or 'contexts', and each one usually stored a different amount of data.
-
-<Tip>
-  Contexts are cascading, so if a property is stored in #2, it will also be stored in #1 as well, and so on.
-</Tip>
-
-1. **Embeddable Context** - This is the full User Data, and is stored within the Embeddable itself. It is not available after the user refreshes or closes the tab.
-2. **Local Storage Context** - This is the subset of User Data that is stored in the user's browser, in Local Storage. It's used to remember a user's answers and position in the flow after they close the tab and return later.
-3. **Embeddables Cloud Context** - This is the smallest subset of User Data that is stored in Embeddables' databases. It is used for displaying analytics insights in the Embeddables Web App.
-
-## How to set whether/where a User Data property is stored
-
-<Note>
-  This feature is coming soon to the New Builder.
-
-  In the meantime, ask Embeddables support to show you how to set this in the component JSON.
-</Note>
-
+- Answers from input components (keyed by the component key).
+- Values from [Computed Fields](/features/computed-fields).
+- Values from [Experiments](/features/split-testing).
+- URL params, automatic data, and other registered keys.
 
 ## Types of User Data
 
-| Type                | Example                      | Typical Use-Case                                        |
-| ------------------- | ---------------------------- | ------------------------------------------------------- |
-| **Automatic Data**  | `current_page_key`           | Sending the user's current page to an API               |
-| **Answers**         | `weight`                     | Asking the user for their details                       |
-| **Computed Fields** | `bmi`                        | Calculating a value to decide if the user is eligible   |
-| **Experiment Data** | `split_title_length`         | Using the user's current variant to show or hide a page |
-| **URL Params**      | `utm_source`                 | Setting a condition based on the user's traffic source  |
-| **Registered Keys** | `access_token`               | Storing the result of an API request                    |
+| Type | Example | Typical use case |
+| --- | --- | --- |
+| **Automatic data** | `current_page_key` | Send the user's current page to an API |
+| **Answers** | `weight` | Collect details from the user |
+| **Computed Fields** | `bmi` | Calculate a value for eligibility or display |
+| **Experiment data** | `split_title_length` | Show or hide content by variant |
+| **URL params** | `utm_source` | Branch logic based on traffic source |
+| **Registered keys** | `access_token` | Store the result of an API request |
 
-## User Data keys and key naming
+## Where User Data is stored
 
-You can read our full guide to best practices for naming keys in Embeddables here:
+User Data lives in three cascading contexts. If a property is stored in a deeper context, it is also available in the ones above it.
+
+1. **Embeddable context** — the full User Data object inside the Embeddable. Cleared when the user refreshes or closes the tab.
+2. **Local Storage context** — a subset stored in the browser. Remembers answers and flow position when the user returns later.
+3. **Embeddables Cloud context** — the smallest subset, stored in Embeddables databases for analytics in the Web App.
+
+### Control where a property is stored
+
+<Note>
+  This setting is coming soon to the New Builder. Until then, ask Embeddables support how to configure storage in the component JSON.
+</Note>
+
+## Keys and naming
+
+Input components write into User Data using their **component key** as the property name. If an input has the key `name`, User Data looks like:
+
+```json
+{
+  "name": "John Doe"
+}
+```
+
+Choose keys carefully — especially for inputs — because they become User Data property names.
 
 <Card
   title="Naming keys correctly in Embeddables"
   icon="key"
   href="/guides/naming-keys"
 >
-  Learn how to choose good names for component keys, Computed Fields and more.
+  Full guide to naming component keys, Computed Fields, and other User Data keys.
 </Card>
 
-### Input component keys
+### Naming rules
 
-Input components, i.e. components that collect data from the user, are special in that they store their data in the User Data.
+- Use `snake_case`: lowercase letters and underscores only (no numbers, spaces, or special characters).
+- Experiment keys must start with `split_`.
+- Prefer short, descriptive names that describe the **data**, not the component (for example, `full_name`, not `full_name_input`).
 
-This means that **the key name you choose for an input component will also be the property key name for that field in the User Data**.
+### Keep keys unique
 
-For example, if you have an input component with the key `name`, the User Data will look like this:
-
-```json
-{
-  ...
-  "name": "John Doe"
-  ...
-}
-```
-
-For this reason, it's especially important to choose good key names for input components.
-
-## Choosing good key names
-
-- All keys must be in `snake_case`, meaning:
-  - lowercase letters and underscores only
-  - no numbers
-  - no special characters
-  - no spaces
-  - no uppercase letters
-- All experiment keys must start with `split_`.
-
-### Input component keys, and other keys that end up in the User Data:
-- Should be short and descriptive (e.g. `full_name`).
-- Should describe the data it's collecting, not the component (e.g. `full_name` not `full_name_input`).
-- Should be unique within the Embeddable, except in very special cases (see below).
-
-## Keeping keys unique
-
-All keys, whether component keys or other User Data keys, must be unique within the Embeddable.
-
-The only exception to this rule is if you're handling multiple input components that will be 'swapped out' - i.e. shown/hidden such that only one of them is visible at a time.
-
-The most common use-case of this is a [Split Test](/features/split-testing), e.g. testing between two different email capture pages, both containing an input component with the key `email`.
+Keys must be unique within an Embeddable, with one exception: multiple inputs that are swapped so only one is visible at a time (for example, two email capture variants in a [split test](/features/split-testing) that both use the key `email`).
 
 ## Default User Data
 
-Default User Data allows you to set initial values for User Data properties when an Embeddable loads. These values are automatically added to the User Data object before the user interacts with your Embeddable.
+Default User Data sets initial values when an Embeddable loads. Values are stored in `defaults.userData` and applied before the user interacts with the flow.
 
-### How it works
+### Set default values
 
-When you set default User Data:
-
-1. The values are stored in the `defaults.userData` property of your Embeddable configuration
-2. When a user loads the Embeddable, these default values are automatically added to their User Data
-3. Default values are applied during the reset process - when User Data is cleared, default values are preserved and reapplied
-
-### Setting default User Data
-
-You can set default User Data through the Builder UI:
-
-1. In the Builder, navigate to the Options panel for your Embeddable
-2. Look for the "Edit default user data JSON" option
-3. Click to open the JSON editor modal
-4. Add your default values as key-value pairs in JSON format
-
-Example:
+1. Open the Embeddable **Options** panel in the Builder.
+2. Click **Edit default user data JSON**.
+3. Add key-value pairs in JSON format.
 
 ```json
 {
@@ -129,40 +85,44 @@ Example:
 }
 ```
 
-### Use cases
+Common uses:
 
-Default User Data is useful for:
+- Pre-fill form fields users can change.
+- Set starting values for conditions or other logic.
+- Attach default tracking metadata for the session.
 
-- **Pre-filling form fields** - Set default values that users can modify
-- **Setting initial state** - Define starting values for conditions or logic
-- **Tracking metadata** - Add default tracking parameters that persist throughout the user's session
+### How defaults behave on reset
 
-### Important limitations
+When User Data is reset:
+
+1. Most properties are cleared.
+2. System properties (such as `entryId` and `current_page_id`) are preserved.
+3. Computed field and experiment keys are preserved.
+4. Default User Data values are reapplied.
+
+Defaults do **not** overwrite an existing value for a key unless User Data is reset.
+
+### Limitations
 
 <Warning>
-  **Not recommended for Computed Fields** - Default User Data should not be used to set values for computed fields. The update sequence could cause computed fields to override default values before you intend them to. Computed fields should set their own default values, and using both would create conflicts.
+  Do not use defaults for **Computed Field** keys. Computed fields manage their own values; defaults can conflict with the update sequence.
 </Warning>
 
 <Warning>
-  **Not recommended for Experiment data** - Default User Data should not be used to initialize experiment-related data. The Experiments feature handles setting that data automatically, and using both would create conflicts.
+  Do not use defaults for **experiment** keys. Experiments set that data automatically.
 </Warning>
 
 <Note>
-  **Requires Registered Keys** - If you want to set default User Data for keys that aren't already created by components, computed fields, or other features, you must add those keys to Registered Keys. This ensures the Embeddable is aware of them and can watch for changes.
+  Defaults for keys that are not created by components, computed fields, or other features require those keys to be added as **Registered Keys**, so the Embeddable can track them.
 </Note>
 
-### Behavior with reset
+## Related features
 
-When you reset User Data (either programmatically or through user actions), default User Data values are preserved and reapplied. This ensures that your Embeddable always starts with the correct initial state.
-
-The reset process:
-1. Clears most User Data properties
-2. Preserves system properties (like `entryId`, `current_page_id`, etc.)
-3. Preserves computed fields and experiment keys
-4. Reapplies all default User Data values
-
-<Note>
-  Default User Data values will not override existing User Data. If a user already has a value for a key, the default will not replace it unless the User Data is reset.
-</Note>
-
-
+<CardGroup cols={2}>
+  <Card title="Computed Fields" icon="brackets-curly" href="/features/computed-fields">
+    Calculate new User Data values from existing data.
+  </Card>
+  <Card title="Conditions" icon="split" href="/features/conditions">
+    Show or hide content based on User Data.
+  </Card>
+</CardGroup>

@@ -5,147 +5,143 @@ icon: "split"
 description: "Hiding/showing content based on the user's answers and other logic"
 ---
 
-**Conditions** are one of Embeddable's powerful logic features, and have a variety of use-cases.
+**Conditions** show or hide a page or component based on a property in [User Data](/features/user-data).
 
-A Condition decides whether a page or component is shown or hidden, based on the value of a property in [User Data](/features/user-data).
+You define which values are acceptable for a key. If the User Data property matches, the page or component is shown; otherwise it is hidden.
 
-To set up a Condition, you define which values are acceptable for a User Data property. If the property has those values, then the page or component is shown - if not, then it is hidden.
+Think of a condition as an equation: **key** + **operator** + **value**.
 
-## Showing/Hiding a component or page with Conditions
+For example, to show a warning for users under 18, the condition is effectively `age_range = 'under_18'`:
+
+- **Key** — `age_range`
+- **Operator** — `Is or includes`
+- **Value** — `under_18`
+
+## Add a condition
 
 <Steps>
-  <Step title="Go to the Page/Component Options">
-    - Select the page or component, in the Layers sidebar or (in the case of a component) in the central preview pane.
-    - Make sure you're on the Content tab at the top-left.
-    - Click on Options in the tabs at the top of the right-hand sidebar.
+  <Step title="Open page or component Options">
+    - Select the page or component in the Layers sidebar or preview pane.
+    - Make sure you are on the **Content** tab at the top-left.
+    - Open **Options** in the right-hand sidebar.
   </Step>
-  <Step title="Add a Condition">
-    - Click the `+ Add condition` button.
-    - Choose the **key** in User Data that you want to impact whether this page/component is shown or hidden.
-    - Choose the type of **operator** for the Condition - usually this is `Is or includes`.
-    - Choose the **value** that should make this page/component be shown.
-
-    <Tip>
-      The way to think about key, operators and values in a Condition is **like an equation**.
-      
-      For example, you might want to display a some warning text to users under 18, so the condition is effectively `age_range = 'under_18'`.
-      
-      Here, `age_range` is the **key**, `Is or includes` is the **operator**, and `under_18` is the **value**.
-    </Tip>
-
+  <Step title="Configure the condition">
+    - Click **+ Add condition**.
+    - Choose the User Data **key** that should control visibility.
+    - Choose an **operator** (usually `Is or includes`).
+    - Choose the **value** that should show the page or component.
   </Step>
-
 </Steps>
 
-## Available Condition Operators
+## Operators
 
-Below is a detailed explanation of each operator type you can use in Conditions, and exactly how they work:
+### Match
 
 <AccordionGroup>
   <Accordion title="Is or includes (==)">
-    This operator checks if the user data value matches any of the specified values.
-    
-    For single values:
-    - Returns true if the user data exactly matches any of the specified values
-    - Returns true if `_no_value` is specified and the user data is undefined/null
-    - Returns false otherwise
-    
-    For arrays:
-    - Returns true if any of the specified values are included in the user data array
-    - Returns true if `_no_value` is specified and any value in the user data array is undefined/null
-    - Returns false otherwise
+    Checks whether the User Data value matches any of the specified values.
 
-    <Tip>
-      Special values like `_true` and `_false` will be automatically converted to their boolean equivalents.
-    </Tip>
+    For single values:
+
+    - Returns true if the value exactly matches any specified value.
+    - Returns true if `_no_value` is specified and the value is undefined or null.
+    - Returns false otherwise.
+
+    For arrays:
+
+    - Returns true if any specified value is included in the array.
+    - Returns true if `_no_value` is specified and any array item is undefined or null.
+    - Returns false otherwise.
   </Accordion>
 
   <Accordion title="Is not or excludes (!=)">
-    This operator checks if the user data value does NOT match any of the specified values.
-    
+    Checks whether the User Data value does **not** match any of the specified values.
+
     For single values:
-    - Returns true if the user data does not match any of the specified values
-    - Returns true if `_no_value` is specified and the user data exists
-    - Returns false otherwise
-    
+
+    - Returns true if the value does not match any specified value.
+    - Returns true if `_no_value` is specified and the value exists.
+    - Returns false otherwise.
+
     For arrays:
-    - Returns true if none of the specified values are included in the user data array
-    - Returns true if `_no_value` is specified and all values in the user data array exist
-    - Returns false otherwise
 
-    <Tip>
-      Special values like `_true` and `_false` will be automatically converted to their boolean equivalents.
-    </Tip>
-  </Accordion>
-
-  <Accordion title="Exists">
-    Checks if the user data value exists (is not undefined or null).
-    
-    For single values:
-    - Returns true if the value is defined and not null
-    - Returns false otherwise
-    
-    For arrays:
-    - Returns true if the array contains any defined, non-null values
-    - Returns false if the array is empty or contains only undefined/null values
-  </Accordion>
-
-  <Accordion title="Does not exist (!exists)">
-    Checks if the user data value does not exist (is undefined or null).
-    
-    For single values:
-    - Returns true if the value is undefined or null
-    - Returns false otherwise
-    
-    For arrays:
-    - Returns true if the array is empty or contains only undefined/null values
-    - Returns false if the array contains any defined, non-null values
-  </Accordion>
-
-  <Accordion title="Is true (is-true)">
-    Checks if the user data value is exactly the value `_true`.
-    - Returns true only if the value is strictly equal to `_true`
-    - Returns false for any other value
-  </Accordion>
-
-  <Accordion title="Is false (is-false)">
-    Checks if the user data value is exactly the value `_false`.
-    - Returns true only if the value is strictly equal to `_false`
-    - Returns false for any other value
-  </Accordion>
-
-  <Accordion title="Is not true (is-not-true)">
-    Checks if the user data value is not the value `_true`.
-    - Returns true for any value that is not strictly equal to `_true`
-    - Returns false only if the value is strictly equal to `_true`
-  </Accordion>
-
-  <Accordion title="Is not false (is-not-false)">
-    Checks if the user data value is not the value `_false`.
-    - Returns true for any value that is not strictly equal to `_false`
-    - Returns false only if the value is strictly equal to `_false`
-  </Accordion>
-
-  <Accordion title="Is empty (is-empty)">
-    Checks if the user data value is empty. A value is considered empty if it is:
-    - undefined
-    - null
-    - An empty array (length = 0)
-    - An empty string (or string containing only whitespace)
-  </Accordion>
-
-  <Accordion title="Is not empty (is-not-empty)">
-    Checks if the user data value is not empty. A value is considered not empty if it is:
-    - defined and not null
-    - A non-empty array (length > 0)
-    - A non-empty string (containing at least one non-whitespace character)
+    - Returns true if none of the specified values are in the array.
+    - Returns true if `_no_value` is specified and all array items exist.
+    - Returns false otherwise.
   </Accordion>
 </AccordionGroup>
 
 <Tip>
-  When working with arrays in conditions, remember that the behavior can be different from single values. For example, the "Is or includes" operator will match if ANY of the specified values are found in the array, while "Is not or excludes" will only match if NONE of the specified values are found.
+  For arrays, **Is or includes** matches if **any** listed value is present. **Is not or excludes** matches only if **none** of the listed values are present.
 </Tip>
 
-<Tip>
-  Special values like `_true`, `_false`, and `_no_value` are automatically converted to their appropriate types when used in conditions. For example, `_true` becomes the boolean value `true` when evaluated.
-</Tip>
+### Existence
+
+<AccordionGroup>
+  <Accordion title="Exists">
+    Checks whether the value exists (not undefined or null).
+
+    - Single values: true if defined and not null.
+    - Arrays: true if the array contains any defined, non-null values.
+  </Accordion>
+
+  <Accordion title="Does not exist (!exists)">
+    Checks whether the value does not exist (undefined or null).
+
+    - Single values: true if undefined or null.
+    - Arrays: true if the array is empty or contains only undefined or null values.
+  </Accordion>
+</AccordionGroup>
+
+### Boolean
+
+These operators compare against the special values `_true` and `_false`.
+
+<AccordionGroup>
+  <Accordion title="Is true (is-true)">
+    Returns true only if the value is strictly equal to `_true`.
+  </Accordion>
+  <Accordion title="Is false (is-false)">
+    Returns true only if the value is strictly equal to `_false`.
+  </Accordion>
+  <Accordion title="Is not true (is-not-true)">
+    Returns true for any value that is not strictly equal to `_true`.
+  </Accordion>
+  <Accordion title="Is not false (is-not-false)">
+    Returns true for any value that is not strictly equal to `_false`.
+  </Accordion>
+</AccordionGroup>
+
+### Empty
+
+<AccordionGroup>
+  <Accordion title="Is empty (is-empty)">
+    Returns true if the value is:
+
+    - undefined or null
+    - an empty array
+    - an empty string, or a string with only whitespace
+  </Accordion>
+  <Accordion title="Is not empty (is-not-empty)">
+    Returns true if the value is:
+
+    - defined and not null
+    - a non-empty array
+    - a string with at least one non-whitespace character
+  </Accordion>
+</AccordionGroup>
+
+## Special values
+
+In conditions, `_true`, `_false`, and `_no_value` are converted to the appropriate types when evaluated (for example, `_true` becomes the boolean `true`).
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="User Data" icon="database" href="/features/user-data">
+    The data properties that conditions evaluate.
+  </Card>
+  <Card title="Computed Fields" icon="brackets-curly" href="/features/computed-fields">
+    Derive values you can use as condition keys.
+  </Card>
+</CardGroup>
