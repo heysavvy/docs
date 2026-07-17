@@ -1,0 +1,100 @@
+---
+title: "Components: Progress Bar"
+sidebarTitle: "Progress Bar"
+description: "How to use the Progress Bar component in Embeddables"
+---
+
+The **Progress Bar** shows how far a user is through your flow. Use it in global components (for example page top) so it appears across pages.
+
+Configure it through **Configuration**, **Content**, and **More**.
+
+## Configuration
+
+<AccordionGroup>
+  <Accordion title="Progress type">
+    Visual style of the progress indicator:
+
+    | Value | Meaning |
+    | --- | --- |
+    | `simple` | Horizontal bar |
+    | `circle` | Circular progress |
+    | `custom` | Custom progress presentation |
+  </Accordion>
+
+  <Accordion title="Allow navigation">
+    Allow users to navigate by interacting with progress nodes (when supported by the progress type).
+  </Accordion>
+
+  <Accordion title="Fill connectors">
+    Fill the connector segments between progress nodes as the user advances.
+  </Accordion>
+
+  <Accordion title="Show progress percentage">
+    Show a percent or fraction label with the bar.
+  </Accordion>
+
+  <Accordion title="Percentage type">
+    How the label is calculated:
+
+    - **`percent-complete`** — percentage complete.
+    - **`fractional`** — fraction-style progress (for example step counts).
+  </Accordion>
+
+  <Accordion title="Label position">
+    Where the progress label appears: `bottom`, `left`, or `right`.
+  </Accordion>
+
+  <Accordion title="Start at one">
+    Treat progress numbering as starting at one instead of zero when showing step-style progress.
+  </Accordion>
+
+  <Accordion title="Animate in">
+    Animate the progress bar when it appears.
+  </Accordion>
+</AccordionGroup>
+
+## Content
+
+<AccordionGroup>
+  <Accordion title="Complete text">
+    Label shown when progress is complete.
+  </Accordion>
+
+  <Accordion title="Node icon">
+    Icon used on progress nodes when applicable.
+  </Accordion>
+</AccordionGroup>
+
+## More settings
+
+<AccordionGroup>
+  <Accordion title="Element ID">
+    Custom HTML element ID for CSS or JavaScript targeting.
+  </Accordion>
+</AccordionGroup>
+
+## Design elements
+
+In the Design sidebar you can style:
+
+- **Whole thing** — the full progress bar container.
+- **Bar filled** — the filled portion of the bar (in CSS this often maps to the `bar` class).
+- **Progress text** — progress label or percentage.
+- **Reset button** — reset control inside the progress bar (class `reset`; hide it in Design if you do not want it shown).
+
+<Note>
+  For background styling of simple/circle bars, target the overall Progress Bar component when a dedicated background element is not available.
+</Note>
+
+See [Design](/features/design) for tags, breakpoints, and states.
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="Design" icon="paintbrush" href="/features/design">
+    Style the bar, label, and reset control.
+  </Card>
+  <Card title="Saving and Version Control" icon="floppy-disk" href="/features/saving-and-version-control">
+    Preview progress UI across versions before launch.
+  </Card>
+</CardGroup>

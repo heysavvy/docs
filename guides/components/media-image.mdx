@@ -1,0 +1,66 @@
+---
+title: "Components: Image"
+sidebarTitle: "Image"
+description: "How to use the Media Image component in Embeddables"
+---
+
+The **Image** component (Media Image) displays a standalone image in your Embeddable. Use it for logos, illustrations, product shots, and other static visuals.
+
+Configure it through **Content** and **More**.
+
+## Content
+
+<AccordionGroup>
+  <Accordion title="Source (src)">
+    Image URL to display. Prefer URLs from your project assets when available (for example from `assets.json` when using the CLI).
+  </Accordion>
+
+  <Accordion title="Alt text">
+    Alternative text for accessibility. Describe the image for screen readers and when the image fails to load.
+  </Accordion>
+
+  <Accordion title="Caption">
+    Optional caption shown with the image.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  For images on buttons or option cards, set <code>imageUrl</code> on the Button or Option Selector option instead of adding a separate Image component. For standalone images, use this Media Image component with <code>src</code>.
+</Tip>
+
+## More settings
+
+<AccordionGroup>
+  <Accordion title="Element ID">
+    Custom HTML element ID for CSS or JavaScript targeting.
+  </Accordion>
+
+  <Accordion title="Repeat Component">
+    Repeat this image for each item in a User Data array when a repeater key is set.
+
+    <Info>
+      Shared setting for most components.
+    </Info>
+  </Accordion>
+</AccordionGroup>
+
+## Design elements
+
+In the Design sidebar you can style:
+
+- **Image element** — the `<img>` itself.
+- **Caption** — caption text when set.
+- **Alt text** — related accessibility content where exposed in Design.
+
+See [Design](/features/design) for tags, breakpoints, and states.
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="Design" icon="paintbrush" href="/features/design">
+    Size and style images with tags and breakpoints.
+  </Card>
+  <Card title="Translations" icon="language" href="/features/translations">
+    Translate caption and alt text per language.
+  </Card>
+</CardGroup>

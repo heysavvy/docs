@@ -1,0 +1,185 @@
+---
+title: "Components: Button"
+sidebarTitle: "Button"
+description: "How to use the Button (Custom Button) component in Embeddables"
+---
+
+The **Button** component (Custom Button) triggers navigation, opens a URL or info box, resets the flow, or runs [Actions](/features/actions). Button text and related values can be stored in [User Data](/features/user-data) when you set an output key.
+
+Configure it through **Action**, **Content**, **Validation**, and **More**.
+
+## Action
+
+What happens when the user clicks the button.
+
+<AccordionGroup>
+  <Accordion title="Action">
+    Built-in click behavior. Must be one of:
+
+    | Value | Behavior |
+    | --- | --- |
+    | `no-action` | No built-in navigation (use Actions via click triggers instead) |
+    | `next-page` | Go to the next page |
+    | `prev-page` | Go to the previous page |
+    | `open-url` | Open `actionUrl` |
+    | `open-info-box` | Open the info box for `info_box_key` |
+    | `close-popup` | Close the current popup |
+    | `reset` | Reset the flow / User Data as configured |
+    | `page-{pageKey}` | Jump to a specific page by key |
+
+    <Warning>
+      Use <code>next-page</code> and <code>prev-page</code> (with the <code>-page</code> suffix), not <code>next</code> or <code>prev</code>.
+    </Warning>
+  </Accordion>
+
+  <Accordion title="Action URL">
+    URL to open when **Action** is `open-url`. Supports opening in a new tab.
+  </Accordion>
+
+  <Accordion title="Open URL in new tab">
+    When **Action** is `open-url`, open the link in a new browser tab.
+  </Accordion>
+
+  <Accordion title="Download URL">
+    When opening a URL, download the file instead of navigating. Optionally set a download filename.
+  </Accordion>
+
+  <Accordion title="Info box key">
+    Page key of the info box to open when **Action** is `open-info-box`.
+  </Accordion>
+
+  <Accordion title="Hide if no nav target">
+    Hide the button when there is no valid next/previous page to navigate to.
+  </Accordion>
+</AccordionGroup>
+
+## Content
+
+Labels, icons, and supporting text.
+
+<AccordionGroup>
+  <Accordion title="Text">
+    Primary label on the button.
+  </Accordion>
+
+  <Accordion title="Description">
+    Secondary text under or beside the main label.
+  </Accordion>
+
+  <Accordion title="Rich text / rich description">
+    Treat the text or description as rich text when enabled.
+  </Accordion>
+
+  <Accordion title="Icon">
+    Font Awesome icon name shown on the button.
+  </Accordion>
+
+  <Accordion title="Emoji icon">
+    Emoji character shown as the button icon (for example 😀).
+  </Accordion>
+
+  <Accordion title="Image URL">
+    Image shown on the button. Use **`imageUrl`** only (not `imgSrc` or `imageSrc`). SVG URLs are valid.
+  </Accordion>
+
+  <Accordion title="Image alt text">
+    Alternative text for the button image.
+  </Accordion>
+
+  <Accordion title="ARIA label">
+    Accessible name for the button when the visible text is not enough.
+  </Accordion>
+
+  <Accordion title="Success / loading / fail messages">
+    Optional messages shown while Actions run or after they succeed or fail (often used with loading until Actions resolve).
+  </Accordion>
+</AccordionGroup>
+
+## Validation
+
+Control whether the button can fire before the page is valid.
+
+<AccordionGroup>
+  <Accordion title="Needs validation passed">
+    When enabled, the button action does not fire until all validation on the page passes.
+
+    <Warning>
+      Set this together with <strong>Validation show state</strong>. Needs validation passed alone does not visually disable the button.
+    </Warning>
+  </Accordion>
+
+  <Accordion title="Validation show state">
+    How the button appears when validation has not passed yet:
+
+    - **`disable`** — grayed out and not clickable (standard “disabled until valid” CTA).
+    - **`hide`** — hidden until validation passes.
+    - **`always_show`** — always looks enabled (default if you omit both props).
+  </Accordion>
+
+  <Accordion title="Allow skip validation">
+    Allow the click to proceed even when page validation has not passed.
+  </Accordion>
+</AccordionGroup>
+
+## More settings
+
+<AccordionGroup>
+  <Accordion title="Track clicks">
+    Capture button clicks for analytics when supported in the hosted runtime.
+  </Accordion>
+
+  <Accordion title="Outputs on click">
+    [Action](/features/actions) IDs to run when the button is clicked (`outputs_onclick`). Use this for custom code or integrations alongside the built-in **Action**.
+  </Accordion>
+
+  <Accordion title="Show loading until actions resolved">
+    Keep a loading state on the button until attached Actions finish.
+  </Accordion>
+
+  <Accordion title="Primary button">
+    Mark this button as the primary CTA for styling or layout conventions.
+  </Accordion>
+
+  <Accordion title="Toggle">
+    Treat the button as a toggle control when enabled.
+  </Accordion>
+
+  <Accordion title="Output key">
+    User Data key to write when the button is used as an output control.
+  </Accordion>
+
+  <Accordion title="Ignore in QA tests">
+    Skip this button in Embeddables automated QA tests.
+
+    <Info>
+      Shared setting for Button and Input Box.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Element ID">
+    Custom HTML element ID for CSS or JavaScript targeting.
+  </Accordion>
+</AccordionGroup>
+
+## Design elements
+
+In the Design sidebar you can style:
+
+- **Whole thing** — the button component (the component itself is the button).
+- **Text wrapper** / **Text** — label container and text.
+- **Description** — secondary text.
+- **Icon** — Font Awesome or emoji icon.
+- **Image** — button image when `imageUrl` is set.
+
+See [Design](/features/design) for tags, breakpoints, and states.
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="Actions" icon="code" href="/features/actions">
+    Run custom code from button click triggers.
+  </Card>
+  <Card title="Design" icon="paintbrush" href="/features/design">
+    Style button text, icons, and states.
+  </Card>
+</CardGroup>

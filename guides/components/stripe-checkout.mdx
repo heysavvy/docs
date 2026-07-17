@@ -1,0 +1,53 @@
+---
+title: "Components: Stripe Checkout"
+sidebarTitle: "Stripe Checkout"
+description: "Overview of the Stripe Checkout component and where to find full payment docs"
+---
+
+The **Stripe Checkout** component accepts payments inside your Embeddable using Stripe (Payment and Express Checkout).
+
+This page is a short component overview. Full setup, configuration, and troubleshooting live under Payments.
+
+<Card
+  title="Accepting Stripe payments in Embeddables"
+  icon="credit-card"
+  href="/features/payments/stripe/overview"
+>
+  Complete Stripe guide: checkout types, keys, setup steps, pricing, customer data, UI options, events, and troubleshooting.
+</Card>
+
+## What this component does
+
+- Renders Stripe Payment and/or Express Checkout elements in your flow.
+- Supports payment, setup, and subscription checkout modes.
+- Can write payment-related IDs and status into [User Data](/features/user-data).
+- Can trigger [Actions](/features/actions) on payment attempted, success, failure, mount, and unmount.
+
+## Design elements
+
+In the Design sidebar you can style:
+
+- **Payment box** — payment form container.
+- **Payment form** — the form element.
+- **Stripe checkout button** — submit / pay button.
+- **Message list** — container for messages.
+- **Error message** / **Success message** — result text.
+
+See [Design](/features/design) for tags, breakpoints, and states.
+
+## Related guides
+
+<CardGroup cols={2}>
+  <Card title="Stripe overview" icon="credit-card" href="/features/payments/stripe/overview">
+    Deep documentation for the Stripe Checkout component.
+  </Card>
+  <Card title="Control Stripe prices from CMS" icon="table" href="/how-to/control-stripe-prices-from-cms">
+    Manage price IDs outside the Builder.
+  </Card>
+  <Card title="Coupons and promo codes" icon="tag" href="/how-to/use-stripe-coupons-and-promo-codes">
+    Apply discounts at checkout.
+  </Card>
+  <Card title="Place a hold on payment" icon="hand" href="/how-to/place-a-hold-on-payment">
+    Authorize without capturing immediately.
+  </Card>
+</CardGroup>

@@ -1,0 +1,119 @@
+---
+title: "Components: File Upload"
+sidebarTitle: "File Upload"
+description: "How to use the File Upload component in Embeddables"
+---
+
+The **File Upload** component lets users upload one or more files. Upload results are stored in [User Data](/features/user-data) under the component key.
+
+Configure it through **Configuration**, **Content**, **Validation**, and **More**.
+
+## Configuration
+
+<AccordionGroup>
+  <Accordion title="User Input">
+    Whether a file is required before the user can proceed.
+
+    <Info>
+      Shared setting for Input Box, Option Selector, Button, Calendly, File Upload, and PayPal.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Upload type">
+    Which file kinds are accepted:
+
+    | Value | Meaning |
+    | --- | --- |
+    | `all` | All types |
+    | `image` | Images only |
+    | `audio` | Audio files |
+    | `video` | Video files |
+    | `doc` | Documents |
+    | `custom` | Custom MIME / extension list via **Custom upload type** |
+  </Accordion>
+
+  <Accordion title="Custom upload type">
+    Custom accept list when **Upload type** is `custom`.
+  </Accordion>
+
+  <Accordion title="Multiple">
+    Allow more than one file in a single upload.
+  </Accordion>
+
+  <Accordion title="Files max limit">
+    Maximum number of files when multi-upload is enabled.
+  </Accordion>
+
+  <Accordion title="Upload file">
+    Whether selected files are uploaded (as opposed to only selecting locally, depending on your flow setup).
+  </Accordion>
+</AccordionGroup>
+
+## Content
+
+<AccordionGroup>
+  <Accordion title="Label">
+    Main label for the upload area.
+  </Accordion>
+
+  <Accordion title="Sub label">
+    Secondary helper text under the label.
+  </Accordion>
+
+  <Accordion title="Icon">
+    Icon shown in the upload area.
+  </Accordion>
+</AccordionGroup>
+
+## Validation
+
+<AccordionGroup>
+  <Accordion title="Validate value">
+    Enable validation for the upload field.
+  </Accordion>
+
+  <Accordion title="Validation formula">
+    Rule used when validating uploaded files.
+  </Accordion>
+
+  <Accordion title="Empty message">
+    Message when a required upload has no file.
+  </Accordion>
+
+  <Accordion title="Invalid message">
+    Message when the upload fails validation (for example wrong type).
+  </Accordion>
+</AccordionGroup>
+
+## More settings
+
+<AccordionGroup>
+  <Accordion title="Outputs on change">
+    [Action](/features/actions) IDs to run when files are uploaded or removed (`outputs_onchange`).
+  </Accordion>
+
+  <Accordion title="Element ID">
+    Custom HTML element ID for CSS or JavaScript targeting.
+  </Accordion>
+</AccordionGroup>
+
+## Design elements
+
+In the Design sidebar you can style:
+
+- **Uploader** — the upload area.
+- **Label** / **Sub label** — label text.
+- **File list** / **File item** — list of uploaded files (when shown).
+
+See [Design](/features/design) for tags, breakpoints, and states.
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="Actions" icon="code" href="/features/actions">
+    React when files change with <code>outputs_onchange</code>.
+  </Card>
+  <Card title="Design" icon="paintbrush" href="/features/design">
+    Style the uploader, labels, and file list.
+  </Card>
+</CardGroup>

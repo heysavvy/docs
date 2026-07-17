@@ -1,0 +1,194 @@
+---
+title: "Components: Option Selector"
+sidebarTitle: "Option Selector"
+description: "How to use the Option Selector component (option buttons and dropdowns) in Embeddables"
+---
+
+The **Option Selector** lets users pick one or more options. The selected option **key**(s) are stored in [User Data](/features/user-data) under the component key.
+
+The same component covers two display modes:
+
+- **Option buttons** — `dropdown` is off; options render as a button list or cards.
+- **Dropdown** — `dropdown` is on; options render in a dropdown (standard or advanced).
+
+Configure it through **Configuration**, **Options**, **Content**, **Validation**, and **More**.
+
+## Configuration
+
+<AccordionGroup>
+  <Accordion title="User Input">
+    Whether a selection is required before the user can proceed.
+
+    <Info>
+      Shared setting for Input Box, Option Selector, Button, Calendly, File Upload, and PayPal.
+    </Info>
+  </Accordion>
+
+  <Accordion title="Dropdown">
+    - **Off** — option buttons / cards.
+    - **On** — dropdown UI. Other dropdown-related settings only apply in this mode.
+
+    <Note>
+      An Option Selector is either a dropdown or not. There is no mixed mode.
+    </Note>
+  </Accordion>
+
+  <Accordion title="Multiple">
+    Allow selecting more than one option. Selected values are stored as an array in User Data.
+  </Accordion>
+
+  <Accordion title="Allow deselect">
+    Let users clear the current selection.
+  </Accordion>
+
+  <Accordion title="Max selection">
+    Maximum number of selected options when multi-select is on. Optionally block further selection over the max.
+  </Accordion>
+
+  <Accordion title="Checkbox">
+    Show a checkbox on each option button (added automatically; you do not add a separate checkbox component).
+  </Accordion>
+
+  <Accordion title="Checkbox location">
+    Place checkboxes at the **start** or **end** of each option’s content (option buttons mode).
+  </Accordion>
+
+  <Accordion title="Layout">
+    Option button layout, such as `horizontal_bars` or `buttons_wrapped`.
+  </Accordion>
+
+  <Accordion title="Advanced dropdown">
+    Use the advanced dropdown UI when **Dropdown** is on. Also used when multi-select or allow typing is enabled.
+  </Accordion>
+
+  <Accordion title="Allow typing">
+    Make an advanced dropdown searchable / typeable.
+  </Accordion>
+
+  <Accordion title="Randomize buttons">
+    Shuffle option order when the component renders.
+  </Accordion>
+
+  <Accordion title="Default value">
+    Pre-select an option key when the component loads.
+  </Accordion>
+</AccordionGroup>
+
+## Options (buttons)
+
+Each option is a button with its own key and content.
+
+<AccordionGroup>
+  <Accordion title="Buttons list">
+    Array of options. Each option needs a unique **key** (snake_case; must not start with a digit). Optional fields include text, description, icon, emoji, image, and conditions.
+  </Accordion>
+
+  <Accordion title="Option text / description">
+    Primary and secondary labels for each option. Can use rich text when enabled on the component.
+  </Accordion>
+
+  <Accordion title="Option icon / emoji / image">
+    Visual for each option:
+
+    - **Icon** — Font Awesome name.
+    - **Emoji icon** — emoji character.
+    - **Image URL** — use `imageUrl` (not `imgSrc`). Optional image alt text.
+  </Accordion>
+
+  <Accordion title="Option trigger event">
+    Per-option click behavior: `no-action`, `next-page`, or `open-url` (with URL / new tab settings).
+  </Accordion>
+
+  <Accordion title="Single select (per option)">
+    Force a specific option to behave as single-select even when the component allows multiple.
+  </Accordion>
+
+  <Accordion title="Button repeater key">
+    User Data array key used to generate options dynamically.
+  </Accordion>
+
+  <Accordion title="Preset buttons">
+    Use a preset set of options when configured.
+  </Accordion>
+</AccordionGroup>
+
+<Tip>
+  Prefer keys that describe the data (for example <code>plan_basic</code>), not the UI. If a label would slug to a key starting with a number, prefix it (for example <code>range_1_to_2_weeks</code>).
+</Tip>
+
+## Content
+
+<AccordionGroup>
+  <Accordion title="Label">
+    Label shown above the Option Selector.
+  </Accordion>
+
+  <Accordion title="Placeholder">
+    Placeholder text (especially useful for dropdowns).
+  </Accordion>
+</AccordionGroup>
+
+## Validation
+
+<AccordionGroup>
+  <Accordion title="Validation formula">
+    Formula or rule used when validating the selection.
+  </Accordion>
+
+  <Accordion title="Empty message">
+    Message when a required Option Selector has no selection.
+  </Accordion>
+
+  <Accordion title="Invalid message">
+    Message when the selection fails validation.
+  </Accordion>
+</AccordionGroup>
+
+## More settings
+
+<AccordionGroup>
+  <Accordion title="Outputs on change">
+    [Action](/features/actions) IDs to run when the selection changes (`outputs_onchange`).
+  </Accordion>
+
+  <Accordion title="Outputs on buttons repeater render">
+    Actions to run when a button repeater re-renders.
+  </Accordion>
+
+  <Accordion title="Fetch options remotely">
+    Optional remote options via fetch URI, headers, transformer, and debounce — useful for dynamic option lists.
+  </Accordion>
+
+  <Accordion title="Element ID">
+    Custom HTML element ID for CSS or JavaScript targeting.
+  </Accordion>
+</AccordionGroup>
+
+## Design elements
+
+### Option buttons (`dropdown` off)
+
+- **Label**
+- **Button list** / **Button** (card)
+- **Text** / **Description**
+- **Icon** / **Image**
+- **Checkbox** (when enabled)
+
+### Dropdown (`dropdown` on)
+
+- **Dropdown main** / main content / searchable input
+- **Dropdown list**
+- **List option** / option text
+
+You can also target a specific option by its key. See [Design](/features/design).
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="Conditions" icon="split" href="/features/conditions">
+    Branch the flow based on the selected option key.
+  </Card>
+  <Card title="Design" icon="paintbrush" href="/features/design">
+    Style option cards, checkboxes, and dropdown parts.
+  </Card>
+</CardGroup>

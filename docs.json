@@ -75,7 +75,15 @@
                 "group": "Components",
                 "icon": "cube",
                 "expanded": false,
-                "pages": ["guides/components/input-box"]
+                "pages": [
+                  "guides/components/input-box",
+                  "guides/components/custom-button",
+                  "guides/components/option-selector",
+                  "guides/components/media-image",
+                  "guides/components/file-upload",
+                  "guides/components/progress-bar",
+                  "guides/components/stripe-checkout"
+                ]
               }
             ]
           },
