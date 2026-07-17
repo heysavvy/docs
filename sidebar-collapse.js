@@ -324,7 +324,7 @@ function createChevronButton() {
   button.className = "embeddables-anchor-chevron";
   button.setAttribute("aria-label", "Toggle section");
   button.innerHTML =
-    '<svg width="12" height="12" viewBox="0 0 14 14" aria-hidden="true" focusable="false" class="embeddables-anchor-chevron-icon"><path d="M4 2.5L9.5 7L4 11.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
+    '<svg width="10" height="10" viewBox="0 0 14 14" aria-hidden="true" focusable="false" class="embeddables-anchor-chevron-icon"><path d="M4 2.5L9.5 7L4 11.5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"></path></svg>';
   return button;
 }
 
