@@ -39,7 +39,7 @@ You select the checkout type when configuring the Stripe component in the Builde
 Some configuration fields and triggers only apply to Express Checkout. These are clearly marked throughout this documentation.
 </Note>
 
-## Keys and IDs that you'll need
+## Keys and IDs you need
 
 1. Your Stripe **Publishable Key** - grab this from the [API Keys](https://dashboard.stripe.com/apikeys) section of your Stripe Dashboard.
 2. A **Restricted Key** generated in Stripe (also from the [API Keys](https://dashboard.stripe.com/apikeys) page in Stripe), with the following scopes/permissions:
@@ -59,7 +59,7 @@ Some configuration fields and triggers only apply to Express Checkout. These are
 
 3. Any **Price IDs** for specific products you want to offer - grab these from the [Products](https://dashboard.stripe.com/products) page in Stripe.
 
-## Setting up Stripe
+## Set up Stripe
 
 The following are the minimum steps required to add a Stripe component to your Embeddable:
 
@@ -81,7 +81,7 @@ The following are the minimum steps required to add a Stripe component to your E
   </Step>
   <Step title="Add a Stripe component to your Embeddable">
     - In the Builder, switch to the checkout page that should contain the Stripe component.
-    - Select a Container to insert the Stripe component into, or a copmonent that it should be added next to.
+    - Select a Container to insert the Stripe component into, or a component that it should be added next to.
     - Open the `+` left-hand sidebar, and select `Stripe` from the list of components.
   </Step>
   <Step title="Choose the type of payment you want to accept">
@@ -145,35 +145,19 @@ The following are the minimum steps required to add a Stripe component to your E
   </Step>
 </Steps>
 
-## Optional: Additional Stripe configurations
+Optional settings are not required to accept payments, but they cover common product and UX needs.
 
-These features are not required in order to successfully accept payments, but they can be useful in different scenarios.
+## Pricing and line items
+
+Dynamic prices, CMS-managed prices, and discounts.
 
 <AccordionGroup>
-  <Accordion title="Collect shipping information">
-    To collect shipping information from the user, you need to make sure you have the relevant input components in your Embeddable:
-      - Address Line 1
-      - Address Line 2
-      - City
-      - State
-      - Zipcode / Postal Code
-      - Country
-
-    Then, enter the keys of these components in the Shipping Address fields in the Stripe component using Templating, e.g. `{{address_line_1}}`.
-
-    <Info>
-      Shipping information is optional, depending on whether you're sending the customer a physical product.
-
-      Billing information is required, but only country and postal code. This is handled automatically by the Stripe component, as described above, so you don't need to add your own billing address fields.
-    </Info>
-
-  </Accordion>
   <Accordion title="Add dynamic line items">
     Sometimes you need your line items to be dynamic - i.e. change based on the user's answers, such as the plan that they select.
 
     To do this:
-    1. Use a [Computed Field](/features/computed-fields)` to generate the JSON for the line items.
-    2. Refernce the key of that Computed Field in the Line Items section of the Stripe component.
+    1. Use a [Computed Field](/features/computed-fields) to generate the JSON for the line items.
+    2. Reference the key of that Computed Field in the Line Items section of the Stripe component.
 
     <Note>
       In order for the Stripe component to still work when the Embeddable is in test mode, you need to ensure that the Computed Field handles test mode correctly by returning a test price_id.
@@ -213,6 +197,43 @@ These features are not required in order to successfully accept payments, but th
       ];
     }
     ```
+
+  </Accordion>
+  <Accordion title="Control Stripe prices from the Embeddables CMS">
+    If you handle multiple Stripe products or prices in your Embeddable, we recommend adding them to a table in the [Embeddables CMS](/features/cms), and pulling those records into your Embeddable to use in your Stripe component.
+
+    See the [Control Stripe Prices from the Embeddables CMS](/how-to/control-stripe-prices-from-cms) guide for more information.
+
+  </Accordion>
+  <Accordion title="Apply coupons and promo codes">
+    You can offer discounts to your customers using Stripe's coupon and promo code system. This lets you create both customer-facing promo codes (like "BLACKFRIDAY50") and automatic discounts.
+
+    See the [Use Stripe Coupons and Promo Codes](/how-to/use-stripe-coupons-and-promo-codes) guide for more information.
+
+  </Accordion>
+</AccordionGroup>
+
+## Customer data and Stripe session
+
+Shipping, templating, customer creation, IDs, metadata, and shared sessions.
+
+<AccordionGroup>
+  <Accordion title="Collect shipping information">
+    To collect shipping information from the user, you need to make sure you have the relevant input components in your Embeddable:
+      - Address Line 1
+      - Address Line 2
+      - City
+      - State
+      - Zipcode / Postal Code
+      - Country
+
+    Then, enter the keys of these components in the Shipping Address fields in the Stripe component using Templating, e.g. `{{address_line_1}}`.
+
+    <Info>
+      Shipping information is optional, depending on whether you're sending the customer a physical product.
+
+      Billing information is required, but only country and postal code. This is handled automatically by the Stripe component, as described above, so you don't need to add your own billing address fields.
+    </Info>
 
   </Accordion>
   <Accordion title="Set values based on dynamic data">
@@ -268,16 +289,134 @@ These features are not required in order to successfully accept payments, but th
     </Tip>
 
   </Accordion>
-  <Accordion title="Control Stripe prices from the Embeddables CMS">
-    If you handle multiple Stripe products or prices in your Embeddable, we recommend adding them to a table in the [Embeddables CMS](/features/cms), and pulling those records into your Embeddable to use in your Stripe component.
+  <Accordion title="Make sure a Customer is created in Stripe">
+    When using **Setup** or **Payment** checkout modes, you can control whether a customer is created in Stripe.
 
-    See the [Control Stripe Prices from the Embeddables CMS](/how-to/control-stripe-prices-from-cms) guide for more information.
+    Use the **Create a Customer in Stripe?** option in the Stripe component options, below the **Checkout Mode** setting.
+
+    <Note>
+    This setting is not available for **Subscription** mode since customers are always created for recurring payments.
+    </Note>
+
+    **Available options:**
+    - **If Required** (Default): A customer is only created if Stripe requires it for the specific payment method or transaction type.
+    - **Always**: A customer is always created in Stripe, regardless of whether it's required for the transaction.
+
+    <Tip>
+      If you choose to create customers, you can collect the Customer ID using the [Collect Stripe IDs](#collect-stripe-ids-to-send-to-your-backend) feature.
+    </Tip>
 
   </Accordion>
-  <Accordion title="Apply coupons and promo codes">
-    You can offer discounts to your customers using Stripe's coupon and promo code system. This lets you create both customer-facing promo codes (like "BLACKFRIDAY50") and automatic discounts.
+  <Accordion title="Collect Stripe IDs to send to your backend">
+    You can collect the following IDs that Stripe provides when a payment is completed:
 
-    See the [Use Stripe Coupons and Promo Codes](/how-to/use-stripe-coupons-and-promo-codes) guide for more information.
+    | Stripe ID              | Provided for                                                     |
+    | ---------------------- | ---------------------------------------------------------------- |
+    | **Customer ID**        | All payment types (for Payment and Setup modes, `Customer Creation` must be set up `Always`)                                               |
+    | **Invoice ID**         | All payments except on-hold payments and collecting card details |
+    | **Payment Intent ID**  | One-time payments only                                           |
+
+    <Note>
+      Stripe used to provide a Subscription ID for recurring payments, but in their newer API version this is no longer the case. You can access this separately via the Stripe API.
+    </Note>
+
+    #### To collect these IDs:
+    1. Specify a User Data key to store the ID in, in the relevant field in the Stripe component options.
+    2. Add that key to the Registered Keys in the Embeddable-wide settings.
+
+    #### To send them to your backend:
+    1. Set up an Action that's triggered when the payment is completed, as specified above in [Trigger actions on payment and lifecycle events](#trigger-actions-on-payment-and-lifecycle-events).
+    2. Use the relevant keys in `userData`, provided in the Action function's first argument.
+
+    **Example Action code:**
+
+    ```javascript
+    // All Actions must contain a function called output()
+    // Trigger this Action when the payment is completed
+    function output(userData) {
+      // Extract the relevant IDs from the userData object
+      const { customer_id, invoice_id, subscription_id } = userData;
+      console.log(customer_id, invoice_id, subscription_id);
+
+      // Send these IDs to your backend
+      fetch('https://your-backend-url.com/', {
+        method: 'POST',
+        body: JSON.stringify({ customer_id, invoice_id, subscription_id }),
+      });
+    }
+    ```
+
+  </Accordion>
+  <Accordion title="Store the selected plan/product and payment status in User Data">
+    Storing the plan or product that the user selected, and the status of the payment, can be useful when looking at your users' data later, or sending that data to your own backend or CRM.
+
+    The good news is that this information is almost certainly already being stored!
+
+    ### Storing the plan or product
+
+    If you're offering multiple plans or products to the user, then that probably means you're either:
+    1. Using an Option Selector component to let the user select the plan or product they want to purchase, or
+    2. Using a Computed Field to calculate the appropriate plan or product based on the user's answers.
+
+    In both cases, just make sure that the key you're using to store the plan or product is set to be
+    [stored in the 'Embeddables Cloud Context'](/features/user-data#where-user-data-is-stored) - i.e. stored in Embeddables' database.
+
+    <Tip>
+      If you're offering multiple plans or products, you're also probably using a Computed Field to generate the **line items** for the Stripe component, including the price_id(s).
+
+      You can then opt to store this in the 'Embeddables Cloud Context' as well.
+
+      Alternatively, you can store a simplified version with just the price_id(s), by computing with with another Computed Field.
+    </Tip>
+
+    ### Storing the payment status
+
+    The payment status is automatically stored  in User Data, using the key of the Stripe component.
+
+    For this reason, we recommend choosing a straightforward key name for the Stripe component, e.g. `stripe_payment`.
+
+    The status will then appear in the User Data as one of the following:
+    {/* 'fresh' | 'pending' | 'error' | 'completed' */}
+
+    - `stripe_payment: 'fresh'` - The Stripe checkout has been reset and is ready for another attempt
+    - `stripe_payment: 'pending'` - The payment has just been attempted, and is awaiting a success or failure response from Stripe
+    - `stripe_payment: 'error'` - The payment failed
+    - `stripe_payment: 'completed'` - The payment was successful
+
+    <Note>
+      Just make sure that the key of the Stripe component is set to be
+      [stored in the 'Embeddables Cloud Context'](/features/user-data#where-user-data-is-stored) - i.e. stored in Embeddables' database.
+    </Note>
+
+  </Accordion>
+  <Accordion title="Configure a Return url for the Checkout Session">
+    You can specify a **Return url** in the Stripe component's Checkout Session configuration. This URL is passed to Stripe when creating the Checkout Session and determines where the customer is redirected after completing an external payment flow (e.g. a bank redirect or 3D Secure authentication).
+
+    <Note>
+      **Return url** is used by Stripe for payment methods that redirect the customer away from your page during the checkout process. If you are only accepting credit card payments without redirects, this field is optional.
+    </Note>
+
+    To configure a return URL:
+    1. In the Stripe component settings, locate the **Checkout Session** configuration section.
+    2. Enter the desired URL in the **Return url** field.
+
+    <Tip>
+      You can use templating in the **Return url** field to include dynamic values, e.g. `https://example.com/confirmation?email={{email}}`.
+    </Tip>
+
+  </Accordion>
+  <Accordion title="Send custom metadata to Stripe">
+    You can send custom metadata to Stripe with each payment, which is useful for tracking additional information about the customer or transaction.
+
+    In the Stripe component settings, look for the <b>Metadata</b> section. Here, you can add key-value pairs that will be sent to Stripe as metadata on the Checkout Session or Payment Intent.
+
+    - Enter a key (e.g., `user_id`, `order_source`, etc.) and a value.
+    - You can use templating in the value field, such as `{{user_id}}` or `{{email}}`, to dynamically insert user data. You can even compute a new value in a Computed Field and use that in the metadata.
+    - Click the `+` button to add more metadata fields.
+
+    <Info>
+      Metadata is visible in the Stripe Dashboard and can be used for reporting, searching, or integrating with your backend.
+    </Info>
 
   </Accordion>
   <Accordion title="Share a single Stripe session across multiple Stripe Checkout components">
@@ -301,61 +440,13 @@ These features are not required in order to successfully accept payments, but th
     </Warning>
 
   </Accordion>
-  <Accordion title="Disable the Pay button until the page is valid">
-    When `disable_button_until_page_valid` is set to `true` on a Stripe Checkout 2 component, the Pay button is disabled reactively whenever any required field on the current page is incomplete or invalid. The button re-enables as soon as all required fields are satisfied.
+</AccordionGroup>
 
-    This is different from `enforce_validation`, which only blocks the payment attempt at the moment the user clicks Pay. With `disable_button_until_page_valid` the button itself is visually disabled throughout, giving users an immediate cue that they still need to fill something in.
+## Checkout UI and payment methods
 
-    **How to enable it:**
-    1. In the Builder, select the Stripe Checkout 2 component.
-    2. Open the component's JSON editor and add `"disable_button_until_page_valid": true`.
+Button copy, validation, layout, and which methods appear.
 
-    <Tip>
-      You can style the disabled state however you like using CSS targeting `[disabled]` on the Pay button element. No default disabled style is applied — full control is yours.
-    </Tip>
-
-    <Note>
-      This setting works in conjunction with the existing `enforce_validation` option. If you only want to block the payment attempt (without visually disabling the button beforehand), use `enforce_validation: true` without setting `disable_button_until_page_valid`.
-    </Note>
-
-  </Accordion>
-  <Accordion title="Place a hold on the customer's card">
-    See the [Place a Hold on a Payment](/how-to/place-a-hold-on-payment) guide for more information on this feature.
-
-    <Warning>
-      You will need to manually release the hold on the user's card at a later date to complete the payment.
-    </Warning>
-    <Note>
-      Please note that Stripe only supports placing a hold on one-time payments, not recurring payments.
-    </Note>
-
-  </Accordion>
-  <Accordion title="Automatically set default payment methods in Stripe">
-    The method for automatically setting default payment methods depends on your checkout mode:
-    
-    - **Payment mode**: Simply set "Setup Future Usage" to "Off Session" in the Stripe component options.
-    - **Setup mode**: Does not apply - payment methods are automatically set as default in this mode.
-    - **Subscription mode**: Set up a webhook from Stripe to Embeddables to automatically set the first payment method as default, [using this step-by-step guide](/how-to/assign-default-payment-methods).
-    
-  </Accordion>
-  <Accordion title="Make sure a Customer is created in Stripe">
-    When using **Setup** or **Payment** checkout modes, you can control whether a customer is created in Stripe.
-
-    Use the **Create a Customer in Stripe?** option in the Stripe component options, below the **Checkout Mode** setting.
-
-    <Note>
-    This setting is not available for **Subscription** mode since customers are always created for recurring payments.
-    </Note>
-
-    **Available options:**
-    - **If Required** (Default): A customer is only created if Stripe requires it for the specific payment method or transaction type.
-    - **Always**: A customer is always created in Stripe, regardless of whether it's required for the transaction.
-
-    <Tip>
-      If you choose to create customers, you can collect the Customer ID using the [Collect Stripe IDs](#collect-stripe-ids-to-send-to-your-backend) feature.
-    </Tip>
-
-  </Accordion>
+<AccordionGroup>
   <Accordion title="Customise the Pay button text and Success message">
     You can customise both the label on the Pay button and the message shown to users after a successful payment.
 
@@ -464,6 +555,39 @@ These features are not required in order to successfully accept payments, but th
     </Warning>
 
   </Accordion>
+</AccordionGroup>
+
+## Holds and default payment methods
+
+Authorization holds and default payment method behavior.
+
+<AccordionGroup>
+  <Accordion title="Place a hold on the customer's card">
+    See the [Place a Hold on a Payment](/how-to/place-a-hold-on-payment) guide for more information on this feature.
+
+    <Warning>
+      You will need to manually release the hold on the user's card at a later date to complete the payment.
+    </Warning>
+    <Note>
+      Please note that Stripe only supports placing a hold on one-time payments, not recurring payments.
+    </Note>
+
+  </Accordion>
+  <Accordion title="Automatically set default payment methods in Stripe">
+    The method for automatically setting default payment methods depends on your checkout mode:
+    
+    - **Payment mode**: Simply set "Setup Future Usage" to "Off Session" in the Stripe component options.
+    - **Setup mode**: Does not apply - payment methods are automatically set as default in this mode.
+    - **Subscription mode**: Set up a webhook from Stripe to Embeddables to automatically set the first payment method as default, [using this step-by-step guide](/how-to/assign-default-payment-methods).
+    
+  </Accordion>
+</AccordionGroup>
+
+## Events and Express Checkout
+
+Triggers for payment lifecycle and Express Checkout click handling.
+
+<AccordionGroup>
   <Accordion title="Trigger actions on payment and lifecycle events">
     You can trigger [Actions](/features/actions) on the following Stripe Checkout events:
 
@@ -525,118 +649,6 @@ These features are not required in order to successfully accept payments, but th
     </Note>
 
   </Accordion>
-  <Accordion title="Collect Stripe IDs to send to your backend">
-    You can collect the following IDs that Stripe provides when a payment is completed:
-
-    | Stripe ID              | Provided for                                                     |
-    | ---------------------- | ---------------------------------------------------------------- |
-    | **Customer ID**        | All payment types (for Payment and Setup modes, `Customer Creation` must be set up `Always`)                                               |
-    | **Invoice ID**         | All payments except on-hold payments and collecting card details |
-    | **Payment Intent ID**  | One-time payments only                                           |
-
-    <Note>
-      Stripe used to provide a Subscription ID for recurring payments, but in their newer API version this is no longer the case. You can access this separately via the Stripe API.
-    </Note>
-
-    #### To collect these IDs:
-    1. Specify a User Data key to store the ID in, in the relevant field in the Stripe component options.
-    2. Add that key to the Registered Keys in the Embeddable-wide settings.
-
-    #### To send them to your backend:
-    1. Set up an Action that's triggered when the payment is completed, as specified above in [Trigger actions on payment and lifecycle events](#trigger-actions-on-payment-and-lifecycle-events).
-    2. Use the relevant keys in `userData`, provided in the Action function's first argument.
-
-    **Example Action code:**
-
-    ```javascript
-    // All Actions must contain a function called output()
-    // Trigger this Action when the payment is completed
-    function output(userData) {
-      // Extract the relevant IDs from the userData object
-      const { customer_id, invoice_id, subscription_id } = userData;
-      console.log(customer_id, invoice_id, subscription_id);
-
-      // Send these IDs to your backend
-      fetch('https://your-backend-url.com/', {
-        method: 'POST',
-        body: JSON.stringify({ customer_id, invoice_id, subscription_id }),
-      });
-    }
-    ```
-
-  </Accordion>
-  <Accordion title="Store the selected plan/product and payment status in User Data">
-    Storing the plan or product that the user selected, and the status of the payment, can be useful when looking at your users' data later, or sending that data to your own backend or CRM.
-
-    The good news is that this information is almost certainly already being stored!
-
-    ### Storing the plan or product
-
-    If you're offering multiple plans or products to the user, then that probably means you're either:
-    1. Using an Option Selector component to let the user select the plan or product they want to purchase, or
-    2. Using a Computed Field to calculate the appropriate plan or product based on the user's answers.
-
-    In both cases, just make sure that the key you're using to store the plan or product is set to be
-    [stored in the 'Embeddables Cloud Context'](https://docs.embeddables.com/features/user-data#where-is-user-data-stored%3F) - i.e. stored in Embeddables' database.
-
-    <Tip>
-      If you're offering multiple plans or products, you're also probably using a Computed Field to generate the **line items** for the Stripe component, including the price_id(s).
-
-      You can then opt to store this in the 'Embeddables Cloud Context' as well.
-
-      Alternatively, you can store a simplified version with just the price_id(s), by computing with with another Computed Field.
-    </Tip>
-
-    ### Storing the payment status
-
-    The payment status is automatically stored  in User Data, using the key of the Stripe component.
-
-    For this reason, we recommend choosing a straightforward key name for the Stripe component, e.g. `stripe_payment`.
-
-    The status will then appear in the User Data as one of the following:
-    {/* 'fresh' | 'pending' | 'error' | 'completed' */}
-
-    - `stripe_payment: 'fresh'` - The Stripe checkout has been reset and is ready for another attempt
-    - `stripe_payment: 'pending'` - The payment has just been attempted, and is awaiting a success or failure response from Stripe
-    - `stripe_payment: 'error'` - The payment failed
-    - `stripe_payment: 'completed'` - The payment was successful
-
-    <Note>
-      Just make sure that the key of the Stripe component is set to be
-      [stored in the 'Embeddables Cloud Context'](https://docs.embeddables.com/features/user-data#where-is-user-data-stored%3F) - i.e. stored in Embeddables' database.
-    </Note>
-
-  </Accordion>
-  <Accordion title="Configure a Return url for the Checkout Session">
-    You can specify a **Return url** in the Stripe component's Checkout Session configuration. This URL is passed to Stripe when creating the Checkout Session and determines where the customer is redirected after completing an external payment flow (e.g. a bank redirect or 3D Secure authentication).
-
-    <Note>
-      **Return url** is used by Stripe for payment methods that redirect the customer away from your page during the checkout process. If you are only accepting credit card payments without redirects, this field is optional.
-    </Note>
-
-    To configure a return URL:
-    1. In the Stripe component settings, locate the **Checkout Session** configuration section.
-    2. Enter the desired URL in the **Return url** field.
-
-    <Tip>
-      You can use templating in the **Return url** field to include dynamic values, e.g. `https://example.com/confirmation?email={{email}}`.
-    </Tip>
-
-  </Accordion>
-  <Accordion title="Send custom metadata to Stripe">
-    You can send custom metadata to Stripe with each payment, which is useful for tracking additional information about the customer or transaction.
-
-    In the Stripe component settings, look for the <b>Metadata</b> section. Here, you can add key-value pairs that will be sent to Stripe as metadata on the Checkout Session or Payment Intent.
-
-    - Enter a key (e.g., `user_id`, `order_source`, etc.) and a value.
-    - You can use templating in the value field, such as `{{user_id}}` or `{{email}}`, to dynamically insert user data. You can even compute a new value in a Computed Field and use that in the metadata.
-    - Click the `+` button to add more metadata fields.
-
-    <Info>
-      Metadata is visible in the Stripe Dashboard and can be used for reporting, searching, or integrating with your backend.
-    </Info>
-
-  </Accordion>
 </AccordionGroup>
 
 ## Troubleshooting
@@ -663,7 +675,7 @@ These features are not required in order to successfully accept payments, but th
 
   </Accordion>
   <Accordion title="I'm getting an error about a missing restricted key">
-    This means that you need to add a Stripe Restricted Key with the [scopes/permissions listed above](#keys-and-ids-that-you'll-need) to your Embeddables project.
+    This means that you need to add a Stripe Restricted Key with the [scopes/permissions listed above](#keys-and-ids-you-need) to your Embeddables project.
 
     **How to fix:**
     - Go to **Settings** → **Credentials & Endpoints** in your Embeddables dashboard.
@@ -671,7 +683,7 @@ These features are not required in order to successfully accept payments, but th
     - Choose **Restricted Key** as the Key Type.
     - Select the appropriate **Environment** (Test or Live).
     - Add a descriptive **Label** and enter your Stripe restricted key.
-    - Make sure the key has the correct permissions, listed [above](#keys-and-ids-that-you’ll-need).
+    - Make sure the key has the correct permissions, listed [above](#keys-and-ids-you-need).
     - Click **Create** to save the credential.
 
   </Accordion>
@@ -735,3 +747,15 @@ These features are not required in order to successfully accept payments, but th
   </Accordion>
 
 </AccordionGroup>
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="CMS" icon="table" href="/features/cms">
+    Manage Stripe prices outside the Builder.
+  </Card>
+  <Card title="Actions" icon="code" href="/features/actions">
+    Run code on payment success, failure, and other triggers.
+  </Card>
+</CardGroup>
+

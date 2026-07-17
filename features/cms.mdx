@@ -5,158 +5,128 @@ icon: "table"
 description: "Use the Embeddables CMS to manage dynamic content for your Embeddables without code changes"
 ---
 
-The **Embeddables CMS** is a powerful content management system that lets you control dynamic content in your Embeddables from outside the Builder.
+The **Embeddables CMS** lets you manage dynamic content outside the Builder — for example Stripe prices or programmatic SEM page content — and use that data across Embeddables.
 
-It provides a user-friendly interface for managing data like **Stripe prices** or **programmatic SEM page content**, that can be used across all your Embeddables.
+## Benefits
 
-## Key Benefits
+- Update content without changing or deploying Embeddable code.
+- Edit data in a simple table UI.
+- Keep an audit trail of changes.
+- Reflect CMS updates in Embeddables as soon as the CMS version is live.
+- Let non-technical teammates manage content.
 
-- **No-Code Updates**: Make content changes without modifying or deploying code.
-- **User-Friendly Interface**: Simple table-based interface for managing data.
-- **Audit Trail**: Track changes to your content over time.
-- **Real-Time Updates**: Changes in the CMS are immediately reflected in your Embeddables.
-- **Non-Technical Users**: Enable team members to update content without coding knowledge.
+## Create and manage tables
 
-<Card
-  title="Control Stripe Prices from the Embeddables CMS"
-  icon="code"
-  href="/how-to/control-stripe-prices-from-cms"
->
-  Learn how to use the Embeddables CMS to manage Stripe prices.
-</Card>
+1. Open **CMS** in the Embeddables Web App.
+2. Click **Edit Tables**.
+3. Click **+ Add Table** and start from a template or a blank table.
+4. Configure columns (name, key, and type).
 
-## How to Use the CMS
+Then:
 
-### Creating Tables
+- Add rows with **+ Add Row**.
+- Edit cells by clicking them.
+- Note each table's ID — you use it when connecting the table to an Embeddable.
 
-1. Navigate to the CMS section in the Embeddables Web App.
-2. Click "Edit Tables" to begin.
-3. Select "+ Add Table" and choose from available templates or start with a blank table.
-4. Configure your columns with appropriate names, keys, and types.
+### Available templates
 
-### Managing Content
+- **Blank table** — start from scratch.
+- **Prices** — product or service pricing.
+- **URLs & links** — routing and redirects.
+- **FAQs** — frequently asked questions.
+- **Programmatic pages** — dynamic page content.
+- **Coupons** — promo codes and discounts.
 
-- Add rows to your tables with the "+ Add Row" button.
-- Edit existing content by clicking on cells.
-- Each table has a unique ID that you'll use to connect it to your Embeddables.
+Each template includes a recommended schema you can customize.
 
-### Connecting to an Embeddable
-
-To use CMS data in your Embeddable:
-
+## Connect a table to an Embeddable
 
 <Steps>
-  <Step title="Add a new Content Source">
-    - In the Embeddables Builder, go to the Embeddable Options (make sure to deselect any pages or components by pressing Escape).
-    - Scroll down to the CMS section and click `+ Add Content Source`.
+  <Step title="Add a content source">
+    In the Builder, deselect pages and components (press Escape), open Embeddable **Options**, scroll to **CMS**, and click **+ Add Content Source**.
   </Step>
   <Step title="Choose a User Data key">
-    <Title>Enter a key under which to store the data in the User Data.</Title>
+    Enter the key under which CMS data should be stored in User Data.
   </Step>
   <Step title="Select a table">
-    <Title>Select the table you want to connect to (if you don't see any tables, make sure that you've saved the new table as a version in the CMS).</Title>
+    Pick the table to connect. If none appear, save the table as a version in the CMS first.
   </Step>
-  <Step title="Configure which records are fetched">
-    - Under "Which records should get shown?", choose the method by which you want to control which record(s) are included
-      - `Show all records` - All records in the table will be fetched (or just the first record if `Multiple Records` is left unchecked)
-      - `Records that match a URL pattern` - Only records that match the URL pattern will be fetched (or the first record that matches if `Multiple Records` is left unchecked)
-    - If you choose `Records that match a URL pattern`, under "Controller Key", enter a column key that will be used to match the URL pattern.
-    - Check the "Multiple Records" checkbox if you want to fetch multiple records - e.g. to display a list of items like FAQs or Prices.
+  <Step title="Choose which records to fetch">
+    Under **Which records should get shown?**:
+
+    - **Show all records** — fetch all rows (or the first row if **Multiple Records** is unchecked).
+    - **Records that match a URL pattern** — fetch rows that match the URL. Set **Controller Key** to the column used for matching.
+
+    Check **Multiple Records** when you need a list (for example FAQs or prices).
   </Step>
-  <Step title="Finish setting it up">
-    - Add your chosen User Data key to the list of Registered Keys in the Embeddable Options.
-    - You can now reference the data in your Embeddable, just like you would with any other User Data property.
+  <Step title="Register the key and use the data">
+    Add the User Data key to **Registered Keys** in Embeddable Options. Reference the data like any other User Data property.
   </Step>
 </Steps>
 
 <Warning>
-  When testing your Embeddable on a preview link, you must add <code>savvy_test=false</code> to the URL to ensure CMS data loads as expected.
+  On preview links, add <code>savvy_test=false</code> so CMS data loads as expected.
 </Warning>
 
-### Utilizing CMS Version Control
+## CMS version control
 
-Just like the Embeddables Builder, the Embeddables CMS comes with a built-in version control system that allows you to track changes to your content over time.
+The CMS has its own version control (save, switch, Staging, Production) in the top-right when editing tables.
 
-You can save a new version, switch versions, and push a version to staging or production, from the controls in the top right of the CMS page (when Editing Tables).
+Preview an Embeddable against a CMS version with `savvy_cms`:
 
-To preview an Embeddable with the content from a specific CMS version, you can use the `savvy_cms` URL parameter, which works in the same way as the `version` parameter:
+| Goal | Param |
+| --- | --- |
+| Specific version | `savvy_cms=123` |
+| Latest | `savvy_cms=latest` |
+| Staging | `savvy_cms=staging` |
 
-- To preview a particular version, add `savvy_cms=123` to the URL.
-- To preview the latest version (useful if you're making lots of updates), just use `savvy_cms=latest`.
-- To preview the version currently on staging, use `savvy_cms=staging`.
+## Example use cases
 
-<Tip>
-  This is a great way to preview what your CMS content updates will look like before pushing them live.
-</Tip>
+### Stripe prices
 
-## Example Use Cases
+Manage pricing in CMS so you can update prices without Builder releases.
 
-### 1. Managing Stripe Prices
-
-The CMS can manage your Stripe pricing configuration, making it easy to update prices without code changes.
-
-**Example Table Structure:**
-
-| Column Name        | Column Key        | Purpose                                   |
-|--------------------|-------------------|-------------------------------------------|
-| **Plan Name**      | `plan_name`       | Identifies the pricing plan               |
-| **Stripe Price ID**| `stripe_price_id` | Links to Stripe's price ID                |
-| **Price Amount**   | `price_amount`    | Displays the actual price                 |
-| **Size**           | `size`            | Distinguishes between plan sizes          |
-| **Discount Type**  | `discount`        | Identifies if this is a discounted price  |
-
-This setup allows you to:
-- Maintain multiple pricing tiers.
-- Update prices without writing code or saving new versions.
-- Give non-technical team members ability to manage pricing.
-- Keep a clear audit trail of price changes.
-
-For a full guide on how to use the CMS to manage Stripe prices, go here:
+| Column name | Column key | Purpose |
+| --- | --- | --- |
+| Plan name | `plan_name` | Identifies the plan |
+| Stripe Price ID | `stripe_price_id` | Links to Stripe |
+| Price amount | `price_amount` | Display price |
+| Size | `size` | Plan size |
+| Discount type | `discount` | Discount flag |
 
 <Card
-  title="Control Stripe Prices from the Embeddables CMS"
+  title="Control Stripe prices from the CMS"
   icon="code"
   href="/how-to/control-stripe-prices-from-cms"
 >
-  Learn how to use the Embeddables CMS to manage Stripe prices.
+  Step-by-step guide for Stripe pricing tables.
 </Card>
 
-### 2. Programmatic SEM Pages
+### Programmatic SEM pages
 
-Use the CMS to control content displayed on templated pages based on URL parameters.
+Drive templated page content from URL patterns so one Embeddable can power many landing pages.
 
-This is a great way to create a large number of pages from a single template, so you can utilize **Search Engine Marketing (SEM)** to target different audiences. 
+| Column name | Column key | Purpose |
+| --- | --- | --- |
+| Page URL | `url_slug` | URL path for the content |
+| Title | `title` | Page title |
+| Description | `description` | Meta description |
+| Content | `content` | Main body |
+| Image URL | `image_url` | Featured image |
 
-**Example Table Structure:**
+## Tips
 
-| Column Name         | Column Key       | Purpose                                   |
-|--------------------|-------------------|-------------------------------------------|
-| **Page URL**       | `url_slug`        | Defines the URL path for the content      |
-| **Title**          | `title`           | Page title to display                     |
-| **Description**    | `description`     | Page meta description                     |
-| **Content**        | `content`         | Main page content                         |
-| **Image URL**      | `image_url`       | Featured image for the page               |
+- Design the table schema before you create it.
+- Use clear column names and `snake_case` keys.
+- Preview with `savvy_cms=latest` before pushing CMS changes to Production.
 
-This enables you to:
-- Create hundreds of pages from a single template.
-- Target different audiences or SEO keywords.
-- Update content through the CMS interface.
+## Related features
 
-## Best Practices
-
-1. **Plan Your Schema**: Carefully design your table structure before creating it.
-2. **Use Clear Names**: Choose descriptive column names and `snake_case` keys.
-4. **Test Updates**: Verify changes on the latest CMS version before pushing to production.
-
-## Available Templates
-
-The CMS comes with several pre-built templates for common use cases:
-
-- **Blank Table**: Start from scratch.
-- **Prices**: Manage product/service pricing.
-- **URLs & Links**: Handle URL routing and redirects.
-- **FAQs**: Organize frequently asked questions.
-- **Programmatic Pages**: Control dynamic page content.
-- **Coupons**: Manage promotional codes and discounts.
-
-Each template comes with recommended columns and structure, which you can customize to fit your needs.
+<CardGroup cols={2}>
+  <Card title="User Data" icon="database" href="/features/user-data">
+    CMS content is stored under Registered Keys in User Data.
+  </Card>
+  <Card title="URL Params" icon="vial" href="/features/url-params">
+    Preview Embeddable and CMS versions together.
+  </Card>
+</CardGroup>

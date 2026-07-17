@@ -1,30 +1,37 @@
 ---
 title: "Testing and URL Params"
+sidebarTitle: "URL Params"
 description: "What URL params are available to use when viewing Embeddables"
 icon: "vial"
 ---
 
-## How to use URL params in Embeddables
+URL params let you control how an Embeddable loads when you open a **preview link** or a **live page** on your site. They are not available in the Builder or Web App.
 
-1. The following URL params are available for use on both Embeddables preview links and live URLs on your own site. They aren't available for use on the Builder or Web App.
-2. The key of the param can differ, depending on whether it's on a preview link (e.g. `https://engine.embeddables.com/preview/flow_abcdefg?version=latest`) or a live link (e.g. `https://mywebsite.com/?savvy_flow_version=latest`).
+## How to use them
 
-## List of available URL params
+1. Add the param to the page URL as a query string (for example, `?version=latest` or `?savvy_flow_version=latest`).
+2. Use the **preview** key on Embeddables preview links (`engine.embeddables.com/preview...`).
+3. Use the **live** key on your own site URLs.
 
-<Info>
-  Some of these params start with "savvy" or "savvy_flow" - Savvy is the old
-  name for Embeddables before we changed our brand. We'll be updating these
-  soon!
-</Info>
+Some keys still use the old "Savvy" brand prefix. Behavior is the same; naming will be updated over time.
 
-| Param on preview link | Param on live link   | Possible values            | Description                                                                                                        |
-| --------------------- | -------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `version`             | `savvy_flow_version` | `latest`, `staging`, `123` | Display a certain version of the Embeddable                                                                        |
-| `savvy_test`          | `savvy_test`         | `true`, `false`            | Force test mode on (if live) or off (if preview)                                                                   |
-| `savvy_track`         | `savvy_track`        | `true`, `false`            | Force analytics tracking on (if live) or off (if preview)                                                          |
-| `static_render`       | `static_render`      | `true`                     | Render only the HTML with no interactivity (useful for showing a preview of the Embeddable)                        |
-| `[USER_DATA_KEY]`     | `[USER_DATA_KEY]`    | `[USER_DATA_VALUE]`        | Prefills/forces a certain value in user data (must be an experiment or listed in the allowed URL keys in settings) |
+## Available params
 
-<Note>
-  The rest of this page is queued up to be completed soon - watch this space!
-</Note>
+| Param on preview link | Param on live link | Possible values | Description |
+| --- | --- | --- | --- |
+| `version` | `savvy_flow_version` | `latest`, `staging`, `123` | Show a specific Embeddable version |
+| `savvy_test` | `savvy_test` | `true`, `false` | Force test mode on (live) or off (preview) |
+| `savvy_track` | `savvy_track` | `true`, `false` | Force analytics tracking on (live) or off (preview) |
+| `static_render` | `static_render` | `true` | Render HTML only, with no interactivity |
+| `[USER_DATA_KEY]` | `[USER_DATA_KEY]` | `[USER_DATA_VALUE]` | Prefill or force a User Data value (must be an experiment key or listed in allowed URL keys) |
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="Saving and Version Control" icon="floppy-disk" href="/features/saving-and-version-control">
+    How versions, Staging, and Production work.
+  </Card>
+  <Card title="User Data" icon="database" href="/features/user-data">
+    Prefill values via allowed URL keys.
+  </Card>
+</CardGroup>

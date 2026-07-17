@@ -5,73 +5,47 @@ icon: "code"
 description: "Running custom code when some kind of event occurs"
 ---
 
-**Actions** are a core feature of Embeddables, allowing you to run custom JS code when some kind of event occurs.
+**Actions** run custom JavaScript when an event occurs in an Embeddable. Events are started by **Triggers** — for example, a button click or a page load.
 
-Actions are initiated by **Triggers**, which are events that occur in the Embeddable. For example, a Trigger might be when a user clicks a button, or when a page is loaded.
+Actions receive [User Data](/features/user-data), helper functions (such as `setUserData` and `triggerAction`), and context about what triggered them. They run **client-side** in the main window, so they can use `window`, `document`, and `localStorage`.
 
-Actions have access to the [User Data](/features/user-data) JSON object, a series of helper functions like `setUserData` and `triggerAction`, and extra context about what triggered the Action.
+## Create an Action
 
 <Steps>
-  <Step title="Create a custom code Action">
-    - Go to the Logic sidebar and click on the Actions tab.
-    - Click `+ Add New Action`.
-    - Give it a name like "Send Data to Klaviyo".
-    - Hit `Add`.
+  <Step title="Add the Action">
+    - Open the **Logic** sidebar and go to the **Actions** tab.
+    - Click **+ Add New Action**.
+    - Give it a name (for example, "Send Data to Klaviyo").
+    - Click **Add**.
   </Step>
-  <Step title="Write your custom code">
-    - Add whatever custom JS you like inside the `output()` function.
-    - The first argument of `output()` is the User Data, and the other arguments
-      are [described here](/guides/custom-code).
-    - The code will execute on the frontend, in the main window environment,
-      so has access to window functions and variables.
+  <Step title="Write the code">
+    - Put your JavaScript inside the `output()` function.
+    - The first argument is User Data; the other arguments are described in [Custom code](/guides/custom-code).
   </Step>
-
 </Steps>
 
-## Action execution environment
+## Execution environment
 
-Actions are executed client-side, in the main window environment.
+Because Actions run in the main window, you can:
 
-This means that they have access to the main window's functions and variables, such as `window.location`, `document`, and `localStorage`.
-
-This can have useful benefits, such as:
-
-1. The ability to manipulate the DOM
-2. Access to read and write to `localStorage`
-3. Accessing frontend functionality that you might want to expose to the Embeddable, e.g. `window.logInToApp()`.
+- Manipulate the DOM.
+- Read and write `localStorage`.
+- Call frontend functions you expose on `window` (for example, `window.logInToApp()`).
 
 <Warning>
-  **Be careful to avoid exposing secure information such as API Secrets in
-  Actions.** One workaround for this (which can also solve CORS issues) is to
-  use the Embeddables Proxy API - ask Embeddables for more information on this.
+  Do not put API secrets or other secure credentials in Actions. To call secured APIs (and avoid CORS issues), use the Embeddables Proxy API — ask Embeddables support for setup help.
 </Warning>
 
-<Card
-  title="Learn more about Custom Code"
-  icon="code"
-  href="/guides/custom-code"
->
-  Read more about writing Custom Code in Embeddables, including all the
-  available arguments passed in to the function.
-</Card>
-
-## Example Actions
-
-### Send Data to Backend
-
-Here's an example of an Action that sends a subset of User Data to a backend.
+## Example: send data to a backend
 
 ```js
-// All Actions must contain a function called output()
 function output(userData) {
-  // Create an object with the data we want to send
   const dataToSend = {
     email: userData.email,
     name: userData.name,
     favorite_color: userData.favorite_color,
   };
 
-  // Send this data to the backend
   fetch("https://your-backend-url.com/", {
     method: "POST",
     body: JSON.stringify(dataToSend),
@@ -79,52 +53,31 @@ function output(userData) {
 }
 ```
 
-## Common use-cases
+## Common use cases
 
-<CardGroup>
-  <Card
-    title="Embeddables and Klaviyo"
-    href="/how-to/send-data-to-klaviyo"
-  >
-    Setting up an Action with custom code that sends user data to Klaviyo's API
+<CardGroup cols={2}>
+  <Card title="Send data to Klaviyo" href="/how-to/send-data-to-klaviyo">
+    Action that posts User Data to Klaviyo.
   </Card>
-  <Card
-    title="Embeddables and Telegra MD"
-    href="/how-to/send-data-to-telegra-md"
-  >
-    Setting up an Action with custom code that sends user data to Telegram's API
+  <Card title="Send data to Telegra MD" href="/how-to/send-data-to-telegra-md">
+    Action that posts User Data to Telegra MD.
   </Card>
-  <Card
-    title="Embeddables and Tellescope"
-    href="/how-to/send-data-to-tellescope"
-  >
-    Setting up an Action with custom code that sends user data to Tellescope's
-    API
+  <Card title="Send data to Tellescope" href="/how-to/send-data-to-tellescope">
+    Action that posts User Data to Tellescope.
   </Card>
-  <Card
-    title="How To: Handle Partial Data Capture"
-    href="/how-to/partial-data-capture"
-  >
-    Storing incomplete user answers, even when they haven't yet completed the
-    entire funnel.
+  <Card title="Partial data capture" href="/how-to/partial-data-capture">
+    Store incomplete answers before the funnel is finished.
   </Card>
-  <Card
-    title="How To: Retrieve User Data on Different Device"
-    href="/how-to/retrieve-user-data-on-different-device"
-  >
-    Resuming a user's progress after remarketing to them by email or SMS
+  <Card title="Resume on another device" href="/how-to/retrieve-user-data-on-different-device">
+    Resume progress after email or SMS remarketing.
   </Card>
-  <Card
-    title="How To: Add External Scripts"
-    href="/how-to/add-external-scripts"
-  >
-    Two ways to add external scripts or style libraries to your Embeddable
+  <Card title="Add external scripts" href="/how-to/add-external-scripts">
+    Load external scripts or style libraries.
   </Card>
-  <Card
-    title="How To: Run custom code on Embeddable Load"
-    href="/how-to/run-custom-code-on-load"
-  >
-    Running JS code on first load, e.g. to run a function or add an event
-    listener
+  <Card title="Run code on load" href="/how-to/run-custom-code-on-load">
+    Run JS when the Embeddable first loads.
+  </Card>
+  <Card title="Custom code guide" icon="code" href="/guides/custom-code">
+    Arguments, helpers, and trigger context for Actions.
   </Card>
 </CardGroup>

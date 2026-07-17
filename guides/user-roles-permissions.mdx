@@ -4,80 +4,56 @@ icon: "lock"
 description: "Understanding the different roles and permissions in Embeddables"
 ---
 
-In your workspace, each user is assigned two key attributes that determine what they can do and what data they can access:
+Each workspace user has two attributes that control what they can do and what data they can see:
 
-## Summary of Roles & Permissions
+- **Role** — editing, publishing, and team management.
+- **Data access level** — how much end-user data they can view.
 
-- **Role**: Controls editing, publishing, and management capabilities.
-  - **Admin**: Full editing and publishing access.
-  - **Publisher**: Can save and push Embeddables live.
-  - **Editor**: Can save Embeddables, but **cannot** push them live.
-- **Data Access Level**: Controls what end-user data the person can see.
-  - **Data Privacy Officer**: Full access to all end-user data.
-  - **Full Data Access**: Can access all end-user data, including personally identifiable information (PII/PHI).
-  - **Anonymized Data Access**: Can only access anonymized data - end-user's personally identifiable + health info is hidden.
+## Roles
 
-## How to change roles & permissions
+Roles define what actions a user can take.
+
+| Role | Capabilities |
+| --- | --- |
+| **Admin** | Full editing and publishing. Can manage other users' roles and data access. Best for team leads. |
+| **Publisher** | Can save and push Embeddables live. Cannot manage other users. |
+| **Editor** | Can save Embeddables, but **cannot** push them live. Best for preparing changes for review. |
+
+## Data access levels
+
+Data access levels control what end-user data a person can view.
+
+| Level | Access |
+| --- | --- |
+| **Data Privacy Officer** | Full access to all end-user data. Defines which fields are sensitive. Assign to **one** trusted person. |
+| **Full Data Access** | All end-user data, including PII/PHI. Only for people who need it for their job. |
+| **Anonymized Data Access** | Anonymized data only — PII and health info are hidden. Safest default for most users. |
+
+## Change roles and permissions
 
 <Warning>
-  You must be an **Admin** to change roles & permissions.
+  You must be an **Admin** to change roles and permissions.
 </Warning>
 
-To change a user's Role or Data Access Level:
-
-1. Navigate to the **Settings** page in the sidebar.
+1. Open **Settings** in the sidebar.
 2. Select the **Team** tab.
-3. Find the user you want to update in the table.
-4. Use the dropdowns to change the user's Role and Data Access Level.
+3. Find the user in the table.
+4. Use the dropdowns to update their **Role** and **Data Access Level**.
 
----
+## Tips
 
-## Full Guide to Roles & Permissions
+- Assign **Data Privacy Officer** to a single person who understands privacy requirements.
+- Prefer **Anonymized Data Access** for most teammates.
+- Grant **Full Data Access** only when required.
+- Review roles and access levels regularly as the team changes.
 
+## Related features
 
-### 1. Roles
-
-Roles define what actions a user can take within the system. There are three main roles:
-
-#### **Admin**
-- Full editing and publishing access.
-- Can manage other users' roles and data access permissions.
-- Recommended for team leads or those responsible for overall workspace management.
-
-#### **Publisher**
-- Can save and push Embeddables live.
-- Cannot manage other users.
-- Suitable for users who need to publish changes but do not require admin privileges.
-
-#### **Editor**
-- Can save Embeddables, but **cannot** push them live.
-- Ideal for content creators or team members who prepare changes for review.
-
-
-
-### 2. Data Access Levels
-
-Data Access Levels determine what kind of end-user data a person can view. There are three levels:
-
-#### **Data Privacy Officer**
-- Full access to all end-user data.
-- Responsible for defining which fields contain sensitive information.
-- **There should be only one person with this role**—this person sets the rules for the rest of your team.
-
-#### **Full Data Access**
-- Can access all end-user data, including personally identifiable information (PII/PHI).
-- Assign to team members who need the full set of customer data to do their job.
-
-#### **Anonymized Data Access**
-- Can only access anonymized data—personally identifiable information about end-users is hidden.
-- This is the **safest** form of access and is recommended for most users.
-
----
-
-## Best Practices
-
-- Assign the **Data Privacy Officer** role to a single, trusted team member who understands privacy requirements.
-- Use **Anonymized Data Access** for most users to minimize risk and exposure to sensitive data.
-- Only grant **Full Data Access** to those who absolutely need it for their work.
-- Regularly review user roles and data access levels to ensure they are up to date and appropriate for each team member's responsibilities.
-
+<CardGroup cols={2}>
+  <Card title="HIPAA Compliance" icon="shield-check" href="/guides/hipaa-compliance">
+    Use roles and field labeling to stay HIPAA compliant.
+  </Card>
+  <Card title="User Data" icon="database" href="/features/user-data">
+    How end-user data is stored and accessed.
+  </Card>
+</CardGroup>

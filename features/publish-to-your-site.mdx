@@ -4,80 +4,87 @@ description: "How to publish your Embeddable to your website"
 icon: "rocket-launch"
 ---
 
-There are three ways to publish your Embeddable to your website:
+You can publish an Embeddable in three ways:
 
-1. [Embed in your site's frontend](#embedding-in-your-site’s-frontend) using the embed code (in raw HTML, [React](/how-to/embed-in-react), or [React Native](/how-to/embed-in-react-native))
-2. [Set up a reverse proxy](#setting-up-a-reverse-proxy)
-3. [Integrate with your site's backend](#integrating-with-your-site’s-backend-using-the-embeddables-api)
+1. **Frontend embed** — add the embed code to your site (HTML, React, React Native, or a site builder).
+2. **Reverse proxy** — serve the Embeddable through your own domain.
+3. **Backend / SSR** — integrate with the Embeddables API from your server.
 
+## Frontend embed
 
-## Embedding in your site's frontend
-
-You can use the 2-part embed code to easily embed your Embeddable in your website or web app:
+Use the two-part embed code to place the Embeddable in your website or web app.
 
 <Card title="Embed in your site" icon="code" href="/how-to/embed-in-your-site">
-  How to publish your Embeddable inside your site's frontend
+  General guide for publishing with the embed code.
 </Card>
 
-For specific guides to embedding in a Webflow site, React app or React Native app, check out the docs below:
+Platform-specific guides:
 
 <CardGroup cols={2}>
-  <Card title="Embed in a Webflow site" icon="webflow" href="/how-to/embed-in-your-webflow-site">
-    How to publish your Embeddable to your Webflow site
+  <Card title="Webflow" icon="webflow" href="/how-to/embed-in-your-webflow-site">
+    Publish to a Webflow site.
   </Card>
-  <Card title="Embed in a WordPress site" icon="wordpress" href="/how-to/embed-in-your-wordpress-site">
-    How to publish your Embeddable to your WordPress site
+  <Card title="WordPress" icon="wordpress" href="/how-to/embed-in-your-wordpress-site">
+    Publish to a WordPress site.
   </Card>
-  <Card title="Embed in a React app" icon="react" href="/how-to/embed-in-react">
-    How to publish your Embeddable inside a React app
+  <Card title="React" icon="react" href="/how-to/embed-in-react">
+    Publish inside a React app.
   </Card>
-  <Card
-    title="Embed in a React Native app"
-    icon="mobile-screen-button"
-    href="/how-to/embed-in-react-native"
-  >
-    How to publish your Embeddable inside a React Native app
+  <Card title="React Native" icon="mobile-screen-button" href="/how-to/embed-in-react-native">
+    Publish inside a React Native app.
+  </Card>
+  <Card title="Framer" icon="browser" href="/how-to/embed-in-your-framer-site">
+    Publish to a Framer site.
   </Card>
 </CardGroup>
 
-## Setting up a reverse proxy
+## Reverse proxy
 
-Publishing your Embeddable via a reverse proxy can be done in 4 steps:
+Serve Embeddables content through your domain in a few steps:
 
 <Steps>
-  <Step title="Point your page to our proxy server">
-    Point your reverse proxy to: `https://proxy.embeddables.com`.
+  <Step title="Point your page at the proxy">
+    Point your reverse proxy to `https://proxy.embeddables.com`.
   </Step>
-  <Step title="Verify the proxy is pointing to the correct page">
-    Verify that by going to https://yourdomain.com/your-reverse-proxy-page, you see a page similar to what you see on https://proxy.embeddables.com itself.
+  <Step title="Verify the proxy page">
+    Open `https://yourdomain.com/your-reverse-proxy-page` and confirm it looks like `https://proxy.embeddables.com`.
   </Step>
-  <Step title="Pass the correct Embeddable ID">
-    Pass the ID of your Embeddable using the `X-Embeddables-Id` header.
+  <Step title="Pass the Embeddable ID">
+    Send the Embeddable ID with the `X-Embeddables-Id` header.
   </Step>
-  <Step title="Add metadata headers (optional)">
-    You can customize the page metadata by adding these optional headers:
-    
-    - `X-Embeddables-Title`: Sets the page title
-    - `X-Embeddables-Description`: Sets the page meta description
-    - `X-Embeddables-Favicon`: Sets the page favicon URL
+  <Step title="Optional metadata headers">
+    - `X-Embeddables-Title` — page title.
+    - `X-Embeddables-Description` — meta description.
+    - `X-Embeddables-Favicon` — favicon URL.
   </Step>
-  <Step title="Verify that it's working">
-    You should now see the desired Embeddable served on your page.
+  <Step title="Confirm it works">
+    You should see your Embeddable on the proxied page.
   </Step>
 </Steps>
 
-<Card title="Reverse Proxy Setup - full guide" icon="code" href="/how-to/reverse-proxy-setup">
-  Go into more detail about how to set up a reverse proxy to serve Embeddables content through your own domain.
+<Card title="Reverse proxy setup" icon="code" href="/how-to/reverse-proxy-setup">
+  Full guide to reverse-proxy publishing.
 </Card>
 
-## Integrating with your site's backend using the Embeddables API
+## Backend integration (SSR)
 
-You can also integrate directly with the Embeddables API from your site's backend, to serve an Embeddable using Server-Side Rendering (SSR).
+You can serve an Embeddable with Server-Side Rendering through the Embeddables API.
 
 <Tip>
-  This integration currently requires a technical conversation with the Embeddables team to discuss your tech stack and how the integration would work, and to enable this for your account.
+  Backend SSR currently needs a technical conversation with the Embeddables team so we can match your stack and enable the feature for your account.
 </Tip>
 
 <Card title="Embed via backend integration" icon="code" href="/how-to/embed-backend-integration">
-  How to publish your Embeddable from the backend via Server-Side Rendering
+  Publish from your backend with SSR.
 </Card>
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="Saving and Version Control" icon="floppy-disk" href="/features/saving-and-version-control">
+    Push the right version to Staging and Production first.
+  </Card>
+  <Card title="URL Params" icon="vial" href="/features/url-params">
+    Preview versions on live URLs before launch.
+  </Card>
+</CardGroup>

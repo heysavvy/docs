@@ -5,54 +5,59 @@ icon: "floppy-disk"
 description: "Maintaining high quality through version visibility"
 ---
 
-**Version Control** is baked into everything in Embeddables. Almost everything you do in the Builder is tied to a version, which is available to be previewed in Embeddables or on your site, before pushing anything live.
+**Version control** is built into the Embeddables Builder. Almost every edit is tied to a version you can preview before anything goes live, so you always know what users will see.
 
-This serves to minimize mistakes, confusion and opaqueness around what edits are getting pushed live to users at any one time.
+## Drafts and unsaved edits
 
-## Unsaved edits and drafts
+Any change in the Builder (pages, text, [experiments](/features/split-testing), logic, and so on) becomes part of your unsaved edits.
 
-Whenever you make any edit in the Builder (adding a page, changing text, setting up a [Split Test](/features/split-testing), updating logic, etc), that edit becomes part of your unsaved edits.
+- Edits are private to you and backed up as a **Draft** once the **Save** button stops spinning.
+- Drafts are tied to the version you are editing from (usually the last saved version).
+- When you return to the Builder — or switch to a version that has your unsaved edits — you can **resume the draft** or **discard it** and edit from the last saved version.
 
-- These unsaved edits are only visible to you, but they are backed up as a Draft (once the `Save` button stops spinning).
-  <Note>
-    Drafts are tied to a particular version that you're editing from (usually
-    the last version to be saved).
-  </Note>
-- When you come back to the Builder later, it will ask you if you want to resume editing from your Draft, or discard it and edit from the last saved version.
-- It will ask you the same thing if you switch to a version that has unsaved edits from you attached to it.
+## Save and switch versions
 
-## Saving and switching versions
+Click **Save** (top-right) to write your changes to a **version**.
 
-Once you hit `Save`, in the top-right, your changes are saved to a **version**.
+- Open the **Version Control** card to switch between versions created by you or teammates and preview that state of the Embeddable.
+- You can edit from an older version and save again. Saving from an older version makes that the latest version **without** changes from versions after the one you edited from (you "skip" those changes).
 
-- You can open the Version Control card and use it to switch between versions that you or other people have created, to view and test out the current state of the Embeddable at that time.
-- You can start making edits on an older version, and even save your changes if you want to - HOWEVER if you save then that will mean that the latest version now includes your changes but does **not** include changes made in the intervening versions. In other words, you have "skipped" all changes made since the version you were editing from.
-  <Note>
-    The Builder will warn you if you're about to skip/overwrite changes from
-    other versions, and will show a "From version XXX" message in the Version
-    Control card.
-  </Note>
+<Note>
+  The Builder warns you before you skip or overwrite intervening versions, and shows a "From version XXX" message in the Version Control card.
+</Note>
 
-## Pushing to Staging and Production
+## Staging and Production
 
-- Once you're happy with your updates, you can click the `Staging` button in the top-right to push to Staging (or do so in the Version Control Card).
-  <Note>
-    A version on Staging doesn't have any special properties, other than being a
-    useful way of marking a version for other people to look at, and the fact
-    that it can be access via the `staging` URL param (see below).
-  </Note>
-- Then, when you've run all your final checks, you can push that version to Product. To do this you must open the Version Control card, select the version, and click the `Production` button at the bottom of the card.
+1. When you are ready for review, click **Staging** (top-right) or push from the Version Control card.
+2. When checks are done, open the Version Control card, select the version, and click **Production**.
 
-## Previewing versions with URL params
+<Note>
+  A Staging version has no special runtime behavior beyond being marked for review. You can open it with the staging URL param (see below).
+</Note>
 
-Embeddables comes with features for previewing and testing your updates before pushing them live to users, using [URL Params](/features/url-params).
+## Preview versions with URL params
 
-- To preview a particular version, add `version=123` to the URL of any Embeddables preview link (starts with `engine.embeddables.com/preview...`), or `savvy_flow_version=123` to any live URL on your site that contains an Embeddable.
-- To preview the latest version (useful if you're making lots of updates), just use `version=latest` or `savvy_flow_version=latest`.
-- To preview the version currently on staging, use `version=staging` or `savvy_flow_version=staging`.
+Use [URL params](/features/url-params) to preview versions before going live:
+
+| Goal | Preview link | Live site |
+| --- | --- | --- |
+| Specific version | `version=123` | `savvy_flow_version=123` |
+| Latest saved | `version=latest` | `savvy_flow_version=latest` |
+| Staging | `version=staging` | `savvy_flow_version=staging` |
+
+Preview links look like `engine.embeddables.com/preview...`. On your own site, use the `savvy_flow_version` form.
 
 <Tip>
-  For a full list of URL params that can be used with Embeddables, check out our
-  doc on [URL Params in
-  Embeddables](/features/url-params).
+  See the full list of params in [URL Params](/features/url-params).
 </Tip>
+
+## Related features
+
+<CardGroup cols={2}>
+  <Card title="URL Params" icon="vial" href="/features/url-params">
+    Preview versions, force test mode, and more.
+  </Card>
+  <Card title="Publish to your site" icon="rocket-launch" href="/features/publish-to-your-site">
+    Ways to put a Production Embeddable on your website.
+  </Card>
+</CardGroup>

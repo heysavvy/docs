@@ -5,40 +5,32 @@ icon: "screencast"
 ---
 
 <Note>
-  The DataStream feature is a BETA feature, meaning that we're still ironing out
-  the kinks, and you may need to request access to use it right now.
+  DataStream is in **beta**. You may need to request access before using it.
 </Note>
 
 ## What DataStream is for
 
-Sometimes you will want to send [User Data](#user-data) to an external service like Airtable, and then keep sending the updated User Data as the user fills out more information.
+Sometimes you want to send [User Data](/features/user-data) to an external service (for example Airtable) and keep updating the **same** record as the user fills in more fields.
 
-For example, when a user enters their email, you might want to send that to Airtable straight away - but then when teh user later enters their name you'd like to store that too.
-
-Normally this would result in several rows per user in the Airtable.
-
-Embeddables' DataStream feature is a new feature in Beta that supports updating the existing records in an external source like Airtable, so that each record alwasy has the most up-to-date version of the data.
+Without DataStream, each send often creates a new row. DataStream updates the existing record so it always holds the latest data.
 
 <Info>
-  The Embeddables Data Pipeline processes the queue once every minute, so the
-  data you receive can be up to a minute out-of-date.
+  The Embeddables data pipeline processes the queue about once per minute, so data can be up to a minute behind.
 </Info>
 
-## Which Integrations currently support DataStream?
+## Supported integrations
 
-Right now, only the [Airtable](/features/actions/airtable) integration supports DataStream.
-
-Let the Embeddables Team know if you want to request that we support DataStream in another integration!
+Today, only the [Airtable](/features/actions/airtable) integration supports DataStream. Tell the Embeddables team if you want it on another integration.
 
 ## How to use DataStream
 
 <Steps>
-  <Step title="Start with an Action + Trigger">
-    Create an Airtable Action and connect it to a Trigger as you normally would.
+  <Step title="Create an Action and Trigger">
+    Create an Airtable Action and connect it to a Trigger as usual.
   </Step>
   <Step title="Turn on DataStream">
     <Note>
-      The rest of these instructions are coming soon - watch this space!
+      Detailed setup steps for enabling DataStream are coming soon.
     </Note>
   </Step>
 </Steps>
