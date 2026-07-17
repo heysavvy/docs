@@ -2,190 +2,215 @@
 title: "Design in Embeddables"
 sidebarTitle: "Design"
 icon: "paintbrush"
-description: "Styling your Embeddables with tags, selectors, and breakpoints"
+description: "Style Embeddables with tags, element selectors, breakpoints, and states"
 ---
 
-The Design sidebar in the Builder allows you to style your Embeddables using a powerful CSS-based system. You can apply styles to components, pages, and the entire Embeddable using tags, element selectors, and breakpoints.
+The Design sidebar in the Builder styles your Embeddables with a CSS-based system. You apply styles to components, pages, or the whole Embeddable using **tags**, **element selectors**, **breakpoints**, and **states**.
 
-## How styling works in Embeddables
+## How styling works
 
-Embeddables uses a tag-based styling system that generates CSS selectors. When you apply styles in the Design sidebar, you're creating CSS rules that target specific elements in your Embeddable.
+When you change styles in the Design sidebar, Embeddables generates CSS rules that target elements through a **selector constructor**. Each selector is built from up to five parts:
 
-### The selector constructor
+| Part | What it controls |
+| --- | --- |
+| **Styling tag** | Which components the styles apply to |
+| **Element** | Which part of the component is styled |
+| **Breakpoint** | Which screen sizes the styles apply at |
+| **State** | Interaction state (hover, focus, and so on) |
+| **Scope** | Where the styles apply (entire Embeddable, one page, or pages with a tag) |
 
-The Design sidebar includes a selector constructor that helps you build precise CSS selectors. The selector is built from several components:
+The sections below cover each part in more detail.
 
-1. **Styling tag** - The primary identifier for what you're styling
-2. **Breakpoint** - The screen size at which the styles apply
-3. **Element** - The specific part of a component you're styling
-4. **State** - The interaction state (hover, focus, etc.)
-5. **Scope** - Where the styles apply (entire Embeddable, specific pages, etc.)
+## Styling workflow
+
+Use this order when styling a component or page:
+
+1. Select the component or page.
+2. Add or select a styling tag.
+3. Choose the element to style.
+4. Start on the **Desktop** breakpoint, then add tablet or mobile overrides.
+5. Apply styles in the style panels.
+6. Preview at different screen sizes with the breakpoint toggle in the Builder.
 
 ## Styling tags
 
-Tags are the foundation of the styling system in Embeddables. They allow you to apply styles to multiple components at once or create reusable style patterns.
+Tags are the foundation of styling in Embeddables. Use them to style many components at once and to reuse style patterns across your Embeddable.
 
-### Adding tags to components
+### Add a tag
 
 <Steps>
   <Step title="Select a component or page">
-    Click on the component or page you want to style in the Layers sidebar or
-    preview pane.
+    Click the component or page in the Layers sidebar or the preview pane.
   </Step>
   <Step title="Open the Design sidebar">
-    Click on the Design tab in the left sidebar.
+    Click the **Design** tab in the left sidebar.
   </Step>
   <Step title="Add a styling tag">
-    - Click on the "Add a tag" dropdown in the Design sidebar - Either select an
-    existing tag or type a new tag name - Press Enter or click to add the tag
+    Open the **Add a tag** dropdown, select an existing tag or type a new name, then press Enter or click to add it.
   </Step>
 </Steps>
 
-### Managing tags on components
+### Manage tags
 
-Once a tag is added to a component:
+After a tag is on a component:
 
-- You can see all tags applied to the selected component in the Design sidebar
-- Click on a tag to select it and view/edit its styles
-- You can add multiple tags to a single component
-- Tags can be removed by clicking the X next to the tag name
+- All tags for the selected component appear in the Design sidebar.
+- Click a tag to select it and view or edit its styles.
+- You can add multiple tags to one component.
+- Remove a tag with the **X** next to its name.
 
 ### Conditional tags
 
-You can also apply tags conditionally based on [User Data](/features/user-data) using [Conditions](/features/conditions). This allows you to change the styling of components dynamically based on user input or other logic.
+Apply tags based on [User Data](/features/user-data) and [Conditions](/features/conditions) so styling can change with user input or experiment variants.
 
-To add a conditional tag:
+1. In the Design sidebar, open the **Styling tag** dropdown.
+2. Click **Convert to conditional tag** (the tag moves into a **Conditional tags** section).
+3. Click **Conditions** or **Experiment conditions** on the tag.
+4. In the popup, set when the tag should apply.
 
-1. In the component Designer sidebar, find the "Styling tag" section at the top and open the dropdown.
-2. Click the "Convert to conditional tag" button inside the tag, to convert it to a conditional tag (it will move down into a new "Conditional tags" section).
-3. Click the "Conditions" or "Experiment conditions" button in the tag.
-4. In the popup, specify the condition for when the tag should apply based on the User Data or Experiment variants.
+### Tag naming and structure
 
-## Tags best practices
+Use a clear tag structure so styles stay reusable and easy to maintain.
 
-Use a structured approach to organizing tags for maintainability and reusability.
+#### Naming
 
-### Tag naming conventions
+- Use descriptive names that state the purpose (for example, `primary_button`, `section_header`).
+- Use `snake_case` (lowercase with underscores).
 
-- Tags should be descriptive and indicate their purpose (e.g., `primary_button`, `section_header`)
-- Use `snake_case` for tag names (lowercase with underscores)
+#### Primary tags
 
-### Primary tags
+Give each component **one primary tag** for its default look (for example, `standard_button` or `pricing_card`). Put the full base styles on that tag, except styles that come from secondary tags or one-off overrides.
 
-- Each component should have **one main ("primary") tag** that defines its default appearance and behavior, e.g. `standard_button` or `pricing_card`.
-- The primary tag typically includes all styles for a component, except any styles that come from secondary tags or single-style overrides.
+#### Secondary tags
 
-### Secondary tags
+Use **secondary tags** to specialize a primary tag without copying most of its styles. Secondary tags can override a few primary styles, but should not replace most of them.
 
-- **Secondary tags** are commonly used to build on primary tags to create a more specific version of a component type, without needing to repeat all/most of the styles in the primary tag.
-- Secondary tags can overwrite styles in primary tags, as long as it's not overwriting the vast majority of the primary tag's styles.
-- **Examples:**
-  - `standard_button` + `primary_button` (adds color change)
-  - `standard_option_buttons` + `option_buttons_2_cols` (adds 2-column layout, modifies padding/margins, centers text)
+Examples:
 
-### Spacing and Tailwind-style tags
+- `standard_button` + `primary_button` (color change).
+- `standard_option_buttons` + `option_buttons_2_cols` (two-column layout, spacing, centered text).
 
-- When applying a **single style** (like a margin or padding), use a **Tailwind-style tag in snake_case** (e.g. `mt_10`, `mb_0`, `pt_8`).
-- These tags should usually be used instead of creating a new secondary tag for one-off overrides.
-- If a spacing style (e.g. `margin: 10px;`) is **universally useful across all instances**, it can be included in the **primary tag**.
-- For layout spacing between components, see whether you can instead use the `gap` property in the parent container.
+#### Spacing and one-off styles
+
+- For a single style such as margin or padding, prefer a Tailwind-style tag in `snake_case` (for example, `mt_10`, `mb_0`, `pt_8`) instead of a new secondary tag.
+- If a spacing value is useful on every instance, put it on the **primary** tag.
+- For spacing between components, prefer `gap` on the parent container when possible.
 
 ## Element selectors
 
-Element selectors allow you to style specific parts of a component. Different component types have different elements you can target.
+Element selectors target a specific part of a component. Available elements depend on the component type.
 
 ### Common elements
 
-Many component types include basic elements like these:
+Many components include:
 
-- **Whole thing** - The entire component container
-- **Contents** - The inner content area
-- **Text** - Text elements within the component
-- **Icon** - Icon elements
+- **Whole thing** — the full component container.
+- **Contents** — the inner content area.
+- **Text** — text inside the component.
+- **Icon** — icon elements.
 
 ### Component-specific elements
 
-Different component types have specialized elements:
-
 <AccordionGroup>
-  <Accordion title="Input Box elements">
-    - **Input** - The input field itself - **Label** - The label text -
-    **Placeholder** - The placeholder text - **Invalid message** - Error message
-    text - **Text area** - For multi-line inputs
+  <Accordion title="Input Box">
+    - **Input** — the input field.
+    - **Label** — the label text.
+    - **Placeholder** — the placeholder text.
+    - **Invalid message** — error message text.
+    - **Text area** — multi-line inputs.
   </Accordion>
-  <Accordion title="Button elements">
-    - **Button** - The button element - **Text** - Button text - **Icon** -
-    Button icon - **Description** - Secondary text
+  <Accordion title="Button">
+    - **Button** — the button element.
+    - **Text** — button text.
+    - **Icon** — button icon.
+    - **Description** — secondary text.
   </Accordion>
-  <Accordion title="Image elements">
-    - **Image element** - The image itself - **Alt text** - Alternative text for
-    accessibility
+  <Accordion title="Image">
+    - **Image element** — the image itself.
+    - **Alt text** — alternative text for accessibility.
   </Accordion>
-  <Accordion title="Option Buttons elements">
-    - **Button list** - Container for all buttons - **Button** - Individual
-    option button - **Text** - Button text - **Checkbox** - Checkbox element
-    (for multi-select) - **Icon** - Button icon - **Description** - Button
-    description text
+  <Accordion title="Option Buttons">
+    - **Button list** — container for all buttons.
+    - **Button** — an individual option button.
+    - **Text** — button text.
+    - **Checkbox** — checkbox for multi-select.
+    - **Icon** — button icon.
+    - **Description** — description text.
   </Accordion>
-  <Accordion title="Dropdown elements">
-    - **Dropdown main** - The main dropdown container - **Dropdown list** - The
-    list of options - **List option** - Individual dropdown option
+  <Accordion title="Dropdown">
+    - **Dropdown main** — main dropdown container.
+    - **Dropdown list** — list of options.
+    - **List option** — an individual option.
   </Accordion>
-  <Accordion title="File Upload elements">
-    - **Uploader** - The upload area - **Label** - Upload label text - **Sub
-    label** - Secondary label text - **File list** - List of uploaded files -
-    **File item** - Individual file in the list
+  <Accordion title="File Upload">
+    - **Uploader** — the upload area.
+    - **Label** — upload label text.
+    - **Sub label** — secondary label text.
+    - **File list** — list of uploaded files.
+    - **File item** — an individual file in the list.
   </Accordion>
-  <Accordion title="Progress Bar elements">
-    - **Whole thing** - The entire progress bar container - **Bar filled** - The
-    filled portion of the bar - **Progress text** - The progress label or
-    percentage text - **Reset button** - The reset control inside the progress
-    bar
+  <Accordion title="Progress Bar">
+    - **Whole thing** — the full progress bar container.
+    - **Bar filled** — the filled portion of the bar.
+    - **Progress text** — progress label or percentage.
+    - **Reset button** — reset control inside the bar.
   </Accordion>
-  <Accordion title="Stripe Checkout elements">
-    - **Payment box** - Container for payment form - **Payment form** - The form
-    element - **Stripe checkout button** - Submit button - **Message list** -
-    Container for messages - **Error message** - Error text - **Success
-    message** - Success text
+  <Accordion title="Stripe Checkout">
+    - **Payment box** — payment form container.
+    - **Payment form** — the form element.
+    - **Stripe checkout button** — submit button.
+    - **Message list** — container for messages.
+    - **Error message** — error text.
+    - **Success message** — success text.
   </Accordion>
 </AccordionGroup>
 
-### Selecting elements
+### Choose an element
 
-In the Design sidebar, use the "Element" dropdown to choose which part of the component you want to style. The available options will change based on the type of component you have selected.
+In the Design sidebar, use the **Element** dropdown to pick which part of the selected component to style. The options update based on the component type.
 
 ## Breakpoints
 
-Breakpoints allow you to create responsive designs that adapt to different screen sizes. Embeddables includes default breakpoints and supports custom breakpoints.
+Breakpoints make layouts responsive. Embeddables ships with defaults and supports custom breakpoints.
 
 ### Default breakpoints
 
-Embeddables comes with three default breakpoints:
+- **Desktop** — all screen sizes (no max-width).
+- **Tablet** — screens 720px and below.
+- **Mobile** — screens 520px and below.
 
-- **Desktop** - Styles that apply to all screen sizes (no max-width)
-- **Tablet** - Styles for screens 720px and below
-- **Mobile** - Styles for screens 520px and below
+### How breakpoints cascade
 
-### How breakpoints work
+Breakpoints use CSS `max-width` media queries:
 
-Breakpoints in Embeddables use CSS media queries with `max-width`. When you apply styles at a specific breakpoint:
+1. Styles for a breakpoint are wrapped in a media query for that max-width.
+2. Styles cascade from larger to smaller breakpoints.
+3. Desktop styles apply everywhere unless overridden.
+4. Tablet overrides desktop at 720px and below.
+5. Mobile overrides desktop and tablet at 520px and below.
 
-1. The styles are wrapped in a media query targeting that maximum width
-2. Styles cascade from larger to smaller breakpoints
-3. Desktop styles apply to all sizes unless overridden
-4. Tablet styles override desktop styles on screens 720px and below
-5. Mobile styles override both desktop and tablet styles on screens 520px and below
+In generated CSS, breakpoints are ordered from highest to lowest max-width so smaller breakpoints correctly override larger ones.
 
-### Creating custom breakpoints
+### Use breakpoints in the Builder
 
-Custom breakpoints allow you to target specific screen sizes beyond the default options.
+1. Select a component or page.
+2. Open the Design sidebar.
+3. Choose a breakpoint from the **On** dropdown.
+4. Apply styles — they affect screens at or below that breakpoint's max-width.
+
+<Tip>
+  Style desktop first, then add tablet and mobile overrides. This is usually faster than rebuilding styles at every breakpoint.
+</Tip>
+
+### Custom breakpoints
+
+Custom breakpoints target sizes beyond the defaults. They are configured in the Embeddable JSON.
 
 <Note>
-  Custom breakpoints are currently configured through the Embeddable JSON.
-  Contact Embeddables support for assistance setting up custom breakpoints.
+  Contact Embeddables support if you need help setting up custom breakpoints.
 </Note>
 
-To add a custom breakpoint, you need to add it to the `breakpoints` array in your Embeddable configuration:
+Add entries to the `breakpoints` array in your Embeddable configuration:
 
 ```json
 {
@@ -202,106 +227,63 @@ To add a custom breakpoint, you need to add it to the `breakpoints` array in you
 }
 ```
 
-Each breakpoint requires:
+Each breakpoint needs:
 
-- **name** - A descriptive name for the breakpoint (use `snake_case`)
-- **max_width** - The maximum screen width in pixels where these styles apply
+- **name** — a descriptive `snake_case` name.
+- **max_width** — maximum screen width in pixels where the styles apply.
 
-### Breakpoint ordering
+## States and scope
 
-In the generated CSS, breakpoints are automatically ordered from highest to lowest max-width. This ensures that styles cascade correctly and more specific (smaller) breakpoints override broader (larger) ones.
-
-### Using breakpoints in the Builder
-
-1. Select a component or page
-2. Open the Design sidebar
-3. Choose your breakpoint from the "On" dropdown
-4. Apply your styles - they will only affect screens at or below that breakpoint's max-width
-
-<Tip>
-  Start by styling for desktop, then add breakpoint-specific overrides for
-  tablet and mobile. This approach (desktop-first) is more efficient than
-  styling each breakpoint from scratch.
-</Tip>
-
-## Advanced selector options
-
-The Design sidebar includes additional options for creating more specific selectors:
+Use these advanced selector options when you need more precise targeting.
 
 ### State selectors
 
-State selectors allow you to style components based on user interaction:
+Style components based on interaction:
 
-- **Always** - Default state (no state selector)
-- **Hover** - When the user hovers over the element
-- **Focus** - When the element has focus
-- **Active** - When the element is being clicked
-- **Disabled** - When the element is disabled
+- **Always** — default state (no state selector).
+- **Hover** — pointer is over the element.
+- **Focus** — element has focus.
+- **Active** — element is being clicked.
+- **Disabled** — element is disabled.
 
 <Note>
-  Hover states are automatically wrapped in a `@media (hover:hover)` query to
-  prevent issues on touch devices where hover doesn't work as expected.
+  Hover styles are wrapped in `@media (hover: hover)` so they do not misbehave on touch devices.
 </Note>
 
 ### Scope selectors
 
-Scope selectors determine where your styles apply:
+Control where tag styles apply:
 
-- **Entire Embeddable** - Styles apply everywhere the tag is used
-- **This page only** - Styles only apply on the current page
-- **Pages with tag** - Styles apply only on pages that have a specific tag. For example, you might want to apply certain styles to all buttons on interstitial pages
+- **Entire Embeddable** — everywhere the tag is used.
+- **This page only** — only on the current page.
+- **Pages with tag** — only on pages that have a specific tag (for example, all buttons on interstitial pages).
 
-### By key selector
+### Target options by key
 
-For Option Selector and Advanced Dropdown components, you can target specific buttons by their key. This is useful when you want to style individual options differently.
+For Option Selector and Advanced Dropdown components, you can style a specific option by its key when one option needs different styles from the others.
 
-## Custom CSS selectors
+### Custom CSS selectors
 
-For advanced users, Embeddables also supports custom CSS selectors. This allows you to write your own CSS selectors directly.
+Advanced users can write custom CSS selectors directly.
 
 <Note>
-  Custom CSS selectors are an advanced feature. Contact Embeddables support for
-  guidance on using custom selectors.
+  Custom CSS selectors are an advanced feature. Contact Embeddables support for guidance.
 </Note>
 
-## Best practices
+## Additional tips
 
-### Tag organization
-
-- Use descriptive tag names that indicate purpose (e.g., `cta_button`, `form_section`)
-- Create reusable tags for common patterns (e.g., `card`, `highlight`)
-- Avoid overly specific tags that will only be used once
-
-### Responsive design
-
-- Start with desktop styles, then add breakpoint overrides
-- Test your Embeddable at different screen sizes
-- Use the breakpoint toggle in the Builder to preview different sizes
-- Consider touch targets on mobile (buttons should be at least 44x44px)
-
-### Performance
-
-- Avoid overly complex selectors when possible
-- Reuse tags instead of creating many unique ones
-- Group related styles under the same tag
-
-### Styling workflow
-
-1. Select the component or page you want to style
-2. Add or select a styling tag
-3. Choose the appropriate element selector
-4. Select your breakpoint (start with desktop)
-5. Apply your styles in the style panels
-6. Add breakpoint-specific overrides as needed
-7. Test across different screen sizes
+- Reuse tags for common patterns instead of creating many one-off tags.
+- Prefer simpler selectors when you can.
+- On mobile, keep interactive targets at least 44×44px.
+- Use the Builder breakpoint toggle to preview desktop, tablet, and mobile before publishing.
 
 ## Related features
 
 <CardGroup cols={2}>
   <Card title="Conditions" icon="split" href="/features/conditions">
-    Use conditions to show/hide components based on user data
+    Show or hide components based on user data, including conditional tags.
   </Card>
   <Card title="User Data" icon="database" href="/features/user-data">
-    Learn about the data system that powers conditional styling
+    The data system that powers conditional styling.
   </Card>
 </CardGroup>
