@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="15 July 2026">
+### 🐞 Bug Fixes
+
+- 💳 **Stripe Checkout 2 Klarna with Dynamic Payment Methods** – Stripe Checkout 2 components that set `payment_method_types` dynamically (for example, showing Klarna conditionally based on the selected product's price) no longer throw a `confirm()` error at payment time. When deciding whether to omit the `returnUrl`, the component now reads the resolved `payment_method_types` and `return_url` from the current component config instead of the raw, un-templated values — so a dynamically resolved `klarna` payment method (or return URL) is detected correctly.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
