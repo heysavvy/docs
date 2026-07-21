@@ -4,6 +4,17 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="21 July 2026">
+### 🔥 Features and Updates
+
+- 📄 **Briefings Table Export: Markdown & CSV Downloads** – The Export menu on Briefings tables now offers three new options alongside **Copy as CSV**: **Copy as Markdown**, **Download CSV**, and **Download as Markdown**. Markdown exports produce GitHub-flavoured tables — header alignment separators, pipe escaping, HTML cells stripped to plain text, and percentage columns formatted with `%`. Downloads respect the table's current sort order and use configurable filenames (defaulting to `table.csv` and `table.md`). Each option can be toggled independently, and the Export menu only appears when at least one export is enabled.
+- 🤖 **MCP: Inspect an Embeddable's Data Schema** – A new `get_embeddable_data_schema` tool on the Embeddables MCP server lets connected AI agents (Cursor, Claude Desktop, and more) look up an embeddable's answer keys together with their **Health Data**, **Personally Identifiable Data (PID/PII)**, and **Contact Info** classifications — so agents can see which keys are sensitive or HIPAA-relevant before filtering or briefing work. Results can be filtered by key (exact or substring match) and by each classification (`yes` / `no` / `unspecified`).
+
+### 🐞 Bug Fixes
+
+- **Data Schema Loaded the Wrong Version on Branched Embeddables** – An embeddable's data schema now resolves the latest **main** version and fetches that version's flow JSON by `flow_id@version_number`, instead of picking the highest `version_number` across all versions. This fixes cases where an embeddable with branches could surface answer keys from the wrong flow JSON.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
