@@ -4,6 +4,19 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="22 July 2026">
+### 🔥 Features and Updates
+
+- 📈 **Web App Usage Analytics** – The Embeddables Web App now emits lightweight product-analytics events — page views, button clicks, and creation events (new embeddables, duplicates, and analytics views) — to PostHog so we can see which areas of the app are used and prioritise improvements. It uses lean custom events only (no autocapture or session replay) and only measures usage of the Web App itself — it does **not** track your embeddables' end-user data.
+
+### ⚡️ Improvements
+
+- 📊 **Streamlined Web App Analytics** – Removed the project-wide **Insights** dashboard, including its KPI cards, segment tabs, and metrics-over-time charts, along with the related **KPI Cards** and **Segments** sections in **Project Settings → General**. The underlying project-settings columns are retained for schema compatibility.
+- 🧪 **Simpler Experiment Results** – Removed the **Traffic breakdown** section (the UTM bar-chart grid) from the experiment detail page. The Summary and Funnel sections are unchanged.
+- 🧩 **Cleaner Embeddable Detail** – Removed the **Experiments** tab from the Embeddable detail navigation.
+- 🧹 **Removed Observability Page** – Retired the internal Observability dashboard from the Web App.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
