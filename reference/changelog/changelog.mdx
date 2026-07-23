@@ -4,6 +4,16 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="23 July 2026">
+### ⚡️ Improvements
+
+- 🔐 **Secure Proxy Redacts Echoed Credentials** – The Secure Proxy now scans each response for any credential value it injected into your outbound request (URL, headers, or opt-in body) and rewrites every occurrence back into its `{{ credential_id }}` placeholder before the response reaches the browser. A destination that echoes a credential back — verbatim or percent-encoded, JSON-escaped, base64, or HTML-entity encoded — can therefore no longer leak your secret in clear text. When a credential is found and redacted, the response includes an `X-Proxy-Credentials-Redacted` header listing the affected credential IDs (never the values). Streaming (`text/event-stream`), compressed, and very large (over 2&nbsp;MB) response bodies are currently passed through unscanned.
+
+### 🐞 Bug Fixes
+
+- **`window.Savvy` / `Embeddables` Flow Discovery for Experiments** – The JavaScript API now correctly discovers the active flow on pages where the `<savvy>` host tag uses `experiment-id` without an `id` attribute. Methods such as `getAllFlowsOnPage()` and the `Embeddables.*` APIs previously failed to find the resolved flow on these cross-embed / experiment pages; the flow ID is now resolved from the mounted embed, re-syncing after mount when the page initializes before the flow is ready. Legacy `id`-based embeds are unaffected.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
