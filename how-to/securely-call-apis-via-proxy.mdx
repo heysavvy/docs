@@ -14,8 +14,17 @@ The Embeddables Secure Proxy is great for solving one or both of the following w
 The new proxy comes with the following features:
 
 - **Allowlisting of endpoints and credentials**: Only allowlisted endpoints and credentials can be used for the specific environment + project combination. Disallowlisted endpoints or credentials will be blocked.
-- **Request results are returned as-is**: The proxy does not tamper with the received requests in any way. What you see is what you get.
+- **Responses are returned as-is, apart from credential redaction**: The proxy does not otherwise alter the destination's response. The one exception is a safety measure — if the destination echoes back a credential value the proxy injected, the proxy rewrites it back into its `{{ credential_id }}` placeholder so the secret never reaches the frontend in clear text (see [Credential Redaction in Responses](#credential-redaction-in-responses) below).
 - **`X-Proxy-Worker-Success` header**: This header will be `true` if the proxy made your request, and `false` if it wasn't able to for some reason. If you receive a 400 response and are unsure if it's coming from the proxy or the final destination, check this header.
+
+## Credential Redaction in Responses
+
+The proxy injects your real credential values into the outbound request. As a safety net, it also scans the destination's **response** and rewrites any occurrence of an injected credential back into its `{{ credential_id }}` placeholder before returning it to the browser. This ensures that a destination which echoes a credential back — whether in the response body or in a response header (such as `Location` on a redirect) — cannot leak your secret in clear text.
+
+- **Encoded forms are covered too.** As well as the literal value, the scan matches percent-encoded, JSON-escaped, base64 / base64url, and HTML-entity representations of the credential.
+- **`X-Proxy-Credentials-Redacted` header.** When one or more credentials are found and redacted, the response carries this header listing the affected credential IDs (never the values). It is intentionally **not** exposed via `Access-Control-Expose-Headers`, so browser JavaScript cannot read it cross-origin — it is there for server-side inspection and non-browser callers.
+- **`Content-Length` and `Content-Encoding` are dropped** when the response body is rewritten, since they no longer describe it.
+- **Known gaps.** Streaming responses (`text/event-stream`), compressed bodies, and bodies larger than 2&nbsp;MB are currently passed through **unscanned**. Don't rely on response redaction for these response types — the real protection is keeping credentials out of what the destination reflects back in the first place.
 
 ## Adding Credentials and Endpoints in Project Settings
 
