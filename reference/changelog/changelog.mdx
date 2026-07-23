@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="23 July 2026">
+### ⚡️ Improvements
+
+- 🔐 **Smarter Auth Redirects for Preview Branch Links** – Opening a shared Vercel preview-branch link no longer bounces you to the production app when the auth bridge can't complete. If you're not signed in, your session has expired, or the target can't be verified, you're now redirected to that same preview branch's own `/login` page with a `returnTo` param, so you land back on the exact link you clicked after signing in instead of losing your destination.
+- 🧭 **Runtime Preview-Host Validation** – The auth bridge now resolves the project's Vercel slug at request time (with a `VERCEL_PROJECT_NAME` fallback) rather than at module load, so preview-branch hostnames are validated correctly when the bridge runs on the production domain.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
