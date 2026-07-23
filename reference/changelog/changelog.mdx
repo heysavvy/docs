@@ -4,6 +4,22 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="23 July 2026">
+### 🔥 Features and Updates
+
+- 🔐 **Preview Deployment Auto-Login** – When you open a Vercel preview deployment (e.g. a shared preview-branch link) while already signed in to production, a new session bridge silently carries your existing session over instead of forcing you to re-authenticate. The bridge uses top-level redirects between the preview ("satellite") host and the canonical production host — which works in privacy-focused browsers like Brave where the previous iframe approach failed — and validates the session server-side before forwarding it. MCP OAuth on preview URLs now flows through the same bridge, so authorizing an MCP client no longer requires a fresh login on every new preview branch.
+
+### ⚡️ Improvements
+
+- ↩️ **Return to Where You Left Off After Login** – Signing in now sends you back to the page you originally tried to open instead of always dropping you on the dashboard. The intended destination is preserved end-to-end through the one-time-code login flow via a sanitized `returnTo` parameter, with open-redirect protection so it can only ever point to an in-app path.
+- ⏳ **Sign-in Loading Message** – The loading indicator can now display a contextual message (such as "Signing you in…") so it's clear what's happening while a session is being established.
+
+### 🐞 Bug Fixes
+
+- **Login Redirect Dropped the Target Path** – Redirecting an unauthenticated user to the login page previously kept only the query string and lost the pathname, so the original destination couldn't be restored after signing in. The middleware now preserves the full path and query as `returnTo`.
+- **Spurious Redirect Errors in Monitoring** – Next.js emits internal `NEXT_REDIRECT` control-flow exceptions as part of normal navigation. These are no longer reported by client-side error monitoring, eliminating noisy false-positive error logs on every redirect.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
