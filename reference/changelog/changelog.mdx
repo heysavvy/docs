@@ -4,6 +4,17 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="24 July 2026">
+### 🔥 Features and Updates
+
+- 🔐 **Edit Custom Credential Values** – You can now update the secret behind a custom credential without deleting and recreating it. In **Project Settings → Credentials & Endpoints**, each custom credential has an **Edit value** (pencil) action that opens a modal to enter a new value. The credential keeps its unique identifier, so endpoints and proxy requests that reference it keep working. Because a new value takes effect immediately, the modal shows a production-risk warning and requires you to acknowledge it before **Save** is enabled.
+- 📊 **Analytics Hub: Inline Rename & Persistent Save** – Saving an analytics report is now smoother. The report title is editable inline — hover to reveal a pencil, then click to rename — and the **Save** button is always visible, appearing as a primary action while there are unsaved changes and as a disabled **Saved** state once everything is persisted. Clicking Save on an unnamed draft focuses the title field with a "Name this view…" prompt and auto-saves as soon as you commit a name, replacing the previous Save modal.
+
+### ⚡️ Improvements
+
+- 🔑 **More Reliable Preview-Branch Login** – The auth bridge used on Vercel preview branches now returns the session to the exact host you were browsing (the branch alias) rather than Vercel's internal deployment URL, so shared preview-branch links no longer force an unnecessary re-authentication.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
