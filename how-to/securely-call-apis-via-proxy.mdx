@@ -53,6 +53,14 @@ The new proxy comes with the following features:
     </ul>
     Your credentials will appear in the list, each with a unique identifier and
     label.
+
+    <Note>
+      You can update (rotate) a credential's <strong>Value</strong> later
+      without recreating it. The credential keeps the same unique identifier, so
+      any endpoints or proxy requests that reference it keep working without
+      reconfiguration. Internal, worker-generated credentials are read-only and
+      cannot be edited.
+    </Note>
   </Step>
   <Step title="Add Endpoints">
     Click the <strong>+ New Endpoint</strong> button and fill in the required
