@@ -31,6 +31,10 @@ Check your version: `embeddables -v`
 
 - **Global component insert positions in JSON diff → edit history** — Fixed `src/helpers/json.ts` so that insert anchors for components added in a diff are scoped by their `_location` (global slot vs. page-level bucket). Sibling ordering now uses only true ordering peers (same parent or same `_location`), the `isGlobalComponents` flag is passed for root globals, and `insertedComponentId` is excluded from anchor resolution so a component can never anchor against itself. Move-command logic was also tightened to preserve component hierarchy across global slots.
 
+### Chores
+
+- **AI prompt rules: MdxRenderer heading styles** — Internal `.prompts/doc-templates-AI-README.md` now documents the default heading styles automatically applied by `MdxRenderer`: `# H1` → `text-3xl`, `## H2` → `text-2xl`, and `### H3` → `text-lg`, all medium weight with `text-primary-color`. This gives AI agents accurate context when authoring doc-template MDX.
+
 </Update>
 
 <Update label="v0.16.3 — 18 May 2026">
