@@ -38,6 +38,29 @@ icon: "list"
 </Update>
 
 <Update label="18 May 2026">
+### 🔥 Features and Updates
+
+- 📝 **Docs: Briefings, Context, and Templates** – A new **Docs** area in the project sidebar lets teams capture long-form context documents about their product, define reusable MDX briefing templates (with a mock-data preview), and generate briefings on demand. Briefings render with rich MDX components — **Callout**, **Tooltip**, **Link buttons**, **Overline**, **BadgePercentage**, and typed **Table** columns with optional header/cell tooltips — and can be exported to PDF from the briefing detail page. Available per project via the new `include_briefings` project setting.
+- 🔌 **New analytics & docs endpoints** – Internal API endpoints have been added to power the CLI and Trigger.dev briefing-generation jobs: document templates (list/create/save/update-status), context docs, briefing creation, plus `POST /api/analytics/experiment-result`, `POST /api/analytics/funnel`, `POST /api/metrics`, and `POST /api/goals`. All are protected by the internal `x-api-key` header.
+
+### ⚡️ Improvements
+
+- **Friendlier Created column in the Briefings table** – Briefing creation timestamps now display in the project's timezone with a readable format such as "May 14, 2026, 5 PM" instead of a raw UTC timestamp.
+- **Per-template briefing ordinals in titles** – Briefing rows now show a muted `#n` next to each title indicating the chronological position within its template group, making it easier to scan generations of the same template.
+- **Real links throughout the Briefings UI** – Briefing and template table rows now navigate via real Next.js links, so right-click → open in new tab and middle-click work as expected.
+- **Graceful degradation for unknown MDX components** – The MDX renderer no longer crashes when a template references a component that isn't in the registry; unknown components are rendered as a visible placeholder so the rest of the briefing still loads.
+- **No more full-page reload on template edit** – Editing a document template now updates the preview in place instead of forcing a full route reload.
+- **List-route skeletons for Docs** – Briefings, Context, and Templates list routes now have proper `loading.tsx` skeletons, eliminating the navigation freeze when switching tabs.
+
+### 🐞 Bug Fixes
+
+- The QA tests table no longer shows a stale failed run as the **Latest Result** after a successful re-run — embedded QA runs are now ordered and limited at the database level so the most recent run is always picked.
+- Briefing PDF exports no longer overflow the page width when the briefing title is long.
+- The briefing, template, and context-doc detail pages no longer scroll the entire page; scrolling is now contained to the document body.
+- Mock-data preview of templates no longer produces invalid MDX (table cells are normalised so the preview matches the exported PDF).
+</Update>
+
+<Update label="18 May 2026">
 ### ⚡️ Improvements
 
 - ♿ **Accessibility: Focus Moves to Top on Page Change** – When a flow advances to a new page and scrolls to the top, focus is now programmatically moved to the form at the top of the page so screen readers and keyboard users land in the right place. Focus only moves when the embed itself scrolls (not when the document scrolls), and the programmatic focus ring is suppressed so sighted users don't see an unexpected outline on every page change.
