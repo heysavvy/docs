@@ -12,6 +12,7 @@ description: "Dev server, Workbench, TypeScript authoring, and workflows for tec
 - Serves the compiled Embeddable to the Engine at the **Preview URL**.
 - Watches files under `embeddables/<id>/` and recompiles on change (hot reload).
 - By default uses the **production** Engine (`https://engine.embeddables.com`); use `--local` to point to a local engine (e.g. `http://localhost:8787`).
+- Forwards your project ID to the Engine, so **connected experiments resolve** and `split_*` variant keys are assigned in the preview just like they are in production.
 
 The terminal prints a URL like:
 
