@@ -4,6 +4,14 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="30 June 2026">
+### 🔥 Features and Updates
+
+- 📄 **Briefings Templates Section (Embeddables Team)** – The Briefings page now surfaces templates that have no public snapshots yet — newly created or internal-only — in a dedicated **Templates** section below the main table (visible to Embeddables team members). Each pending template gets a **Generate internal** button to produce its first internal-only briefing, and a template moves up into the main Briefings table as soon as its first non-internal briefing is generated. Template creation itself now lives entirely in the CLI, so the in-app "Create briefing template" entry points have been removed.
+- 👁️ **Live Doc Template Previews from the CLI** – A new public, data-free `/doc-preview` route plus a Bearer-authenticated `POST /api/documents/templates/mock-preview/serialize` endpoint let the CLI `doc-templates preview` command render briefing MDX exactly like production. The endpoint serializes (compiles) the template's MDX server-side and the standalone route renders it through the real component map, so charts, tabs, and tooltips hydrate in the preview just as they do in the app. Compile errors are returned inline (HTTP 200) so the CLI can display them in place.
+- 🧩 **Scenario Examples in the Template Save Endpoint** – `POST /api/documents/templates/save` now accepts an optional `examples` array and full-syncs scenario examples alongside the template skeleton — creating new examples, updating existing ones by `name`, and soft-deleting any that are omitted. Example names are validated as safe filename identifiers and must be unique (case-insensitively). The endpoint stays backward compatible: when no `examples` field is sent, the existing save contract is unchanged.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
