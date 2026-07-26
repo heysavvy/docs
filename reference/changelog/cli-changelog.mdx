@@ -11,6 +11,20 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.10 — 29 June 2026">
+
+### Bug Fixes
+
+- **Custom validation functions: default parameter values preserved** — Input Box `custom_validation_function` definitions that use default parameter values (e.g. `function validate(value, userData = {}) { … }`) are no longer emptied during reverse compilation. The function-body extractor now skips past the parameter list before locating the body's opening `{`, so braces inside default values (like `{}`) are no longer mistaken for the start of the function body.
+
+### Chores
+
+- **AI-README restructured for AI agents** — The internal `AI-README.md` developer guide has been condensed and reorganized for clearer, more concise consumption by AI coding agents, including a corrected PR title format example (`LINEAR_ISSUE_ID: LINEAR_ISSUE_TITLE`). Contributor-facing only.
+- **doc-templates AI README: briefing generator data tools** — Internal doc-templates AI context now documents which data sources the briefing generator supports, with user-friendly tool names, summary tables, and explicit decline rules for unsupported requests. Contributor-facing only.
+- **`evaluate-pr` skill for the CLI repo** — Added a repo-specific PR review skill that runs Embeddables CLI PR checks, starting with verification that new commands expose non-interactive flags. Contributor-facing only.
+
+</Update>
+
 <Update label="v0.16.7 — 27 May 2026">
 
 ### Features
