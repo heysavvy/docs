@@ -4,6 +4,19 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="29 June 2026">
+### 🔥 Features and Updates
+
+- 🤖 **MCP Tool: `get_projects`** – The Embeddables MCP server now exposes a `get_projects` tool that returns every project the authenticated user belongs to, with an optional case-insensitive substring filter on the project title. AI agents use it to resolve a project name to its ID before calling project-scoped tools.
+- 🤖 **MCP Tool: `get_embeddables`** – A new `get_embeddables` tool lists the embeddables in a project, returning each one's `id` and `title`. It supports optional filters for specific embeddable IDs, published vs. draft state, and a case-insensitive published-URL substring match. Use it to resolve an embeddable name to its ID before calling embeddable-scoped tools.
+- 🤖 **MCP Tool: `get_embeddable_json`** – A new `get_embeddable_json` tool returns the JSON for an embeddable's `latest` (draft/editor) or `live` (published) version. Callers request only the sections they need — `pages`, `global_components`, `components` (optionally scoped to a single page by key), `experiments`, `actions`, `computed_fields`, `answer_keys`, or the entire `full_json` payload — keeping responses small. Project membership is verified on every call.
+- 🤖 **MCP Tool: `get_current_user`** – A new `get_current_user` tool returns the identity (id, email, name) of the authenticated user, so agents can personalise requests like "my projects" or "my tasks".
+
+### ⚡️ Improvements
+
+- 🧭 **Identity-Aware MCP Guidance** – The MCP server now instructs the agent to call `get_current_user` first whenever a request refers to the user themselves (e.g. "my tasks", "my projects", "show me my …"), then use that identity to personalise the follow-up tool call.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
