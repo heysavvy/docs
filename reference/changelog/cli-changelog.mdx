@@ -43,12 +43,24 @@ Check your version: `embeddables -v`
 
 <Update label="v0.16.2 — 6 May 2026">
 
+### Features
+
+- **`embeddables doc-templates` command group** — New `doc-templates` namespace for managing project document templates (briefings/reports) from the CLI:
+  - `embeddables doc-templates list` — Print a table of the project's document templates (ID, status, title, last updated).
+  - `embeddables doc-templates pull -i <id>` — Fetch a template and write `template.mdx` and `description.txt` to `doc_templates/<id>/` (use `-o, --out <dir>` to override the base directory).
+  - `embeddables doc-templates create` — Interactively prompt for title, status, and optional `cron_utc`, create the template, and write starter files to `doc_templates/<id>/`.
+  - `embeddables doc-templates save -i <id>` — Upload the local `template.mdx` and `description.txt` back to the server.
+
+  Each command resolves the project from `-p, --project-id`, `embeddables.json`, or an interactive prompt, and requires `embeddables login`.
+- **`docs/document-templates.md` written by `init` / `upgrade`** — `embeddables init` and `embeddables upgrade` now also write `docs/document-templates.md`, a dedicated MDX guide for AI assistants when editing or creating document templates. The shared short-pointer rule files now reference this guide alongside the main `AI-README.md`.
+
 ### Improvements
 
 - **Per-operation edit history on save and publish** — `embeddables save` and `embeddables dangerously-publish` now emit per-change `editHistoryDescriptions` matching the Builder's format (e.g. `Set component login_btn [id: comp_123] property text to "Continue"`, `Add component cta_button in page welcome`, `Move page checkout`, `Remove tag draft from Page welcome`). Previously each save/publish recorded a single generic `Saved version from CLI` entry. Descriptions are capped at 100 entries with an overflow marker, mirroring the Builder. The `trigger.editor` field on save/publish now records the actual user ID instead of the literal string `"CLI"`.
 
 ### Chores
 
+- **AI prompt rules: doc templates pointer** — The shared short-rule body now references `docs/document-templates.md` so AI assistants pick up the doc-template guide before editing or creating templates.
 - **AI-README: PR title workflow for Linear issues** — Internal contributor guide updated with the PR title format used for Linear-tracked work.
 
 </Update>
