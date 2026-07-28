@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="28 July 2026">
+### ⚡️ Improvements
+
+- 🔍 **Secure Proxy Observability** – The Secure Proxy now reports structured logs and credential-surface detection events to Sentry, feeding a dedicated proxy dashboard. When a credential placeholder is substituted into a request URL (raised as an error) or, with body templating enabled, into a request body (raised as a warning), the proxy records a detection event referencing only the credential's identifier — so misplaced or over-exposed credentials are easy to spot. Secret values themselves are never logged: they are redacted from log messages, error responses, and Sentry events (including stack traces and URLs), and outbound request tracing is disabled so credential-bearing URLs never reach a trace.
+- 🧹 **AI Worker Decommissioned** – The legacy `ai-worker` (scheduled Puppeteer-based AI automation) has been retired now that all consumers have migrated off it, removing the worker and its references across the codebase.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
