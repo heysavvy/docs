@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="29 July 2026">
+### ⚡️ Improvements
+
+- 🔭 **Connect-Path Observability for Flows & Pages** – The Engine Worker now emits structured Sentry Logs across the flow and page controller connect path — covering connect start/complete, `SavvyFlow` reads, user-data loading, page connections, and page transitions — to help diagnose client-side race conditions between bootstrap setup and user-data hydration. Each log is tagged as `preview` or `production` traffic and records how many split-testing keys are present at each step so late-arriving split hydration can be spotted. Logging is gated on a valid Sentry DSN and wrapped in try/catch, so it never affects embed rendering.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
