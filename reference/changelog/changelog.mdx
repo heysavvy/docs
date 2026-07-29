@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="29 July 2026">
+### ⚡️ Improvements
+
+- 🔭 **Split-Key Mismatch Detection in Flow Logging** – The engine worker's first user-data-change bootstrap log now compares the number of split keys found in user data against those in local storage and records a new `split_key_mismatch` flag when the counts differ, making it easier to spot split-key synchronisation issues during flow load.
+- 🩺 **Frontend Sentry Sends Logs Only** – The engine worker's browser Sentry integration no longer forwards browser error events; it now emits only the structured bootstrap logs from `logSentryStep` (via `beforeSend: () => null`), keeping Sentry focused on diagnostic bootstrap data. Traces and replay sampling are unchanged.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
