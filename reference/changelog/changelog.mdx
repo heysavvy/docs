@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="29 July 2026">
+### ⚡️ Improvements
+
+- 🔍 **Split Key Persistence Diagnostics** – The engine worker now emits a one-time `split_persist_check` Sentry log on the first reactive user-data update, comparing the split keys already stored in localStorage against the in-memory data about to be persisted. This flags cases where a server-assigned split key gets clobbered because the on-load script wrote it after `loadUserData()` had already read it, replacing the previous `user_data_first_changed` log with a more precise check.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
