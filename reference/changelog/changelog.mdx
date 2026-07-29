@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="29 July 2026">
+### ⚡️ Improvements
+
+- 🧪 **Broader Split-Assignment Mismatch Detection** – The engine's first reactive-update diagnostic now flags any disagreement between the split-testing keys held in local storage and those in the in-memory user data (`split_key_mismatch`), instead of only the one-directional "clobber" case where local storage held more keys than the incoming write. The Sentry telemetry now records `user_data_split_key_count` and `local_storage_split_key_count`, surfacing split-assignment races in both directions so these state issues are easier to diagnose.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
