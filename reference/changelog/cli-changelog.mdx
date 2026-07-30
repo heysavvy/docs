@@ -11,6 +11,18 @@ Check your version: `embeddables -v`
 
 ---
 
+<Update label="v0.16.12 — 30 July 2026">
+
+### Features
+
+- **`disable_all_interactions_during_transitions` flow-level setting** — The `Flow` type now recognizes an optional `disable_all_interactions_during_transitions` boolean at the flow root (same level as `title`, `builder_version`, and `defaults`). When set to `true`, it blocks `OptionSelector` and `CustomButton` interactions while a page transition is running. The flag is stored in `config.json` and passes through compile and reverse-compile unchanged, aligning the CLI with the Workers and web app. Consumer AI context now documents flow-level settings and this flag.
+
+### Chores
+
+- **doc-templates AI README: Table export dropdown** — Internal doc-templates AI context now documents the `Table` component's Export dropdown with four independently-toggled actions — `enableCopyCSV`, `enableCopyMarkdown`, `enableDownloadCSV`, and `enableDownloadMarkdown` (all default to `true`) — plus the `csvFilename` and `mdFilename` filename props for the download options. Template authors now know each copy/download-as-CSV-or-Markdown action is enabled separately and that the dropdown is hidden only when all four flags are `false`.
+
+</Update>
+
 <Update label="v0.16.7 — 27 May 2026">
 
 ### Features
