@@ -4,6 +4,16 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="30 July 2026">
+### ⚡️ Improvements
+
+- 🚧 **Block All Interactions During Page Transitions** – The flow setting that previously only disabled buttons mid-transition now blocks **all** interactions while a page is animating in or out — both Custom Button actions and Option Selector clicks. Enabling **Disable all interactions during transitions** on the flow prevents users from triggering navigation until the transition finishes, and coverage now spans the entire transition window, including the pre-animation exit delay before the animation class is applied.
+
+### 🐞 Bug Fixes
+
+- **Changing Answers During Transitions Broke Next-Page Evaluation** – Clicking an option or button while a page transition was still running could re-evaluate flow conditions against a half-updated state and bounce users back to the first page. Interaction blocking now spans the full transition window, and a failed or missing page navigation no longer leaves the flow stuck reporting a transition indefinitely.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
