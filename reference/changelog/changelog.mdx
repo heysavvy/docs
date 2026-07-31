@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="31 July 2026">
+### ⚡️ Improvements
+
+- 🔎 **Proxy Dashboard: Filter by Destination URL** – The Secure Proxy worker now records the destination URL as a filterable Sentry tag alongside the origin URL on credential-surface events. Operators can now filter the Issues/Errors dashboards by both the origin and the (pre-substitution) destination URL — including placeholders and query string — to quickly see which destination is affected when a credential lookup or body-templating step fails.
+- 🔇 **Quieter Page Controller Logs** – Routine flow navigations no longer emit `page_id_changed` and `get_flow_unavailable` Sentry log steps from the engine worker's page controller, cutting log volume and cost without losing genuine errors — page-not-found cases are still reported to the console.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
