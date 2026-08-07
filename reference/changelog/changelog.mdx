@@ -4,6 +4,18 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="07 August 2026">
+### 🔥 Features and Updates
+
+- 🚀 **List Entries on the New Public API** – The new Embeddables public API on Cloudflare Workers now serves `GET /api/v1/entries` at `https://api.embeddables.com/api/v1/entries`. It returns a project's entries as a paginated list using opaque keyset cursors (`limit` up to 100, with the next page cursor in `pagination.next_cursor`), supports `sort` (`updatedAt` or `createdAt`) and `direction`, and filters by last-update time via the `lastUpdatedAfterInUTC` and `lastUpdatedBeforeInUTC` query parameters. Authenticate with your `X-Api-Key` and identify the project via the `X-Project-Id` header or the `project_id` query parameter. The API key's scopes determine the data returned: deanonymized reads require the deanonymized analytics scope and are HIPAA-audited, while keys with only the anonymized analytics scope read from the anonymized tables.
+
+### ⚡️ Improvements
+
+- **Consistent snake_case Responses** – Public API entities and pagination now use snake_case wire fields (`entry_id`, `embeddable_id`, `project_id`, `group_id`, `created_at`, `next_cursor`, and so on) across both `/api/v1/embeddables` and `/api/v1/entries`, matching the existing API contract so clients don't need a casing migration.
+- **Ordering-Safe Pagination Cursors** – Entry pagination cursors are now bound to the `sort` and `direction` they were minted with. Replaying a cursor under a different ordering is rejected with a clear `400` instead of silently skipping or repeating entries, and the API also rejects a `project_id` query parameter that conflicts with the `X-Project-Id` header.
+- **Public API Error Reporting** – The public API worker now reports errors to Sentry in every environment for faster diagnosis of production issues.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
