@@ -4,6 +4,14 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="07 August 2026">
+### 🔥 Features and Updates
+
+- 🚀 **New Public API (v1)** – A brand-new versioned public API is now live at `https://api.embeddables.com/api/v1`, running on Cloudflare Workers alongside the existing API. It ships with auto-generated OpenAPI docs, native rate limiting, and a unified error format (`{ error: { code, message, requestId } }`). Authenticate with your `x-api-key` header and identify the project via the `x-project-id` header (or a `project_id` query parameter).
+- 📋 **List Embeddables Endpoint** – The first endpoint on the new API, `GET /api/v1/embeddables`, returns a paginated list of your project's embeddables. It uses opaque keyset pagination — pass `limit` (default 25, max 100) and the `cursor` returned as `pagination.nextCursor` to page through results.
+- 🔐 **Granular API Key Scopes** – Internal Embeddables API keys now carry per-domain permission scopes (`projectData`, `analyticsAnonymized`, and the read-only, HIPAA-sensitive `analyticsDeanonymized`), each with independent `read` and `write` flags. Scopes are persisted and returned whenever a key is verified, so the new public API can enforce exactly what each key is allowed to do — a key with no scopes has no access.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
