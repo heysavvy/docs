@@ -10,7 +10,7 @@ description: "Get programmatic access to your Embeddables and your data"
 
 ## Welcome
 
-The Embeddables API is brand new and still being built.
+The Embeddables API is still being built out, and we're now rolling out a brand-new **versioned public API** served under `https://api.embeddables.com/api/v1`.
 
 Please contact us to get access and let us know what you want us to prioritize shipping first!
 
@@ -28,8 +28,6 @@ Please contact us to get access and let us know what you want us to prioritize s
 
 All private API endpoints are authenticated using API Keys.
 
-Each API Key gives full access to a particular [Project](/reference/glossary/glossary#project).
-
 Head to **Settings** > **Credentials and Endpoints** in the [Embeddables Dashboard](https://app.embeddables.com/) to create an API Key.
 
 You should provide the API Key as the `X-Api-Key` header in your request:
@@ -39,3 +37,53 @@ curl --request GET \
   --url https://api.embeddables.com/projects/{projectId}/entries \
   --header 'X-Api-Key: <x-api-key>'
 ```
+
+Each API Key is tied to a particular [Project](/reference/glossary/glossary#project) and carries a set of **scopes** that determine what it can read and write.
+
+## The versioned API (`/api/v1`)
+
+The new public API lives under `https://api.embeddables.com/api/v1`. Requests are authenticated with the same `X-Api-Key` header, and you must also identify the project the key belongs to — either with an `X-Project-Id` header or a `project_id` query parameter.
+
+Its first endpoint, `GET /api/v1/embeddables`, returns a paginated list of your project's embeddables:
+
+```sh Sample CURL Request
+curl --request GET \
+  --url 'https://api.embeddables.com/api/v1/embeddables?limit=25' \
+  --header 'X-Api-Key: <x-api-key>' \
+  --header 'X-Project-Id: <project-id>'
+```
+
+A successful response wraps the results in a `data` array alongside a `pagination` object:
+
+```json
+{
+  "data": [
+    {
+      "id": "flow_abc123",
+      "title": "Insurance quote flow",
+      "projectId": "proj_123",
+      "groupId": "grp_456",
+      "createdAt": "2026-01-01T00:00:00.000Z"
+    }
+  ],
+  "pagination": { "nextCursor": "eyJjcmVhdGVkQXQiOiI..." }
+}
+```
+
+**Pagination** uses an opaque keyset cursor rather than page offsets. Pass `limit` (defaults to `25`, capped at `100`) to control the page size, and pass the `nextCursor` value from the previous response back as the `cursor` query parameter to fetch the next page. When `nextCursor` is `null`, you've reached the last page.
+
+**Rate limiting** is applied per API key; exceeding the limit returns a `429` response.
+
+**Errors** are returned in a unified shape so you can handle them consistently:
+
+```json
+{
+  "error": {
+    "code": "UNAUTHORIZED",
+    "message": "Missing or invalid API key.",
+    "requestId": "..."
+  }
+}
+```
+
+Possible `code` values include `INVALID_PARAMETERS` (`400`), `UNAUTHORIZED` (`401`), `FORBIDDEN` (`403` — the key lacks the required scope), `NOT_FOUND` (`404`), `RATE_LIMITED` (`429`), and `INTERNAL` (`500`). The `requestId` is useful to quote when contacting support.
