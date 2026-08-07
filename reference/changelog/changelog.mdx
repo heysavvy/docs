@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="07 August 2026">
+### ⚡️ Improvements
+
+- 🔌 **Embeddables API Worker Production Config** – The new `embeddables-api-worker` (which now serves the `/entries` endpoint) is fully wired up for production. Its non-secret Supabase and ClickHouse connection settings — project URL, ClickHouse HTTP endpoint, and the read-only / anonymized / audit-insert usernames — now live in the worker's `wrangler.jsonc` vars, while all passwords, the Supabase anon key, and the JWT secret remain as Wrangler secrets. This lets the production entries API reach ClickHouse for deanonymized analytics reads and HIPAA audit logging. Sentry error reporting (`SENTRY_DSN`) is also now populated for the worker.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
