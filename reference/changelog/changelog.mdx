@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="10 August 2026">
+### 🐞 Bug Fixes
+
+- **Accurate Eval Storage Diagnostics** – Fixed the flow eval write/read-back diagnostics so a failed `localStorage` write is no longer misreported as a successful read-back. The `storage_readback_result` telemetry now defaults to `not_attempted` and is only marked `ok` when the read-back genuinely succeeds, making Sentry diagnostics for user-data persistence trustworthy.
+- **Eval Write Errors No Longer Swallowed** – When a `localStorage` write fails during eval, the error is now logged and re-thrown instead of being silently swallowed, so `eval_connect_failed` telemetry and caller behavior are preserved exactly as before.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
