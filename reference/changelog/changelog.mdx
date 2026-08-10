@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="10 August 2026">
+### ⚡️ Improvements
+
+- 🔍 **Split Persistence Diagnostics** – Added Sentry instrumentation to trace how experiment split assignments are written to and read back from `localStorage`, so we can pinpoint why a small share of WebKit in-app browser pageviews lose their split assignment. The renderer's eval step now verifies its own write with an immediate read-back, and the flow controller's `connect` step reports the outcome of its read — both classifying the result (`ok`, `null`, `empty`, `missing_flow`, `parse_error`, `read_error`) and surfacing the underlying storage error when one occurs. The existing write and split-key-count behavior is unchanged; the diagnostics are purely additive.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
