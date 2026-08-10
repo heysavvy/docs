@@ -4,6 +4,17 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="10 August 2026">
+### 🔥 Features and Updates
+
+- 📈 **UTM Attribution on the Entries API** – The public `GET /projects/{projectId}/entries` endpoint now accepts an optional `include_utm_params` query parameter (default `false`). When set to `true`, each entry is enriched with flat `utm_source`, `utm_medium`, `utm_campaign`, `utm_term`, and `utm_content` fields, taken from the latest non-empty `flowpage:viewed` page-view event for that entry (values are `null` when no attribution is found). Events are only queried when the flag is enabled, so the default response keeps its original cost. A companion `utm_window_padding_days` parameter (default `1`, max `30`) widens the page-view search window by ±N days, so a view logged one day still attaches to an entry updated the next.
+- 🕒 **Lifetime Timestamps via `use_full_time_history`** – Pass `use_full_time_history=true` on `GET /entries` to additionally receive each entry's lifetime `created_at` and `updated_at` (the earliest/latest timestamps across all of the entry's history). This runs a heavier aggregation and is omitted by default.
+
+### ⚡️ Improvements
+
+- 🪟 **UTC Time Window on the Entries API** – `GET /entries` now scans an explicit UTC time window via the optional `updated_after` / `updated_before` parameters, defaulting to the last 24 hours in UTC rather than a local-calendar day. This keeps the underlying query partition-friendly and fast. Each entry now reports `first_updated_in_period` and `last_updated_in_period` — the earliest and latest timestamps inside the requested window — in place of the previous `created_at` / `updated_at` fields (which are now returned only when `use_full_time_history=true`). Sorting accepts `last_updated_in_period` (default) and `first_updated_in_period`; the legacy `updated_at` / `created_at` sort values are still accepted and map to the matching period field (or to the true lifetime timestamps when `use_full_time_history=true`).
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 

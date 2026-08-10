@@ -460,7 +460,14 @@ paths:
                     projectId: pr_myexampleproject
   /projects/{projectId}/entries:
     get:
-      description: Retrieve all entries from the database
+      description: >-
+        Retrieve a project's entries within a UTC time window (defaults to the
+        last 24 hours in UTC via updated_after / updated_before). Each entry
+        reports first_updated_in_period and last_updated_in_period; pass
+        use_full_time_history=true to also receive lifetime created_at /
+        updated_at (heavier). Set include_utm_params=true to attach flat utm_*
+        fields from the latest flowpage:viewed event (the UTM search window is
+        widened by utm_window_padding_days, default ±1).
       operationId: entries_getEntries
       tags:
         - Entries
@@ -505,6 +512,37 @@ paths:
           schema:
             $ref: "#/components/schemas/DateTime"
             nullable: true
+        - name: use_full_time_history
+          in: query
+          required: false
+          description: >-
+            When true, also resolve each entry's lifetime created_at /
+            updated_at (across all history, not just the window). Heavier
+            query. Defaults to false.
+          schema:
+            type: boolean
+            nullable: true
+        - name: include_utm_params
+          in: query
+          required: false
+          description: >-
+            When true, attach utm_source / utm_medium / utm_campaign / utm_term
+            / utm_content taken from the latest non-empty flowpage:viewed event
+            in the UTM search window (null when none found). Defaults to false;
+            events are not queried when unset.
+          schema:
+            type: boolean
+            nullable: true
+        - name: utm_window_padding_days
+          in: query
+          required: false
+          description: >-
+            Days to widen the UTM event search window around updated_after /
+            updated_before (±N). Only used when include_utm_params=true.
+            Defaults to 1, max 30.
+          schema:
+            type: integer
+            nullable: true
         - name: X-Api-Key
           in: header
           required: true
@@ -532,24 +570,24 @@ paths:
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_1
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      first_updated_in_period: "2022-01-01T00:00:00Z"
+                      last_updated_in_period: "2022-01-01T00:00:00Z"
                       entry_data: '{ "email": "ada@lovelace.com" }'
                     - entry_id: entry_myexampleentry_2
                       group_id: group_myexamplegroup
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_2
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      first_updated_in_period: "2022-01-01T00:00:00Z"
+                      last_updated_in_period: "2022-01-01T00:00:00Z"
                       entry_data: '{ "email": "grace@hopper.com" }'
                     - entry_id: entry_myexampleentry_3
                       group_id: group_myexamplegroup
                       project_id: pr_myexampleproject
                       embeddable_id: flow_myexampleflow
                       contact_id: contact_myexamplecontact_3
-                      created_at: "2022-01-01T00:00:00Z"
-                      updated_at: "2022-01-01T00:00:00Z"
+                      first_updated_in_period: "2022-01-01T00:00:00Z"
+                      last_updated_in_period: "2022-01-01T00:00:00Z"
                       entry_data: '{ "email": "alan@turing.com" }'
         "401":
           description: ""
@@ -624,8 +662,8 @@ paths:
                     project_id: pr_myexampleproject
                     embeddable_id: flow_myexampleflow
                     contact_id: contact_myexamplecontact
-                    created_at: "2022-01-01T00:00:00Z"
-                    updated_at: "2022-01-01T00:00:00Z"
+                    first_updated_in_period: "2022-01-01T00:00:00Z"
+                    last_updated_in_period: "2022-01-01T00:00:00Z"
                     entry_data: '{ "email": "ada@lovelace.com" }'
         "401":
           description: ""
@@ -1238,20 +1276,68 @@ components:
           $ref: "#/components/schemas/EmbeddableId"
         contact_id:
           $ref: "#/components/schemas/ContactId"
+        first_updated_in_period:
+          $ref: "#/components/schemas/DateTime"
+          description: >-
+            Earliest entry-row timestamp within the query window
+            (updated_after..updated_before).
+        last_updated_in_period:
+          $ref: "#/components/schemas/DateTime"
+          description: >-
+            Latest entry-row timestamp within the query window
+            (updated_after..updated_before).
         created_at:
           $ref: "#/components/schemas/DateTime"
+          nullable: true
+          description: >-
+            Lifetime creation timestamp (earliest across all history). Only
+            present when use_full_time_history=true.
         updated_at:
           $ref: "#/components/schemas/DateTime"
+          nullable: true
+          description: >-
+            Lifetime last-update timestamp (latest across all history). Only
+            present when use_full_time_history=true.
         entry_data:
           $ref: "#/components/schemas/EntryData"
+        utm_source:
+          type: string
+          nullable: true
+          description: >-
+            Latest non-empty flowpage:viewed UTM source. Only present when
+            include_utm_params=true; null when no attribution is found.
+        utm_medium:
+          type: string
+          nullable: true
+          description: >-
+            Latest non-empty flowpage:viewed UTM medium. Only present when
+            include_utm_params=true; null when no attribution is found.
+        utm_campaign:
+          type: string
+          nullable: true
+          description: >-
+            Latest non-empty flowpage:viewed UTM campaign. Only present when
+            include_utm_params=true; null when no attribution is found.
+        utm_term:
+          type: string
+          nullable: true
+          description: >-
+            Latest non-empty flowpage:viewed UTM term. Only present when
+            include_utm_params=true; null when no attribution is found.
+        utm_content:
+          type: string
+          nullable: true
+          description: >-
+            Latest non-empty flowpage:viewed UTM content. Only present when
+            include_utm_params=true; null when no attribution is found.
       required:
         - entry_id
         - group_id
         - project_id
         - embeddable_id
         - contact_id
-        - created_at
-        - updated_at
+        - first_updated_in_period
+        - last_updated_in_period
         - entry_data
     Event:
       title: Event
@@ -1475,7 +1561,11 @@ components:
     Sort:
       title: Sort
       type: string
-      description: the key that you want to sort by (defaults to sorting by last updated)
+      description: >-
+        The key to sort by. Accepts last_updated_in_period (default) or
+        first_updated_in_period. The legacy values updated_at / created_at are
+        also accepted and map to the matching period field, or to the true
+        lifetime timestamps when use_full_time_history=true.
     Direction:
       title: Direction
       type: string
