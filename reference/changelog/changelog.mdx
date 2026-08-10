@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="10 August 2026">
+### 🐞 Bug Fixes
+
+- 📚 **API Docs Reachable in Production** – The Embeddables API's interactive reference (Scalar UI) and OpenAPI spec are now served under `/api/docs` and `/api/openapi.json`. Cloudflare production only routes `/api/*` to the API worker, so the previous `/docs` and `/openapi.json` paths were unreachable once deployed — moving them under `/api/*` fixes this. Serving is still gated by the `DOCS_ENABLED` toggle.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
