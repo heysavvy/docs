@@ -4,6 +4,23 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="10 August 2026">
+### ⚡️ Improvements
+
+- 📊 **Faster Users Page & Analytics (ClickHouse Phase 1)** – Analytics reads now route per project to a new partitioned event schema, substantially cutting Users page and analytics query times. On the Users page, the contacts list, browser/location filter options, and location data are now loaded through concurrent API routes with cached session auth, the default date range resolves server-side, and filter dropdowns lazy-load their options only when opened. The contacts table also fetches contact names and Embeddable progress in a single request.
+- 📈 **Analytics Hub Conversions Match Overview** – The Conversions table now counts each conversion as the distinct contacts that fired the conversion event within the date range, without requiring a page view on the same session, aligning it with the Embeddable Overview conversion tabs. As a result, a contact whose page view happened on an earlier day is no longer dropped — and a conversion count can now legitimately exceed Total traffic when a contact converts without a page view in range.
+- 🔎 **Inline Search Loading** – The project search box no longer swaps out for a full skeleton on the first query. The input stays interactive and shows a "Loading…" state inside the results popover while data is fetched.
+- 🔐 **Hardened Analytics Query Validation** – Custom event, event metric, and experiment keys are now validated at the ClickHouse query builders before being inlined into queries, guarding against SQL injection.
+- 🛠️ **MCP Task Tool Renamed** – For teams using the Embeddables MCP server, the `list_tasks` tool has been renamed to `get_tasks` to match the `get_*` naming convention, and the task and embeddable tools now run through the standard server query layer.
+
+### 🐞 Bug Fixes
+
+- 🏳️ **Country Flags on Windows** – Country flags in the web app now render from a self-hosted SVG sprite instead of emoji, so Windows users see the actual flags rather than bare country codes.
+- 📊 **"Include Empty Values" Toggle** – In the Analytics Hub breakdown tables, toggling **Include empty values** now only shows or hides the "no value" bucket column, instead of unexpectedly re-hiding columns you had already restored.
+- 🔎 **Filter Dropdowns Show Selected Value** – The Browser, Location, and Embeddable filters on the Users page now display the selected value's readable label immediately — when it comes from the URL or after a date-range change — instead of showing a blank or a raw ID until the dropdown is opened.
+- 🕓 **Users Filter Date Range** – The Location and Browser filter option lists on the Users page now use UTC-converted range bounds, so the available options correctly match the selected date range across time zones.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
