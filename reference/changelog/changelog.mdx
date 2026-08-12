@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="12 August 2026">
+### ⚡️ Improvements
+
+- 📄 **Larger Public API Page Size** – The `limit` query parameter on the public API list endpoints (`GET /api/v1/entries` and `GET /api/v1/embeddables`) now accepts values up to **1000** (previously 100), so integrations can pull much larger pages when backfilling or keeping data in sync. The default page size is unchanged at 25, and opaque keyset (`next_cursor`) pagination continues to work exactly as before.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
