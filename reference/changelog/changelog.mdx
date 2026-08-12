@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="12 August 2026">
+### ⚡️ Improvements
+
+- 🔍 **Experiment Split Storage Diagnostics** – The engine worker now emits additional Sentry probes on load to pinpoint where experiment splits (`split_*` keys) can go missing between the render eval's verified write of `SavvyFormUserData` and the read in `flow_controller.connect()`. Each `connect` step now reports the request **hostname**, an `EmbeddablesStorageSentinel` localStorage key written alongside `SavvyFormUserData`, the presence and parseability of the `Embeddables.<flowId>` experiment cookie, and an `eval_to_connect_ms` timing keyed per flow so multiple embeds on the same page don't overwrite each other's measurement. These are internal observability signals only — there is no change to how splits are written, read, or applied.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
