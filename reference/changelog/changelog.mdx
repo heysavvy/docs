@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="12 August 2026">
+### 🐞 Bug Fixes
+
+- 🧪 **Recover Experiment Splits from Cookies** – When an embed connects and finds its `SavvyFormUserData` Local Storage missing or empty (for example after WebKit purges script-written storage in an in-app browser session), it now recovers the user's assigned experiment splits from the `Embeddables.<flowId>` cookie and writes them back to Local Storage before loading user data. This keeps users on their previously assigned variants instead of being silently re-bucketed. Recovery only runs for flows with **Store experiments in cookies** enabled, and never when **do not store any data** is set.
+- **Legacy Un-encoded Experiment Cookies** – Experiment cookie reads now fall back gracefully when a legacy, un-encoded cookie value contains `%` sequences that would otherwise throw during decoding, so older cookies still parse and recover correctly.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
