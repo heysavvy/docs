@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="13 August 2026">
+### 🐞 Bug Fixes
+
+- 🧪 **Experiment Splits Preserved When Local Storage Reads Empty at Connect** – Experiment variant assignments (`split_*`) could be lost when the flow controller read `SavvyFormUserData` from local storage before the assignment had been written, dropping the user out of their assigned variant. The renderer's eval script now also publishes the `split_*` values (and only those) to a per-flow window variable, and the flow controller recovers them from that fallback when the primary local storage read comes back empty at connect. The existing happy path and cookie-recovery lane are unchanged, and the window fallback is never populated when `do_not_store_any_data` is enabled.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
