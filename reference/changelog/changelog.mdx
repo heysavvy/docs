@@ -4,6 +4,13 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="24 August 2026">
+### ⚡️ Improvements
+
+- 🔐 **Public API Project Isolation** – The public API now enforces project boundaries at the database level. New Supabase Row Level Security policies read the scoped JWT minted for each API caller and restrict `flows` queries to the caller's own `project_id`, replacing the previous temporary open access. Each API Key already grants access to a single project — this hardens that guarantee inside Postgres itself.
+- 🧹 **Cleaner Builder Top Bar** – Removed the in-Builder **Feedback** button and the **Open old builder** menu item, along with the underlying Userback integration. These were legacy entry points tied to the old builder that generated unactioned feedback noise and are no longer needed.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
