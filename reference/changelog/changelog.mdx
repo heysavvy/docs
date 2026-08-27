@@ -4,6 +4,14 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="27 August 2026">
+### ⚡️ Improvements
+
+- 🔑 **Purpose-Specific AI Keys** – The web app's Anthropic access is now split into dedicated keys per feature — AI sidebar chat, AI summaries (tasks, experiments, QA, version history, and chat titles), and document template mock previews — retiring the shared `builder-ai` key. This lets us track cost and limit blast radius per feature, with no change to how any AI feature behaves.
+- 🛡️ **Hardened AI Chat Model Validation** – The `/api/chat` endpoint now validates the requested model and rejects any non-Haiku or malformed Anthropic model with a `400`, ensuring the AI sidebar chat only ever runs on its intended Haiku model.
+
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
