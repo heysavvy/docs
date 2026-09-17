@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="17 September 2026">
+### 🔥 Features and Updates
+
+- 📊 **Public API: Conversion Counts Endpoint** – A new `GET /api/v1/conversions` endpoint returns conversion counts for an embeddable over a time window. Pass a URL-encoded `metrics` array (each with a `tracked_event` and one or more comma-separated `event_key`s, plus an optional `id` / `title`) to get `total_traffic` alongside a per-metric distinct-user count. Set `include_utm_params=true` to also break each count down by `utm_source`, `utm_medium`, and `utm_campaign`. The window defaults to the last 7 days and can be narrowed with `updated_after` / `updated_before`. Requires an API key with the `analyticsDeanonymized.read` or `analyticsAnonymized.read` scope.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
