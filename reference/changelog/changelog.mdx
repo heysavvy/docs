@@ -4,6 +4,12 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="13 October 2026">
+### 🔥 Features and Updates
+
+- 📊 **Answer Breakdowns on the Conversions API** – The public `GET /api/v1/conversions` endpoint now accepts an optional `breakdown_answer_field` parameter to group conversion counts by a userData answer value. When set, an aggregate `answer_breakdown` map (`{ field, counts }` of answer value → distinct-user count) is attached to `total_traffic` and to each metric, grouped by the latest answer recorded per entry. The field is restricted to an explicit allowlist of non-PII userData keys (currently just `emb_lander` for the Enhance dashboard) — any other value returns a `400`. The breakdown is **fail-open**: if the underlying answers data can't be read, `answer_breakdown` is simply omitted and the conversion totals are still returned.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
