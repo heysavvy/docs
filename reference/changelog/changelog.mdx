@@ -4,6 +4,17 @@ description: "What we've shipped, when we shipped it"
 icon: "list"
 ---
 
+<Update label="26 October 2026">
+### 🔥 Features and Updates
+
+- 📊 **UTM Term & Content Breakdowns on the Conversions API** – `GET /api/v1/conversions` now returns `utm_term` and `utm_content` count maps alongside `utm_source`, `utm_medium`, and `utm_campaign` when `include_utm_params=true`, so the endpoint now exposes the full UTM set available on `/entries`.
+- 🎯 **UTM Breakdowns Split by Answer Cohort** – When both `include_utm_params=true` and `breakdown_answer_field` (e.g. `emb_lander`) are set, each row on `GET /api/v1/conversions` now includes a `utm_by_answer` object that splits every UTM map by answer value (answer value → UTM value → distinct-user count). This lets you filter UTM breakdowns by a lander cohort without changing the all-traffic view. The flat `utm_*` maps stay all-traffic, counts are capped at 500 UTM values per answer value, and the breakdown fails open — if the answers table can't be read, `utm_by_answer` is omitted and totals still return.
+
+### ⚡️ Improvements
+
+- 🧪 **CI: Cypress Action Bump** – The engine worker's CI test workflow now pins the Cypress GitHub Action to `v7.4.6` for more reliable end-to-end test runs.
+</Update>
+
 <Update label="23 June 2026">
 ### 🔥 Features and Updates
 
